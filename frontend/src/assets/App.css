@@ -1,5 +1,5 @@
 * {
-    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+    font-family: menlo,Ubuntu Mono,consolas,Courier New,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;
 }
 
 #gtx-trans {
@@ -210,8 +210,4 @@ li {
 
 .vuepress-markdown-body i {
     font-style: unset!important;
-}
-
-.v-md-textarea-editor pre, .v-md-textarea-editor textarea {
-    font-family: menlo,Ubuntu Mono,consolas,Courier New,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif!important;
 }
