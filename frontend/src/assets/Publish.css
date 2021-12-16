@@ -1,0 +1,80 @@
+.editor-box {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 40px;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.editor-box .el-input {
+    margin-right: 10px;
+}
+
+.editor-box .el-input,
+.editor-box .header .el-button {
+    border-radius: 4px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.editor-box .el-input :deep(input) {
+    border: unset;
+}
+
+.editor-box .v-md-editor {
+    height: calc(100% - 80px);
+}
+
+.editor-box .header {
+    margin-bottom: 20px;
+    display: flex;
+}
+
+.publish-form .el-select {
+    width: 100%;
+}
+
+.publish-button-box {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.publish-form .fa-folder-upload {
+    font-size: 60px;
+    margin-top: 30px;
+    color: #8cc5ff;
+}
+
+.publish-form :deep(.el-upload) {
+    text-align: left;
+    display: flex;
+}
+
+.upload-notice {
+    margin-left: 10px;
+    color: #909399;
+}
+
+.el-upload__text {
+    line-height: 24px;
+}
+
+.publish-form :deep(.el-upload),
+.publish-form :deep(.el-upload-dragger) {
+    width: 100%;
+}
+
+.collaborator-box .el-table :deep(.cell) {
+    line-height: 40px;
+}
+
+.publish-form .el-table :deep(.el-table__cell) {
+    padding: 0;
+}
+
+.add-col-select :deep(.el-input__inner) {
+    border: unset;
+    padding: 0;
+    width: 100%;
+}

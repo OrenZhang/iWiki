@@ -1,0 +1,130 @@
+from django.http import Http404
+from rest_framework import exceptions, status
+from rest_framework.exceptions import APIException, Throttled, ValidationError
+from rest_framework.response import Response
+from rest_framework.views import set_rollback
+
+
+def exception_handler(exc, context):
+    """
+    :param exc: 异常
+    :param context: 上下文
+    :return: Response object
+    """
+
+    if isinstance(exc, Http404):
+        exc = exceptions.NotFound()
+
+    if isinstance(exc, exceptions.APIException):
+        headers = {}
+        if getattr(exc, "auth_header", None):
+            headers["WWW-Authenticate"] = exc.auth_header
+        if getattr(exc, "wait", None):
+            headers["Retry-After"] = "%d" % exc.wait
+
+        if isinstance(exc, ValidationError):
+            data = exc.detail
+            msg = ""
+            for field, val in data.items():
+                msg += "[{}]{} ".format(field, ",".join(val))
+        elif isinstance(exc.detail, (list, dict)):
+            data = exc.detail
+            msg = "failed"
+        else:
+            data = None
+            msg = exc.detail
+
+        set_rollback()
+
+        return Response(
+            {
+                "code": exc.default_code
+                if isinstance(exc.default_code, int)
+                else exc.status_code,
+                "result": False,
+                "data": data,
+                "msg": msg,
+            },
+            status=exc.status_code,
+            headers=headers,
+        )
+
+    return None
+
+
+class ServerError(APIException):
+    status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+    default_code = 500500
+    default_detail = "服务器异常，请联系管理员"
+
+
+class LoginRequired(APIException):
+    status_code = status.HTTP_401_UNAUTHORIZED
+    default_code = 500401
+    default_detail = "未登录用户"
+
+
+class LoginFailed(APIException):
+    status_code = status.HTTP_401_UNAUTHORIZED
+    default_code = 500401
+    default_detail = "登录失败"
+
+
+class VerifyCodeFailed(APIException):
+    status_code = status.HTTP_400_BAD_REQUEST
+    default_code = 500400
+    default_detail = "验证码有误"
+
+
+class UserNotExist(APIException):
+    status_code = status.HTTP_404_NOT_FOUND
+    default_code = 500404
+    default_detail = "用户不存在"
+
+
+class UsernameExist(APIException):
+    status_code = status.HTTP_400_BAD_REQUEST
+    default_code = 500400
+    default_detail = "用户名已存在"
+
+
+class PhoneNumberExist(UsernameExist):
+    default_detail = "手机号已被注册"
+
+
+class PermissionDenied(APIException):
+    status_code = status.HTTP_403_FORBIDDEN
+    default_code = 500403
+    default_detail = "未经授权访问"
+
+
+class ParamsNotFound(APIException):
+    status_code = status.HTTP_400_BAD_REQUEST
+    default_code = 500400
+    default_detail = "参数缺失"
+
+
+class ThrottledError(Throttled):
+    status_code = status.HTTP_429_TOO_MANY_REQUESTS
+    default_code = 500429
+    default_detail = "请求次数受限"
+    extra_detail_singular = "请在{wait}秒后再试"
+    extra_detail_plural = extra_detail_singular
+
+
+class SMSSendFailed(APIException):
+    status_code = status.HTTP_400_BAD_REQUEST
+    default_code = 500400
+    default_detail = "短信发送失败，请稍后再试"
+
+
+class OperationError(APIException):
+    status_code = status.HTTP_400_BAD_REQUEST
+    default_code = 500400
+    default_detail = "异常操作"
+
+
+class Error404(APIException):
+    status_code = status.HTTP_404_NOT_FOUND
+    default_code = 500404
+    default_detail = "资源不存在"

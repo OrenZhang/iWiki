@@ -1,0 +1,10 @@
+.register-notice {
+    text-align: right;
+    line-height: 24px;
+    margin-bottom: -10px;
+    color: #909399;
+}
+
+.oneline-code-button-box :deep(.el-form-item__content) {
+    display: flex;
+}

@@ -1,0 +1,146 @@
+.doc-container {
+    padding: 40px;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.back-top div:hover {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.doc-container .el-main {
+    padding: 0 20px 0 0;
+}
+
+.scroll-view :deep(.el-scrollbar__view) {
+    display: flex;
+    justify-content: center;
+}
+
+.info-box {
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.attach-box {
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.author-box {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.ml-10 {
+    margin-left: 10px;
+}
+
+.mr-2 {
+    margin-right: 2px;
+}
+
+.author-box .update-at {
+    margin-top: 3px;
+    margin-left: 10px;
+}
+
+@media screen and (max-width: 1200px) {
+    .doc-container .el-aside {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .author-box {
+        display: unset;
+        line-height: 24px;
+    }
+    .author-box .update-at {
+        margin-left: 10px;
+    }
+    .doc-container .el-main {
+        padding-right: 0;
+    }
+}
+
+.content-box :deep(.vuepress-markdown-body) {
+    padding: 0;
+}
+
+.operate-box :deep(.el-link:nth-of-type(n+2)) {
+    margin-left: 10px;
+}
+
+.comment-box {
+    margin: 20px 0 0 0;
+}
+
+.comment-box .operate-box .el-link {
+    margin-left: 10px;
+}
+
+.comment-box :deep(.vuepress-markdown-body) {
+    padding: 0;
+}
+
+:deep(.el-card) {
+    border: none;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-header .el-button,
+.child-comment .el-button {
+    padding: 0;
+    min-height: unset;
+}
+
+.child-comment .el-divider {
+    margin: 20px 0;
+}
+
+.doc-container .el-pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.md-editor-popover .v-md-editor {
+    box-shadow: none;
+}
+
+.user-link {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.child-comment:first-child {
+    margin-top: 20px;
+}
+
+.child-comment {
+    margin-bottom: 20px;
+    box-shadow: none;
+    border: 1px solid #dcdfe6;
+    border-radius: 5px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.el-pagination {
+    margin-top: 20px;
+}
+
+.title-box {
+    margin-top: 0;
+}

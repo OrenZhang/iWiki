@@ -1,0 +1,58 @@
+.home-container {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.search-box {
+    background: url("https://wiki.incv.net/static/img/bg-2.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 30vh;
+    min-height: 240px;
+    max-height: 600px;
+    display: flex;
+    align-items: center;
+}
+
+.search-box :deep(.el-select),
+.search-box :deep(.el-button),
+.search-box :deep(.el-select__wrapper) {
+    border: unset;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.search-box :deep(.el-input__inner) {
+    border: unset;
+    border-radius: 5px;
+}
+
+.search-box > div {
+    text-align: center;
+    max-width: 540px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.next-container {
+    padding: 40px;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.next-container .el-main {
+    padding: 0 20px 0 0;
+    overflow: unset;
+}
+
+:deep(.el-card) {
+    border: none;
+}
+
+.search-box :deep(.el-select-v2__placeholder) {
+    left: 0;
+}
+
+.next-container .el-aside {
+    overflow: unset;
+}

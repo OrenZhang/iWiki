@@ -1,0 +1,60 @@
+.login-container {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.side-pic {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.login-box {
+    width: 760px;
+    background: white;
+    display: flex;
+    box-shadow: 0 2px 12px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 380px) {
+    .login-box {
+        width: 320px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .login-box {
+        width: 300px;
+    }
+}
+
+.login-box .el-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid #d9ecff;
+}
+
+.login-box .el-header,
+.login-box .el-header :deep(.el-link) {
+    font-size: 22px;
+}
+
+.login-box .el-footer {
+    height: 32px;
+    text-align: center;
+}
+
+.el-footer .el-link {
+    color: #909399;
+}

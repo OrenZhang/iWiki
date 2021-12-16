@@ -1,0 +1,17 @@
+.head-box {
+    background: url("https://wiki.incv.net/static/img/bg-3.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 30vh;
+    min-height: 240px;
+    max-height: 600px;
+    display: flex;
+    align-items: center;
+}
+
+.doc-list {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 40px 40px 40px;
+    box-sizing: border-box;
+}

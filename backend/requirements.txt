@@ -1,0 +1,20 @@
+# Django
+django==4.0
+mysqlclient==2.0.3
+djangorestframework==3.12.4
+django-cors-headers==3.10.1
+
+# Login
+chd_login==0.0.8
+
+# Storage
+redis==4.0.2
+
+# Sms
+tencentcloud-sdk-python==3.0.532
+
+# Cos
+cos-python-sdk-v5==1.9.11
+
+# Celery
+celery==5.1.2

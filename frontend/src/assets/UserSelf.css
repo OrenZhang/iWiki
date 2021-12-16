@@ -1,0 +1,40 @@
+.head-box {
+    background: url("https://wiki.incv.net/static/img/bg-3.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 30vh;
+    min-height: 240px;
+    max-height: 600px;
+    display: flex;
+    align-items: center;
+}
+
+.content-box {
+    margin: 0 auto;
+    max-width: 1440px;
+    padding: 0 40px 40px 40px;
+    box-sizing: border-box;
+}
+
+.content-box > div {
+    display: flex;
+    box-sizing: border-box;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    min-height: 360px;
+    overflow: hidden;
+}
+
+.el-menu {
+    height: 100%;
+}
+
+.el-menu-item i {
+    margin-right: 6px;
+    font-size: 16px;
+}
+
+:deep(.el-menu-item.is-active) {
+    background: #53a8ff;
+    color: white;
+}

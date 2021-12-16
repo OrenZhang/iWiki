@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <link rel="stylesheet" href="https://cos.incv.net/docs/static/css/pro.min.css">
+        <link rel="stylesheet" href="https://wiki.incv.net/static/css/katex.min.css" />
+        <script src="https://wiki.incv.net/static/js/katex.min.js"></script>
+        <script src="https://wiki.incv.net/static/js/mermaid.min.js"></script>
+        <link rel="icon" href="https://www.oren.ink/metapic/iwiki.png">
+        <script>
+            document.onkeydown = (event) => {
+                if (event.keyCode === 9 && event.path[0].nodeName === 'TEXTAREA') {
+                    event.preventDefault()
+                    insertText(event.path[0], "    ")
+                }
+            }
+            function insertText(obj,str) {
+                if (document.selection) {
+                    let sel = document.selection.createRange();
+                    sel.text = str;
+                } else if (typeof obj.selectionStart === 'number' && typeof obj.selectionEnd === 'number') {
+                    let startPos = obj.selectionStart,
+                        endPos = obj.selectionEnd,
+                        cursorPos = startPos,
+                        tmpStr = obj.value;
+                    obj.value = tmpStr.substring(0, startPos) + str + tmpStr.substring(endPos, tmpStr.length);
+                    cursorPos += str.length;
+                    obj.selectionStart = obj.selectionEnd = cursorPos;
+                } else {
+                    obj.value += str;
+                }
+            }
+        </script>
+        <title>iWiki 知识库</title>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script type="module" src="/src/main.js"></script>
+    </body>
+</html>
