@@ -211,3 +211,7 @@ li {
 .vuepress-markdown-body i {
     font-style: unset!important;
 }
+
+.v-md-textarea-editor pre, .v-md-textarea-editor textarea {
+    font-family: menlo,Ubuntu Mono,consolas,Courier New,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif!important;
+}
