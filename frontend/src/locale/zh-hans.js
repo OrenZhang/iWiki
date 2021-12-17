@@ -146,7 +146,10 @@ const zh = {
     toDraft: '转草稿',
     removeMemberMsg: '确认移除成员 {name} 吗？',
     removeConfirm: '移除确认',
-    removeConfirmed: '确认移除'
+    removeConfirmed: '确认移除',
+    deleteRepoConfirmMsg1: '这个操作不能被取消，将会永久删除库与所有文章及相关内容！',
+    deleteRepoConfirmMsg2: '请输入 ',
+    deleteRepoConfirmMsg3: ' 来确认操作'
 }
 
 export default zh

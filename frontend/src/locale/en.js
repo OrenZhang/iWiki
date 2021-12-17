@@ -146,7 +146,10 @@ const en = {
     toDraft: 'ToDraft',
     removeMemberMsg: 'Remove Member {name} ?',
     removeConfirm: 'Remove Confirm',
-    removeConfirmed: 'Remove'
+    removeConfirmed: 'Remove',
+    deleteRepoConfirmMsg1: 'This action cannot be undone. This will permanently delete the repo, docs and associations.',
+    deleteRepoConfirmMsg2: 'Please type ',
+    deleteRepoConfirmMsg3: ' to confirm.'
 }
 
 export default en

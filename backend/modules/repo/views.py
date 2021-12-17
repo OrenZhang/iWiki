@@ -190,6 +190,13 @@ class RepoView(
         Doc.objects.filter(id=doc_id, repo_id=instance.id).update(is_deleted=True)
         return Response()
 
+    @action(detail=True, methods=["GET"])
+    def is_owner(self, request, *args, **kwargs):
+        if request.user.is_superuser:
+            return Response(True)
+        instance = self.get_object()
+        return Response(instance.creator == request.uesr.uid)
+
 
 class RepoCommonView(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     """仓库常规入口"""

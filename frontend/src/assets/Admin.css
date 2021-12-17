@@ -15,10 +15,21 @@
     font-weight: bold;
 }
 
+.main-box {
+    max-width: 1440px;
+    box-sizing: border-box;
+    padding: 40px;
+    margin: 0 auto;
+}
+
+.main-box .el-button {
+    margin-left: 10px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
 .admin-header-select {
     width: 240px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
 }
 
 .admin-header-select :deep(.el-select-v2__wrapper) {
@@ -48,4 +59,8 @@
 
 .admin-container-box .el-main {
     padding: 20px;
+}
+
+:deep(.delete-dialog) .el-dialog__body {
+    padding: 0 20px 20px 20px;
 }
