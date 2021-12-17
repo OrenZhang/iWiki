@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-16 11:52+0800\n"
+"POT-Creation-Date: 2021-12-17 12:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,39 +18,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\constents\doc.py:6 .\constents\repo.py:9
+#: .\constents\doc.py:6 .\constents\repo.py:6
 msgid "公开"
 msgstr "Public"
 
-#: .\constents\doc.py:7 .\constents\repo.py:10
+#: .\constents\doc.py:7 .\constents\repo.py:7
 msgid "私有"
 msgstr "Private"
 
-#: .\constents\repo.py:5
-msgid "默认库"
-msgstr "Default Repo"
-
-#: .\constents\repo.py:14
+#: .\constents\repo.py:11
 msgid "所有者"
 msgstr "Owner"
 
-#: .\constents\repo.py:15
+#: .\constents\repo.py:12
 msgid "管理员"
 msgstr "Admin"
 
-#: .\constents\repo.py:16 .\modules\account\models.py:49
+#: .\constents\repo.py:13 .\modules\account\models.py:49
 msgid "成员"
 msgstr "Member"
 
-#: .\constents\repo.py:17
+#: .\constents\repo.py:14
 msgid "访客"
 msgstr "Visitor"
 
-#: .\entry\settings.py:144
+#: .\entry\settings.py:156
 msgid "English"
 msgstr "English"
 
-#: .\entry\settings.py:145
+#: .\entry\settings.py:157
 msgid "中文简体"
 msgstr "Chinese Simplified"
 
@@ -100,7 +96,7 @@ msgid "用户名格式有误"
 msgstr "Incorrect username format"
 
 #: .\modules\account\serializers.py:21 .\modules\account\serializers.py:24
-#: .\modules\account\views.py:106 .\modules\doc\views\doc.py:283
+#: .\modules\account\views.py:106 .\modules\doc\views\doc.py:280
 msgid "用户名不能为空"
 msgstr "Username cannot be empty"
 
@@ -152,14 +148,14 @@ msgstr "Operator"
 msgid "上传时间"
 msgstr "Upload At"
 
-#: .\modules\cos\views.py:23 .\modules\cos\views.py:60
+#: .\modules\cos\views.py:23 .\modules\cos\views.py:59
 #, python-format
 msgid "请上传 %(limit)dM 以内文件"
 msgid_plural "请上传 %(limit)dM 以内文件"
 msgstr[0] "Please upload files within %(limit)dM"
 msgstr[1] "Please upload files within %(limit)dM"
 
-#: .\modules\cos\views.py:37 .\modules\cos\views.py:52
+#: .\modules\cos\views.py:36 .\modules\cos\views.py:51
 msgid "上传失败，请稍后再试"
 msgstr "Upload failed, please try again later"
 
@@ -248,7 +244,7 @@ msgstr "Comment Version"
 msgid "已添加该用户为协作者，请勿重复添加"
 msgstr "Duplicated Add"
 
-#: .\modules\doc\views\doc.py:307
+#: .\modules\doc\views\doc.py:304
 msgid "搜索关键字不能为空"
 msgstr "Search keyword cannot be empty"
 
@@ -308,11 +304,11 @@ msgstr "Repo Member"
 msgid "库名重复"
 msgstr "Duplicated RepoName"
 
-#: .\modules\repo\views.py:83
+#: .\modules\repo\views.py:93
 msgid "该申请不存在"
 msgstr "Not Found"
 
-#: .\modules\repo\views.py:177
+#: .\modules\repo\views.py:261
 #, python-format
 msgid "已申请或加入%(name)s"
 msgid_plural "已申请或加入%(name)s"
@@ -346,6 +342,65 @@ msgstr "Send At"
 #: .\modules\sms\views.py:20
 msgid "手机号为空或格式有误"
 msgstr "The phone number is empty or format is incorrect."
+
+#: .\utils\exceptions.py:59
+msgid "服务器异常，请联系管理员"
+msgstr "Server Error"
+
+#: .\utils\exceptions.py:65
+msgid "未登录用户"
+msgstr "No Login User"
+
+#: .\utils\exceptions.py:71
+msgid "登录失败"
+msgstr "Login Failed"
+
+#: .\utils\exceptions.py:77
+msgid "验证码有误"
+msgstr "Wrong Code"
+
+#: .\utils\exceptions.py:83
+msgid "用户不存在"
+msgstr "User Does Not Exist"
+
+#: .\utils\exceptions.py:89
+msgid "用户名已存在"
+msgstr "Duplicated Username"
+
+#: .\utils\exceptions.py:93
+msgid "手机号已被注册"
+msgstr "Phone number in use"
+
+#: .\utils\exceptions.py:99
+msgid "未经授权访问"
+msgstr "UnAuthorized Access"
+
+#: .\utils\exceptions.py:105
+msgid "参数缺失"
+msgstr "Param Missing"
+
+#: .\utils\exceptions.py:111
+msgid "请求次数受限"
+msgstr "Throttled"
+
+#: .\utils\exceptions.py:112
+#, python-brace-format
+msgid "请在{wait}秒后再试"
+msgstr "Expected available in {wait} second."
+
+#: .\utils\exceptions.py:119
+#, fuzzy
+#| msgid "上传失败，请稍后再试"
+msgid "短信发送失败，请稍后再试"
+msgstr "SMS send failed, please try again later"
+
+#: .\utils\exceptions.py:125
+msgid "异常操作"
+msgstr "Error Operation"
+
+#: .\utils\exceptions.py:131
+msgid "资源不存在"
+msgstr "Resource Does Not Exist"
 
 #: .\venv\Lib\site-packages\django\contrib\messages\apps.py:7
 msgid "Messages"
@@ -1554,6 +1609,9 @@ msgstr ""
 #, python-format
 msgid "Unable to connect to qpid with SASL mechanism %s"
 msgstr ""
+
+#~ msgid "默认库"
+#~ msgstr "Default Repo"
 
 #, fuzzy
 #~| msgid "用户名不能为空"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-16 11:52+0800\n"
+"POT-Creation-Date: 2021-12-17 12:35+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,39 +18,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: .\constents\doc.py:6 .\constents\repo.py:9
+#: .\constents\doc.py:6 .\constents\repo.py:6
 msgid "公开"
 msgstr "公开"
 
-#: .\constents\doc.py:7 .\constents\repo.py:10
+#: .\constents\doc.py:7 .\constents\repo.py:7
 msgid "私有"
 msgstr "私有"
 
-#: .\constents\repo.py:5
-msgid "默认库"
-msgstr "默认库"
-
-#: .\constents\repo.py:14
+#: .\constents\repo.py:11
 msgid "所有者"
 msgstr "所有者"
 
-#: .\constents\repo.py:15
+#: .\constents\repo.py:12
 msgid "管理员"
 msgstr "管理员"
 
-#: .\constents\repo.py:16 .\modules\account\models.py:49
+#: .\constents\repo.py:13 .\modules\account\models.py:49
 msgid "成员"
 msgstr "成员"
 
-#: .\constents\repo.py:17
+#: .\constents\repo.py:14
 msgid "访客"
 msgstr "访客"
 
-#: .\entry\settings.py:144
+#: .\entry\settings.py:156
 msgid "English"
 msgstr "英语"
 
-#: .\entry\settings.py:145
+#: .\entry\settings.py:157
 msgid "中文简体"
 msgstr "中文简体"
 
@@ -100,7 +96,7 @@ msgid "用户名格式有误"
 msgstr "用户名格式有误"
 
 #: .\modules\account\serializers.py:21 .\modules\account\serializers.py:24
-#: .\modules\account\views.py:106 .\modules\doc\views\doc.py:283
+#: .\modules\account\views.py:106 .\modules\doc\views\doc.py:280
 msgid "用户名不能为空"
 msgstr "用户名不能为空"
 
@@ -152,13 +148,13 @@ msgstr "操作人"
 msgid "上传时间"
 msgstr "上传时间"
 
-#: .\modules\cos\views.py:23 .\modules\cos\views.py:60
+#: .\modules\cos\views.py:23 .\modules\cos\views.py:59
 #, python-format
 msgid "请上传 %(limit)dM 以内文件"
 msgid_plural "请上传 %(limit)dM 以内文件"
 msgstr[0] "请上传 %(limit)dM 以内文件"
 
-#: .\modules\cos\views.py:37 .\modules\cos\views.py:52
+#: .\modules\cos\views.py:36 .\modules\cos\views.py:51
 msgid "上传失败，请稍后再试"
 msgstr "上传失败，请稍后再试"
 
@@ -247,7 +243,7 @@ msgstr "评论版本"
 msgid "已添加该用户为协作者，请勿重复添加"
 msgstr "已添加该用户为协作者，请勿重复添加"
 
-#: .\modules\doc\views\doc.py:307
+#: .\modules\doc\views\doc.py:304
 msgid "搜索关键字不能为空"
 msgstr "搜索关键字不能为空"
 
@@ -307,11 +303,11 @@ msgstr "库成员"
 msgid "库名重复"
 msgstr "库名重复"
 
-#: .\modules\repo\views.py:83
+#: .\modules\repo\views.py:93
 msgid "该申请不存在"
 msgstr "该申请不存在"
 
-#: .\modules\repo\views.py:177
+#: .\modules\repo\views.py:261
 #, python-format
 msgid "已申请或加入%(name)s"
 msgid_plural "已申请或加入%(name)s"
@@ -344,6 +340,65 @@ msgstr "发送时间"
 #: .\modules\sms\views.py:20
 msgid "手机号为空或格式有误"
 msgstr "手机号为空或格式有误"
+
+#: .\utils\exceptions.py:59
+msgid "服务器异常，请联系管理员"
+msgstr "服务器异常，请联系管理员"
+
+#: .\utils\exceptions.py:65
+msgid "未登录用户"
+msgstr "未登录用户"
+
+#: .\utils\exceptions.py:71
+msgid "登录失败"
+msgstr "登录失败"
+
+#: .\utils\exceptions.py:77
+msgid "验证码有误"
+msgstr "验证码有误"
+
+#: .\utils\exceptions.py:83
+msgid "用户不存在"
+msgstr "用户不存在"
+
+#: .\utils\exceptions.py:89
+msgid "用户名已存在"
+msgstr "用户名已存在"
+
+#: .\utils\exceptions.py:93
+msgid "手机号已被注册"
+msgstr "手机号已被注册"
+
+#: .\utils\exceptions.py:99
+msgid "未经授权访问"
+msgstr "未经授权访问"
+
+#: .\utils\exceptions.py:105
+msgid "参数缺失"
+msgstr "参数缺失"
+
+#: .\utils\exceptions.py:111
+msgid "请求次数受限"
+msgstr "请求次数受限"
+
+#: .\utils\exceptions.py:112
+#, python-brace-format
+msgid "请在{wait}秒后再试"
+msgstr "请在{wait}秒后再试"
+
+#: .\utils\exceptions.py:119
+#, fuzzy
+#| msgid "上传失败，请稍后再试"
+msgid "短信发送失败，请稍后再试"
+msgstr "短信发送失败，请稍后再试"
+
+#: .\utils\exceptions.py:125
+msgid "异常操作"
+msgstr "异常操作"
+
+#: .\utils\exceptions.py:131
+msgid "资源不存在"
+msgstr "资源不存在"
 
 #: .\venv\Lib\site-packages\django\contrib\messages\apps.py:7
 msgid "Messages"
@@ -1552,6 +1607,9 @@ msgstr ""
 #, python-format
 msgid "Unable to connect to qpid with SASL mechanism %s"
 msgstr ""
+
+#~ msgid "默认库"
+#~ msgstr "默认库"
 
 #, fuzzy
 #~| msgid "用户名不能为空"
