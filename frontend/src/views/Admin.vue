@@ -13,6 +13,14 @@
                     filterable
                     :placeholder="$t('chooseRepo')"
                 />
+                <el-select @change="changeRepoType" class="admin-header-select2" v-model="repoType" :placeholder="$t('repoType')">
+                    <el-option
+                        v-for="item in repoTypeOptions"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id"
+                    />
+                </el-select>
                 <el-button type="danger" size="medium" v-show="isOwner" @click="showDeleteConfirm">
                     {{ $t('deleteRepo') }}
                 </el-button>
@@ -65,13 +73,42 @@
     import http from '../api'
     import AdminMember from '../components/AdminMember.vue'
     import AdminDoc from '../components/AdminDoc.vue'
+    import { useI18n } from 'vue-i18n'
     
+    const { t } = useI18n()
+
+    const repoType = ref('')
+    const repoTypeOptions = ref([
+        {
+            id: 'public',
+            name: t('publicRepo')
+        },
+        {
+            id: 'private',
+            name: t('privateRepo')
+        }
+    ])
+    const changeRepoType = (value) => {
+        if (!value) {
+            return
+        }
+        http.patch(
+            '/repo/manage/' + curRepoID.value + '/',
+            {
+                r_type: value
+            }
+        ).then(() => {
+            loadRepo()
+        })
+    }
     const repoName = computed(() => {
         for (const i in repos.value) {
             if (repos.value[i].id === curRepoID.value) {
+                repoType.value = repos.value[i].r_type
                 return repos.value[i].name
             }
         }
+        repoType.value = ''
         return ''
     })
     const curComponent = computed(() => {

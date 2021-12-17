@@ -32,6 +32,16 @@
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
 
+.admin-header-select2 {
+    width: 120px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    margin-left: 10px;
+}
+
+.admin-header-select2 :deep(.el-input__inner) {
+    border: unset;
+}
+
 .admin-header-select :deep(.el-select-v2__wrapper) {
     border: unset;
 }

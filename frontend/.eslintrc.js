@@ -34,6 +34,7 @@ module.exports = {
         'vue/no-unused-properties': ['error'],
         'vue/no-unused-components': ['error'],
         'vue/no-unused-vars': ['error'],
-        'vue/no-unused-refs': ['error']
+        'vue/no-unused-refs': ['error'],
+        'vue/no-side-effects-in-computed-properties': 'off'
     }
 }

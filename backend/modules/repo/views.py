@@ -5,11 +5,10 @@ from django.db import transaction, IntegrityError
 from django.db.models import Q
 from django.utils.translation import gettext as _
 from django.utils.translation import ngettext
-from rest_framework import mixins
 from rest_framework.decorators import action
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
 from constents import UserTypeChoices, DocAvailableChoices
 from modules.account.serializers import UserInfoSerializer
@@ -31,13 +30,7 @@ from utils.paginations import NumPagination, RepoListNumPagination
 USER_MODEL = get_user_model()
 
 
-class RepoView(
-    mixins.CreateModelMixin,
-    mixins.RetrieveModelMixin,
-    mixins.DestroyModelMixin,
-    mixins.ListModelMixin,
-    GenericViewSet,
-):
+class RepoView(ModelViewSet):
     """仓库管理入口"""
 
     queryset = Repo.objects.filter(is_deleted=False)

@@ -3,14 +3,12 @@
         <div style="display: flex; align-items: center; margin-bottom: 20px; justify-content: space-between;">
             <div style="display: flex; align-items: center;">
                 <h2>{{ repo.name }}</h2>
-                <el-link :underline="false" @click="changeRepoType">
-                    <el-tag size="small" v-if="repo.r_type === 'public'" style="margin-left: 10px;" type="success">
-                        {{ $t('publicRepo') }}
-                    </el-tag>
-                    <el-tag size="small" v-else style="margin-left: 10px;" type="warning">
-                        {{ $t('privateRepo') }}
-                    </el-tag>
-                </el-link>
+                <el-tag size="small" v-if="repo.r_type === 'public'" style="margin-left: 10px;" type="success">
+                    {{ $t('publicRepo') }}
+                </el-tag>
+                <el-tag size="small" v-else style="margin-left: 10px;" type="warning">
+                    {{ $t('privateRepo') }}
+                </el-tag>
             </div>
             <div>
                 <el-link v-show="!isMember" :underline="false" @click="showApplyConfirm">
@@ -91,24 +89,6 @@
 
     const handleCurrentChange = (page) => {
         emits('handleCurrentChange', page)
-    }
-
-    const changeRepoType = () => {
-        if (!props.isAdmin) {
-            return
-        }
-        let r_type = 'public'
-        if (props.repo.r_type === 'public') {
-            r_type = 'private'
-        }
-        http.patch(
-            '/repo/manage/' + props.repo.id + '/',
-            {
-                r_type: r_type
-            }
-        ).then(() => {
-            emits('reloadRepoInfo')
-        })
     }
 
     const goTo = (url) => {
