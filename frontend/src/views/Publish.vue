@@ -114,7 +114,7 @@
 
 <script setup>
     import ErrorPage from '../components/ErrorPage.vue'
-    import { computed, onMounted, ref } from 'vue'
+    import { computed, onMounted, onUpdated, ref, watch } from 'vue'
     import { useStore } from 'vuex'
     import { onBeforeRouteLeave, useRoute, useRouter } from 'vue-router'
     import http from '../api'
@@ -187,7 +187,7 @@
 
     // 数据
     const repos = ref([])
-    const docID = ref(undefined)
+    const docID = computed(() => route.params.id)
     const docData = ref({
         repo_id: '',
         available: 'public',
@@ -420,11 +420,17 @@
     // router
     const route = useRoute()
     const router = useRouter()
-    docID.value = route.params.id
-    if (docID.value !== undefined) {
-        loadDocData()
-        loadCol()
-    }
+    onMounted(() => {
+        if (docID.value !== undefined) {
+            loadDocData()
+            loadCol()
+        }
+    })
+    watch(() => docID.value, () => {
+        if (docID.value === undefined) {
+            window.location.reload()
+        }
+    })
     
     onBeforeRouteLeave(() => {
         if (!savedStatus.value) {
