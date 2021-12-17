@@ -272,6 +272,7 @@
             setLoading(false)
         })
     }
+    const savedStatus = ref(false)
     const SaveContent = (isPublish = false) => {
         publishDrawer.value.visible = false
         setLoading(true)
@@ -291,6 +292,7 @@
             if (res.result) {
                 message(messageContent)
                 if (isPublish) {
+                    savedStatus.value = true
                     router.push({ path: '/doc/' + res.data.id })
                 } else {
                     window.location.href = '/publish/' + res.data.id
@@ -425,8 +427,10 @@
     }
     
     onBeforeRouteLeave(() => {
-        const answer = window.confirm(t('leaveConfirm'))
-        if (!answer) return false
+        if (!savedStatus.value) {
+            const answer = window.confirm(t('leaveConfirm'))
+            if (!answer) return false
+        }
     })
 </script>
 
