@@ -114,7 +114,7 @@
 
 <script setup>
     import ErrorPage from '../components/ErrorPage.vue'
-    import { computed, onMounted, onUpdated, ref, watch } from 'vue'
+    import { computed, onMounted, ref, watch } from 'vue'
     import { useStore } from 'vuex'
     import { onBeforeRouteLeave, useRoute, useRouter } from 'vue-router'
     import http from '../api'
