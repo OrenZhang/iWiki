@@ -7,6 +7,9 @@ from utils.exceptions import PermissionDenied
 
 class RepoAdminPermission(BasePermission):
     def has_object_permission(self, request, view, obj):
+        # 超级管理员拥有全部权限
+        if request.user.is_superuser:
+            return True
         try:
             repo_user = RepoUser.objects.get(repo_id=obj.id, uid=request.user.uid)
         except RepoUser.DoesNotExist:

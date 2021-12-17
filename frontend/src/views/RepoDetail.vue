@@ -5,8 +5,7 @@
                 <div class="head-box" />
                 <div class="box-container">
                     <RepoDetailInfo
-                        :is-admin="isAdmin" :apply="apply" :repo="repo"
-                        @reloadApply="loadApply" @handleCurrentChange="handleCurrentChange" @reloadRepoInfo="loadRepoInfo"
+                        :is-admin="isAdmin" :repo="repo" @reloadRepoInfo="loadRepoInfo"
                     />
                 </div>
                 <div class="content-box">
@@ -96,17 +95,6 @@
     }
     onMounted(loadDocs)
 
-    const apply = ref({
-        data: [],
-        paginator: {
-            page: 1,
-            count: 0
-        }
-    })
-    const handleCurrentChange = () => {
-        apply.value.paginator.page++
-        loadApply()
-    }
     const isAdmin = computed(() => {
         for (const i in repo.value.admins) {
             if (repo.value.admins[i].uid === user.value.uid) {
@@ -114,19 +102,6 @@
             }
         }
         return false
-    })
-    const loadApply = () => {
-        http.get(
-            '/repo/manage/' + repo_id + '/list_apply/?page=' + apply.value.paginator.page
-        ).then(res => {
-            apply.value.data = res.data.results
-            apply.value.paginator.count = res.data.count
-        })
-    }
-    watch(isAdmin, newVal => {
-        if (newVal) {
-            loadApply()
-        }
     })
 </script>
 

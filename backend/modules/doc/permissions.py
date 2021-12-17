@@ -34,6 +34,18 @@ def check_doc_privacy(obj, uid):
     raise PermissionDenied()
 
 
+def is_manager(uid, repo_id):
+    try:
+        RepoUser.objects.get(
+            Q(repo_id=repo_id)
+            & Q(uid=uid)
+            & Q(u_type__in=[UserTypeChoices.ADMIN, UserTypeChoices.OWNER])
+        )
+        return True
+    except RepoUser.DoesNotExist:
+        return False
+
+
 class DocManagePermission(BasePermission):
     """
     文章管理权限
@@ -48,6 +60,10 @@ class DocManagePermission(BasePermission):
         return True
 
     def has_object_permission(self, request, view, obj):
+        if request.user.is_superuser:
+            return True
+        if is_manager(request.user.uid, obj.repo_id):
+            return True
         if obj.creator == request.user.uid:
             return True
         if view.action in ["partial_update", "retrieve"]:
@@ -73,6 +89,10 @@ class DocCommonPermission(BasePermission):
         return True
 
     def has_object_permission(self, request, view, obj):
+        if request.user.is_superuser:
+            return True
+        if is_manager(request.user.uid, obj.repo_id):
+            return True
         check_repo_user_or_public(obj.repo_id, request.user.uid)
         check_doc_privacy(obj, request.user.uid)
         return True

@@ -124,7 +124,26 @@ const zh = {
     docManage: '文章管理',
     repoManage: '库管理',
     alreadyChangeLangTo: '已切换到',
-    changeLangFailed: '后端语言切换失败'
+    changeLangFailed: '后端语言切换失败',
+    AdminTab: '知镜',
+    chooseRepo: '选择库',
+    memberManage: '成员管理',
+    owner: '拥有者',
+    visitor: '访客',
+    remove: '移除',
+    changeUType: '切换类型',
+    removeSuccess: '移除成功',
+    passApply: '通过申请',
+    rejectApply: '拒绝申请',
+    Member: '成员',
+    Admin: '管理员',
+    userType: '用户类型',
+    username: '用户名',
+    author: '作者',
+    titleSearchKey: '标题关键字',
+    changeAuthor: '修改作者',
+    toPrivate: '转私有',
+    toDraft: '转草稿'
 }
 
 export default zh

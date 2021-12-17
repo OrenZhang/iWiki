@@ -15,7 +15,7 @@
                             </h2>
                         </router-link>
                         <el-menu :default-active="activeIndex" :router="true" mode="horizontal" :ellipsis="false">
-                            <el-menu-item v-for="item in menu" :key="item.index" :route="item.route" :index="item.index">
+                            <el-menu-item v-for="item in menu" v-show="!item.disabled" :key="item.index" :route="item.route" :index="item.index">
                                 {{ item.name }}
                             </el-menu-item>
                         </el-menu>
@@ -108,30 +108,55 @@
             route: {
                 name: 'Home'
             },
-            index: 'home'
+            index: 'home',
+            disabled: false
         },
         {
             name: t('Repo'),
             route: {
                 name: 'Repo'
             },
-            index: 'repo'
+            index: 'repo',
+            disabled: false
         },
         {
             name: t('User'),
             route: {
                 name: 'Self'
             },
-            index: 'user'
+            index: 'user',
+            disabled: false
         },
         {
             name: t('New'),
             route: {
                 name: 'Publish'
             },
-            index: 'publish'
+            index: 'publish',
+            disabled: false
+        },
+        {
+            name: t('AdminTab'),
+            route: {
+                name: 'Admin'
+            },
+            index: 'admin',
+            disabled: computed(() => !isManager.value)
         }
     ])
+
+    // 管理员检测
+    const isManager = ref(false)
+    const checkManager = () => {
+        http.get(
+            '/account/user_info/is_manager/'
+        ).then(res => {
+            if (res.result && res.data) {
+                isManager.value = true
+            }
+        })
+    }
+    checkManager()
 
     // 路由匹配
     const route = useRoute()

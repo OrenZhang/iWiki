@@ -124,7 +124,26 @@ const en = {
     docManage: 'Doc',
     repoManage: 'Repo',
     alreadyChangeLangTo: 'Change to ',
-    changeLangFailed: 'Change Language Failed'
+    changeLangFailed: 'Change Language Failed',
+    AdminTab: 'Admin',
+    chooseRepo: 'Choose Repo',
+    memberManage: 'Member',
+    owner: 'Owner',
+    visitor: 'Visitor',
+    remove: 'Remove',
+    changeUType: 'ChangeType',
+    removeSuccess: 'Remove Success',
+    passApply: 'PassApply',
+    rejectApply: 'RejectApply',
+    Member: 'Member',
+    Admin: 'Admin',
+    userType: 'User Type',
+    username: 'Username',
+    author: 'Author',
+    titleSearchKey: 'Title Search',
+    changeAuthor: 'ChangeAuthor',
+    toPrivate: 'ToPrivate',
+    toDraft: 'ToDraft'
 }
 
 export default en

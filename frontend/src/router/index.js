@@ -43,6 +43,11 @@ const routes = [
         component: () => import('../views/RepoDetail.vue')
     },
     {
+        path: '/admin',
+        name: 'Admin',
+        component: () => import('../views/Admin.vue')
+    },
+    {
         path: '/:pathMatch(.*)*',
         name: '404',
         component: () => import('../components/ErrorPage.vue')

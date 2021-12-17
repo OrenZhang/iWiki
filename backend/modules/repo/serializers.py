@@ -44,3 +44,11 @@ class RepoListSerializer(serializers.ModelSerializer):
 
     def get_create_at(self, obj):
         return obj.create_at.strftime("%Y-%m-%d")
+
+
+class RepoUserSerializer(serializers.ModelSerializer):
+    username = serializers.CharField()
+
+    class Meta:
+        model = RepoUser
+        fields = "__all__"

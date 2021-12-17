@@ -1,0 +1,51 @@
+.head-box {
+    background: url("https://cdn.wallpaperhub.app/cloudcache/f/c/8/1/6/7/fc8167ee67ba181fe0fa6bbe04598358a38e28a1.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 30vh;
+    min-height: 240px;
+    max-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-position: center;
+    font-size: 32px;
+    color: white;
+    letter-spacing: 4px;
+    font-weight: bold;
+}
+
+.admin-header-select {
+    width: 240px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.admin-header-select :deep(.el-select-v2__wrapper) {
+    border: unset;
+}
+
+.admin-container-box {
+    box-sizing: border-box;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.admin-container-box .el-aside .el-menu {
+    height: 100%;
+}
+
+.admin-container-box .el-aside .el-menu :deep(.el-menu-item) {
+    height: 48px;
+    line-height: 48px;
+}
+
+.admin-container-box .el-aside .el-menu :deep(.el-menu-item.is-active) {
+    background: #79bbff;
+    color: white;
+}
+
+.admin-container-box .el-main {
+    padding: 20px;
+}

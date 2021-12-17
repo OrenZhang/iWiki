@@ -187,6 +187,18 @@ class UserInfoView(GenericViewSet):
         cache.set(cache_key, serializer.data, 86400)
         return Response(serializer.data)
 
+    @action(detail=False, methods=["GET"])
+    def is_manager(self, request, *args, **kwargs):
+        if request.user.is_superuser:
+            return Response(True)
+        repo_user = RepoUser.objects.filter(
+            Q(uid=request.user.uid)
+            & Q(u_type__in=[UserTypeChoices.ADMIN, UserTypeChoices.OWNER])
+        )
+        if repo_user.exists():
+            return Response(True)
+        return Response(False)
+
 
 class LoginCheckView(GenericViewSet):
     """登录检验"""

@@ -5,15 +5,17 @@ from django.db import transaction, IntegrityError
 from django.db.models import Q
 from django.utils.translation import gettext as _
 from django.utils.translation import ngettext
+from rest_framework import mixins
 from rest_framework.decorators import action
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework.viewsets import GenericViewSet
 
-from constents import UserTypeChoices
+from constents import UserTypeChoices, DocAvailableChoices
 from modules.account.serializers import UserInfoSerializer
 from modules.cel.tasks import export_all_docs
 from modules.doc.models import Doc
+from modules.doc.serializers import DocListSerializer
 from modules.repo.models import Repo, RepoUser
 from modules.repo.permissions import RepoAdminPermission
 from modules.repo.serializers import (
@@ -21,6 +23,7 @@ from modules.repo.serializers import (
     RepoApplyDealSerializer,
     RepoListSerializer,
     RepoCommonSerializer,
+    RepoUserSerializer,
 )
 from utils.exceptions import OperationError, UserNotExist, Error404, ThrottledError
 from utils.paginations import NumPagination, RepoListNumPagination
@@ -28,7 +31,13 @@ from utils.paginations import NumPagination, RepoListNumPagination
 USER_MODEL = get_user_model()
 
 
-class RepoView(ModelViewSet):
+class RepoView(
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
+    GenericViewSet,
+):
     """仓库管理入口"""
 
     queryset = Repo.objects.filter(is_deleted=False)
@@ -103,6 +112,84 @@ class RepoView(ModelViewSet):
         export_all_docs.delay(instance.id, request.user.uid)
         return Response()
 
+    @action(detail=False, methods=["GET"])
+    def load_repo(self, request, *args, **kwargs):
+        if request.user.is_superuser:
+            repos = Repo.objects.filter(is_deleted=False)
+        else:
+            repo_ids = RepoUser.objects.filter(
+                Q(uid=request.user.uid)
+                & Q(u_type__in=[UserTypeChoices.ADMIN, UserTypeChoices.OWNER])
+            ).values("repo_id")
+            repos = Repo.objects.filter(id__in=repo_ids, is_deleted=False)
+        serializer = self.get_serializer(repos, many=True)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=["GET"])
+    def load_user(self, request, *args, **kwargs):
+        instance = self.get_object()
+        sql = (
+            "SELECT au.username, ru.* "
+            "FROM `auth_user` au "
+            "JOIN `repo_user` ru ON au.uid = ru.uid "
+            "WHERE ru.repo_id = {} "
+            "AND au.username like %s "
+        ).format(instance.id)
+        search_key = request.GET.get("searchKey")
+        search_key = f"%%{search_key}%%" if search_key else "%%"
+        repo_users = RepoUser.objects.raw(sql, [search_key])
+        queryset = self.paginate_queryset(repo_users)
+        serializer = RepoUserSerializer(queryset, many=True)
+        return self.get_paginated_response(serializer.data)
+
+    @action(detail=True, methods=["POST"])
+    def remove_user(self, request, *args, **kwargs):
+        instance = self.get_object()
+        uid = request.data.get("uid")
+        RepoUser.objects.filter(repo_id=instance.id, uid=uid).delete()
+        return Response()
+
+    @action(detail=True, methods=["POST"])
+    def change_u_type(self, request, *args, **kwargs):
+        instance = self.get_object()
+        uid = request.data.get("uid")
+        u_type = request.data.get("uType")
+        try:
+            repo_user = RepoUser.objects.get(repo_id=instance.id, uid=uid)
+        except RepoUser.DoesNotExist:
+            raise OperationError()
+        if repo_user.u_type == UserTypeChoices.OWNER:
+            raise OperationError()
+        repo_user.u_type = u_type
+        repo_user.save()
+        return Response()
+
+    @action(detail=True, methods=["GET"])
+    def load_doc(self, request, *args, **kwargs):
+        instance = self.get_object()
+        sql = (
+            "SELECT dd.*, au.username 'creator_name' "
+            "FROM `auth_user` au "
+            "JOIN `doc_doc` dd ON dd.creator=au.uid "
+            "WHERE NOT dd.is_deleted AND dd.is_publish AND dd.available='{}' "
+            "AND dd.repo_id = {} "
+            "AND dd.title like %s "
+            "ORDER BY dd.id DESC ;"
+        ).format(DocAvailableChoices.PUBLIC, instance.id)
+        search_key = request.GET.get("searchKey")
+        search_key = f"%%{search_key}%%" if search_key else "%%"
+        docs = Doc.objects.raw(sql, [search_key])
+        queryset = self.paginate_queryset(docs)
+        serializer = DocListSerializer(queryset, many=True)
+        return self.get_paginated_response(serializer.data)
+
+    @action(detail=True, methods=["DELETE"])
+    def delete_doc(self, request, *args, **kwargs):
+        instance = self.get_object()
+        doc_id = request.data.get("docID", "")
+        Doc.objects.filter(id=doc_id, repo_id=instance.id).update(is_deleted=True)
+        return Response()
+
 
 class RepoCommonView(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     """仓库常规入口"""
@@ -148,20 +235,17 @@ class RepoCommonView(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     @action(detail=False, methods=["GET"])
     def with_user(self, request, *args, **kwargs):
         search_key = request.GET.get("searchKey")
+        search_key = f"%%{search_key}%%" if search_key else "%%"
         sql = (
             "SELECT rr.*, au.username creator_name, ru.u_type member_type "
             "FROM `repo_repo` rr "
             "LEFT JOIN `auth_user` au ON au.uid = rr.creator "
             "LEFT JOIN `repo_user` ru ON ru.repo_id = rr.id AND ru.uid = %s "
             "WHERE NOT rr.is_deleted "
-            "{} "
+            "AND rr.name like %s "
             "ORDER BY rr.id;"
         )
-        if search_key:
-            sql = sql.format("AND rr.name like '%%{}%%'".format(search_key))
-        else:
-            sql = sql.format("")
-        repos = Repo.objects.raw(sql, [request.user.uid])
+        repos = Repo.objects.raw(sql, [request.user.uid, search_key])
         page = RepoListNumPagination()
         queryset = page.paginate_queryset(repos, request, self)
         serializer = RepoListSerializer(queryset, many=True)

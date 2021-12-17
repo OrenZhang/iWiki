@@ -13,11 +13,6 @@
                 </el-link>
             </div>
             <div>
-                <el-link v-show="isAdmin" :underline="false" @click="applyDrawer = true">
-                    <el-tag size="small" style="margin-left: 10px;">
-                        {{ $t('manageRepo') }}
-                    </el-tag>
-                </el-link>
                 <el-link v-show="!isMember" :underline="false" @click="showApplyConfirm">
                     <el-tag size="small" style="margin-left: 10px;">
                         {{ $t('applyRepo') }}
@@ -59,35 +54,6 @@
                 </template>
             </div>
         </div>
-        <el-drawer
-            v-model="applyDrawer"
-            custom-class="admin-dialog"
-            direction="rtl">
-            <h4>{{ $t('memberApplyInfo') }}</h4>
-            <el-table :data="apply.data" border size="medium">
-                <el-table-column prop="username" :label="$t('Username')" />
-                <el-table-column width="100" label="$t('Operation')">
-                    <template #default="scope">
-                        <el-button type="text" size="small" @click="dealApply(scope.row, true)">
-                            {{ $t('pass') }}
-                        </el-button>
-                        <el-button type="text" size="small" @click="dealApply(scope.row, false)">
-                            {{ $t('reject') }}
-                        </el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <div style="display: flex; align-items: center; justify-content: center; margin-top: 20px;">
-                <el-pagination
-                    layout="prev, pager, next"
-                    :total="apply.paginator.count" :current-page="apply.paginator.page"
-                    @current-change="handleCurrentChange"
-                />
-            </div>
-            <el-button type="danger" size="small" style="float: right; margin-top: 20px;" @click="showDeleteConfirm">
-                {{ $t('deleteRepo') }}
-            </el-button>
-        </el-drawer>
     </div>
 </template>
 
@@ -120,52 +86,11 @@
         isAdmin: {
             type: Boolean,
             default: false
-        },
-        apply: {
-            type: Object,
-            default: {
-                data: [],
-                paginator: {
-                    page: 1,
-                    count: 0
-                }
-            }
         }
     })
 
-    const applyDrawer = ref(false)
-
-    const dealApply = (row, status) => {
-        http.post(
-            '/repo/manage/' + props.repo.id + '/deal_apply/',
-            {
-                status: status,
-                uid: row.uid
-            }
-        ).then(() => {
-            emits('reloadApply')
-        })
-    }
-
     const handleCurrentChange = (page) => {
         emits('handleCurrentChange', page)
-    }
-
-    const showDeleteConfirm = () => {
-        const content = t('deleteRepoMsg', { name: props.repo.name })
-        ElMessageBox.alert(content, t('deleteConfirm'), {
-            confirmButtonText: t('deleteConfirmed'),
-            confirmButtonClass: 'el-button--danger',
-            callback: (action) => {
-                if (action === 'confirm') {
-                    http.delete(
-                        '/repo/manage/' + props.repo.id + '/'
-                    ).then(() => {
-                        router.push({ name: 'Repo' })
-                    })
-                }
-            },
-        })
     }
 
     const changeRepoType = () => {

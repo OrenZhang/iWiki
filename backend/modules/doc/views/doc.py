@@ -48,12 +48,14 @@ class DocManageView(ModelViewSet):
             "JOIN `repo_repo` r ON d.repo_id=r.id "
             "JOIN `auth_user` au ON au.uid=d.creator "
             "WHERE d.creator=%s AND NOT d.is_deleted "
-            "{search_key} {is_publish} {available} "
+            "AND d.title like %s "
+            "{is_publish} "
+            "{available} "
             "ORDER BY d.id DESC;"
         )
         # 标题关键字搜索
         search_key = request.GET.get("searchKey", "")
-        search_key = f"AND d.title like '%%{search_key}%%'" if search_key else ""
+        search_key = f"%%{search_key}%%" if search_key else "%%"
         # 发布状态搜索
         is_publish = request.GET.get("isPublish", "")
         if is_publish and is_publish == "True":
@@ -71,10 +73,8 @@ class DocManageView(ModelViewSet):
         else:
             available = ""
         # SQL
-        sql = sql.format(
-            search_key=search_key, available=available, is_publish=is_publish
-        )
-        self.queryset = self.queryset.raw(sql, [request.user.uid])
+        sql = sql.format(available=available, is_publish=is_publish)
+        self.queryset = self.queryset.raw(sql, [request.user.uid, search_key])
         return super().list(request, *args, **kwargs)
 
     def create(self, request, *args, **kwargs):
@@ -166,16 +166,13 @@ class DocCommonView(GenericViewSet):
             "WHERE NOT d.`is_deleted` AND d.`is_publish` "
             "AND d.repo_id = %s "
             "AND (d.available = %s OR d.creator = %s) "
-            "{} "
+            "AND d.title like %s "
             "ORDER BY d.id DESC"
         )
         search_key = request.GET.get("searchKey")
-        if search_key:
-            sql = sql.format(f"AND d.title like '%%{search_key}%%'")
-        else:
-            sql = sql.format("")
+        search_key = f"%%{search_key}%%" if search_key else "%%"
         queryset = self.queryset.raw(
-            sql, [repo_id, DocAvailableChoices.PUBLIC, request.user.uid]
+            sql, [repo_id, DocAvailableChoices.PUBLIC, request.user.uid, search_key]
         )
         page = self.paginate_queryset(queryset)
         serializer = self.get_serializer(page, many=True)
