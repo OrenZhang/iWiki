@@ -92,6 +92,7 @@
         const content = t('deleteDocConfirmContent', { title: row.title })
         ElMessageBox.alert(content, t('deleteConfirm'), {
             confirmButtonText: t('deleteConfirmed'),
+            confirmButtonClass: 'el-button--danger',
             callback: (action) => {
                 if (action === 'confirm') {
                     http({
