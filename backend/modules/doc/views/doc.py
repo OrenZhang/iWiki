@@ -284,7 +284,9 @@ class DocPublicView(GenericViewSet):
             raise UserNotExist()
         # 共同仓库 的 公开文章
         union_repo_ids = RepoUser.objects.filter(uid=request.user.uid).values("repo_id")
-        docs = self.queryset.filter(creator=user.uid, repo_id__in=union_repo_ids)
+        docs = self.queryset.filter(
+            creator=user.uid, repo_id__in=union_repo_ids
+        ).order_by("-id")
         page = NumPagination()
         queryset = page.paginate_queryset(docs, request, self)
         serializer = DocListSerializer(queryset, many=True)
