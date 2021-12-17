@@ -143,7 +143,10 @@ const zh = {
     titleSearchKey: '标题关键字',
     changeAuthor: '修改作者',
     toPrivate: '转私有',
-    toDraft: '转草稿'
+    toDraft: '转草稿',
+    removeMemberMsg: '确认移除成员 {name} 吗？',
+    removeConfirm: '移除确认',
+    removeConfirmed: '确认移除'
 }
 
 export default zh

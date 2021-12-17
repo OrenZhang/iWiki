@@ -143,7 +143,10 @@ const en = {
     titleSearchKey: 'Title Search',
     changeAuthor: 'ChangeAuthor',
     toPrivate: 'ToPrivate',
-    toDraft: 'ToDraft'
+    toDraft: 'ToDraft',
+    removeMemberMsg: 'Remove Member {name} ?',
+    removeConfirm: 'Remove Confirm',
+    removeConfirmed: 'Remove'
 }
 
 export default en

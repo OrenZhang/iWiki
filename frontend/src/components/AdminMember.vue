@@ -70,6 +70,7 @@
     import { useStore } from 'vuex'
     import message from '../utils/message'
     import { useI18n } from 'vue-i18n'
+    import { ElMessageBox } from 'element-plus'
     
     const { t } = useI18n()
     
@@ -136,14 +137,21 @@
     }
 
     const doRemoveMember = (row) => {
-        http.post(
-            '/repo/manage/' + props.repoId + '/remove_user/',
-            {
-                uid: row.uid
-            }
-        ).then(() => {
-            message(t('removeSuccess'))
-            loadMembers()
+        const content = t('removeMemberMsg', { name: row.username })
+        ElMessageBox.alert(content, t('removeConfirm'), {
+            confirmButtonText: t('removeConfirmed'),
+            callback: (action) => {
+                if (action === 'confirm') {
+                    http.post(
+                        '/repo/manage/' + props.repoId + '/remove_user/',
+                        {
+                            uid: row.uid
+                        }
+                    ).then(() => {
+                        loadMembers()
+                    })
+                }
+            },
         })
     }
 
