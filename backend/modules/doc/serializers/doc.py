@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from modules.doc.models import Doc
+from modules.doc.models import Doc, PinDoc
 from modules.repo.models import Repo
 
 USER_MODEL = get_user_model()
@@ -31,6 +31,7 @@ class DocCommonSerializer(serializers.ModelSerializer):
 class DocListSerializer(serializers.ModelSerializer):
     creator_name = serializers.CharField(read_only=True)
     repo_name = serializers.CharField(read_only=True)
+    pin_status = serializers.BooleanField(read_only=True)
 
     class Meta:
         model = Doc
@@ -41,3 +42,9 @@ class DocUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doc
         exclude = ["creator", "update_at"]
+
+
+class DocPinSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PinDoc
+        fields = ["doc_id", "pin_to", "operator", "in_use"]

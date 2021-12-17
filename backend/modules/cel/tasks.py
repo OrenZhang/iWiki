@@ -1,3 +1,4 @@
+import datetime
 import logging
 import os
 import shutil
@@ -17,6 +18,7 @@ from django.db import connection  # noqa
 
 from constents import DocAvailableChoices  # noqa
 from modules.account.models import User  # noqa
+from modules.doc.models import PinDoc  # noqa
 from modules.cel.serializers import StatisticSerializer  # noqa
 from modules.doc.models import Doc  # noqa
 from modules.repo.models import Repo  # noqa
@@ -34,7 +36,12 @@ app.conf.beat_schedule = {
         "task": "modules.cel.tasks.auto_update_active_index",
         "schedule": crontab(minute=0, hour=0),
         "args": (),
-    }
+    },
+    "auto_check_pin_doc": {
+        "task": "modules.cel.tasks.auto_check_pin_doc",
+        "schedule": crontab(minute="*"),
+        "args": (),
+    },
 }
 
 
@@ -54,6 +61,14 @@ def auto_update_active_index():
     data = serializer.data
     for info in data:
         logger.info(info)
+
+
+@app.task
+def auto_check_pin_doc():
+    now = datetime.datetime.now()
+    PinDoc.objects.filter(in_use=True, pin_to__lt=now).update(
+        in_use=False, operator=settings.ADMIN_USERNAME
+    )
 
 
 @app.task

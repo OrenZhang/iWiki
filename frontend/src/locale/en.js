@@ -149,7 +149,9 @@ const en = {
     removeConfirmed: 'Remove',
     deleteRepoConfirmMsg1: 'This action cannot be undone. This will permanently delete the repo, docs and associations.',
     deleteRepoConfirmMsg2: 'Please type ',
-    deleteRepoConfirmMsg3: ' to confirm.'
+    deleteRepoConfirmMsg3: ' to confirm.',
+    pinDoc: 'PinDoc',
+    unpinDoc: 'UnPinDoc'
 }
 
 export default en

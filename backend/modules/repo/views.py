@@ -13,8 +13,8 @@ from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from constents import UserTypeChoices, DocAvailableChoices
 from modules.account.serializers import UserInfoSerializer
 from modules.cel.tasks import export_all_docs
-from modules.doc.models import Doc
-from modules.doc.serializers import DocListSerializer
+from modules.doc.models import Doc, PinDoc
+from modules.doc.serializers import DocListSerializer, DocPinSerializer
 from modules.repo.models import Repo, RepoUser
 from modules.repo.permissions import RepoAdminPermission
 from modules.repo.serializers import (
@@ -24,7 +24,13 @@ from modules.repo.serializers import (
     RepoCommonSerializer,
     RepoUserSerializer,
 )
-from utils.exceptions import OperationError, UserNotExist, Error404, ThrottledError
+from utils.exceptions import (
+    OperationError,
+    UserNotExist,
+    Error404,
+    ThrottledError,
+    ParamsNotFound,
+)
 from utils.paginations import NumPagination, RepoListNumPagination
 
 USER_MODEL = get_user_model()
@@ -161,9 +167,10 @@ class RepoView(ModelViewSet):
     def load_doc(self, request, *args, **kwargs):
         instance = self.get_object()
         sql = (
-            "SELECT dd.*, au.username 'creator_name' "
+            "SELECT dd.*, au.username 'creator_name', IFNULL(dp.in_use, FALSE) 'pin_status' "
             "FROM `auth_user` au "
             "JOIN `doc_doc` dd ON dd.creator=au.uid "
+            "LEFT JOIN `doc_pin` dp ON dp.doc_id=dd.id AND dp.in_use "
             "WHERE NOT dd.is_deleted AND dd.is_publish AND dd.available='{}' "
             "AND dd.repo_id = {} "
             "AND dd.title like %s "
@@ -189,6 +196,54 @@ class RepoView(ModelViewSet):
             return Response(True)
         instance = self.get_object()
         return Response(instance.creator == request.user.uid)
+
+    @action(detail=True, methods=["POST"])
+    def pin_doc(self, request, *args, **kwargs):
+        data = request.data
+        data["operator"] = request.user.uid
+        serializer = DocPinSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        instance = self.get_object()
+        try:
+            Doc.objects.get(
+                id=data["doc_id"],
+                repo_id=instance.id,
+                is_deleted=False,
+                is_publish=True,
+                available=DocAvailableChoices.PUBLIC,
+            )
+        except Doc.DoesNotExist:
+            raise OperationError()
+        try:
+            pin = PinDoc.objects.get(doc_id=data["doc_id"], in_use=True)
+            pin.pin_to = data["pin_to"]
+            pin.operator = request.user.uid
+            pin.save()
+        except PinDoc.DoesNotExist:
+            serializer.save()
+        return Response()
+
+    @action(detail=True, methods=["POST"])
+    def unpin_doc(self, request, *args, **kwargs):
+        doc_id = request.data.get("doc_id")
+        if not doc_id:
+            raise ParamsNotFound()
+        instance = self.get_object()
+        try:
+            Doc.objects.get(
+                id=doc_id,
+                repo_id=instance.id,
+                is_deleted=False,
+                is_publish=True,
+                available=DocAvailableChoices.PUBLIC,
+            )
+        except Doc.DoesNotExist:
+            raise OperationError()
+        PinDoc.objects.filter(doc_id=doc_id, in_use=True).update(
+            in_use=False, operator=request.user.uid
+        )
+        return Response()
 
 
 class RepoCommonView(ListModelMixin, RetrieveModelMixin, GenericViewSet):

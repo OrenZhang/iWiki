@@ -95,3 +95,18 @@ class CommentVersion(CommentBase):
         db_table = f"{DB_PREFIX}comment_version"
         verbose_name = _("评论版本")
         verbose_name_plural = verbose_name
+
+
+class PinDoc(models.Model):
+    doc_id = models.BigIntegerField(_("文章ID"))
+    create_at = models.DateTimeField(_("创建时间"), auto_now_add=True)
+    pin_to = models.DateTimeField(_("置顶到期时间"))
+    operator = models.CharField(_("操作人"), max_length=SHORT_CHAR_LENGTH)
+    in_use = models.BooleanField(_("使用中"), default=True, db_index=True)
+
+    class Meta:
+        db_table = f"{DB_PREFIX}pin"
+        verbose_name = _("置顶文章")
+        verbose_name_plural = verbose_name
+        ordering = ["-id"]
+        index_together = [["doc_id", "in_use"]]

@@ -11,6 +11,7 @@
                 <div class="content-box">
                     <el-main>
                         <el-skeleton :rows="6" animated v-show="loading" />
+                        <PinDocList :repo-id="repo_id" v-show="!loading" />
                         <DocList :data="docs" @pageChange="handlePageChange" v-show="!loading" />
                     </el-main>
                     <el-aside>
@@ -36,6 +37,7 @@
     import DocSidebar from '../components/DocSidebar.vue'
     import DocList from '../components/DocList.vue'
     import { useStore } from 'vuex'
+    import PinDocList from '../components/PinDocList.vue'
 
     const store = useStore()
     const user = computed(() => store.state.user)

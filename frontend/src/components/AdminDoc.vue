@@ -16,13 +16,22 @@
         </div>
         <div class="admin-doc-main">
             <el-table :data="docs" stripe>
-                <el-table-column prop="title" :label="$t('title')" />
-                <el-table-column prop="creator_name" :label="$t('author')" />
-                <el-table-column prop="update_at" :label="$t('updateAt')" />
-                <el-table-column :label="$t('operation')">
+                <el-table-column :label="$t('title')">
                     <template #default="scope">
                         <el-link type="primary" :underline="false" @click="goTo(scope.row)">
-                            {{ $t('open') }}
+                            {{ scope.row.title }}
+                        </el-link>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="creator_name" :label="$t('author')" />
+                <el-table-column prop="update_at" :label="$t('updateAt')" />
+                <el-table-column :label="$t('operation')" width="300">
+                    <template #default="scope">
+                        <el-link type="primary" v-show="!scope.row.pin_status" :underline="false" @click="showPinDoc(scope.row)" style="margin-left: 10px">
+                            {{ $t('pinDoc') }}
+                        </el-link>
+                        <el-link type="primary" v-show="scope.row.pin_status" :underline="false" @click="unpinDoc(scope.row)" style="margin-left: 10px">
+                            {{ $t('unpinDoc') }}
                         </el-link>
                         <el-link type="primary" :underline="false" @click="changeDoc(scope.row, 'available', 'private')" style="margin-left: 10px">
                             {{ $t('toPrivate') }}
@@ -37,10 +46,30 @@
                 </el-table-column>
             </el-table>
         </div>
+        <el-dialog
+            v-model="pinDocDialog.visible"
+            :title="$t('pinDoc')"
+            width="360px">
+            <el-form>
+                <el-form-item label="置顶文章">
+                    <el-input v-model="pinDocDialog.data.title" disabled />
+                </el-form-item>
+                <el-form-item label="过期时间">
+                    <el-date-picker v-model="pinDocDialog.data.pin_to" type="datetime" :disabled-date="checkDate" style="width: 100%"/>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="pinDocDialog.visible = false">{{ $t('cancel') }}</el-button>
+                    <el-button type="primary" @click="doPinDoc">{{ $t('submit') }}</el-button>
+                </span>
+            </template>
+        </el-dialog>
     </div>
 </template>
 
 <script setup>
+    import moment from 'moment';
     import { onMounted, ref, watch } from 'vue'
     import http from '../api'
     import { ElMessageBox } from 'element-plus'
@@ -121,6 +150,48 @@
             '/doc/manage/' + row.id + '/',
             data
         ).finally(() => {
+            loadDoc()
+        })
+    }
+
+    const showPinDoc = (row) => {
+        pinDocDialog.value.data.title = row.title
+        pinDocDialog.value.data.doc_id = row.id
+        pinDocDialog.value.visible = true
+    }
+    const pinDocDialog = ref({
+        visible: false,
+        data: {
+            title: '',
+            doc_id: '',
+            pin_to: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
+        }
+    })
+    const checkDate = (date) => {
+        return date < new Date(new Date(new Date().toLocaleDateString()).getTime())
+    }
+    const unpinDoc = (row) => {
+        http.post(
+            '/repo/manage/' + props.repoId + '/unpin_doc/',
+            {
+                doc_id: row.id
+            }
+        ).then(() => {
+            loadDoc()
+        })
+    }
+    const doPinDoc = () => {
+        pinDocDialog.value.visible = false
+        const data = {
+            doc_id: pinDocDialog.value.data.doc_id,
+            pin_to: moment(pinDocDialog.value.data.pin_to).format('YYYY-MM-DD HH:mm:ss')
+        }
+        pinDocDialog.value.data.doc_id = ''
+        pinDocDialog.value.data.title = ''
+        http.post(
+            '/repo/manage/' + props.repoId + '/pin_doc/',
+            data
+        ).then(() => {
             loadDoc()
         })
     }

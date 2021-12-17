@@ -3,6 +3,7 @@ from modules.doc.serializers.doc import (
     DocVersionSerializer,
     DocListSerializer,
     DocCommonSerializer,
+    DocPinSerializer,
 )
 
 from modules.doc.serializers.comment import CommentCommonSerializer

@@ -192,6 +192,30 @@ class DocCommonView(GenericViewSet):
         except DocCollaborator.DoesNotExist:
             return Response({"result": False})
 
+    @action(detail=False, methods=["GET"])
+    def load_pin_doc(self, request, *args, **kwargs):
+        repo_id = request.GET.get("repo_id", None)
+        # 没有传参直接返回
+        if repo_id is None:
+            raise Error404()
+        # 传入参数获取对应仓库的文章
+        try:
+            Repo.objects.get(id=repo_id, is_deleted=False)
+        except Repo.DoesNotExist:
+            raise Error404()
+        sql = (
+            "SELECT distinct dd.*, au.username creator_name, rr.name repo_name "
+            "FROM `doc_doc` dd "
+            "JOIN `auth_user` au ON dd.creator=au.uid "
+            "JOIN `repo_repo` rr ON rr.id=dd.repo_id "
+            "JOIN `doc_pin` dp ON dp.doc_id=dd.id AND dp.in_use "
+            "WHERE rr.id=%s AND dd.available=%s "
+            "AND dd.is_publish AND NOT dd.is_deleted; "
+        )
+        queryset = Doc.objects.raw(sql, [repo_id, DocAvailableChoices.PUBLIC])
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
 
 class DocPublicView(GenericViewSet):
     """公共入口"""

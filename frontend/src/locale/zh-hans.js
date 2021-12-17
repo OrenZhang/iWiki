@@ -149,7 +149,9 @@ const zh = {
     removeConfirmed: '确认移除',
     deleteRepoConfirmMsg1: '这个操作不能被取消，将会永久删除库与所有文章及相关内容！',
     deleteRepoConfirmMsg2: '请输入 ',
-    deleteRepoConfirmMsg3: ' 来确认操作'
+    deleteRepoConfirmMsg3: ' 来确认操作',
+    pinDoc: '置顶',
+    unpinDoc: '解除置顶'
 }
 
 export default zh
