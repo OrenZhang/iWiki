@@ -195,7 +195,7 @@ class RepoView(
         if request.user.is_superuser:
             return Response(True)
         instance = self.get_object()
-        return Response(instance.creator == request.uesr.uid)
+        return Response(instance.creator == request.user.uid)
 
 
 class RepoCommonView(ListModelMixin, RetrieveModelMixin, GenericViewSet):
