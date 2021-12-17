@@ -82,7 +82,7 @@
             docs.value.paginator.page = res.data.page
         }, err => {
             message(err.data.msg, 'error')
-            if (err.data.msg.indexOf('页码有误') !== -1) {
+            if (err.data.code === 404) {
                 docs.value.paginator.page = 1
                 loadDocs()
             }

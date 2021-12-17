@@ -243,7 +243,7 @@
             commentsPaginator.value.count = res.data.count
             commentsPaginator.value.page = res.data.page
         }, err => {
-            if (err.data.msg.indexOf('页码有误') !== -1) {
+            if (err.data.code === 404) {
                 handlePageChange(1)
             }
         }).finally(() => {
