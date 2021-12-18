@@ -145,7 +145,9 @@ class RepoView(ModelViewSet):
     def remove_user(self, request, *args, **kwargs):
         instance = self.get_object()
         uid = request.data.get("uid")
-        RepoUser.objects.filter(repo_id=instance.id, uid=uid).delete()
+        RepoUser.objects.filter(
+            Q(repo_id=instance.id) & Q(uid=uid) & ~Q(u_type=UserTypeChoices.OWNER)
+        ).delete()
         return Response()
 
     @action(detail=True, methods=["POST"])
@@ -154,10 +156,10 @@ class RepoView(ModelViewSet):
         uid = request.data.get("uid")
         u_type = request.data.get("uType")
         try:
-            repo_user = RepoUser.objects.get(repo_id=instance.id, uid=uid)
+            repo_user = RepoUser.objects.get(
+                Q(repo_id=instance.id) & Q(uid=uid) & ~Q(u_type=UserTypeChoices.OWNER)
+            )
         except RepoUser.DoesNotExist:
-            raise OperationError()
-        if repo_user.u_type == UserTypeChoices.OWNER:
             raise OperationError()
         repo_user.u_type = u_type
         repo_user.save()
