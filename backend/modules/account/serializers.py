@@ -55,3 +55,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         if value.isdigit() and len(value) == VERIFY_CODE_LENGTH:
             return value
         raise serializers.ValidationError("验证码格式有误")
+
+
+class RePasswordSerializer(RegisterSerializer):
+    pass

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-18 12:39+0800\n"
+"POT-Creation-Date: 2021-12-18 18:07+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,6 +90,10 @@ msgstr "软删除"
 #: .\modules\account\models.py:42
 msgid "活跃指数"
 msgstr "活跃指数"
+
+#: .\modules\account\models.py:97
+msgid "手机号不匹配"
+msgstr "手机号不匹配"
 
 #: .\modules\account\serializers.py:20
 msgid "用户名格式有误"
@@ -319,7 +323,7 @@ msgstr "库名重复"
 msgid "该申请不存在"
 msgstr "该申请不存在"
 
-#: .\modules\repo\views.py:316
+#: .\modules\repo\views.py:320
 #, python-format
 msgid "已申请或加入%(name)s"
 msgid_plural "已申请或加入%(name)s"
@@ -349,9 +353,15 @@ msgstr "发送情况"
 msgid "发送时间"
 msgstr "发送时间"
 
-#: .\modules\sms\views.py:20
+#: .\modules\sms\views.py:20 .\modules\sms\views.py:36
 msgid "手机号为空或格式有误"
 msgstr "手机号为空或格式有误"
+
+#: .\modules\sms\views.py:38
+#, fuzzy
+#| msgid "用户名格式有误"
+msgid "用户名为空或格式有误"
+msgstr "用户名格式有误"
 
 #: .\utils\exceptions.py:59
 msgid "服务器异常，请联系管理员"

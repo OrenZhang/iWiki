@@ -6,6 +6,7 @@ const store = createStore({
         return {
             mainLoading: true,
             showLogin: false,
+            showEditUser: false,
             user: {
                 uid: '',
                 username: '',
@@ -23,16 +24,11 @@ const store = createStore({
         setUser (state, payload) {
             state.user = payload
         },
+        setEditUser (state, payload) {
+            state.showEditUser = payload
+        },
         setLogin (state, payload) {
             state.showLogin = payload
-            state.user = {
-                uid: '',
-                username: '',
-                avatar: '',
-                date_joined: '',
-                property: {},
-                auth: false
-            }
         }
     },
     actions: {

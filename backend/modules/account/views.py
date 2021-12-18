@@ -18,6 +18,7 @@ from modules.account.serializers import (
     LoginFormSerializer,
     UserInfoSerializer,
     RegisterSerializer,
+    RePasswordSerializer,
 )
 from modules.doc.models import Doc, Comment
 from modules.repo.models import RepoUser, Repo
@@ -198,6 +199,26 @@ class UserInfoView(GenericViewSet):
         if repo_user.exists():
             return Response(True)
         return Response(False)
+
+    @action(detail=False, methods=["POST"])
+    def re_pass(self, request, *args, **kwargs):
+        # 校验数据
+        serializer = RePasswordSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        # 校验验证码
+        data = serializer.validated_data
+        code = data["code"]
+        if not USER_MODEL.verify_code(data["phone"], code):
+            raise VerifyCodeFailed()
+        try:
+            user = USER_MODEL.objects.get(
+                username=data["username"], phone=data["phone"]
+            )
+            user.set_password(data["password"])
+            user.save()
+        except USER_MODEL.DoesNotExist:
+            raise UserNotExist()
+        return Response()
 
 
 class LoginCheckView(GenericViewSet):
