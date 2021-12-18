@@ -23,8 +23,11 @@
                         </div>
                     </div>
                 </el-scrollbar>
-                <el-scrollbar style="background: #ecf5ff">
-                    <div class="content" v-loading="loading" v-html="versionContent" />
+                <el-scrollbar style="margin-top: -18px">
+                    <div style="padding: 20px;" v-show="loading">
+                        <el-skeleton :rows="5" animated />
+                    </div>
+                    <div class="content" v-if="!loading" v-html="versionContent" />
                 </el-scrollbar>
             </el-main>
         </div>
@@ -41,7 +44,13 @@
 
     const loading = ref(true)
     const setLoading = (status) => {
-        loading.value = status
+        if (status) {
+            loading.value = true
+        } else {
+            setTimeout(() => {
+                loading.value = false
+            }, 600)
+        }
     }
 
     const closeVersion = () => {
@@ -55,6 +64,9 @@
         content: ''
     })
     const loadVersionData = () => {
+        versionData.value = {
+            content: ''
+        }
         setLoading(true)
         http.get(
             '/version/log/' + curVersion.value + '/'
