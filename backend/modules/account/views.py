@@ -211,7 +211,9 @@ class UserInfoView(GenericViewSet):
         if not USER_MODEL.verify_code(data["phone"], code):
             raise VerifyCodeFailed()
         try:
-            user = USER_MODEL.objects.get(username=data["username"], phone=data["phone"])
+            user = USER_MODEL.objects.get(
+                username=data["username"], phone=data["phone"]
+            )
             user.set_password(data["password"])
             user.save()
         except USER_MODEL.DoesNotExist:
