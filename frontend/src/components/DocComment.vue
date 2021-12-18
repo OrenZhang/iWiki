@@ -6,7 +6,7 @@
                 :left-toolbar="leftTool"
                 :right-toolbar="rightTool"
                 :toolbar="toolbar"
-                v-model="commentDialog.content" :mode="editType ? 'editable' : 'edit'" placeholder="内容" height="200px"
+                v-model="commentDialog.content" :mode="editType ? 'editable' : 'edit'" :placeholder="$t('content')" height="200px"
                 :disabled-menus="[]" @upload-image="handleUploadImage" @save="doAddNewComment" />
             <el-card v-for="comment in comments" :key="comment.id" class="comment-box">
                 <div class="card-header">

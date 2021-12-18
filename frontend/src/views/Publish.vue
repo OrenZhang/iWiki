@@ -14,7 +14,7 @@
             <v-md-editor
                 left-toolbar="undo redo | h bold italic strikethrough quote | ul ol table hr tip emoji todo-list | link image code"
                 :toolbar="toolbar"
-                v-model="docData.content" :mode="editType ? 'editable' : 'edit'" right-toolbar="fullscreen preview toc sync-scroll" placeholder="内容"
+                v-model="docData.content" :mode="editType ? 'editable' : 'edit'" right-toolbar="fullscreen preview toc sync-scroll" :placeholder="$t('content')"
                 :disabled-menus="[]" @image-click="imgClick" @upload-image="handleUploadImage" />
             <el-drawer
                 :size="480"
@@ -87,10 +87,10 @@
                                         <el-link v-if="scope.row.type === undefined" type="danger" @click="removeCol(scope.row)">
                                             {{ $t('delete') }}
                                         </el-link>
-                                        <el-link v-else-if="scope.row.type === 'add'" type="primary" @click="addCol()">
+                                        <el-link v-else-if="scope.row.type === 'add'" :disabled="hasUnSaveCol" type="primary" @click="addCol()">
                                             {{ $t('add') }}
                                         </el-link>
-                                        <el-link v-else-if="scope.row.type === 'edit'" type="primary" @click="doAddCol(scope.row)">
+                                        <el-link v-else-if="scope.row.type === 'edit'" type="primary" @click="doAddCol()">
                                             {{ $t('save') }}
                                         </el-link>
                                     </template>
@@ -404,13 +404,23 @@
         const length = collaborators.value.length
         collaborators.value.splice(length - 1, 0, { username: '', uid: '', type: 'edit' })
     }
+    const hasUnSaveCol = computed(() => {
+        for (const item of collaborators.value) {
+            if (item.type === 'edit') {
+                return true
+            }
+        }
+        return false
+    })
     const doAddCol = () => {
         http.post(
             '/doc/manage/' + docID.value + '/add_collaborator/',
             {
                 uid: newUID.value
             }
-        ).then(() => {}, err => {
+        ).then(() => {
+            newUID.value = ''
+        }, err => {
             message(err.data.msg, 'error')
         }).finally(() => {
             loadCol()
