@@ -3,7 +3,7 @@ import zh from './zh-hans'
 import en from './en'
 
 const i18n = createI18n({
-    locale: sessionStorage.getItem('locale') === 'en' ? 'en' : 'zh',
+    locale: localStorage.getItem('locale') === 'en' ? 'en' : 'zh',
     fallbackLocale: 'zh',
     messages: {
         zh,
