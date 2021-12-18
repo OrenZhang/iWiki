@@ -47,6 +47,7 @@ class COSClient(object):
             log.response = resp
             log.save()
             url = "{}/{}".format(settings.COS_DOMAIN, full_path)
+            logger.info("Upload File Success %s", url)
             result = True
         except IntegrityError:
             return self.upload(filename, file)
