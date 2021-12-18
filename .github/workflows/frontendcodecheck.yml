@@ -1,0 +1,23 @@
+name: Code Check
+
+on:
+    push:
+        branches: [ master ]
+    pull_request:
+        branches: [ master ]
+
+jobs:
+    build:
+
+        runs-on: ubuntu-latest
+
+        steps:
+            -   uses: actions/checkout@v2
+            -   name: Frontend - Install Packages
+                run: |
+                    cd frontend
+                    yarn global add eslint --registry=https://mirrors.cloud.tencent.com/pypi/simple
+            -   name: Frontend - Run ESLint
+                run: |
+                    cd frontend
+                    eslint --ext .js,.vue
