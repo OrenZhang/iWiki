@@ -1,4 +1,5 @@
 import datetime
+import os
 import random
 import time
 import uuid
@@ -65,3 +66,10 @@ def model_to_dict(instance, fields=None, exclude=None):
             continue
         data[f.name] = field_handler(f.value_from_object(instance))
     return data
+
+
+def getenv_or_raise(key):
+    val = os.getenv(key)
+    if val is None:
+        raise Exception(f"Env Not Set, Key [{key}]")
+    return val
