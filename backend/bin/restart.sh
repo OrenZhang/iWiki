@@ -15,6 +15,9 @@ echo [$(date "+%Y-%m-%d %H:%M:%S")] "Pull Latest Branch"
 git reset --hard HEAD
 git pull origin master
 echo ""
+echo "Git Now At"
+git log --oneline | head -n 1
+echo ""
 sleep 2
 
 # 安装依赖
