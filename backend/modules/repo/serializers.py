@@ -6,6 +6,8 @@ from modules.repo.models import Repo, RepoUser
 
 
 class RepoSerializer(serializers.ModelSerializer):
+    """库"""
+
     id = serializers.CharField(read_only=True)
     name = serializers.CharField(max_length=SHORT_CHAR_LENGTH)
 
@@ -22,18 +24,24 @@ class RepoSerializer(serializers.ModelSerializer):
 
 
 class RepoCommonSerializer(serializers.ModelSerializer):
+    """库"""
+
     class Meta:
         model = Repo
         fields = ["id", "name", "r_type", "creator"]
 
 
 class RepoApplyDealSerializer(serializers.ModelSerializer):
+    """申请库"""
+
     class Meta:
         model = RepoUser
         fields = ["uid"]
 
 
 class RepoListSerializer(serializers.ModelSerializer):
+    """库列表"""
+
     create_at = serializers.SerializerMethodField()
     creator_name = serializers.CharField()
     member_type = serializers.CharField()
@@ -47,6 +55,8 @@ class RepoListSerializer(serializers.ModelSerializer):
 
 
 class RepoUserSerializer(serializers.ModelSerializer):
+    """库成员"""
+
     username = serializers.CharField()
 
     class Meta:

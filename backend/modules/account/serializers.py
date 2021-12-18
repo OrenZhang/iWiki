@@ -13,6 +13,8 @@ USER_MODEL = get_user_model()
 
 
 class LoginFormSerializer(serializers.Serializer):
+    """登录表单"""
+
     username = serializers.CharField(
         min_length=USERNAME_MIN_LENGTH,
         max_length=SHORT_CHAR_LENGTH,
@@ -36,12 +38,16 @@ class LoginFormSerializer(serializers.Serializer):
 
 
 class UserInfoSerializer(serializers.ModelSerializer):
+    """用户信息"""
+
     class Meta:
         model = USER_MODEL
         fields = ["username", "uid", "date_joined", "avatar", "active_index"]
 
 
 class RegisterSerializer(serializers.ModelSerializer):
+    """用户注册"""
+
     username = serializers.CharField(max_length=SHORT_CHAR_LENGTH)
     code = serializers.CharField(
         min_length=VERIFY_CODE_LENGTH, max_length=VERIFY_CODE_LENGTH
@@ -58,4 +64,6 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class RePasswordSerializer(RegisterSerializer):
+    """重置密码"""
+
     pass

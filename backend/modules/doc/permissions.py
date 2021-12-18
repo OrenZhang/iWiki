@@ -60,12 +60,14 @@ class DocManagePermission(BasePermission):
         return True
 
     def has_object_permission(self, request, view, obj):
-        if request.user.is_superuser:
+        # 超管/库管理/创建者 授权
+        if (
+            obj.creator == request.user.uid
+            or request.user.is_superuser
+            or is_manager(request.user.uid, obj.repo_id)
+        ):
             return True
-        if is_manager(request.user.uid, obj.repo_id):
-            return True
-        if obj.creator == request.user.uid:
-            return True
+        # 协作者 获取/更新 授权
         if view.action in ["partial_update", "retrieve"]:
             try:
                 DocCollaborator.objects.get(doc_id=obj.id, uid=request.user.uid)
@@ -90,8 +92,6 @@ class DocCommonPermission(BasePermission):
 
     def has_object_permission(self, request, view, obj):
         if request.user.is_superuser:
-            return True
-        if is_manager(request.user.uid, obj.repo_id):
             return True
         check_repo_user_or_public(obj.repo_id, request.user.uid)
         check_doc_privacy(obj, request.user.uid)

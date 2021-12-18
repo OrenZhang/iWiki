@@ -16,6 +16,8 @@ def attachments_default():
 
 
 class DocBase(models.Model):
+    """文章基准"""
+
     repo_id = models.BigIntegerField(_("仓库id"), db_index=True)
     available = models.CharField(
         _("可见范围"),
@@ -36,6 +38,8 @@ class DocBase(models.Model):
 
 
 class Doc(DocBase):
+    """文章"""
+
     repo_id = models.BigIntegerField(_("仓库id"), db_index=True)
 
     class Meta:
@@ -46,6 +50,8 @@ class Doc(DocBase):
 
 
 class DocVersion(DocBase):
+    """文章版本"""
+
     version_id = models.BigAutoField(_("版本id"), primary_key=True)
     id = models.BigIntegerField("id")
 
@@ -56,6 +62,8 @@ class DocVersion(DocBase):
 
 
 class DocCollaborator(models.Model):
+    """文章协作者"""
+
     doc_id = models.BigIntegerField(_("文章ID"))
     uid = models.CharField(_("协作人ID"), max_length=SHORT_CHAR_LENGTH)
     add_at = models.DateTimeField(_("添加时间"), auto_now_add=True)
@@ -68,6 +76,8 @@ class DocCollaborator(models.Model):
 
 
 class CommentBase(models.Model):
+    """评论基准"""
+
     doc_id = models.BigIntegerField(_("文档id"), db_index=True)
     reply_to = models.BigIntegerField(_("父级评论"), null=True, blank=True)
     content = models.TextField(_("内容"))
@@ -80,6 +90,8 @@ class CommentBase(models.Model):
 
 
 class Comment(CommentBase):
+    """评论"""
+
     class Meta:
         db_table = f"{DB_PREFIX}comment"
         verbose_name = _("评论")
@@ -88,6 +100,8 @@ class Comment(CommentBase):
 
 
 class CommentVersion(CommentBase):
+    """评论版本"""
+
     version_id = models.BigAutoField(_("版本id"), primary_key=True)
     id = models.BigIntegerField("id")
 
@@ -98,6 +112,8 @@ class CommentVersion(CommentBase):
 
 
 class PinDoc(models.Model):
+    """置顶文章"""
+
     doc_id = models.BigIntegerField(_("文章ID"))
     create_at = models.DateTimeField(_("创建时间"), auto_now_add=True)
     pin_to = models.DateTimeField(_("置顶到期时间"))

@@ -46,6 +46,7 @@ class RepoView(ModelViewSet):
     ]
 
     def create(self, request, *args, **kwargs):
+        """创建仓库"""
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         with transaction.atomic():
@@ -54,6 +55,7 @@ class RepoView(ModelViewSet):
         return Response(serializer.data)
 
     def destroy(self, request, *args, **kwargs):
+        """删除仓库"""
         instance = self.get_object()
         with transaction.atomic():
             instance.pages_delete()
@@ -64,6 +66,7 @@ class RepoView(ModelViewSet):
 
     @action(detail=True, methods=["GET"])
     def list_apply(self, request, *args, **kwargs):
+        """申请人"""
         instance = self.get_object()
         applicant_ids = RepoUser.objects.filter(
             repo_id=instance.id, u_type=UserTypeChoices.VISITOR
@@ -81,6 +84,7 @@ class RepoView(ModelViewSet):
 
     @action(detail=True, methods=["POST"])
     def deal_apply(self, request, *args, **kwargs):
+        """处理申请"""
         instance = self.get_object()
         try:
             repo_user = RepoUser.objects.get(
@@ -100,6 +104,7 @@ class RepoView(ModelViewSet):
 
     @action(detail=True, methods=["POST"])
     def export_docs(self, request, *args, **kwargs):
+        """导出文章"""
         instance = self.get_object()
         # 检验是否有执行中任务
         cache_key = "ExportAllDocs:{}:{}".format(instance.id, request.user.uid)
@@ -113,8 +118,11 @@ class RepoView(ModelViewSet):
 
     @action(detail=False, methods=["GET"])
     def load_repo(self, request, *args, **kwargs):
+        """显示有权限库"""
+        # 超管显示全部
         if request.user.is_superuser:
             repos = Repo.objects.filter(is_deleted=False)
+        # 显示管理的库
         else:
             repo_ids = RepoUser.objects.filter(
                 Q(uid=request.user.uid)
@@ -126,6 +134,7 @@ class RepoView(ModelViewSet):
 
     @action(detail=True, methods=["GET"])
     def load_user(self, request, *args, **kwargs):
+        """库内所有用户"""
         instance = self.get_object()
         sql = (
             "SELECT au.username, ru.* "
@@ -143,6 +152,7 @@ class RepoView(ModelViewSet):
 
     @action(detail=True, methods=["POST"])
     def remove_user(self, request, *args, **kwargs):
+        """移除用户"""
         instance = self.get_object()
         uid = request.data.get("uid")
         RepoUser.objects.filter(
@@ -152,23 +162,20 @@ class RepoView(ModelViewSet):
 
     @action(detail=True, methods=["POST"])
     def change_u_type(self, request, *args, **kwargs):
+        """切换用户类型"""
         instance = self.get_object()
         uid = request.data.get("uid")
         u_type = request.data.get("uType")
         if u_type == UserTypeChoices.OWNER:
             raise OperationError()
-        try:
-            repo_user = RepoUser.objects.get(
-                Q(repo_id=instance.id) & Q(uid=uid) & ~Q(u_type=UserTypeChoices.OWNER)
-            )
-        except RepoUser.DoesNotExist:
-            raise OperationError()
-        repo_user.u_type = u_type
-        repo_user.save()
+        RepoUser.objects.filter(
+            Q(repo_id=instance.id) & Q(uid=uid) & ~Q(u_type=UserTypeChoices.OWNER)
+        ).update(u_type=u_type)
         return Response()
 
     @action(detail=True, methods=["GET"])
     def load_doc(self, request, *args, **kwargs):
+        """展示文章"""
         instance = self.get_object()
         sql = (
             "SELECT dd.*, au.username 'creator_name', IFNULL(dp.in_use, FALSE) 'pin_status' "
@@ -189,6 +196,7 @@ class RepoView(ModelViewSet):
 
     @action(detail=True, methods=["DELETE"])
     def delete_doc(self, request, *args, **kwargs):
+        """删除文章"""
         instance = self.get_object()
         doc_id = request.data.get("docID", "")
         Doc.objects.filter(id=doc_id, repo_id=instance.id).update(is_deleted=True)
@@ -196,6 +204,7 @@ class RepoView(ModelViewSet):
 
     @action(detail=True, methods=["GET"])
     def is_owner(self, request, *args, **kwargs):
+        """检测是否为仓库拥有者"""
         if request.user.is_superuser:
             return Response(True)
         instance = self.get_object()
@@ -203,6 +212,7 @@ class RepoView(ModelViewSet):
 
     @action(detail=True, methods=["POST"])
     def pin_doc(self, request, *args, **kwargs):
+        """置顶文章"""
         data = request.data
         data["operator"] = request.user.uid
         serializer = DocPinSerializer(data=data)
@@ -230,6 +240,7 @@ class RepoView(ModelViewSet):
 
     @action(detail=True, methods=["POST"])
     def unpin_doc(self, request, *args, **kwargs):
+        """取消置顶"""
         doc_id = request.data.get("doc_id")
         if not doc_id:
             raise ParamsNotFound()
@@ -258,6 +269,7 @@ class RepoCommonView(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     pagination_class = None
 
     def get_users(self, repo_id, u_types):
+        """获取成员"""
         repo_users = RepoUser.objects.filter(
             repo_id=repo_id, u_type__in=u_types
         ).values_list("uid", flat=True)
@@ -284,6 +296,7 @@ class RepoCommonView(ListModelMixin, RetrieveModelMixin, GenericViewSet):
         return Response(data)
 
     def list(self, request, *args, **kwargs):
+        """获取自己的库"""
         repo_ids = RepoUser.objects.filter(
             Q(uid=request.user.uid) & ~Q(u_type=UserTypeChoices.VISITOR)
         ).values_list("repo_id", flat=True)
@@ -293,6 +306,7 @@ class RepoCommonView(ListModelMixin, RetrieveModelMixin, GenericViewSet):
 
     @action(detail=False, methods=["GET"])
     def with_user(self, request, *args, **kwargs):
+        """获取包含成员状态的库列表"""
         search_key = request.GET.get("searchKey")
         search_key = f"%%{search_key}%%" if search_key else "%%"
         sql = (
@@ -311,6 +325,7 @@ class RepoCommonView(ListModelMixin, RetrieveModelMixin, GenericViewSet):
         return page.get_paginated_response(serializer.data)
 
     def apply_for_repo(self, repo, uid):
+        """申请库"""
         try:
             RepoUser.objects.create(
                 repo_id=repo.id, uid=uid, u_type=UserTypeChoices.VISITOR
@@ -322,12 +337,14 @@ class RepoCommonView(ListModelMixin, RetrieveModelMixin, GenericViewSet):
 
     @action(detail=True, methods=["POST"])
     def apply(self, request, *args, **kwargs):
+        """申请库"""
         instance = self.get_object()
         self.apply_for_repo(instance, request.user.uid)
         return Response()
 
     @action(detail=False, methods=["POST"])
     def apply_by_doc(self, request, *args, **kwargs):
+        """通过文章申请库"""
         try:
             doc = Doc.objects.get(id=request.data.get("doc_id", ""))
             repo = Repo.objects.get(id=doc.repo_id)
@@ -338,16 +355,16 @@ class RepoCommonView(ListModelMixin, RetrieveModelMixin, GenericViewSet):
 
     @action(detail=True, methods=["POST"])
     def exit(self, request, *args, **kwargs):
+        """退出库"""
         instance = self.get_object()
         if instance.name == settings.DEFAULT_REPO_NAME:
             raise OperationError()
         try:
-            repo_user = RepoUser.objects.get(
+            RepoUser.objects.filter(
                 Q(repo_id=instance.id)
                 & Q(uid=request.user.uid)
                 & ~Q(u_type=UserTypeChoices.OWNER)
-            )
-            repo_user.delete()
+            ).delete()
             return Response()
         except RepoUser.DoesNotExist:
             raise OperationError()

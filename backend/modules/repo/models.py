@@ -15,6 +15,8 @@ DB_PREFIX = "repo_"
 
 
 class Repo(models.Model):
+    """库"""
+
     name = models.CharField(_("库名"), max_length=SHORT_CHAR_LENGTH, unique=True)
     r_type = models.CharField(
         _("类型"),
@@ -32,6 +34,7 @@ class Repo(models.Model):
         verbose_name_plural = verbose_name
 
     def pages_transfer(self, destination=settings.DEFAULT_REPO_NAME):
+        """迁移文章"""
         try:
             default_repo = self.objects.get(name=destination, is_deleted=False)
         except self.DoesNotExist:
@@ -39,12 +42,15 @@ class Repo(models.Model):
         Doc.objects.filter(repo_id=self.id).update(repo_id=default_repo.id)
 
     def pages_delete(self):
+        """删除文章"""
         Doc.objects.filter(repo_id=self.id).update(is_deleted=True)
 
     def members_delete(self):
+        """删除成员"""
         RepoUser.objects.filter(repo_id=self.id).delete()
 
     def set_owner(self, uid, operator=None):
+        """设置所有者"""
         repo_user, _ = RepoUser.objects.get_or_create(repo_id=self.id, uid=uid)
         repo_user.u_type = UserTypeChoices.OWNER
         repo_user.operator = operator
@@ -52,6 +58,8 @@ class Repo(models.Model):
 
 
 class RepoUser(models.Model):
+    """库用户"""
+
     repo_id = models.BigIntegerField(_("库id"))
     uid = models.CharField(_("用户id"), max_length=SHORT_CHAR_LENGTH)
     u_type = models.CharField(

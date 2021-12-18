@@ -7,6 +7,8 @@ DB_PREFIX = "cos_"
 
 
 class UploadLog(models.Model):
+    """上传日志"""
+
     name = models.CharField(_("文件名"), max_length=MAX_CHAR_LENGTH)
     path = models.CharField(_("文件Path"), max_length=MEDIUM_CHAR_LENGTH, unique=True)
     response = models.JSONField(_("相应参数"), default=dict)
