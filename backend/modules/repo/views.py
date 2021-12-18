@@ -155,6 +155,8 @@ class RepoView(ModelViewSet):
         instance = self.get_object()
         uid = request.data.get("uid")
         u_type = request.data.get("uType")
+        if u_type == UserTypeChoices.OWNER:
+            raise OperationError()
         try:
             repo_user = RepoUser.objects.get(
                 Q(repo_id=instance.id) & Q(uid=uid) & ~Q(u_type=UserTypeChoices.OWNER)
