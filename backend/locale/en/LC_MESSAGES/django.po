@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-17 12:34+0800\n"
+"POT-Creation-Date: 2021-12-18 12:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -96,7 +96,7 @@ msgid "用户名格式有误"
 msgstr "Incorrect username format"
 
 #: .\modules\account\serializers.py:21 .\modules\account\serializers.py:24
-#: .\modules\account\views.py:106 .\modules\doc\views\doc.py:280
+#: .\modules\account\views.py:106 .\modules\doc\views\doc.py:304
 msgid "用户名不能为空"
 msgstr "Username cannot be empty"
 
@@ -140,7 +140,7 @@ msgstr "File Path"
 msgid "相应参数"
 msgstr "Params"
 
-#: .\modules\cos\models.py:13
+#: .\modules\cos\models.py:13 .\modules\doc\models.py:104
 msgid "操作人"
 msgstr "Operator"
 
@@ -208,7 +208,7 @@ msgstr "Version ID"
 msgid "文档版本"
 msgstr "Doc Version"
 
-#: .\modules\doc\models.py:59
+#: .\modules\doc\models.py:59 .\modules\doc\models.py:101
 msgid "文章ID"
 msgstr "Doc ID"
 
@@ -240,11 +240,27 @@ msgstr "Comment"
 msgid "评论版本"
 msgstr "Comment Version"
 
+#: .\modules\doc\models.py:102 .\modules\repo\models.py:26
+msgid "创建时间"
+msgstr "Create At"
+
+#: .\modules\doc\models.py:103
+msgid "置顶到期时间"
+msgstr "Pin To"
+
+#: .\modules\doc\models.py:105
+msgid "使用中"
+msgstr "in use"
+
+#: .\modules\doc\models.py:109
+msgid "置顶文章"
+msgstr "Pin Doc"
+
 #: .\modules\doc\views\doc.py:127
 msgid "已添加该用户为协作者，请勿重复添加"
 msgstr "Duplicated Add"
 
-#: .\modules\doc\views\doc.py:304
+#: .\modules\doc\views\doc.py:330
 msgid "搜索关键字不能为空"
 msgstr "Search keyword cannot be empty"
 
@@ -267,10 +283,6 @@ msgstr "Repo Name"
 #: .\modules\repo\models.py:20
 msgid "类型"
 msgstr "Type"
-
-#: .\modules\repo\models.py:26
-msgid "创建时间"
-msgstr "Create At"
 
 #: .\modules\repo\models.py:31
 msgid "库"
@@ -304,11 +316,11 @@ msgstr "Repo Member"
 msgid "库名重复"
 msgstr "Duplicated RepoName"
 
-#: .\modules\repo\views.py:93
+#: .\modules\repo\views.py:92
 msgid "该申请不存在"
 msgstr "Not Found"
 
-#: .\modules\repo\views.py:261
+#: .\modules\repo\views.py:316
 #, python-format
 msgid "已申请或加入%(name)s"
 msgid_plural "已申请或加入%(name)s"
