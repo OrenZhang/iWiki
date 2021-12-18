@@ -4,8 +4,15 @@
             <span style="letter-spacing: 20px">iWik</span>i
         </div>
         <div v-loading="mainLoading" v-if="screenCheck" class="app-container">
-            <Login v-show="showLogin" />
-            <EditUserInfo v-show="showEditUser" />
+            <transition name="el-fade-in">
+                <Login v-if="showLogin" />
+            </transition>
+            <transition name="el-fade-in">
+                <EditUserInfo v-if="showEditUser" />
+            </transition>
+            <transition name="el-fade-in">
+                <VersionLog v-if="showVersion" />
+            </transition>
             <el-header class="app-header" height="61px">
                 <div class="el-menu-demo">
                     <div class="menu">
@@ -22,7 +29,10 @@
                         </el-menu>
                     </div>
                     <div class="right-bar">
-                        <el-link :underline="false" type="warning" class="locale" @click="toggleLang">
+                        <el-link :underline="false" class="version" @click="showVersionTab">
+                            <i class="far fa-question-circle" />
+                        </el-link>
+                        <el-link :underline="false" type="primary" class="locale" @click="toggleLang">
                             <i class="fad fa-globe" />
                             <span>{{ curLocaleName }}</span>
                         </el-link>
@@ -54,6 +64,7 @@
     import en from 'element-plus/es/locale/lang/en'
     import http from './api'
     import EditUserInfo from './components/EditUserInfo.vue'
+    import VersionLog from './components/VersionLog.vue'
 
     // 国际化
     const { ctx } = getCurrentInstance()
@@ -86,6 +97,10 @@
         })
     }
 
+    const showVersionTab = () => {
+        store.commit('setVersion', true)
+    }
+
     // 宽度控制
     const width = ref(window.innerWidth)
     const height = ref(window.innerHeight)
@@ -103,6 +118,7 @@
     const mainLoading = computed(() => store.state.mainLoading)
     const showLogin = computed(() => store.state.showLogin)
     const showEditUser = computed(() => store.state.showEditUser)
+    const showVersion = computed(() => store.state.showVersion)
 
     // 菜单
     const menu = ref([

@@ -163,7 +163,9 @@ const en = {
     newPhone: 'NewPhone',
     newPassword: 'Password',
     updatePassword: 'Change Password',
-    changeSuccess: 'Success'
+    changeSuccess: 'Success',
+    versionLog: 'Version Log',
+    curVersion: 'Current'
 }
 
 export default en
