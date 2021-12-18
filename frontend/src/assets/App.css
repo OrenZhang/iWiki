@@ -187,6 +187,11 @@ ul {
     border: unset!important;
 }
 
+.el-menu-demo .version .el-link--inner {
+    margin-right: 20px;
+    margin-top: 2px;
+}
+
 .small-screen {
     background-image: linear-gradient(45deg, #f5f7fa 0%, #c3cfe2 100%);
     width: 100%;

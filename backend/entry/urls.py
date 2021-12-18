@@ -22,4 +22,5 @@ urlpatterns = [
     path("repo/", include("modules.repo.urls")),
     path("doc/", include("modules.doc.urls")),
     path("cos/", include("modules.cos.urls")),
+    path("version/", include("modules.version.urls")),
 ]

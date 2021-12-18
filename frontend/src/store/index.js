@@ -7,6 +7,7 @@ const store = createStore({
             mainLoading: true,
             showLogin: false,
             showEditUser: false,
+            showVersion: false,
             user: {
                 uid: '',
                 username: '',
@@ -29,6 +30,9 @@ const store = createStore({
         },
         setLogin (state, payload) {
             state.showLogin = payload
+        },
+        setVersion (state, payload) {
+            state.showVersion = payload
         }
     },
     actions: {
