@@ -14,7 +14,7 @@
         "@kangc/v-md-editor": "^2.3.12",
         "axios": "^0.24.0",
         "codemirror": "^5.64.0",
-        "element-plus": "^1.2.0-beta.3",
+        "element-plus": "^1.2.0-beta.6",
         "markdown-it-sub": "^1.0.0",
         "markdown-it-sup": "^1.0.0",
         "moment": "^2.29.1",
@@ -30,7 +30,6 @@
         "eslint": "^8.2.0",
         "eslint-plugin-vue": "^8.0.3",
         "standard": "^16.0.4",
-        "unplugin-vue-components": "^0.17.2",
         "vite": "^2.6.4",
         "vite-plugin-prismjs": "^0.0.8",
         "vue-eslint-parser": "^8.0.1"
