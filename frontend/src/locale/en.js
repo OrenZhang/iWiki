@@ -151,7 +151,8 @@ const en = {
     deleteRepoConfirmMsg2: 'Please type ',
     deleteRepoConfirmMsg3: ' to confirm.',
     pinDoc: 'PinDoc',
-    unpinDoc: 'UnPinDoc'
+    unpinDoc: 'UnPinDoc',
+    pinTo: 'PinTo'
 }
 
 export default en

@@ -151,7 +151,8 @@ const zh = {
     deleteRepoConfirmMsg2: '请输入 ',
     deleteRepoConfirmMsg3: ' 来确认操作',
     pinDoc: '置顶',
-    unpinDoc: '解除置顶'
+    unpinDoc: '解除置顶',
+    pinTo: '置顶到'
 }
 
 export default zh

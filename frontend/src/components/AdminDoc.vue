@@ -50,11 +50,11 @@
             v-model="pinDocDialog.visible"
             :title="$t('pinDoc')"
             width="360px">
-            <el-form>
-                <el-form-item label="置顶文章">
+            <el-form label-width="80px" label-position="left">
+                <el-form-item :label="$t('title')">
                     <el-input v-model="pinDocDialog.data.title" disabled />
                 </el-form-item>
-                <el-form-item label="过期时间">
+                <el-form-item :label="$t('pinTo')">
                     <el-date-picker v-model="pinDocDialog.data.pin_to" type="datetime" :disabled-date="checkDate" style="width: 100%"/>
                 </el-form-item>
             </el-form>
