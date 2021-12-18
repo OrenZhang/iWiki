@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 
 from constents import SHORT_CHAR_LENGTH, PHONE_NUMBER_CHAR_LENGTH, VERIFY_CODE_LENGTH
 from utils.client import get_client_by_user
-from utils.exceptions import PhoneNumberExist
+from utils.exceptions import PhoneNumberExist, OperationError
 from utils.tools import simple_uniq_id, num_code
 
 DB_PREFIX = "auth_"
@@ -62,13 +62,7 @@ class User(AbstractBaseUser, PermissionsMixin):
             return uid
 
     @staticmethod
-    def send_code(phone):
-        # 校验参数
-        if not phone:
-            return False
-        phones = User.objects.filter(phone=phone)
-        if phones.exists():
-            raise PhoneNumberExist()
+    def do_send_code(phone):
         # 初始化键值
         code_key = f"phone_verify_code:{phone}"
         send_key = f"phone_verify_code_send:{phone}"
@@ -84,6 +78,24 @@ class User(AbstractBaseUser, PermissionsMixin):
             cache.set(send_key, code, timeout=settings.SMS_PHONE_CODE_PERIOD)
             cache.set(code_key, code, timeout=settings.SMS_PHONE_CODE_EX)
         return result
+
+    @staticmethod
+    def send_code(phone):
+        # 校验参数
+        if not phone:
+            return False
+        phones = User.objects.filter(phone=phone)
+        if phones.exists():
+            raise PhoneNumberExist()
+        return User.do_send_code(phone)
+
+    def send_re_pass_code(self, phone):
+        # 校验参数
+        if not phone:
+            return False
+        if self.phone != phone:
+            raise OperationError(_("手机号不匹配"))
+        return self.do_send_code(phone)
 
     @staticmethod
     def verify_code(phone, code_input):

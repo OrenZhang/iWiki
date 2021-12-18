@@ -24,6 +24,9 @@
                     <el-link @click="store.commit('setLogin', false)">
                         {{ $t('exitLogin') }}
                     </el-link>
+                    <el-link class="edit-user" v-show="curTab === 'sign-in'" @click="showEdit">
+                        {{ $t('updatePassword') }}
+                    </el-link>
                 </el-footer>
             </el-main>
         </div>
@@ -55,6 +58,11 @@
                 return LoginForm
         }
     })
+
+    const showEdit = () => {
+        store.commit('setLogin', false)
+        store.commit('setEditUser', true)
+    }
 </script>
 
 <style scoped>

@@ -152,7 +152,18 @@ const en = {
     deleteRepoConfirmMsg3: ' to confirm.',
     pinDoc: 'PinDoc',
     unpinDoc: 'UnPinDoc',
-    pinTo: 'PinTo'
+    pinTo: 'PinTo',
+    updateUserInfo: 'Update User Info',
+    backToLogin: 'Back',
+    userInfoEdit: 'User Info Edit',
+    project: 'Project',
+    password: 'Password',
+    phone: 'Phone',
+    oldPhone: 'OldPhone',
+    newPhone: 'NewPhone',
+    newPassword: 'Password',
+    updatePassword: 'Change Password',
+    changeSuccess: 'Success'
 }
 
 export default en

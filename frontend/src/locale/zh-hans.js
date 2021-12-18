@@ -152,7 +152,18 @@ const zh = {
     deleteRepoConfirmMsg3: ' 来确认操作',
     pinDoc: '置顶',
     unpinDoc: '解除置顶',
-    pinTo: '置顶到'
+    pinTo: '置顶到',
+    updateUserInfo: '密码/手机号维护',
+    backToLogin: '返回登录',
+    userInfoEdit: '个人信息维护',
+    project: '项目',
+    password: '密码',
+    phone: '手机号',
+    oldPhone: '旧手机号',
+    newPhone: '新手机号',
+    newPassword: '新密码',
+    updatePassword: '更改密码',
+    changeSuccess: '修改成功'
 }
 
 export default zh

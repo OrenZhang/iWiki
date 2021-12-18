@@ -58,3 +58,11 @@
 .el-footer .el-link {
     color: #909399;
 }
+
+.edit-user {
+    margin-left: 10px;
+}
+
+.oneline-code-button-box :deep(.el-form-item__content) {
+    display: flex;
+}

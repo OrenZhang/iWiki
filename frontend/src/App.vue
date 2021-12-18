@@ -5,6 +5,7 @@
         </div>
         <div v-loading="mainLoading" v-if="screenCheck" class="app-container">
             <Login v-show="showLogin" />
+            <EditUserInfo v-show="showEditUser" />
             <el-header class="app-header" height="61px">
                 <div class="el-menu-demo">
                     <div class="menu">
@@ -52,6 +53,7 @@
     import zhCn from 'element-plus/es/locale/lang/zh-cn'
     import en from 'element-plus/es/locale/lang/en'
     import http from './api'
+    import EditUserInfo from './components/EditUserInfo.vue'
 
     // 国际化
     const { ctx } = getCurrentInstance()
@@ -100,6 +102,7 @@
     const user = computed(() => store.state.user)
     const mainLoading = computed(() => store.state.mainLoading)
     const showLogin = computed(() => store.state.showLogin)
+    const showEditUser = computed(() => store.state.showEditUser)
 
     // 菜单
     const menu = ref([
