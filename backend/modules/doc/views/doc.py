@@ -41,6 +41,7 @@ class DocManageView(ModelViewSet):
         return serializer.save()
 
     def list(self, request, *args, **kwargs):
+        """个人文章"""
         self.serializer_class = DocListSerializer
         # 获取个人的所有文章
         sql = (
@@ -78,6 +79,7 @@ class DocManageView(ModelViewSet):
         return super().list(request, *args, **kwargs)
 
     def create(self, request, *args, **kwargs):
+        """新建文章"""
         request.data["creator"] = request.user.uid
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -87,6 +89,7 @@ class DocManageView(ModelViewSet):
         return Response({"id": instance.id})
 
     def update(self, request, *args, **kwargs):
+        """更新文章"""
         partial = kwargs.pop("partial", False)
         instance = self.get_object()
         serializer = DocUpdateSerializer(instance, data=request.data, partial=partial)
@@ -97,6 +100,7 @@ class DocManageView(ModelViewSet):
         return Response({"id": instance.id})
 
     def destroy(self, request, *args, **kwargs):
+        """删除文章"""
         instance = self.get_object()
         instance.is_deleted = True
         instance.save()
@@ -104,6 +108,7 @@ class DocManageView(ModelViewSet):
 
     @action(detail=True, methods=["GET"])
     def list_collaborator(self, request, *args, **kwargs):
+        """获取协作者"""
         instance = self.get_object()
         sql = (
             "SELECT au.* "
@@ -117,6 +122,7 @@ class DocManageView(ModelViewSet):
 
     @action(detail=True, methods=["POST"])
     def add_collaborator(self, request, *args, **kwargs):
+        """增加协作者"""
         instance = self.get_object()
         uid = request.data.get("uid")
         if not uid or uid == request.user.uid:
@@ -129,6 +135,7 @@ class DocManageView(ModelViewSet):
 
     @action(detail=True, methods=["POST"])
     def remove_collaborator(self, request, *args, **kwargs):
+        """删除协作者"""
         instance = self.get_object()
         uid = request.data.get("uid")
         if not uid or uid == request.user.uid:
@@ -148,6 +155,7 @@ class DocCommonView(GenericViewSet):
     authentication_classes = [SessionAuthentication]
 
     def list(self, request, *args, **kwargs):
+        """获取仓库文章"""
         repo_id = request.GET.get("repo_id", None)
         # 没有传参直接返回
         if repo_id is None:
@@ -179,12 +187,14 @@ class DocCommonView(GenericViewSet):
         return self.get_paginated_response(serializer.data)
 
     def retrieve(self, request, *args, **kwargs):
+        """获取文章详情"""
         instance = self.get_object()
         serializer = DocCommonSerializer(instance)
         return Response(serializer.data)
 
     @action(detail=True, methods=["GET"])
     def is_collaborator(self, request, *args, **kwargs):
+        """判断是否是协作者"""
         instance = self.get_object()
         try:
             DocCollaborator.objects.get(doc_id=instance.id, uid=request.user.uid)
@@ -194,6 +204,7 @@ class DocCommonView(GenericViewSet):
 
     @action(detail=False, methods=["GET"])
     def load_pin_doc(self, request, *args, **kwargs):
+        """获取置顶文章"""
         repo_id = request.GET.get("repo_id", None)
         # 没有传参直接返回
         if repo_id is None:

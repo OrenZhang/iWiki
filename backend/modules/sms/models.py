@@ -7,6 +7,8 @@ DB_PREFIX = "sms_"
 
 
 class SMSLog(models.Model):
+    """短信日志"""
+
     phone = models.CharField(_("电话号码"), max_length=CHINA_PHONE_NUMBER_CHAR_LENGTH)
     template_id = models.CharField(_("模板ID"), max_length=SHORT_CHAR_LENGTH)
     template_params = models.JSONField(_("模板参数"), null=True, blank=True)

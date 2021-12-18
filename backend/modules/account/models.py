@@ -14,10 +14,14 @@ DB_PREFIX = "auth_"
 
 
 class UserManager(models.Manager):
+    """用户管理器"""
+
     def get_by_natural_key(self, username):
+        """通过用户名获取用户"""
         self.get(username=username)
 
     def create(self, **kwargs):
+        """创建用户"""
         obj = self.model(**kwargs)
         obj.uid = self.model.init_uid()
         obj.set_password(kwargs.get("password", None))
@@ -25,12 +29,15 @@ class UserManager(models.Manager):
         return obj
 
     def create_superuser(self, **kwargs):
+        """创建超级用户"""
         kwargs["is_superuser"] = True
         kwargs["is_staff"] = True
         return self.create(**kwargs)
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    """用户"""
+
     uid = models.CharField(_("用户ID"), primary_key=True, max_length=SHORT_CHAR_LENGTH)
     username = models.CharField(_("用户名"), max_length=SHORT_CHAR_LENGTH, unique=True)
     is_staff = models.BooleanField(_("访问后台"), default=False)
@@ -54,6 +61,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     @staticmethod
     def init_uid():
+        """初始化用户UID"""
         uid = simple_uniq_id(SHORT_CHAR_LENGTH)
         try:
             User.objects.get(uid=uid)
@@ -63,6 +71,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     @staticmethod
     def do_send_code(phone):
+        """发送验证码"""
         # 初始化键值
         code_key = f"phone_verify_code:{phone}"
         send_key = f"phone_verify_code_send:{phone}"
@@ -81,6 +90,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     @staticmethod
     def send_code(phone):
+        """发送注册验证码"""
         # 校验参数
         if not phone:
             return False
@@ -90,6 +100,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return User.do_send_code(phone)
 
     def send_re_pass_code(self, phone):
+        """发送重置密码验证码"""
         # 校验参数
         if not phone:
             return False
@@ -99,6 +110,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     @staticmethod
     def verify_code(phone, code_input):
+        """校验验证码"""
         code_key = f"phone_verify_code:{phone}"
         code = cache.get(code_key)
         if code is None:
@@ -110,6 +122,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class CustomAnonymousUser(AnonymousUser):
+    """匿名用户"""
+
     uid = ""
     username = ""
     avatar = None

@@ -7,12 +7,16 @@ USER_MODEL = get_user_model()
 
 
 class CommentCommonSerializer(serializers.ModelSerializer):
+    """评论"""
+
     class Meta:
         model = Comment
         fields = "__all__"
 
 
 class CommentListSerializer(serializers.ModelSerializer):
+    """评论列表"""
+
     username = serializers.SerializerMethodField()
     children = serializers.SerializerMethodField()
 

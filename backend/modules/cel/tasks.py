@@ -47,6 +47,7 @@ app.conf.beat_schedule = {
 
 @app.task
 def auto_update_active_index():
+    """自动更新用户活跃度"""
     sql_path = os.path.join(
         settings.BASE_DIR, "modules", "cel", "sql", "auto_update_active_index.sql"
     )
@@ -65,6 +66,7 @@ def auto_update_active_index():
 
 @app.task
 def auto_check_pin_doc():
+    """自动取消置顶到期的文章"""
     now = datetime.datetime.now()
     PinDoc.objects.filter(in_use=True, pin_to__lt=now).update(
         in_use=False, operator=settings.ADMIN_USERNAME
@@ -73,6 +75,7 @@ def auto_check_pin_doc():
 
 @app.task
 def export_all_docs(repo_id, uid):
+    """导出仓库所有文章"""
     client = get_client_by_user(uid)
     # 获取用户和库对象
     user = User.objects.get(uid=uid)

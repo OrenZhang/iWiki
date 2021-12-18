@@ -13,6 +13,8 @@ logger = logging.getLogger("cos")
 
 
 class COSClient(object):
+    """对象存储客户端"""
+
     def __init__(self, operator):
         self.operator = operator
         self.client = CosS3Client(
@@ -25,6 +27,7 @@ class COSClient(object):
         self.bucket = settings.COS_BUCKET
 
     def upload(self, filename, file):
+        """上传文件"""
         # 文件存储位置
         key = "upload/{date_path}/{random_path}".format(
             date_path=datetime.datetime.now().strftime("%Y%m/%d"),

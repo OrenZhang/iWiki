@@ -8,12 +8,16 @@ USER_MODEL = get_user_model()
 
 
 class DocVersionSerializer(serializers.ModelSerializer):
+    """文章版本"""
+
     class Meta:
         model = Doc
         fields = "__all__"
 
 
 class DocCommonSerializer(serializers.ModelSerializer):
+    """文章"""
+
     creator_name = serializers.SerializerMethodField()
     repo_name = serializers.SerializerMethodField()
 
@@ -29,6 +33,8 @@ class DocCommonSerializer(serializers.ModelSerializer):
 
 
 class DocListSerializer(serializers.ModelSerializer):
+    """文章列表"""
+
     creator_name = serializers.CharField(read_only=True)
     repo_name = serializers.CharField(read_only=True)
     pin_status = serializers.BooleanField(read_only=True)
@@ -39,12 +45,16 @@ class DocListSerializer(serializers.ModelSerializer):
 
 
 class DocUpdateSerializer(serializers.ModelSerializer):
+    """文章更新"""
+
     class Meta:
         model = Doc
         exclude = ["creator", "update_at"]
 
 
 class DocPinSerializer(serializers.ModelSerializer):
+    """文章置顶"""
+
     class Meta:
         model = PinDoc
         fields = ["doc_id", "pin_to", "operator", "in_use"]

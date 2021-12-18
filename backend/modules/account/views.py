@@ -42,6 +42,7 @@ class RegisterView(APIView):
     authentication_classes = [SessionAuthentication]
 
     def post(self, request, *args, **kwargs):
+        """用户注册"""
         # 校验数据
         serializer = RegisterSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -73,14 +74,18 @@ class LoginView(ThrottleAPIView):
     ]
 
     def post(self, request, *args, **kwargs):
+        """用户登录"""
+        # 校验表单
         form_serializer = LoginFormSerializer(data=request.data)
         form_serializer.is_valid(raise_exception=True)
+        # 尝试登录
         data = form_serializer.validated_data
         if data.get("username") == settings.ADMIN_USERNAME:
             raise OperationError()
         user = auth.authenticate(request, **data)
         if user is None:
             raise LoginFailed(_("登陆失败，用户名或密码错误"))
+        # session登录
         auth.login(request, user)
         serializer = UserInfoSerializer(request.user)
         return Response(serializer.data)
@@ -90,6 +95,7 @@ class LogoutView(APIView):
     """登出入口"""
 
     def get(self, request, *args, **kwargs):
+        """用户登出"""
         auth.logout(request)
         return Response()
 
@@ -102,9 +108,12 @@ class SearchView(GenericViewSet):
 
     @action(detail=False, methods=["POST"])
     def check_username(self, request, *args, **kwargs):
+        """校验用户名是否可用"""
+        # 获取参数
         username = request.data.get("username")
         if not username:
             raise ParamsNotFound(_("用户名不能为空"))
+        # 校验用户名
         try:
             USER_MODEL.objects.get(username=username)
             raise UsernameExist()
@@ -113,9 +122,12 @@ class SearchView(GenericViewSet):
 
     @action(detail=False, methods=["POST"])
     def search_user(self, request, *args, **kwargs):
+        """搜索用户"""
+        # 获取参数
         search_key = request.data.get("searchKey")
         if not search_key:
             return Response()
+        # 获取用户
         users = USER_MODEL.objects.filter(username__icontains=search_key)
         serializer = UserInfoSerializer(users, many=True)
         return Response(serializer.data)
@@ -128,10 +140,13 @@ class UserInfoView(GenericViewSet):
     authentication_classes = [SessionAuthentication]
 
     def get_statistic_info(self, uid, active_index):
+        """获取统计信息"""
+        # 获取缓存
         cache_key = f"UserInfoView:user_info:{uid}"
         cache_data = cache.get(cache_key)
         if cache_data:
             return cache_data
+        # 初始化数据
         data = {
             "repo_count": RepoUser.objects.filter(
                 Q(uid=uid) & ~Q(u_type=UserTypeChoices.VISITOR)
@@ -142,10 +157,12 @@ class UserInfoView(GenericViewSet):
             "doc_count": Doc.objects.filter(creator=uid, is_deleted=False).count(),
             "active_index": active_index,
         }
+        # 设置缓存
         cache.set(cache_key, data, 1800)
         return data
 
     def list(self, request, *args, **kwargs):
+        """用户信息"""
         # 基础信息
         serializer = UserInfoSerializer(request.user)
         data = serializer.data
@@ -165,6 +182,7 @@ class UserInfoView(GenericViewSet):
         return Response(resp_data)
 
     def retrieve(self, request, *args, **kwargs):
+        """用户信息"""
         username = kwargs.get("pk")
         try:
             user = USER_MODEL.objects.get(username=username)
@@ -177,6 +195,7 @@ class UserInfoView(GenericViewSet):
 
     @action(detail=False, methods=["GET"])
     def active_user(self, request, *args, **kwargs):
+        """用户活跃排行"""
         cache_key = f"{self.__class__.__name__}:{self.action}"
         cache_data = cache.get(cache_key)
         if cache_data:
@@ -190,8 +209,11 @@ class UserInfoView(GenericViewSet):
 
     @action(detail=False, methods=["GET"])
     def is_manager(self, request, *args, **kwargs):
+        """是否是任意库管理员"""
+        # 超管拥有权限
         if request.user.is_superuser:
             return Response(True)
+        # 库管理
         repo_user = RepoUser.objects.filter(
             Q(uid=request.user.uid)
             & Q(u_type__in=[UserTypeChoices.ADMIN, UserTypeChoices.OWNER])
@@ -202,6 +224,7 @@ class UserInfoView(GenericViewSet):
 
     @action(detail=False, methods=["POST"])
     def re_pass(self, request, *args, **kwargs):
+        """重置密码"""
         # 校验数据
         serializer = RePasswordSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -210,6 +233,7 @@ class UserInfoView(GenericViewSet):
         code = data["code"]
         if not USER_MODEL.verify_code(data["phone"], code):
             raise VerifyCodeFailed()
+        # 更新密码
         try:
             user = USER_MODEL.objects.get(
                 username=data["username"], phone=data["phone"]
