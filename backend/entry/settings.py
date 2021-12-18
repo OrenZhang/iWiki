@@ -9,30 +9,34 @@ from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 
 from utils.logs import get_logging_config_dict
+from utils.tools import getenv_or_raise
 
 # 目录
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # 环境配置
-with open(
-    os.path.join(BASE_DIR, "entry", "settings.json"), "r", encoding="utf-8"
-) as env_setting_file:
-    env_settings = json.loads(env_setting_file.read())
-    for key, val in env_settings.items():
-        os.environ[key] = val
+try:
+    with open(
+        os.path.join(BASE_DIR, "entry", "settings.json"), "r", encoding="utf-8"
+    ) as env_setting_file:
+        env_settings = json.loads(env_setting_file.read())
+        for key, val in env_settings.items():
+            os.environ[key] = val
+except FileNotFoundError:
+    pass
 
 # DEBUG
-DEBUG = True if os.getenv("DEBUG") == "True" else False
+DEBUG = True if os.getenv("DEBUG", "False") == "True" else False
 
 # APP_CODE & SECRET
-APP_CODE = os.getenv("APP_CODE")
-SECRET_KEY = os.getenv("APP_SECRET_KEY")
+APP_CODE = getenv_or_raise("APP_CODE")
+SECRET_KEY = getenv_or_raise("APP_SECRET_KEY")
 
 # 允许的host
-ALLOWED_HOSTS = [os.getenv("BACKEND_HOST")]
+ALLOWED_HOSTS = [getenv_or_raise("BACKEND_HOST")]
 CORS_ALLOW_CREDENTIALS = os.getenv("CORS_ALLOW_CREDENTIALS", True)
-CORS_ORIGIN_WHITELIST = [os.getenv("FRONTEND_URL")]
-CSRF_TRUSTED_ORIGINS = [os.getenv("FRONTEND_URL")]
+CORS_ORIGIN_WHITELIST = [getenv_or_raise("FRONTEND_URL")]
+CSRF_TRUSTED_ORIGINS = [getenv_or_raise("FRONTEND_URL")]
 
 # APPs
 INSTALLED_APPS = [
@@ -94,19 +98,19 @@ WSGI_APPLICATION = "entry.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": os.getenv("DB_NAME", APP_CODE),
-        "USER": os.getenv("DB_USER"),
-        "PASSWORD": os.getenv("DB_PASSWORD"),
-        "HOST": os.getenv("DB_HOST"),
-        "PORT": int(os.getenv("DB_PORT")),
+        "NAME": getenv_or_raise("DB_NAME"),
+        "USER": getenv_or_raise("DB_USER"),
+        "PASSWORD": getenv_or_raise("DB_PASSWORD"),
+        "HOST": os.getenv("DB_HOST", "127.0.0.1"),
+        "PORT": int(os.getenv("DB_PORT", 3306)),
         "OPTIONS": {"charset": "utf8mb4"},
     }
 }
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-REDIS_HOST = os.getenv("REDIS_HOST")
-REDIS_PORT = int(os.getenv("REDIS_PORT"))
-REDIS_PASSWORD = os.getenv("REDIS_PASSWORD")
-REDIS_DB = int(os.getenv("REDIS_DB"))
+REDIS_HOST = os.getenv("REDIS_HOST", "127.0.0.1")
+REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
+REDIS_PASSWORD = os.getenv("REDIS_PASSWORD", "")
+REDIS_DB = int(os.getenv("REDIS_DB", 0))
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
@@ -147,8 +151,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # 国际化
-LANGUAGE_CODE = os.getenv("DEFAULT_LANGUAGE")
-TIME_ZONE = os.getenv("DEFAULT_TIME_ZONE")
+LANGUAGE_CODE = os.getenv("DEFAULT_LANGUAGE", "zh-Hans")
+TIME_ZONE = os.getenv("DEFAULT_TIME_ZONE", "Asia/Shanghai")
 USE_I18N = True
 USE_L10N = True
 USE_TZ = False
@@ -192,29 +196,29 @@ REST_FRAMEWORK = {
 }
 
 # tencent cloud
-TCLOUD_SECRET_ID = os.getenv("TCLOUD_SECRET_ID")
-TCLOUD_SECRET_KEY = os.getenv("TCLOUD_SECRET_KEY")
+TCLOUD_SECRET_ID = getenv_or_raise("TCLOUD_SECRET_ID")
+TCLOUD_SECRET_KEY = getenv_or_raise("TCLOUD_SECRET_KEY")
 
 # sms
-SMS_APP_ID = os.getenv("SMS_APP_ID")
-SMS_SIGN_NAME = os.getenv("SMS_SIGN_NAME")
+SMS_APP_ID = getenv_or_raise("SMS_APP_ID")
+SMS_SIGN_NAME = getenv_or_raise("SMS_SIGN_NAME")
 SMS_SECRET_ID = TCLOUD_SECRET_ID
 SMS_SECRET_KEY = TCLOUD_SECRET_KEY
-SMS_PHONE_CODE_TID = os.getenv("SMS_PHONE_CODE_TID")
+SMS_PHONE_CODE_TID = getenv_or_raise("SMS_PHONE_CODE_TID")
 SMS_PHONE_CODE_EX = 120
 SMS_PHONE_CODE_PERIOD = 60
-SMS_REPO_EXPORT_FAIL_TID = os.getenv("SMS_REPO_EXPORT_FAIL_TID")
-SMS_REPO_EXPORT_SUCCESS_TID = os.getenv("SMS_REPO_EXPORT_SUCCESS_TID")
+SMS_REPO_EXPORT_FAIL_TID = getenv_or_raise("SMS_REPO_EXPORT_FAIL_TID")
+SMS_REPO_EXPORT_SUCCESS_TID = getenv_or_raise("SMS_REPO_EXPORT_SUCCESS_TID")
 
 # cos
 COS_SECRET_ID = TCLOUD_SECRET_ID
 COS_SECRET_KEY = TCLOUD_SECRET_KEY
-COS_REGION = os.getenv("COS_REGION")
-COS_BUCKET = os.getenv("COS_BUCKET")
+COS_REGION = getenv_or_raise("COS_REGION")
+COS_BUCKET = getenv_or_raise("COS_BUCKET")
 COS_RANDOM_PATH_LENGTH = 10
-COS_DOMAIN = os.getenv("COS_DOMAIN")
+COS_DOMAIN = getenv_or_raise("COS_DOMAIN")
 COS_MAX_FILE_SIZE = os.getenv("COS_MAX_FILE_SIZE", 120) * 1024 * 1024  # Bytes
 COS_MAX_AVATAR_SIZE = os.getenv("COS_MAX_AVATAR_SIZE", 2) * 1024 * 1024  # Bytes
 
 # init
-DEFAULT_REPO_NAME = os.getenv("DEFAULT_REPO_NAME")
+DEFAULT_REPO_NAME = getenv_or_raise("DEFAULT_REPO_NAME")
