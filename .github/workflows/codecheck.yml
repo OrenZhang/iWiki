@@ -19,8 +19,8 @@ jobs:
             -   name: Frontend - Install Packages
                 run: |
                     cd frontend
-                    yarn install
-                    yarn global add eslint
+                    yarn install --registry=https://mirrors.cloud.tencent.com/pypi/simple
+                    yarn global add eslint --registry=https://mirrors.cloud.tencent.com/pypi/simple
             -   name: Frontend - Run ESLint
                 run: |
                     cd frontend
