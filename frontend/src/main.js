@@ -41,7 +41,7 @@ VueMarkdownEditor.use(createMermaidPlugin())
 VueMarkdownEditor.use(createTodoListPlugin())
 VueMarkdownEditor.use(createLineNumbertPlugin())
 VueMarkdownEditor.use(createAlignPlugin())
-const userLocale = sessionStorage.getItem('locale')
+const userLocale = localStorage.getItem('locale')
 if (userLocale === 'en') {
     VueMarkdownEditor.lang.use('en-US', enUS)
 } else {

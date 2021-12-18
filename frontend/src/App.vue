@@ -56,17 +56,17 @@
     // 国际化
     const { ctx } = getCurrentInstance()
     const { t } = useI18n()
-    const userLocale = ref(sessionStorage.getItem('locale'))
+    const userLocale = ref(localStorage.getItem('locale'))
     const curLocaleName = computed(() => userLocale.value === 'en' ? 'English' : '简体中文')
     const locale = computed(() => userLocale.value === 'en' ? en : zhCn)
     const toggleLang = () => {
         if (userLocale.value === 'en') {
             userLocale.value = 'zh'
-            sessionStorage.setItem('locale', 'zh')
+            localStorage.setItem('locale', 'zh')
             changeBackendLang('zh-Hans')
         } else {
             userLocale.value = 'en'
-            sessionStorage.setItem('locale', 'en')
+            localStorage.setItem('locale', 'en')
             changeBackendLang('en')
         }
     }
