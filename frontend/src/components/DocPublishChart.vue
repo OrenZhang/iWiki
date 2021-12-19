@@ -5,13 +5,34 @@
 </template>
 
 <script setup>
-    import * as echarts from 'echarts'
+    import * as echarts from 'echarts/core'
+    import { LineChart } from 'echarts/charts'
+    import {
+        TitleComponent,
+        TooltipComponent,
+        GridComponent,
+        DatasetComponent,
+        TransformComponent
+    } from 'echarts/components'
+    import { LabelLayout, UniversalTransition } from 'echarts/features'
+    import { SVGRenderer } from 'echarts/renderers'
     import { onMounted, ref } from 'vue'
     import http from '../api'
 
+    echarts.use([
+        TitleComponent,
+        TooltipComponent,
+        GridComponent,
+        DatasetComponent,
+        TransformComponent,
+        LineChart,
+        LabelLayout,
+        UniversalTransition,
+        SVGRenderer
+    ])
+
     const loading = ref(true)
 
-    const myChart = ref(null)
     const initXY = (data) => {
         for (const item in data) {
             options.value.xAxis.data.push(item)
@@ -20,8 +41,8 @@
     }
     const initChart = (data) => {
         initXY(data)
-        myChart.value = echarts.init(document.getElementById('doc-publish-chart-main'))
-        myChart.value.setOption(options.value)
+        const myChart = echarts.init(document.getElementById('doc-publish-chart-main'), null, { renderer: 'svg' })
+        myChart.setOption(options.value)
         loading.value = false
     }
     const options = ref({
@@ -47,8 +68,7 @@
                     show: true,
                     precision: 0
                 },
-                axis: 'y',
-                precision: 1
+                axis: 'x'
             },
             backgroundColor: 'rgba(255, 255, 255, 0.8)'
         },
@@ -62,17 +82,14 @@
                 },
                 lineStyle: {
                     color: '#409eff',
-                    width: 0,
                     type: 'inherit'
                 },
-                showSymbol: true,
+                showSymbol: false,
                 label: {
-                    show: true,
+                    show: false,
                     position: 'top',
-                    textStyle: {
-                        color: '#909399',
-                        fontSize: 16
-                    }
+                    color: '#909399',
+                    fontSize: 16
                 }
             }
         ]
