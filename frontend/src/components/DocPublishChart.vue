@@ -54,12 +54,9 @@
             left: 'center'
         },
         xAxis: {
-            data: [],
-            boundaryGap: ['20%', '20%']
+            data: []
         },
-        yAxis: {
-            boundaryGap: ['20%', '20%']
-        },
+        yAxis: {},
         tooltip: {
             trigger: 'axis',
             axisPointer: {

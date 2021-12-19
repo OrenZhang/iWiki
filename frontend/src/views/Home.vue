@@ -31,7 +31,7 @@
                 </div>
                 <el-container class="next-container">
                     <el-main>
-                        <DocPublishChart v-if="!loading" />
+                        <DocPublishChart />
                         <el-skeleton :rows="6" animated v-show="loading" />
                         <DocList :data="docs" @pageChange="handlePageChange" v-show="!loading" />
                     </el-main>
