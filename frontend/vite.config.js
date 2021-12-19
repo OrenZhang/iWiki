@@ -37,13 +37,6 @@ export default defineConfig({
             }
     },
     build: {
-        rollupOptions: {
-            output: {
-                manualChunks (id) {
-                    return 'index'
-                }
-            }
-        },
         chunkSizeWarningLimit: 2000
     }
 })
