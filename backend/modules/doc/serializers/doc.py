@@ -58,3 +58,10 @@ class DocPinSerializer(serializers.ModelSerializer):
     class Meta:
         model = PinDoc
         fields = ["doc_id", "pin_to", "operator", "in_use"]
+
+
+class DocPublishChartSerializer(serializers.Serializer):
+    """文章发布统计图"""
+
+    date = serializers.CharField()
+    count = serializers.IntegerField()

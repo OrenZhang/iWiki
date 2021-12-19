@@ -1,7 +1,8 @@
+import datetime
+
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.db import transaction, IntegrityError
-from django.db.models import Count, Min
 from django.utils.translation import gettext as _
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import action
@@ -17,6 +18,7 @@ from modules.doc.serializers import (
     DocListSerializer,
     DocUpdateSerializer,
     DocVersionSerializer,
+    DocPublishChartSerializer,
 )
 from modules.repo.models import Repo, RepoUser
 from modules.repo.serializers import RepoSerializer
@@ -288,21 +290,17 @@ class DocPublicView(GenericViewSet):
         cache_data = cache.get(cache_key)
         if cache_data:
             return Response(cache_data)
-        last_repo_id = (
-            Doc.objects.filter(is_deleted=False)
-            .order_by("-id")[:100]
-            .aggregate(m=Min("id"))["m"]
+        sql = (
+            "SELECT rr.*, dd.repo_id, COUNT(1) 'count' "
+            "FROM `doc_doc` dd "
+            "JOIN (SELECT MIN(dd2.id) 'min_id' from `doc_doc` dd2 ORDER BY dd2.id DESC LIMIT 100) dd3 "
+            "JOIN `repo_repo` rr ON rr.id=dd.repo_id "
+            "WHERE dd.id>=dd3.min_id "
+            "GROUP BY dd.repo_id "
+            "ORDER BY count DESC "
+            "LIMIT 10"
         )
-        recent_docs = Doc.objects.filter(id__gte=last_repo_id)
-        hot_repos = recent_docs.values("repo_id").annotate(c=Count("repo_id"))
-        repo_id_count = {repo["c"]: repo["repo_id"] for repo in hot_repos}
-        repo_ids = []
-        for c in sorted(repo_id_count, reverse=True):
-            if len(repo_ids) <= 10:
-                repo_ids.append(repo_id_count[c])
-            else:
-                break
-        repos = Repo.objects.filter(id__in=repo_ids)
+        repos = Repo.objects.raw(sql)
         serializer = RepoSerializer(repos, many=True)
         cache.set(cache_key, serializer.data, 1800)
         return Response(serializer.data)
@@ -326,6 +324,27 @@ class DocPublicView(GenericViewSet):
         queryset = page.paginate_queryset(docs, request, self)
         serializer = DocListSerializer(queryset, many=True)
         return page.get_paginated_response(serializer.data)
+
+    @action(detail=False, methods=["GET"])
+    def recent_chart(self, request, *args, **kwargs):
+        """文章发布图表数据"""
+        cache_key = f"{self.__class__.__name__}:{self.action}"
+        cache_data = cache.get(cache_key)
+        if cache_data:
+            return Response(cache_data)
+        today = datetime.datetime.today()
+        last_day = today - datetime.timedelta(days=30)
+        sql = (
+            "SELECT dd.id, DATE_FORMAT(dd.update_at, \"%%m-%%d\") 'date', COUNT(1) 'count' "
+            "FROM `doc_doc` dd "
+            "WHERE dd.update_at>='{}' "
+            "GROUP BY DATE(dd.update_at); "
+        ).format(last_day)
+        docs_count = Doc.objects.raw(sql)
+        serializer = DocPublishChartSerializer(docs_count, many=True)
+        data = {item["date"]: item["count"] for item in serializer.data}
+        cache.set(cache_key, data, 1800)
+        return Response(data)
 
 
 class SearchDocView(ThrottleAPIView):
