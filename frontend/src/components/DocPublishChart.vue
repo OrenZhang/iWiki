@@ -41,7 +41,7 @@
     }
     const initChart = (data) => {
         initXY(data)
-        const myChart = echarts.init(document.getElementById('doc-publish-chart-main'), null,{ renderer: 'svg' })
+        const myChart = echarts.init(document.getElementById('doc-publish-chart-main'), null, { renderer: 'svg' })
         myChart.setOption(options.value)
         loading.value = false
     }
