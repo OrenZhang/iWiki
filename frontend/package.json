@@ -14,17 +14,18 @@
         "@kangc/v-md-editor": "^2.3.12",
         "axios": "^0.24.0",
         "codemirror": "^5.64.0",
+        "echarts": "^5.2.2",
         "element-plus": "^1.2.0-beta.6",
         "markdown-it-sub": "^1.0.0",
         "markdown-it-sup": "^1.0.0",
+        "marked": "^4.0.7",
         "moment": "^2.29.1",
         "prismjs": "^1.25.0",
         "vue": "^3.2.16",
         "vue-axios": "^3.4.0",
         "vue-i18n": "^9.2.0-beta.23",
         "vue-router": "^4.0.12",
-        "vuex": "^4.0.2",
-        "marked": "^4.0.7"
+        "vuex": "^4.0.2"
     },
     "devDependencies": {
         "@vitejs/plugin-vue": "^1.9.3",

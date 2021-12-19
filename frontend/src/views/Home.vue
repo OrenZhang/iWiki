@@ -31,6 +31,7 @@
                 </div>
                 <el-container class="next-container">
                     <el-main>
+                        <DocPublishChart />
                         <el-skeleton :rows="6" animated v-show="loading" />
                         <DocList :data="docs" @pageChange="handlePageChange" v-show="!loading" />
                     </el-main>
@@ -49,6 +50,7 @@
     import DocList from '../components/DocList.vue'
     import http from '../api'
     import message from '../utils/message'
+    import DocPublishChart from '../components/DocPublishChart.vue'
 
     // 加载状态
     const loading = ref(true)
