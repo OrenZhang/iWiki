@@ -8,7 +8,7 @@ const zh = {
     activeUser: '活跃用户',
     docCatalogue: '文章目录',
     noMoreCat: '暂无目录',
-    reply: '编辑',
+    reply: '回复',
     edit: '编辑',
     delete: '删除',
     comment: '评论',
