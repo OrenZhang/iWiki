@@ -165,7 +165,8 @@ const zh = {
     updatePassword: '更改密码',
     changeSuccess: '修改成功',
     versionLog: '版本日志',
-    curVersion: '当前版本'
+    curVersion: '当前版本',
+    docPublishStatistic: '文章发布统计'
 }
 
 export default zh

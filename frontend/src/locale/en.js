@@ -165,7 +165,8 @@ const en = {
     updatePassword: 'Change Password',
     changeSuccess: 'Success',
     versionLog: 'Version Log',
-    curVersion: 'Current'
+    curVersion: 'Current',
+    docPublishStatistic: 'Doc Publish Statistic'
 }
 
 export default en

@@ -18,6 +18,7 @@
     import { SVGRenderer } from 'echarts/renderers'
     import { onMounted, ref } from 'vue'
     import http from '../api'
+    import { useI18n } from 'vue-i18n'
 
     echarts.use([
         TitleComponent,
@@ -30,6 +31,8 @@
         UniversalTransition,
         SVGRenderer
     ])
+    
+    const { t } = useI18n()
 
     const loading = ref(true)
 
@@ -47,7 +50,7 @@
     }
     const options = ref({
         title: {
-            text: '文章发布统计',
+            text: t('docPublishStatistic'),
             textStyle: {
                 color: '#606266'
             },
