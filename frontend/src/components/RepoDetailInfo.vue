@@ -81,10 +81,6 @@
                 admins: [],
                 members: []
             }
-        },
-        isAdmin: {
-            type: Boolean,
-            default: false
         }
     })
 
