@@ -58,10 +58,10 @@
             <el-table-column :label="$t('updateAt')" prop="update_at" width="200px" />
             <el-table-column :label="$t('operation')" width="160px">
                 <template #default="scope">
-                    <el-button type="text" :disabled="!scope.row.is_publish" @click="goTo('/doc/' + scope.row.id)">
+                    <el-button type="text" :disabled="!scope.row.is_publish" @click="goTo('doc/' + scope.row.id)">
                         {{ $t('open') }}
                     </el-button>
-                    <el-button type="text" @click="goTo('/publish/' + scope.row.id)">
+                    <el-button type="text" @click="goTo('publish/' + scope.row.id)">
                         {{ $t('edit') }}
                     </el-button>
                     <el-button type="text" class="el-button--danger" @click="showDeleteConfirm(scope.row)">
@@ -79,6 +79,7 @@
     import message from '../utils/message'
     import { ElMessageBox } from 'element-plus'
     import { useI18n } from 'vue-i18n'
+    import globalContext from '../context'
     
     const { t } = useI18n()
     
@@ -94,7 +95,7 @@
     }
 
     const goTo = (url) => {
-        window.open(url)
+        window.open(globalContext.siteUrl + url)
     }
 
     const docType = ref('')

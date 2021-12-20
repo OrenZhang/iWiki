@@ -14,7 +14,7 @@
             </el-table-column>
             <el-table-column prop="username">
                 <template #default="scope">
-                    <el-link target="_blank" :href="'/user/' + scope.row.username" :underline="false">
+                    <el-link target="_blank" :href="globalContext.siteUrl + 'user/' + scope.row.username" :underline="false">
                         {{ scope.row.username }}
                     </el-link>
                 </template>
@@ -31,6 +31,7 @@
 </template>
 
 <script setup>
+    import globalContext from '../context'
     import { onMounted, ref } from 'vue'
     import http from '../api'
     import { useRouter } from 'vue-router'

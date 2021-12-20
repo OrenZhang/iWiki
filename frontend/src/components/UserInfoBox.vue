@@ -1,13 +1,13 @@
 <template>
     <el-card class="user-info-box">
         <div class="user-info">
-            <div class="user-avatar" @click="goTo('/user')">
+            <div class="user-avatar" @click="goTo('user')">
                 <el-avatar class="default-avatar" v-if="user.avatar !== null && user.avatar !== ''" :src="user.avatar" />
                 <el-avatar v-else class="default-avatar">
                     <i class="fad fa-user" />
                 </el-avatar>
             </div>
-            <el-link :underline="false" class="user-name" :href="'/user'" target="_blank">
+            <el-link :underline="false" class="user-name" :href="globalContext.siteUrl + 'user'" target="_blank">
                 {{ user.username }}
             </el-link>
         </div>
@@ -48,10 +48,10 @@
             </el-row>
         </div>
         <el-button-group class="button-box">
-            <el-button style="width: 51%" type="primary" plain @click="goTo('/user')">
+            <el-button style="width: 51%" type="primary" plain @click="goTo('user')">
                 <strong>{{ $t('userCenter') }}</strong>
             </el-button>
-            <el-button style="width: 51%" type="primary" plain @click="goTo('/publish')">
+            <el-button style="width: 51%" type="primary" plain @click="goTo('publish')">
                 <strong>{{ $t('NewDoc') }}</strong>
             </el-button>
         </el-button-group>
@@ -59,6 +59,7 @@
 </template>
 
 <script setup>
+    import globalContext from '../context'
     import { useStore } from 'vuex'
     import { useRouter } from 'vue-router'
     import { computed } from 'vue'
@@ -66,7 +67,7 @@
     const router = useRouter()
 
     const goTo = (url) => {
-        window.open(url)
+        window.open(globalContext.siteUrl + url)
     }
 
     const store = useStore()

@@ -46,6 +46,7 @@
     import message from '../utils/message'
     import { ElMessageBox } from 'element-plus'
     import { useI18n } from 'vue-i18n'
+    import globalContext from '../context'
     
     const { t } = useI18n()
     
@@ -66,7 +67,7 @@
     const router = useRouter()
     const goRepo = (repo) => {
         if (checkUserStatus(repo)) {
-            window.open('/repo/' + repo.id)
+            window.open(globalContext.siteUrl + 'repo/' + repo.id)
         } else {
             showApplyConfirm(repo)
         }
