@@ -5,7 +5,7 @@
                 <el-tag size="mini" type="danger" effect="dark">
                     {{ $t('pinDoc') }}
                 </el-tag>
-                <el-link target="_blank" :href="'/doc/' + item.id">
+                <el-link target="_blank" :href="globalContext.siteUrl + 'doc/' + item.id">
                     <h4>{{ item.title }}</h4>
                 </el-link>
             </div>
@@ -19,11 +19,11 @@
                     </el-tag>
                 </div>
                 <i class="far fa-archive ml-10 mr-2" v-if="item.repo_name" />
-                <el-link :underline="false" :href="'/repo/' + item.repo_id" target="_blank" v-if="item.repo_name">
+                <el-link :underline="false" :href="globalContext.siteUrl + 'repo/' + item.repo_id" target="_blank" v-if="item.repo_name">
                     {{ item.repo_name }}
                 </el-link>
                 <i class="far fa-user ml-10 mr-2" v-if="item.creator_name" />
-                <el-link :underline="false" :href="'/user/' + item.creator_name" target="_blank" v-if="item.creator_name">
+                <el-link :underline="false" :href="globalContext.siteUrl + 'user/' + item.creator_name" target="_blank" v-if="item.creator_name">
                     {{ item.creator_name }}
                 </el-link>
                 <i class="far fa-clock ml-10 mr-2" />
@@ -37,6 +37,7 @@
 </template>
 
 <script setup>
+    import globalContext from '../context'
     import { onMounted, ref, watch } from 'vue'
     import http from '../api'
 

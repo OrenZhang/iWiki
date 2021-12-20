@@ -27,8 +27,8 @@
             <div class="users-inline">
                 <template v-for="member in repo.admins" :key="member.uid">
                     <el-tooltip :content="member.username" placement="top" effect="light">
-                        <el-avatar @click="goTo('/user/' + member.username)" :src="member.avatar" v-if="member.avatar !== null" />
-                        <el-avatar @click="goTo('/user/' + member.username)" v-else>
+                        <el-avatar @click="goTo('user/' + member.username)" :src="member.avatar" v-if="member.avatar !== null" />
+                        <el-avatar @click="goTo('user/' + member.username)" v-else>
                             {{ member.username[0].toUpperCase() }}
                         </el-avatar>
                     </el-tooltip>
@@ -44,8 +44,8 @@
             <div class="users-inline">
                 <template v-for="member in repo.members" :key="member.uid">
                     <el-tooltip :content="member.username" placement="top" effect="light">
-                        <el-avatar @click="goTo('/user/' + member.username)" :src="member.avatar" v-if="member.avatar !== null" />
-                        <el-avatar @click="goTo('/user/' + member.username)" v-else>
+                        <el-avatar @click="goTo('user/' + member.username)" :src="member.avatar" v-if="member.avatar !== null" />
+                        <el-avatar @click="goTo('user/' + member.username)" v-else>
                             {{ member.username[0].toUpperCase() }}
                         </el-avatar>
                     </el-tooltip>
@@ -63,6 +63,7 @@
     import message from '../utils/message'
     import { useStore } from 'vuex'
     import { useI18n } from 'vue-i18n'
+    import globalContext from '../context'
     
     const { t } = useI18n()
     
@@ -80,10 +81,6 @@
                 admins: [],
                 members: []
             }
-        },
-        isAdmin: {
-            type: Boolean,
-            default: false
         }
     })
 
@@ -92,7 +89,7 @@
     }
 
     const goTo = (url) => {
-        window.open(url)
+        window.open(globalContext.siteUrl + url)
     }
     
     const isMember = computed(() => {

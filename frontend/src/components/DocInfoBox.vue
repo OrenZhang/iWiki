@@ -13,11 +13,11 @@
                         {{ $t('public') }}
                     </el-tag>
                     <i class="far fa-archive ml-10 mr-2" v-if="docData.repo_name" />
-                    <el-link :underline="false" :href="'/repo/' + docData.repo_id" target="_blank" v-if="docData.repo_name">
+                    <el-link :underline="false" :href="globalContext.siteUrl + 'repo/' + docData.repo_id" target="_blank" v-if="docData.repo_name">
                         {{ docData.repo_name }}
                     </el-link>
                     <i class="far fa-user ml-10 mr-2" v-if="docData.creator_name" />
-                    <el-link :underline="false" :href="'/user/' + docData.creator_name" target="_blank" v-if="docData.creator_name">
+                    <el-link :underline="false" :href="globalContext.siteUrl + 'user/' + docData.creator_name" target="_blank" v-if="docData.creator_name">
                         {{ docData.creator_name }}
                     </el-link>
                     <i class="far fa-clock ml-10 mr-2" />
@@ -26,7 +26,7 @@
                     </el-link>
                 </div>
                 <div class="operate-box">
-                    <el-link type="primary" :href="'/publish/' + docData.id" v-if="docData.creator === user.uid || isCollaborator">
+                    <el-link type="primary" :href="globalContext.siteUrl + 'publish/' + docData.id" v-if="docData.creator === user.uid || isCollaborator">
                         {{ $t('edit') }}
                     </el-link>
                     <el-link type="danger" @click="showDeleteConfirm" v-if="docData.creator === user.uid">
@@ -56,6 +56,7 @@
 </template>
 
 <script setup>
+    import globalContext from '../context'
     import { computed, nextTick, onMounted, ref, watch } from 'vue'
     import { ElMessageBox } from 'element-plus'
     import http from '../api'
@@ -63,10 +64,6 @@
     import { useI18n } from 'vue-i18n'
     
     const { t } = useI18n()
-    
-    const goTo = (url) => {
-        window.open(url)
-    }
 
     const emits = defineEmits(['loadTitle'])
 

@@ -6,7 +6,7 @@
                     <el-table-column type="index" width="24" />
                     <el-table-column>
                         <template #default="scope">
-                            <el-link target="_blank" :underline="false" :href="'/repo/' + scope.row.id">
+                            <el-link target="_blank" :underline="false" :href="globalContext.siteUrl + 'repo/' + scope.row.id">
                                 {{ scope.row.name }}
                             </el-link>
                         </template>
@@ -18,7 +18,7 @@
                     <el-table-column type="index" width="24" />
                     <el-table-column>
                         <template #default="scope">
-                            <el-link target="_blank" :underline="false" :href="'/doc/' + scope.row.id">
+                            <el-link target="_blank" :underline="false" :href="globalContext.siteUrl + 'doc/' + scope.row.id">
                                 {{ scope.row.title }}
                             </el-link>
                         </template>
@@ -30,6 +30,7 @@
 </template>
 
 <script setup>
+    import globalContext from '../context'
     import { useRouter } from 'vue-router'
     import { onMounted, ref } from 'vue'
     import http from '../api'

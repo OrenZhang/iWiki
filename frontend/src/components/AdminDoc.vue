@@ -55,7 +55,7 @@
                     <el-input v-model="pinDocDialog.data.title" disabled />
                 </el-form-item>
                 <el-form-item :label="$t('pinTo')">
-                    <el-date-picker v-model="pinDocDialog.data.pin_to" type="datetime" :disabled-date="checkDate" style="width: 100%"/>
+                    <el-date-picker v-model="pinDocDialog.data.pin_to" type="datetime" :disabled-date="checkDate" style="width: 100%" />
                 </el-form-item>
             </el-form>
             <template #footer>
@@ -69,7 +69,7 @@
 </template>
 
 <script setup>
-    import moment from 'moment';
+    import moment from 'moment'
     import { onMounted, ref, watch } from 'vue'
     import http from '../api'
     import { ElMessageBox } from 'element-plus'
