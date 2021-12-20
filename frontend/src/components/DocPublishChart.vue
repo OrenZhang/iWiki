@@ -1,5 +1,5 @@
 <template>
-    <div class="chart-box" v-loading="loading">
+    <div class="chart-box" v-if="showChart" v-loading="loading">
         <div id="doc-publish-chart-main" />
     </div>
 </template>
@@ -92,11 +92,15 @@
         ]
     })
 
+    const showChart = ref(true)
     const loadData = () => {
         http.get(
             '/doc/public/recent_chart/'
         ).then(res => {
             initChart(res.data)
+            if (Object.keys(res.data).length <= 1) {
+                showChart.value = false
+            }
         })
     }
 

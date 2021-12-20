@@ -185,9 +185,12 @@
         height: 100%;
     }
 
+    .menu-scroll {
+        background: #ecf5ff;
+    }
+
     .el-main .el-scrollbar,
     .el-main :deep(.el-scrollbar__view) {
-        border-radius: 5px;
         overflow-x: hidden;
     }
 </style>
