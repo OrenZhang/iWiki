@@ -1,7 +1,10 @@
 <template>
     <el-config-provider :locale="locale">
         <div v-if="!screenCheck" class="small-screen">
-            <span style="letter-spacing: 20px">iWik</span>i
+            <div><span style="letter-spacing: 20px">iWik</span>i</div>
+            <div style="font-size: 16px; text-align: center;">
+                {{ $t('mobileNotice') }}
+            </div>
         </div>
         <div v-loading="mainLoading" v-if="screenCheck" class="app-container">
             <transition name="el-fade-in">
@@ -13,7 +16,7 @@
             <transition name="el-fade-in">
                 <VersionLog v-if="showVersion" />
             </transition>
-            <el-header class="app-header" height="61px">
+            <el-header class="app-header" height="61px" v-if="!isMobile">
                 <div class="el-menu-demo">
                     <div class="menu">
                         <router-link to="/" class="header-menu-home">
@@ -47,7 +50,7 @@
                     </div>
                 </div>
             </el-header>
-            <el-main style="height: calc(100% - 61px);padding: 0; z-index: -1;">
+            <el-main>
                 <router-view />
             </el-main>
         </div>
@@ -104,7 +107,8 @@
     // 宽度控制
     const width = ref(window.innerWidth)
     const height = ref(window.innerHeight)
-    const screenCheck = computed(() => width.value >= 1000 && height.value >= 600 )
+    const isMobile = computed(() => width.value < 1000 || height.value < 600)
+    const screenCheck = computed(() => route.meta.allowMobile || (width.value >= 1000 && height.value >= 600))
     onMounted(() => {
         window.addEventListener('resize', () => {
             width.value = window.innerWidth

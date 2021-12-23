@@ -30,7 +30,18 @@ const routes = [
     {
         path: '/doc/:id',
         name: 'Doc',
-        component: () => import('../views/Doc.vue')
+        component: () => import('../views/Doc.vue'),
+        meta: {
+            allowMobile: true
+        }
+    },
+    {
+        path: '/m/doc/:id',
+        name: 'DocMobile',
+        component: () => import('../views/DocMobile.vue'),
+        meta: {
+            allowMobile: true
+        }
     },
     {
         path: '/repo',

@@ -29,10 +29,17 @@
     import http from '../api'
     import message from '../utils/message'
     import DocCatalogue from '../components/DocCatalogue.vue'
+    import globalContext from '../context'
 
     const appleInfo = ref({
         visible: true,
         doc_id: computed(() => docID.value)
+    })
+    
+    onMounted(() => {
+        if (window.innerWidth < 1000 || window.innerHeight < 600) {
+            window.location.href = globalContext.siteUrl + 'm/doc/' + docID.value
+        }
     })
 
     const titles = ref([])

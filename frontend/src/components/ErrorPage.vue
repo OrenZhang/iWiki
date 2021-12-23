@@ -4,8 +4,11 @@
             <el-button type="text" @click="router.push({ name: 'Home' })">
                 {{ $t('backIndex') }}
             </el-button>
-            <el-button v-show="applyInfo.visible" type="text" @click="doApply">
+            <el-button v-show="applyInfo.visible && user.auth" type="text" @click="doApply">
                 {{ $t('applyForRepo') }}
+            </el-button>
+            <el-button v-show="!user.auth" type="text" @click="showLogin">
+                {{ $t('login') }}
             </el-button>
         </el-empty>
     </div>
@@ -23,6 +26,7 @@
     const { t } = useI18n()
     
     const store = useStore()
+    const user = computed(() => store.state.user)
 
     const router = useRouter()
 
@@ -67,6 +71,10 @@
         } else {
             return t(props.errorMessages[props.error])
         }
+    })
+
+    const showLogin = (() => {
+        store.commit('setLogin', true)
     })
 </script>
 
