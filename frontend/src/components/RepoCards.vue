@@ -29,7 +29,7 @@
                             </div>
                         </div>
                         <div class="check-info" :class="checkUserStatus(repo) ? 'public-repo' : 'private-repo'" @click="goRepo(repo)">
-                            <i class="fad" :class="checkUserStatus(repo) ? 'fa-door-open' : 'fa-lock'" />
+                            <i class="fad" :class="checkUserStatus(repo) ? 'fa-sign-in' : 'fa-lock'" />
                         </div>
                     </div>
                 </el-card>
