@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-19 00:30+0800\n"
+"POT-Creation-Date: 2021-12-23 13:38+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -100,7 +100,7 @@ msgid "用户名格式有误"
 msgstr "用户名格式有误"
 
 #: .\modules\account\serializers.py:23 .\modules\account\serializers.py:26
-#: .\modules\account\views.py:115 .\modules\doc\views\doc.py:315
+#: .\modules\account\views.py:115 .\modules\doc\views\doc.py:335
 msgid "用户名不能为空"
 msgstr "用户名不能为空"
 
@@ -259,11 +259,15 @@ msgstr "使用中"
 msgid "置顶文章"
 msgstr "置顶文章"
 
-#: .\modules\doc\views\doc.py:133
+#: .\modules\doc\views\doc.py:135
 msgid "已添加该用户为协作者，请勿重复添加"
 msgstr "已添加该用户为协作者，请勿重复添加"
 
-#: .\modules\doc\views\doc.py:341
+#: .\modules\doc\views\doc.py:157
+msgid "已有用户编辑中"
+msgstr "已有用户编辑中"
+
+#: .\modules\doc\views\doc.py:382
 msgid "搜索关键字不能为空"
 msgstr "搜索关键字不能为空"
 

@@ -166,7 +166,8 @@ const en = {
     changeSuccess: 'Success',
     versionLog: 'Version Log',
     curVersion: 'Current',
-    docPublishStatistic: 'Doc Publish Statistic'
+    docPublishStatistic: 'Doc Publish Statistic',
+    docEditing: 'Someone else is editing this doc, please try again later.'
 }
 
 export default en

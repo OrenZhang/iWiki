@@ -166,7 +166,8 @@ const zh = {
     changeSuccess: '修改成功',
     versionLog: '版本日志',
     curVersion: '当前版本',
-    docPublishStatistic: '文章发布统计'
+    docPublishStatistic: '文章发布统计',
+    docEditing: '其他人正在编辑此文档，请稍后重试'
 }
 
 export default zh

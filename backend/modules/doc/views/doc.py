@@ -145,6 +145,28 @@ class DocManageView(ModelViewSet):
         DocCollaborator.objects.filter(doc_id=instance.id, uid=uid).delete()
         return Response()
 
+    @action(detail=True, methods=["POST"])
+    def set_edit_status(self, request, *args, **kwargs):
+        """为文章添加编辑中状态"""
+        instance = self.get_object()
+        cache_key = f"{self.__class__.__name__}:edit_status:{instance.id}"
+        uid = cache.get(cache_key)
+        if uid is None or uid == request.user.uid:
+            cache.set(cache_key, request.user.uid, 60)
+        else:
+            raise OperationError(_("已有用户编辑中"))
+        return Response()
+
+    @action(detail=True, methods=["GET"])
+    def check_edit_status(self, request, *args, **kwargs):
+        """检测文章编辑中状态"""
+        instance = self.get_object()
+        cache_key = f"{self.__class__.__name__}:edit_status:{instance.id}"
+        uid = cache.get(cache_key)
+        if uid is None or uid == request.user.uid:
+            return Response(False)
+        return Response(True)
+
 
 class DocCommonView(GenericViewSet):
     """文章常规入口"""
