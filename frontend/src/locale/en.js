@@ -167,7 +167,8 @@ const en = {
     versionLog: 'Version Log',
     curVersion: 'Current',
     docPublishStatistic: 'Doc Publish Statistic',
-    docEditing: 'Someone else is editing this doc, please try again later.'
+    docEditing: 'Someone else is editing this doc, please try again later.',
+    mobileNotice: 'This page is not yet compatible with small screen devices.'
 }
 
 export default en

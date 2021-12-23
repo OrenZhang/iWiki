@@ -141,14 +141,16 @@
     const preview = ref(null)
     const titles = ref([])
     const loadTitle = () => {
-        const anchors = preview.value.$el.querySelectorAll('h1,h2,h3,h4,h5,h6')
-        const titlesTmp = Array.from(anchors).filter((title) => !!title.innerText.trim())
-        const hTags = Array.from(new Set(titlesTmp.map((title) => title.tagName))).sort()
-        titles.value = titlesTmp.map((el) => ({
-            title: el.innerText,
-            lineIndex: el.getAttribute('data-v-md-line'),
-            indent: hTags.indexOf(el.tagName),
-        }))
+        try {
+            const anchors = preview.value.$el.querySelectorAll('h1,h2,h3,h4,h5,h6')
+            const titlesTmp = Array.from(anchors).filter((title) => !!title.innerText.trim())
+            const hTags = Array.from(new Set(titlesTmp.map((title) => title.tagName))).sort()
+            titles.value = titlesTmp.map((el) => ({
+                title: el.innerText,
+                lineIndex: el.getAttribute('data-v-md-line'),
+                indent: hTags.indexOf(el.tagName),
+            }))
+        } catch (e) {}
     }
     onMounted(() => {
         nextTick(() => {

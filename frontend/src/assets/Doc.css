@@ -52,22 +52,21 @@
     margin-left: 10px;
 }
 
-@media screen and (max-width: 1200px) {
-    .doc-container .el-aside {
+@media screen and (max-width: 1099px) {
+    .author-box {
         display: none;
+    }
+    :deep(.v-md-editor--preview) .scrollbar {
+        overflow: unset;
+    }
+    :deep(.v-md-editor--preview) .scrollbar__wrap {
+        overflow-x: unset;
     }
 }
 
-@media screen and (max-width: 1000px) {
-    .author-box {
-        display: unset;
-        line-height: 24px;
-    }
-    .author-box .update-at {
-        margin-left: 10px;
-    }
-    .doc-container .el-main {
-        padding-right: 0;
+@media screen and (max-width: 1200px) {
+    .doc-container .el-aside {
+        display: none;
     }
 }
 

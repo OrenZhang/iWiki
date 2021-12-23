@@ -38,6 +38,21 @@
     }
 }
 
+@media screen and (max-width: 300px) {
+    .login-box {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .login-box .el-aside {
+        display: none;
+    }
+    .login-box {
+        width: 360px;
+    }
+}
+
 .login-box .el-header {
     display: flex;
     align-items: center;
