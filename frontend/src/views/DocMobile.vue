@@ -17,7 +17,7 @@
 
     onMounted(() => {
         if (window.innerWidth >= 1000 && window.innerHeight >= 600) {
-            window.location.href = globalContext.siteUrl + 'doc/' + docID
+            window.location.replace(globalContext.siteUrl + 'doc/' + docID)
         }
     })
     
