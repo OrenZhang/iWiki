@@ -313,6 +313,8 @@
             return 404
         } else if (permissionDenied.value) {
             return 403
+        } else if (docEditing.value) {
+            return 400001
         }
         return 0
     })
@@ -448,6 +450,35 @@
             if (!answer) return false
         }
     })
+
+    // 编辑状态
+    const docEditing = ref(false)
+    const setEditStatus = () => {
+        if (!docID.value) {
+            return
+        }
+        http.post(
+            '/doc/manage/' + docID.value + '/set_edit_status/'
+        ).finally(() => {
+            setTimeout(() => {
+                setEditStatus()
+            }, 5000)
+        })
+    }
+    const checkEditStatus = () => {
+        if (!docID.value) {
+            return
+        }
+        http.get(
+            '/doc/manage/' + docID.value + '/check_edit_status/'
+        ).then(res => {
+            docEditing.value = res.data
+            if (!docEditing.value) {
+                setEditStatus()
+            }
+        })
+    }
+    onMounted(checkEditStatus)
 </script>
 
 <style scoped>

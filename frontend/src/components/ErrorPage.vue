@@ -35,7 +35,8 @@
             type: Object,
             default: {
                 403: 'permissionDenied',
-                404: 'Error404'
+                404: 'Error404',
+                400001: 'docEditing'
             }
         },
         applyInfo: {
