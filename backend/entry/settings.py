@@ -41,6 +41,7 @@ CSRF_TRUSTED_ORIGINS = [getenv_or_raise("FRONTEND_URL")]
 # APPs
 INSTALLED_APPS = [
     "corsheaders",
+    "simpleui",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -220,6 +221,29 @@ COS_RANDOM_PATH_LENGTH = 10
 COS_DOMAIN = getenv_or_raise("COS_DOMAIN")
 COS_MAX_FILE_SIZE = os.getenv("COS_MAX_FILE_SIZE", 120) * 1024 * 1024  # Bytes
 COS_MAX_AVATAR_SIZE = os.getenv("COS_MAX_AVATAR_SIZE", 2) * 1024 * 1024  # Bytes
+
+# Admin Site
+SIMPLEUI_INDEX = getenv_or_raise("FRONTEND_URL")
+SIMPLEUI_HOME_INFO = False
+SIMPLEUI_HOME_QUICK = True
+SIMPLEUI_HOME_ACTION = False
+SIMPLEUI_STATIC_OFFLINE = True
+SIMPLEUI_ANALYSIS = False
+SIMPLEUI_HOME_TITLE = "iWiki"
+SIMPLEUI_LOGO = "https://wiki.incv.net/favicon.ico"
+SIMPLEUI_DEFAULT_ICON = True
+SIMPLEUI_ICON = {
+    "文档模块": "far fa-file-alt",
+    "文档": "far fa-file-alt",
+    "文档版本": "far fa-file",
+    "评论": "far fa-comment-dots",
+    "评论版本": "far fa-comment",
+    "文库模块": "far fa-folder",
+    "库": "far fa-folder",
+    "短信模块": "far fa-comment-alt",
+    "短信": "far fa-comment-alt",
+}
+SIMPLEUI_CONFIG = {"system_keep": False}
 
 # init
 DEFAULT_REPO_NAME = getenv_or_raise("DEFAULT_REPO_NAME")
