@@ -5,10 +5,22 @@ import time
 import uuid
 from itertools import chain
 
+from django.conf import settings
+from django.core.cache import cache
+
 
 def uniq_id():
     uniq = uuid.uuid3(uuid.uuid1(), uuid.uuid4().hex).hex
-    return "%s%s" % (str(int(time.time())), str(uniq))
+    return "%s%s" % (str(int(time.time() * 1000)), str(uniq))
+
+
+def get_auth_token(uid):
+    uniq = f"{uniq_id()}{uid}"
+    in_use = cache.get(uniq)
+    if in_use is None:
+        cache.set(uniq, uid, settings.SESSION_COOKIE_AGE)
+        return uniq
+    return get_auth_token(uid)
 
 
 def simple_uniq_id(length):

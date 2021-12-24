@@ -3,7 +3,6 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import exceptions, status
 from rest_framework.exceptions import APIException, Throttled, ValidationError
 from rest_framework.response import Response
-from rest_framework.views import set_rollback
 
 
 def exception_handler(exc, context):
@@ -34,6 +33,8 @@ def exception_handler(exc, context):
         else:
             data = None
             msg = exc.detail
+
+        from rest_framework.views import set_rollback
 
         set_rollback()
 

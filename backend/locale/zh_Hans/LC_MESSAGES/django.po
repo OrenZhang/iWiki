@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-24 13:25+0800\n"
+"POT-Creation-Date: 2021-12-24 15:48+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -100,7 +100,7 @@ msgid "用户名格式有误"
 msgstr "用户名格式有误"
 
 #: .\modules\account\serializers.py:23 .\modules\account\serializers.py:26
-#: .\modules\account\views.py:115 .\modules\doc\views\doc.py:335
+#: .\modules\account\views.py:135 .\modules\doc\views\doc.py:333
 msgid "用户名不能为空"
 msgstr "用户名不能为空"
 
@@ -124,7 +124,7 @@ msgstr "密码不能为空"
 msgid "密码过长"
 msgstr "密码过长"
 
-#: .\modules\account\views.py:87
+#: .\modules\account\views.py:93
 msgid "登陆失败，用户名或密码错误"
 msgstr "登陆失败，用户名或密码错误"
 
@@ -296,7 +296,7 @@ msgstr "已添加该用户为协作者，请勿重复添加"
 msgid "已有用户编辑中"
 msgstr "已有用户编辑中"
 
-#: .\modules\doc\views\doc.py:382
+#: .\modules\doc\views\doc.py:380
 msgid "搜索关键字不能为空"
 msgstr "搜索关键字不能为空"
 
@@ -427,62 +427,62 @@ msgstr "当前版本"
 msgid "版本"
 msgstr "版本id"
 
-#: .\utils\exceptions.py:59
+#: .\utils\exceptions.py:60
 msgid "服务器异常，请联系管理员"
 msgstr "服务器异常，请联系管理员"
 
-#: .\utils\exceptions.py:65
+#: .\utils\exceptions.py:66
 msgid "未登录用户"
 msgstr "未登录用户"
 
-#: .\utils\exceptions.py:71
+#: .\utils\exceptions.py:72
 msgid "登录失败"
 msgstr "登录失败"
 
-#: .\utils\exceptions.py:77
+#: .\utils\exceptions.py:78
 msgid "验证码有误"
 msgstr "验证码有误"
 
-#: .\utils\exceptions.py:83
+#: .\utils\exceptions.py:84
 msgid "用户不存在"
 msgstr "用户不存在"
 
-#: .\utils\exceptions.py:89
+#: .\utils\exceptions.py:90
 msgid "用户名已存在"
 msgstr "用户名已存在"
 
-#: .\utils\exceptions.py:93
+#: .\utils\exceptions.py:94
 msgid "手机号已被注册"
 msgstr "手机号已被注册"
 
-#: .\utils\exceptions.py:99
+#: .\utils\exceptions.py:100
 msgid "未经授权访问"
 msgstr "未经授权访问"
 
-#: .\utils\exceptions.py:105
+#: .\utils\exceptions.py:106
 msgid "参数缺失"
 msgstr "参数缺失"
 
-#: .\utils\exceptions.py:111
+#: .\utils\exceptions.py:112
 msgid "请求次数受限"
 msgstr "请求次数受限"
 
-#: .\utils\exceptions.py:112
+#: .\utils\exceptions.py:113
 #, python-brace-format
 msgid "请在{wait}秒后再试"
 msgstr "请在{wait}秒后再试"
 
-#: .\utils\exceptions.py:119
+#: .\utils\exceptions.py:120
 #, fuzzy
 #| msgid "上传失败，请稍后再试"
 msgid "短信发送失败，请稍后再试"
 msgstr "短信发送失败，请稍后再试"
 
-#: .\utils\exceptions.py:125
+#: .\utils\exceptions.py:126
 msgid "异常操作"
 msgstr "异常操作"
 
-#: .\utils\exceptions.py:131
+#: .\utils\exceptions.py:132
 msgid "资源不存在"
 msgstr "资源不存在"
 

@@ -177,6 +177,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 7
 SESSION_COOKIE_DOMAIN = os.getenv("SESSION_COOKIE_DOMAIN")
+AUTH_TOKEN_NAME = os.getenv("AUTH_TOKEN_NAME", f"{APP_CODE}-auth-token")
 
 # 日志
 LOG_LEVEL = "INFO"
@@ -192,8 +193,8 @@ REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "utils.exceptions.exception_handler",
     "UNAUTHENTICATED_USER": "modules.account.models.CustomAnonymousUser",
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.SessionAuthentication",
-        "utils.authenticators.LoginAuthenticate",
+        "utils.authenticators.SessionAuthenticate",
+        "utils.authenticators.AuthTokenAuthenticate",
     ],
 }
 
