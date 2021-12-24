@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-23 13:38+0800\n"
+"POT-Creation-Date: 2021-12-24 13:25+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,11 +42,11 @@ msgstr "成员"
 msgid "访客"
 msgstr "访客"
 
-#: .\entry\settings.py:161
+#: .\entry\settings.py:162
 msgid "English"
 msgstr "英语"
 
-#: .\entry\settings.py:162
+#: .\entry\settings.py:163
 msgid "中文简体"
 msgstr "中文简体"
 
@@ -58,7 +58,7 @@ msgstr "用户模块"
 msgid "用户ID"
 msgstr "用户ID"
 
-#: .\modules\account\models.py:42
+#: .\modules\account\models.py:42 .\modules\repo\admin.py:30
 msgid "用户名"
 msgstr "用户名"
 
@@ -128,6 +128,23 @@ msgstr "密码过长"
 msgid "登陆失败，用户名或密码错误"
 msgstr "登陆失败，用户名或密码错误"
 
+#: .\modules\cos\admin.py:9 .\modules\cos\admin.py:32
+msgid "上传结果"
+msgstr "上传结果"
+
+#: .\modules\cos\admin.py:14
+msgid "上传成功"
+msgstr "上传成功"
+
+#: .\modules\cos\admin.py:15
+msgid "上传失败"
+msgstr "上传失败"
+
+#: .\modules\cos\admin.py:36 .\modules\cos\models.py:15
+#: .\modules\doc\admin.py:70 .\modules\doc\models.py:120
+msgid "操作人"
+msgstr "操作人"
+
 #: .\modules\cos\apps.py:8
 msgid "对象存储"
 msgstr "对象存储"
@@ -144,13 +161,13 @@ msgstr "文件Path"
 msgid "相应参数"
 msgstr "相应参数"
 
-#: .\modules\cos\models.py:15 .\modules\doc\models.py:120
-msgid "操作人"
-msgstr "操作人"
-
 #: .\modules\cos\models.py:16
 msgid "上传时间"
 msgstr "上传时间"
+
+#: .\modules\cos\models.py:20
+msgid "上传日志"
+msgstr "上传日志"
 
 #: .\modules\cos\views.py:27 .\modules\cos\views.py:71
 #, python-format
@@ -161,6 +178,23 @@ msgstr[0] "请上传 %(limit)dM 以内文件"
 #: .\modules\cos\views.py:41 .\modules\cos\views.py:61
 msgid "上传失败，请稍后再试"
 msgstr "上传失败，请稍后再试"
+
+#: .\modules\doc\admin.py:23 .\modules\repo\admin.py:26
+#: .\modules\repo\models.py:20
+msgid "库名"
+msgstr "库名"
+
+#: .\modules\doc\admin.py:27 .\modules\doc\models.py:31
+#: .\modules\doc\models.py:84 .\modules\repo\admin.py:15
+#: .\modules\repo\models.py:27
+msgid "创建人"
+msgstr "创建人"
+
+#: .\modules\doc\admin.py:43 .\modules\doc\admin.py:66
+#, fuzzy
+#| msgid "文章ID"
+msgid "文章"
+msgstr "文章ID"
 
 #: .\modules\doc\apps.py:8
 msgid "文档模块"
@@ -185,11 +219,6 @@ msgstr "内容"
 #: .\modules\doc\models.py:30
 msgid "附件"
 msgstr "附件"
-
-#: .\modules\doc\models.py:31 .\modules\doc\models.py:84
-#: .\modules\repo\models.py:27
-msgid "创建人"
-msgstr "创建人"
 
 #: .\modules\doc\models.py:32 .\modules\doc\models.py:85
 msgid "更新时间"
@@ -279,13 +308,14 @@ msgstr "国际化模块"
 msgid "不支持的语言"
 msgstr "不支持的语言"
 
+#: .\modules\repo\admin.py:34 .\modules\repo\models.py:73
+#: .\modules\sms\admin.py:27 .\modules\sms\models.py:16
+msgid "处理人"
+msgstr "处理人"
+
 #: .\modules\repo\apps.py:28
 msgid "文库模块"
 msgstr "文库模块"
-
-#: .\modules\repo\models.py:20
-msgid "库名"
-msgstr "库名"
 
 #: .\modules\repo\models.py:22
 msgid "类型"
@@ -306,10 +336,6 @@ msgstr "用户id"
 #: .\modules\repo\models.py:66
 msgid "用户类型"
 msgstr "用户类型"
-
-#: .\modules\repo\models.py:73 .\modules\sms\models.py:16
-msgid "处理人"
-msgstr "处理人"
 
 #: .\modules\repo\models.py:75
 msgid "加入时间"
@@ -333,6 +359,10 @@ msgid "已申请或加入%(name)s"
 msgid_plural "已申请或加入%(name)s"
 msgstr[0] "已申请或加入%(name)s"
 
+#: .\modules\sms\admin.py:20 .\modules\sms\models.py:15
+msgid "发送情况"
+msgstr "发送情况"
+
 #: .\modules\sms\apps.py:8
 msgid "短信模块"
 msgstr "短信模块"
@@ -349,13 +379,15 @@ msgstr "模板ID"
 msgid "模板参数"
 msgstr "模板参数"
 
-#: .\modules\sms\models.py:15
-msgid "发送情况"
-msgstr "发送情况"
-
 #: .\modules\sms\models.py:17
 msgid "发送时间"
 msgstr "发送时间"
+
+#: .\modules\sms\models.py:21
+#, fuzzy
+#| msgid "短信模块"
+msgid "短信"
+msgstr "短信模块"
 
 #: .\modules\sms\views.py:20 .\modules\sms\views.py:36
 msgid "手机号为空或格式有误"
@@ -388,6 +420,12 @@ msgstr "发布时间"
 #: .\modules\version\models.py:15
 msgid "当前版本"
 msgstr "当前版本"
+
+#: .\modules\version\models.py:19
+#, fuzzy
+#| msgid "版本id"
+msgid "版本"
+msgstr "版本id"
 
 #: .\utils\exceptions.py:59
 msgid "服务器异常，请联系管理员"
@@ -979,6 +1017,7 @@ msgstr ""
 
 #: .\venv\Lib\site-packages\django\forms\forms.py:230
 #: .\venv\Lib\site-packages\django\forms\forms.py:304
+#: .\venv\Lib\site-packages\simpleui\forms.py:113
 #, python-format
 msgid "(Hidden field %(name)s) %(error)s"
 msgstr ""
@@ -1010,6 +1049,8 @@ msgid "Order"
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\forms\formsets.py:433
+#: .\venv\Lib\site-packages\simpleui\templates\admin\actions.html:21
+#: .\venv\Lib\site-packages\simpleui\templates\admin\submit_line.html:12
 msgid "Delete"
 msgstr ""
 
@@ -1071,10 +1112,14 @@ msgid "Unknown"
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\forms\widgets.py:713
+#: .\venv\Lib\site-packages\simpleui\templates\admin\index.html:319
+#: .\venv\Lib\site-packages\simpleui\templatetags\simpletags.py:539
 msgid "Yes"
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\forms\widgets.py:714
+#: .\venv\Lib\site-packages\simpleui\templates\admin\index.html:320
+#: .\venv\Lib\site-packages\simpleui\templatetags\simpletags.py:540
 msgid "No"
 msgstr ""
 
@@ -1654,6 +1699,350 @@ msgstr ""
 #: .\venv\Lib\site-packages\kombu\transport\qpid.py:1333
 #, python-format
 msgid "Unable to connect to qpid with SASL mechanism %s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\404.html:4
+#: .\venv\Lib\site-packages\simpleui\templates\admin\404.html:8
+msgid "Page not found"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\404.html:10
+msgid "We're sorry, but the requested page could not be found."
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\500.html:6
+#: .\venv\Lib\site-packages\simpleui\templates\admin\app_index.html:9
+#: .\venv\Lib\site-packages\simpleui\templates\admin\change_list.html:34
+#: .\venv\Lib\site-packages\simpleui\templates\admin\index.html:311
+#: .\venv\Lib\site-packages\simpleui\templates\admin\invalid_setup.html:6
+#: .\venv\Lib\site-packages\simpleui\templates\admin\object_history.html:6
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_change_done.html:8
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_change_form.html:10
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_complete.html:6
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_confirm.html:7
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_done.html:6
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_form.html:7
+msgid "Home"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\500.html:7
+msgid "Server error"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\500.html:11
+msgid "Server error (500)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\500.html:14
+msgid "Server Error <em>(500)</em>"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\actions.html:12
+msgid "Add"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\actions.html:54
+#: .\venv\Lib\site-packages\simpleui\templates\admin\actions.html:56
+#: .\venv\Lib\site-packages\simpleui\templates\admin\submit_line.html:31
+msgid "Save"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\actions.html:73
+msgid "Click here to select the objects across all pages"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\actions.html:73
+#, python-format
+msgid "Select all %(total_count)s %(module_name)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\actions.html:76
+msgid "Clear selection"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\base.html:173
+msgid "Back to View documentation"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\base_site.html:3
+msgid "Django site admin"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\base_site.html:6
+msgid "Django administration"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\change_form.html:34
+#: .\venv\Lib\site-packages\simpleui\templates\admin\change_form.html:40
+#: .\venv\Lib\site-packages\simpleui\templates\admin\change_form_object_tools.html:5
+#: .\venv\Lib\site-packages\simpleui\templates\admin\object_history.html:11
+msgid "History"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\change_form.html:45
+#: .\venv\Lib\site-packages\simpleui\templates\admin\change_form_object_tools.html:7
+msgid "View on site"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\change_form.html:62
+#: .\venv\Lib\site-packages\simpleui\templates\admin\change_list.html:79
+#: .\venv\Lib\site-packages\simpleui\templates\admin\login.html:75
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_change_form.html:37
+msgid "Please correct the error below."
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\change_form.html:64
+#: .\venv\Lib\site-packages\simpleui\templates\admin\change_list.html:80
+#: .\venv\Lib\site-packages\simpleui\templates\admin\login.html:77
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_change_form.html:42
+msgid "Please correct the errors below."
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\change_list_object_tools.html:8
+#, python-format
+msgid "Add %(name)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\change_list_results.html:18
+msgid "Remove from sorting"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\change_list_results.html:20
+#, python-format
+msgid "Sorting priority: %(priority_number)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\change_list_results.html:23
+msgid "Toggle sorting"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\filter.html:2
+#, python-format
+msgid " By %(filter_title)s "
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\home.html:70
+msgid "Recent actions"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\index.html:184
+#: .\venv\Lib\site-packages\simpleui\templates\admin\index.html:185
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_change_done.html:4
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_change_form.html:6
+msgid "Documentation"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\index.html:259
+#: .\venv\Lib\site-packages\simpleui\templates\admin\index.html:317
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_change_done.html:4
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_change_form.html:6
+msgid "Change password"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\index.html:318
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_change_done.html:5
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_change_form.html:7
+msgid "Log out"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\index.html:321
+msgid "Are you sure?"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\invalid_setup.html:12
+msgid ""
+"Something's wrong with your database installation. Make sure the appropriate "
+"database tables have been created, and make sure the database is readable by "
+"the appropriate user."
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\login.html:16
+#: .\venv\Lib\site-packages\simpleui\templates\admin\login.html:103
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_complete.html:18
+msgid "Log in"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\login.html:87
+msgid "username"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\login.html:92
+msgid "password"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\login.html:98
+msgid "Forgotten your password or username?"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\object_history.html:28
+msgid "Date/time"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\object_history.html:29
+msgid "User"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\object_history.html:30
+msgid "Action"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\object_history.html:45
+msgid ""
+"This object doesn't have a change history. It probably wasn't added via this "
+"admin site."
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\popup_response.html:3
+msgid "Popup closing..."
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\search_form.html:95
+#: .\venv\Lib\site-packages\simpleui\templates\admin\search_form.html:146
+msgid "Search"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\search_form.html:99
+#, python-format
+msgid "%(counter)s result"
+msgid_plural "%(counter)s results"
+msgstr[0] ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\search_form.html:99
+#, python-format
+msgid "%(full_result_count)s total"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\search_form.html:99
+msgid "Show all"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\submit_line.html:16
+msgid "Save as new"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\submit_line.html:20
+msgid "Save and add another"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\admin\submit_line.html:26
+msgid "Save and continue editing"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\logged_out.html:19
+msgid "Log in again"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_change_done.html:9
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_change_form.html:11
+msgid "Password change"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_change_done.html:16
+msgid "Your password was changed."
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_change_form.html:30
+msgid ""
+"Please enter your old password, for security's sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_change_form.html:51
+msgid "Old password"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_change_form.html:56
+msgid "New password"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_change_form.html:64
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_confirm.html:29
+msgid "Confirm password:"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_change_form.html:72
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_confirm.html:32
+msgid "Change my password"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_complete.html:7
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_done.html:7
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_form.html:8
+msgid "Password reset"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_complete.html:16
+msgid "Your password has been set.  You may go ahead and log in now."
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_confirm.html:8
+msgid "Password reset confirmation"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_confirm.html:18
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly."
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_confirm.html:24
+msgid "New password:"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_confirm.html:38
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a new password reset."
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_done.html:15
+msgid ""
+"We've emailed you instructions for setting your password, if an account "
+"exists with the email you entered. You should receive them shortly."
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_done.html:17
+msgid ""
+"If you don't receive an email, please make sure you've entered the address "
+"you registered with, and check your spam folder."
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_email.html:2
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_email.html:4
+msgid "Please go to the following page and choose a new password:"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_email.html:8
+msgid "Your username, in case you've forgotten:"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_email.html:10
+msgid "Thanks for using our site!"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_email.html:12
+#, python-format
+msgid "The %(site_name)s team"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_form.html:16
+msgid ""
+"Forgotten your password? Enter your email address below, and we'll email "
+"instructions for setting a new one."
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_form.html:22
+msgid "Email address:"
+msgstr ""
+
+#: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_form.html:25
+msgid "Reset my password"
 msgstr ""
 
 #~ msgid "默认库"

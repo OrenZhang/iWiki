@@ -18,3 +18,5 @@ class SMSLog(models.Model):
 
     class Meta:
         db_table = f"{DB_PREFIX}log"
+        verbose_name = _("短信")
+        verbose_name_plural = verbose_name
