@@ -7,7 +7,6 @@ from django.core.cache import cache
 from django.db import IntegrityError
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
-from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -22,6 +21,7 @@ from modules.account.serializers import (
 )
 from modules.doc.models import Doc, Comment
 from modules.repo.models import RepoUser, Repo
+from utils.authenticators import SessionAuthenticate
 from utils.exceptions import (
     LoginFailed,
     UsernameExist,
@@ -31,6 +31,7 @@ from utils.exceptions import (
     OperationError,
 )
 from utils.throttlers import LoginThrottle
+from utils.tools import get_auth_token
 from utils.viewsets import ThrottleAPIView
 
 USER_MODEL = get_user_model()
@@ -39,7 +40,7 @@ USER_MODEL = get_user_model()
 class RegisterView(APIView):
     """注册入口"""
 
-    authentication_classes = [SessionAuthentication]
+    authentication_classes = [SessionAuthenticate]
 
     def post(self, request, *args, **kwargs):
         """用户注册"""
@@ -59,19 +60,24 @@ class RegisterView(APIView):
             RepoUser.objects.create(
                 repo_id=repo.id, uid=user.uid, join_at=datetime.datetime.now()
             )
+            serializer = UserInfoSerializer(request.user)
+            response = Response(serializer.data)
+            response.set_cookie(
+                settings.AUTH_TOKEN_NAME,
+                get_auth_token(user.uid),
+                max_age=settings.SESSION_COOKIE_AGE,
+                domain=settings.SESSION_COOKIE_DOMAIN,
+            )
+            return response
         except IntegrityError:
             raise UsernameExist()
-        serializer = UserInfoSerializer(request.user)
-        return Response(serializer.data)
 
 
 class LoginView(ThrottleAPIView):
     """登录入口"""
 
-    authentication_classes = [SessionAuthentication]
-    throttle_classes = [
-        LoginThrottle,
-    ]
+    authentication_classes = [SessionAuthenticate]
+    throttle_classes = [LoginThrottle]
 
     def post(self, request, *args, **kwargs):
         """用户登录"""
@@ -88,7 +94,14 @@ class LoginView(ThrottleAPIView):
         # session登录
         auth.login(request, user)
         serializer = UserInfoSerializer(request.user)
-        return Response(serializer.data)
+        response = Response(serializer.data)
+        response.set_cookie(
+            settings.AUTH_TOKEN_NAME,
+            get_auth_token(user.uid),
+            max_age=settings.SESSION_COOKIE_AGE,
+            domain=settings.SESSION_COOKIE_DOMAIN,
+        )
+        return response
 
 
 class LogoutView(APIView):
@@ -97,14 +110,21 @@ class LogoutView(APIView):
     def get(self, request, *args, **kwargs):
         """用户登出"""
         auth.logout(request)
-        return Response()
+        auth_token = request.COOKIES.get(settings.AUTH_TOKEN_NAME, None)
+        if auth_token is not None:
+            cache.delete(auth_token)
+        response = Response()
+        response.delete_cookie(
+            settings.AUTH_TOKEN_NAME, domain=settings.SESSION_COOKIE_DOMAIN
+        )
+        return response
 
 
 class SearchView(GenericViewSet):
     """搜索入口"""
 
     queryset = USER_MODEL.objects.all()
-    authentication_classes = [SessionAuthentication]
+    authentication_classes = [SessionAuthenticate]
 
     @action(detail=False, methods=["POST"])
     def check_username(self, request, *args, **kwargs):
@@ -137,7 +157,7 @@ class UserInfoView(GenericViewSet):
     """用户信息入口"""
 
     queryset = USER_MODEL.objects.all()
-    authentication_classes = [SessionAuthentication]
+    authentication_classes = [SessionAuthenticate]
 
     def get_statistic_info(self, uid, active_index):
         """获取统计信息"""
@@ -243,6 +263,11 @@ class UserInfoView(GenericViewSet):
         except USER_MODEL.DoesNotExist:
             raise UserNotExist()
         return Response()
+
+    @action(detail=False, methods=["GET"])
+    def is_superuser(self, request, *args, **kwargs):
+        """校验超级管理员身份"""
+        return Response(request.user.is_superuser)
 
 
 class LoginCheckView(GenericViewSet):

@@ -4,7 +4,7 @@
             {{ repoName }}
         </div>
         <div class="main-box">
-            <div style="display: flex; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
                 <el-select-v2
                     class="admin-header-select"
                     v-model="curRepoID"
@@ -13,17 +13,22 @@
                     filterable
                     :placeholder="$t('chooseRepo')"
                 />
-                <el-select @change="changeRepoType" class="admin-header-select2" v-model="repoType" :placeholder="$t('repoType')">
-                    <el-option
-                        v-for="item in repoTypeOptions"
-                        :key="item.id"
-                        :label="item.name"
-                        :value="item.id"
-                    />
-                </el-select>
-                <el-button type="danger" size="medium" v-show="isOwner" @click="showDeleteConfirm">
-                    {{ $t('deleteRepo') }}
-                </el-button>
+                <div style="display: flex;">
+                    <el-select @change="changeRepoType" class="admin-header-select2" v-model="repoType" :placeholder="$t('repoType')">
+                        <el-option
+                            v-for="item in repoTypeOptions"
+                            :key="item.id"
+                            :label="item.name"
+                            :value="item.id"
+                        />
+                    </el-select>
+                    <el-button type="danger" size="medium" v-show="isOwner" @click="showDeleteConfirm">
+                        {{ $t('deleteRepo') }}
+                    </el-button>
+                    <el-button type="primary" size="medium" v-show="isSuperAdmin" @click="goToBackend">
+                        {{ $t('backendAdmin') }}
+                    </el-button>
+                </div>
             </div>
             <el-container class="admin-container-box">
                 <el-aside width="120px">
@@ -74,6 +79,7 @@
     import AdminMember from '../components/AdminMember.vue'
     import AdminDoc from '../components/AdminDoc.vue'
     import { useI18n } from 'vue-i18n'
+    import globalContext from '../context'
     
     const { t } = useI18n()
 
@@ -159,6 +165,19 @@
     watch(() => curRepoID.value, () => {
         checkOwner()
     })
+
+    const isSuperAdmin = ref(false)
+    const checkSuperAdmin = () => {
+        http.get(
+            '/account/user_info/is_superuser/'
+        ).then(res => {
+            isSuperAdmin.value = res.data
+        })
+    }
+    onMounted(checkSuperAdmin)
+    const goToBackend = () => {
+        window.open(globalContext.backEndUrl + '/admin/')
+    }
 
     const deleteDialog = ref({
         visible: false

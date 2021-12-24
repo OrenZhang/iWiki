@@ -1,9 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext as _
-from rest_framework.authentication import SessionAuthentication
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from utils.authenticators import SessionAuthenticate
 from utils.exceptions import ParamsNotFound, SMSSendFailed, UserNotExist
 
 USER_MODEL = get_user_model()
@@ -12,7 +12,7 @@ USER_MODEL = get_user_model()
 class RegisterCodeView(APIView):
     """注册验证码入口"""
 
-    authentication_classes = [SessionAuthentication]
+    authentication_classes = [SessionAuthenticate]
 
     def post(self, request, *args, **kwargs):
         phone = request.data.get("phone", None)
@@ -27,7 +27,7 @@ class RegisterCodeView(APIView):
 class RePasswordCodeView(APIView):
     """重设密码验证码入口"""
 
-    authentication_classes = [SessionAuthentication]
+    authentication_classes = [SessionAuthenticate]
 
     def post(self, request, *args, **kwargs):
         phone = request.data.get("phone", None)

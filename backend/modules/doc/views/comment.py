@@ -1,6 +1,5 @@
 from django.db import transaction
 from rest_framework import mixins
-from rest_framework.authentication import SessionAuthentication
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
@@ -8,6 +7,7 @@ from modules.doc.models import Comment, CommentVersion
 from modules.doc.permissions import CommentPermission
 from modules.doc.serializers import CommentCommonSerializer
 from modules.doc.serializers.comment import CommentListSerializer
+from utils.authenticators import SessionAuthenticate
 
 
 class CommentListView(mixins.ListModelMixin, GenericViewSet):
@@ -15,10 +15,8 @@ class CommentListView(mixins.ListModelMixin, GenericViewSet):
 
     queryset = Comment.objects.filter(is_deleted=False)
     serializer_class = CommentListSerializer
-    permission_classes = [
-        CommentPermission,
-    ]
-    authentication_classes = [SessionAuthentication]
+    permission_classes = [CommentPermission]
+    authentication_classes = [SessionAuthenticate]
 
     def list(self, request, *args, **kwargs):
         doc_id = request.GET.get("doc_id", None)
