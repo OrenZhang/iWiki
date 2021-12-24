@@ -48,7 +48,7 @@ app.conf.beat_schedule = {
     },
     "remind_apply_info": {
         "task": "modules.cel.tasks.remind_apply_info",
-        "schedule": crontab(minute=10, hour=17),
+        "schedule": crontab(minute=20, hour=17),
         "args": (),
     },
 }
