@@ -4,7 +4,6 @@ from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.db import transaction, IntegrityError
 from django.utils.translation import gettext as _
-from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
@@ -22,6 +21,7 @@ from modules.doc.serializers import (
 )
 from modules.repo.models import Repo, RepoUser
 from modules.repo.serializers import RepoSerializer
+from utils.authenticators import SessionAuthenticate
 from utils.exceptions import Error404, ParamsNotFound, UserNotExist, OperationError
 from utils.paginations import NumPagination
 from utils.throttlers import DocSearchThrottle
@@ -173,10 +173,8 @@ class DocCommonView(GenericViewSet):
 
     queryset = Doc.objects.filter(is_deleted=False, is_publish=True)
     serializer_class = DocListSerializer
-    permission_classes = [
-        DocCommonPermission,
-    ]
-    authentication_classes = [SessionAuthentication]
+    permission_classes = [DocCommonPermission]
+    authentication_classes = [SessionAuthenticate]
 
     def list(self, request, *args, **kwargs):
         """获取仓库文章"""
@@ -258,7 +256,7 @@ class DocPublicView(GenericViewSet):
     queryset = Doc.objects.filter(
         is_deleted=False, is_publish=True, available=DocAvailableChoices.PUBLIC
     )
-    authentication_classes = [SessionAuthentication]
+    authentication_classes = [SessionAuthenticate]
 
     def list(self, request, *args, **kwargs):
         # 获取 公开或成员仓库 的 公开或自己的 文章

@@ -1,16 +1,16 @@
-from rest_framework.authentication import SessionAuthentication
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from modules.version.models import Version
 from modules.version.serializers import VersionSerializer, VersionListSerializer
+from utils.authenticators import SessionAuthenticate
 from utils.exceptions import Error404
 
 
 class VersionView(APIView):
     """版本入口"""
 
-    authentication_classes = [SessionAuthentication]
+    authentication_classes = [SessionAuthenticate]
 
     def get(self, request, *args, **kwargs):
         if kwargs.get("pk") is not None:

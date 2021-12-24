@@ -168,7 +168,8 @@ const en = {
     curVersion: 'Current',
     docPublishStatistic: 'Doc Publish Statistic',
     docEditing: 'Someone else is editing this doc, please try again later.',
-    mobileNotice: 'This page is not yet compatible with small screen devices.'
+    mobileNotice: 'This page is not yet compatible with small screen devices.',
+    backendAdmin: 'Backend'
 }
 
 export default en

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-24 13:24+0800\n"
+"POT-Creation-Date: 2021-12-24 15:48+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -100,7 +100,7 @@ msgid "用户名格式有误"
 msgstr "Incorrect username format"
 
 #: .\modules\account\serializers.py:23 .\modules\account\serializers.py:26
-#: .\modules\account\views.py:115 .\modules\doc\views\doc.py:335
+#: .\modules\account\views.py:135 .\modules\doc\views\doc.py:333
 msgid "用户名不能为空"
 msgstr "Username cannot be empty"
 
@@ -124,7 +124,7 @@ msgstr "Password cannot be empty"
 msgid "密码过长"
 msgstr "Password too long"
 
-#: .\modules\account\views.py:87
+#: .\modules\account\views.py:93
 msgid "登陆失败，用户名或密码错误"
 msgstr "Login failed, check your username and password"
 
@@ -297,7 +297,7 @@ msgstr "Duplicated Add"
 msgid "已有用户编辑中"
 msgstr "Someone else is editing"
 
-#: .\modules\doc\views\doc.py:382
+#: .\modules\doc\views\doc.py:380
 msgid "搜索关键字不能为空"
 msgstr "Search keyword cannot be empty"
 
@@ -429,62 +429,62 @@ msgstr "Current Version"
 msgid "版本"
 msgstr "Version ID"
 
-#: .\utils\exceptions.py:59
+#: .\utils\exceptions.py:60
 msgid "服务器异常，请联系管理员"
 msgstr "Server Error"
 
-#: .\utils\exceptions.py:65
+#: .\utils\exceptions.py:66
 msgid "未登录用户"
 msgstr "No Login User"
 
-#: .\utils\exceptions.py:71
+#: .\utils\exceptions.py:72
 msgid "登录失败"
 msgstr "Login Failed"
 
-#: .\utils\exceptions.py:77
+#: .\utils\exceptions.py:78
 msgid "验证码有误"
 msgstr "Wrong Code"
 
-#: .\utils\exceptions.py:83
+#: .\utils\exceptions.py:84
 msgid "用户不存在"
 msgstr "User Does Not Exist"
 
-#: .\utils\exceptions.py:89
+#: .\utils\exceptions.py:90
 msgid "用户名已存在"
 msgstr "Duplicated Username"
 
-#: .\utils\exceptions.py:93
+#: .\utils\exceptions.py:94
 msgid "手机号已被注册"
 msgstr "Phone number in use"
 
-#: .\utils\exceptions.py:99
+#: .\utils\exceptions.py:100
 msgid "未经授权访问"
 msgstr "UnAuthorized Access"
 
-#: .\utils\exceptions.py:105
+#: .\utils\exceptions.py:106
 msgid "参数缺失"
 msgstr "Param Missing"
 
-#: .\utils\exceptions.py:111
+#: .\utils\exceptions.py:112
 msgid "请求次数受限"
 msgstr "Throttled"
 
-#: .\utils\exceptions.py:112
+#: .\utils\exceptions.py:113
 #, python-brace-format
 msgid "请在{wait}秒后再试"
 msgstr "Expected available in {wait} second."
 
-#: .\utils\exceptions.py:119
+#: .\utils\exceptions.py:120
 #, fuzzy
 #| msgid "上传失败，请稍后再试"
 msgid "短信发送失败，请稍后再试"
 msgstr "SMS send failed, please try again later"
 
-#: .\utils\exceptions.py:125
+#: .\utils\exceptions.py:126
 msgid "异常操作"
 msgstr "Error Operation"
 
-#: .\utils\exceptions.py:131
+#: .\utils\exceptions.py:132
 msgid "资源不存在"
 msgstr "Resource Does Not Exist"
 
