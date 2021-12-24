@@ -227,3 +227,16 @@ li {
 .vuepress-markdown-body i {
     font-style: unset!important;
 }
+
+.vuepress-markdown-body ol, .vuepress-markdown-body ul {
+    margin: 0!important;
+}
+
+.vuepress-markdown-body ol ::marker,
+.vuepress-markdown-body ul ::marker {
+    font-weight: bold;
+}
+
+.vuepress-markdown-body ol, .vuepress-markdown-body p, .vuepress-markdown-body ul {
+    line-height: 2!important;
+}
