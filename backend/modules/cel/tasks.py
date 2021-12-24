@@ -1,10 +1,14 @@
 import datetime
+import json
 import logging
 import os
 import shutil
+import time
 import traceback
 import zipfile
+
 import django
+from django.contrib.auth import get_user_model
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "entry.settings")
 os.environ.setdefault("C_FORCE_ROOT", "True")
@@ -16,12 +20,12 @@ from django.core.cache import cache  # noqa
 from django.conf import settings  # noqa
 from django.db import connection  # noqa
 
-from constents import DocAvailableChoices  # noqa
+from constents import DocAvailableChoices, UserTypeChoices  # noqa
 from modules.account.models import User  # noqa
 from modules.doc.models import PinDoc  # noqa
 from modules.cel.serializers import StatisticSerializer  # noqa
 from modules.doc.models import Doc  # noqa
-from modules.repo.models import Repo  # noqa
+from modules.repo.models import Repo, RepoUser  # noqa
 from utils.client import get_client_by_user  # noqa
 
 app = Celery("main", broker=settings.BROKER_URL)
@@ -40,6 +44,11 @@ app.conf.beat_schedule = {
     "auto_check_pin_doc": {
         "task": "modules.cel.tasks.auto_check_pin_doc",
         "schedule": crontab(minute="*"),
+        "args": (),
+    },
+    "remind_apply_info": {
+        "task": "modules.cel.tasks.remind_apply_info",
+        "schedule": crontab(minute=0, hour=10),
         "args": (),
     },
 }
@@ -124,4 +133,55 @@ def export_all_docs(repo_id, uid):
         logger.error(err, traceback.print_exc())
         client.sms.send_sms(
             user.phone, settings.SMS_REPO_EXPORT_FAIL_TID, [user.username, repo.name]
+        )
+
+
+@app.task
+def remind_apply_info():
+    """向管理员发送申请通知"""
+    sql_path = os.path.join(
+        settings.BASE_DIR, "modules", "cel", "sql", "remind_apply_info.sql"
+    )
+    sql = ""
+    with open(sql_path) as sql_file:
+        sql = sql_file.read()
+    sql = sql.format(
+        UserTypeChoices.VISITOR,
+        UserTypeChoices.ADMIN,
+        UserTypeChoices.OWNER,
+    )
+    user_model = get_user_model()
+    visitor_count = user_model.objects.raw(sql)
+    send_kwargs = {}
+    for c in visitor_count:
+        if c.uid not in send_kwargs.keys():
+            send_kwargs[c.uid] = {"repos": [c.name], "count": c.count, "phone": c.phone}
+        else:
+            send_kwargs[c.uid]["repos"].append(c.name)
+            send_kwargs[c.uid]["count"] += c.count
+    logger.info("[remind_apply_info] %s", json.dumps(send_kwargs))
+    client = get_client_by_user(settings.ADMIN_USERNAME)
+    for u in send_kwargs.values():
+        client.sms.send_sms(
+            u["phone"],
+            settings.SMS_REPO_APPLY_TID,
+            [" / ".join(u["repos"]), str(u["count"])],
+        )
+        time.sleep(0.1)
+
+
+@app.task
+def send_apply_result(operator, repo_id, apply_user, result=True):
+    """管理员处理结果"""
+    result_msg = "已通过" if result else "已拒绝"
+    user_model = get_user_model()
+    try:
+        user = user_model.objects.get(uid=apply_user)
+        repo = Repo.objects.get(id=repo_id)
+    except (user_model.DoesNotExist, Repo.DoesNotExist):
+        return
+    if user.phone:
+        client = get_client_by_user(operator)
+        client.sms.send_sms(
+            user.phone, settings.SMS_REPO_APPLY_RESULT_TID, [repo.name, result_msg]
         )

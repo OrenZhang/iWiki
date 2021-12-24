@@ -12,7 +12,7 @@ from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
 from constents import UserTypeChoices, DocAvailableChoices
 from modules.account.serializers import UserInfoSerializer
-from modules.cel.tasks import export_all_docs
+from modules.cel.tasks import export_all_docs, send_apply_result
 from modules.doc.models import Doc, PinDoc
 from modules.doc.serializers import DocListSerializer, DocPinSerializer
 from modules.repo.models import Repo, RepoUser
@@ -95,11 +95,17 @@ class RepoView(ModelViewSet):
         except RepoUser.DoesNotExist:
             raise UserNotExist(_("该申请不存在"))
         if not request.data.get("status", True):
+            send_apply_result.delay(
+                request.user.uid, repo_user.repo_id, repo_user.uid, False
+            )
             repo_user.delete()
             return Response()
         serializer = RepoApplyDealSerializer(instance=repo_user, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(u_type=UserTypeChoices.MEMBER)
+        send_apply_result.delay(
+            request.user.uid, repo_user.repo_id, repo_user.uid, True
+        )
         return Response()
 
     @action(detail=True, methods=["POST"])
