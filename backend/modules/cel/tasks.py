@@ -48,7 +48,7 @@ app.conf.beat_schedule = {
     },
     "remind_apply_info": {
         "task": "modules.cel.tasks.remind_apply_info",
-        "schedule": crontab(minute=20, hour=17),
+        "schedule": crontab(minute=0, hour=10),
         "args": (),
     },
 }
@@ -168,3 +168,20 @@ def remind_apply_info():
             [" / ".join(u["repos"]), str(u["count"])],
         )
         time.sleep(0.1)
+
+
+@app.task
+def send_apply_result(operator, repo_id, apply_user, result=True):
+    """管理员处理结果"""
+    result_msg = "已通过" if result else "已拒绝"
+    user_model = get_user_model()
+    try:
+        user = user_model.objects.get(uid=apply_user)
+        repo = Repo.objects.get(id=repo_id)
+    except (user_model.DoesNotExist, Repo.DoesNotExist):
+        return
+    if user.phone:
+        client = get_client_by_user(operator)
+        client.sms.send_sms(
+            user.phone, settings.SMS_REPO_APPLY_RESULT_TID, [repo.name, result_msg]
+        )
