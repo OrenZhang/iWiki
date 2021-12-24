@@ -23,6 +23,8 @@
     "SMS_PHONE_CODE_TID": "",
     "SMS_REPO_EXPORT_FAIL_TID": "",
     "SMS_REPO_EXPORT_SUCCESS_TID": "",
+    "SMS_REPO_APPLY_TID": "",
+    "SMS_REPO_APPLY_RESULT_TID": "",
     "COS_REGION": "",
     "COS_BUCKET": "",
     "COS_DOMAIN": "",
