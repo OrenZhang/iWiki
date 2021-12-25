@@ -20,7 +20,7 @@
                 <div class="el-menu-demo">
                     <div class="menu">
                         <router-link to="/" class="header-menu-home">
-                            <img src="https://www.oren.ink/metapic/iwiki.png" alt="logo.jpg" style="width: 32px; height: 32px; margin: 0 10px 0 0;">
+                            <img src="https://wiki.incv.net/favicon.ico" alt="logo.jpg" style="width: 32px; height: 32px; margin: 0 10px 0 0;">
                             <h2 class="header-menu-home-title">
                                 iWiki
                             </h2>
