@@ -3,7 +3,7 @@
         <el-tabs v-model="activeTab">
             <el-tab-pane :label="$t('hotRepo')" name="repo">
                 <el-table :show-header="false" :data="hotRepos" size="small">
-                    <el-table-column type="index" width="24" />
+                    <el-table-column type="index" width="40" />
                     <el-table-column>
                         <template #default="scope">
                             <el-link target="_blank" :underline="false" :href="globalContext.siteUrl + 'repo/' + scope.row.id">
@@ -15,7 +15,7 @@
             </el-tab-pane>
             <el-tab-pane :label="$t('newDoc')" name="doc">
                 <el-table :show-header="false" :data="recentDocs" size="small">
-                    <el-table-column type="index" width="24" />
+                    <el-table-column type="index" width="40" />
                     <el-table-column>
                         <template #default="scope">
                             <el-link target="_blank" :underline="false" :href="globalContext.siteUrl + 'doc/' + scope.row.id">
