@@ -3,6 +3,7 @@ import datetime
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.db import transaction, IntegrityError
+from django.db.models import Q
 from django.utils.translation import gettext as _
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -335,10 +336,13 @@ class DocPublicView(GenericViewSet):
             user = USER_MODEL.objects.get(username=username)
         except USER_MODEL.DoesNotExist:
             raise UserNotExist()
-        # 共同仓库 的 公开文章
+        # 共同或公开仓库 的 公开文章
         union_repo_ids = RepoUser.objects.filter(uid=request.user.uid).values("repo_id")
+        allowed_repo_ids = Repo.objects.filter(
+            Q(r_type=RepoTypeChoices.PUBLIC) | Q(id__in=union_repo_ids)
+        ).values("id")
         docs = self.queryset.filter(
-            creator=user.uid, repo_id__in=union_repo_ids
+            creator=user.uid, repo_id__in=allowed_repo_ids
         ).order_by("-id")
         page = NumPagination()
         queryset = page.paginate_queryset(docs, request, self)
