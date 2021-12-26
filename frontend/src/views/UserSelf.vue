@@ -65,12 +65,12 @@
         {
             index: 'doc',
             name: t('docManage'),
-            icon: 'fad fa-copy',
+            icon: 'fa-solid fa-copy',
         },
         {
             index: 'repo',
             name: t('repoManage'),
-            icon: 'fad fa-archive'
+            icon: 'fa-solid fa-cube'
         }
     ])
 </script>

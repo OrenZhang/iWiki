@@ -12,15 +12,15 @@
                     <el-tag size="mini" v-else>
                         {{ $t('public') }}
                     </el-tag>
-                    <i class="far fa-archive ml-10 mr-2" v-if="docData.repo_name" />
+                    <i class="fa-solid fa-cube ml-10 mr-2" v-if="docData.repo_name" />
                     <el-link :underline="false" :href="globalContext.siteUrl + 'repo/' + docData.repo_id" target="_blank" v-if="docData.repo_name">
                         {{ docData.repo_name }}
                     </el-link>
-                    <i class="far fa-user ml-10 mr-2" v-if="docData.creator_name" />
+                    <i class="fa-regular fa-user ml-10 mr-2" v-if="docData.creator_name" />
                     <el-link :underline="false" :href="globalContext.siteUrl + 'user/' + docData.creator_name" target="_blank" v-if="docData.creator_name">
                         {{ docData.creator_name }}
                     </el-link>
-                    <i class="far fa-clock ml-10 mr-2" />
+                    <i class="fa-regular fa-clock ml-10 mr-2" />
                     <el-link :underline="false">
                         {{ docData.update_at }}
                     </el-link>

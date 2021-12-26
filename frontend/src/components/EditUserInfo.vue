@@ -3,7 +3,7 @@
         <div class="login-box">
             <el-aside width="400px">
                 <div style="width: 100%; height: 100%; overflow: hidden;">
-                    <img alt="side-pic.jpg" class="side-pic" src="https://wiki.incv.net/static/img/bg-3.jpg">
+                    <img alt="side-pic.jpg" class="side-pic" src="/extra-assests/imgs/bg-3.jpg">
                 </div>
             </el-aside>
             <el-main style="width:100%">
@@ -15,21 +15,21 @@
                         <el-form-item :label="$t('username')">
                             <el-input :disabled="loading" v-model="username" :maxlength="24">
                                 <template #prefix>
-                                    <i class="fad fa-user h-center" style="margin-left: 6px;" />
+                                    <i class="fa-solid fa-user h-center" style="margin-left: 6px;" />
                                 </template>
                             </el-input>
                         </el-form-item>
                         <el-form-item :label="$t('phone')">
                             <el-input :disabled="loading" v-model="phone" :maxlength="11" show-word-limit>
                                 <template #prefix>
-                                    <i class="fad fa-phone-alt h-center" style="margin-left: 6px;" />
+                                    <i class="fa-solid fa-phone-alt h-center" style="margin-left: 6px;" />
                                 </template>
                             </el-input>
                         </el-form-item>
                         <el-form-item :label="$t('VerificationCode')" class="oneline-code-button-box">
                             <el-input v-model="code" :minlength="6" :maxlength="6" show-word-limit :disabled="loading">
                                 <template #prefix>
-                                    <i class="fad fa-shield-check h-center" style="margin-left: 6px;" />
+                                    <i class="fa-solid fa-shield h-center" style="margin-left: 6px;" />
                                 </template>
                             </el-input>
                             <el-button style="padding: 12px;" :disabled="phone.length !== 11 || codeSend || loading" @click="sendVerifyCode">
@@ -39,7 +39,7 @@
                         <el-form-item :label="$t('password')">
                             <el-input :disabled="loading" type="password" show-password v-model="password">
                                 <template #prefix>
-                                    <i class="fad fa-lock h-center" style="margin-left: 6px;" />
+                                    <i class="fa-solid fa-lock h-center" style="margin-left: 6px;" />
                                 </template>
                             </el-input>
                         </el-form-item>

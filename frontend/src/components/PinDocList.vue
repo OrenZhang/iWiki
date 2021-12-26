@@ -18,15 +18,15 @@
                         {{ $t('private') }}
                     </el-tag>
                 </div>
-                <i class="far fa-archive ml-10 mr-2" v-if="item.repo_name" />
+                <i class="fa-solid fa-cube ml-10 mr-2" v-if="item.repo_name" />
                 <el-link :underline="false" :href="globalContext.siteUrl + 'repo/' + item.repo_id" target="_blank" v-if="item.repo_name">
                     {{ item.repo_name }}
                 </el-link>
-                <i class="far fa-user ml-10 mr-2" v-if="item.creator_name" />
+                <i class="fa-regular fa-user ml-10 mr-2" v-if="item.creator_name" />
                 <el-link :underline="false" :href="globalContext.siteUrl + 'user/' + item.creator_name" target="_blank" v-if="item.creator_name">
                     {{ item.creator_name }}
                 </el-link>
-                <i class="far fa-clock ml-10 mr-2" />
+                <i class="fa-regular fa-clock ml-10 mr-2" />
                 <el-link :underline="false">
                     {{ item.update_at }}
                 </el-link>

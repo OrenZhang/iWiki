@@ -10,13 +10,13 @@
                 :before-upload="beforeAvatarUpload">
                 <el-avatar v-if="userInfo.avatar !== null && userInfo.avatar!== ''" :src="userInfo.avatar" :size="100" />
                 <el-avatar v-else :size="100">
-                    <i class="fad fa-user" />
+                    <i class="fa-solid fa-user" />
                 </el-avatar>
             </el-upload>
             <div class="user-info-text">
                 <h2>
                     {{ userInfo.username }}
-                    <el-tag v-show="user.uid === userInfo.uid && user.auth" class="edit-info" effect="plain" size="small" @click="doLogout">
+                    <el-tag v-show="showLogout && user.uid === userInfo.uid && user.auth" class="edit-info" effect="plain" size="small" @click="doLogout">
                         {{ $t('logout') }}
                     </el-tag>
                 </h2>
@@ -65,6 +65,10 @@
             default: {}
         },
         avatarDisabled: {
+            type: Boolean,
+            default: true
+        },
+        showLogout: {
             type: Boolean,
             default: true
         }
