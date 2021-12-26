@@ -44,7 +44,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(_("激活状态"), default=True)
     date_joined = models.DateTimeField(_("注册时间"), auto_now_add=True)
     avatar = models.URLField(_("头像"), null=True, blank=True)
-    phone = models.CharField(_("联系电话"), max_length=PHONE_NUMBER_CHAR_LENGTH)
+    phone = models.CharField(
+        _("联系电话"), max_length=PHONE_NUMBER_CHAR_LENGTH, null=True, blank=True
+    )
     is_deleted = models.BooleanField(_("软删除"), default=False)
     active_index = models.FloatField(_("活跃指数"), default=0)
 
