@@ -1,3 +1,5 @@
+import datetime
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
@@ -102,7 +104,11 @@ class RepoView(ModelViewSet):
             return Response()
         serializer = RepoApplyDealSerializer(instance=repo_user, data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(u_type=UserTypeChoices.MEMBER)
+        serializer.save(
+            u_type=UserTypeChoices.MEMBER,
+            operator=request.user.uid,
+            join_at=datetime.datetime.now(),
+        )
         send_apply_result.delay(
             request.user.uid, repo_user.repo_id, repo_user.uid, True
         )
