@@ -4,7 +4,7 @@
             <div class="user-avatar" @click="goTo('user')">
                 <el-avatar class="default-avatar" v-if="user.avatar !== null && user.avatar !== ''" :src="user.avatar" />
                 <el-avatar v-else class="default-avatar">
-                    <i class="fad fa-user" />
+                    <i class="fa-solid fa-user" />
                 </el-avatar>
             </div>
             <el-link :underline="false" class="user-name" :href="globalContext.siteUrl + 'user'" target="_blank">

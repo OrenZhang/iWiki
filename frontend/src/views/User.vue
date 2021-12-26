@@ -2,7 +2,7 @@
     <div class="h-100">
         <el-scrollbar always>
             <div class="head-box" />
-            <HUserInfoBox :user-info="searchUserInfo" />
+            <HUserInfoBox :show-logout="false" :user-info="searchUserInfo" />
             <div class="doc-list">
                 <el-skeleton :rows="6" animated v-show="docLoading" />
                 <DocList :data="docData" @pageChange="handlePageChange" v-show="!docLoading" />

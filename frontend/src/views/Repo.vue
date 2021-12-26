@@ -21,7 +21,7 @@
         <div class="load-more" v-show="hasMore">
             <el-link :underline="false" v-show="!loading" @click="loadMore">
                 <div>{{ $t('loadMore') }}</div>
-                <i class="fad fa-chevron-down" />
+                <i class="fa-solid fa-chevron-down" />
             </el-link>
             <el-link :underline="false" v-show="loading">
                 <div>{{ $t('loading') }}</div>
@@ -153,7 +153,7 @@
 
 <style scoped>
     .search-box {
-        background: url("https://wiki.incv.net/static/img/bg-1.png");
+        background: url("/extra-assests/imgs/bg-1.png");
         background-size: cover;
         background-repeat: no-repeat;
         height: 30vh;

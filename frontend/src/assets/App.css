@@ -140,6 +140,10 @@ ul {
     margin-right: 20px;
 }
 
+.el-menu-demo .right-bar .locale .fa-globe {
+    color: unset;
+}
+
 .el-menu-demo .right-bar .el-link .el-link--inner {
     display: flex;
     align-items: center;
@@ -239,4 +243,8 @@ li {
 
 .vuepress-markdown-body ol, .vuepress-markdown-body p, .vuepress-markdown-body ul {
     line-height: 2!important;
+}
+
+.fa-solid {
+    color: #606266;
 }

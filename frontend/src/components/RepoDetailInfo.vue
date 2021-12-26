@@ -21,7 +21,7 @@
         <div class="user-avatars">
             <el-avatar class="head-avatar">
                 <el-tooltip :content="$t('admin')" placement="top" effect="light">
-                    <i class="far fa-users-cog" />
+                    <i class="fa-solid fa-shield" />
                 </el-tooltip>
             </el-avatar>
             <div class="users-inline">
@@ -38,7 +38,7 @@
         <div class="user-avatars" v-if="repo.members !== undefined && repo.members.length > 0">
             <el-avatar class="head-avatar">
                 <el-tooltip :content="$t('member')" placement="top" effect="light">
-                    <i class="far fa-users" />
+                    <i class="fa-solid fa-users" />
                 </el-tooltip>
             </el-avatar>
             <div class="users-inline">
@@ -160,8 +160,7 @@
     }
 
     .head-avatar .fa-users,
-    .head-avatar .fa-users-cog {
-        color: #303133;
+    .head-avatar .fa-shield {
         font-size: 18px;
         margin-top: 12px;
     }

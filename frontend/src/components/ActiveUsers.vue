@@ -8,7 +8,7 @@
                 <template #default="scope">
                     <el-avatar v-if="scope.row.avatar !== '' && scope.row.avatar !== null" :src="scope.row.avatar" />
                     <el-avatar v-else>
-                        <i class="fad fa-user" />
+                        <i class="fa-solid fa-user" />
                     </el-avatar>
                 </template>
             </el-table-column>
@@ -78,12 +78,21 @@
 
     .active-user .fa-user {
         font-size: 16px;
-        margin-top: 12px;
+        margin-top: 0;
     }
 
     .active-user :deep(.cell) {
         line-height: unset;
         font-size: 14px;
+    }
+
+    .el-avatar {
+        background: #c0c4cc;
+        box-sizing: border-box;
+    }
+
+    .el-avatar .fa-user {
+        color: white;
     }
 
     :deep(.avatar-column) .cell {

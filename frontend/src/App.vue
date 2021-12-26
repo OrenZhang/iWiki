@@ -20,7 +20,7 @@
                 <div class="el-menu-demo">
                     <div class="menu">
                         <router-link to="/" class="header-menu-home">
-                            <img src="https://wiki.incv.net/favicon.ico" alt="logo.jpg" style="width: 32px; height: 32px; margin: 0 10px 0 0;">
+                            <img src="/favicon.png" alt="logo.jpg" style="width: 32px; height: 32px; margin: 0 10px 0 0;">
                             <h2 class="header-menu-home-title">
                                 iWiki
                             </h2>
@@ -33,10 +33,10 @@
                     </div>
                     <div class="right-bar">
                         <el-link :underline="false" class="version" @click="showVersionTab">
-                            <i class="far fa-question-circle" />
+                            <i class="fa-regular fa-question-circle" />
                         </el-link>
                         <el-link :underline="false" type="primary" class="locale" @click="toggleLang">
-                            <i class="fad fa-globe" />
+                            <i class="fa-solid fa-globe" />
                             <span>{{ curLocaleName }}</span>
                         </el-link>
                         <div class="user-login">

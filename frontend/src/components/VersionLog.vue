@@ -4,7 +4,7 @@
             <el-header>
                 <h3>{{ $t('versionLog') }}</h3>
                 <el-link :underline="false" class="close-button" @click="closeVersion">
-                    <i class="fad fa-times" />
+                    <i class="fa-solid fa-times" />
                 </el-link>
             </el-header>
             <el-main>

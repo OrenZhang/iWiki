@@ -23,6 +23,7 @@ export default defineConfig({
         })
     ],
     base: '/',
+    publicDir: 'public',
     server: {
         host: 'dev.wiki.incv.net',
         port: 8080

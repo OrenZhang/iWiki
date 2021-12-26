@@ -3,7 +3,7 @@
         <el-form-item :label="$t('Username')">
             <el-input v-model="signData.username" :placeholder="$t('characters4to24')" :minlength="4" :maxlength="24" :disabled="loading">
                 <template #prefix>
-                    <i class="fad fa-user h-center" style="margin-left: 6px;" />
+                    <i class="fa-solid fa-user h-center" style="margin-left: 6px;" />
                 </template>
             </el-input>
             <div style="color: #F56C6C; margin-bottom: -10px; height: 32px; margin-top: -10px;" v-if="!usernameValid">
@@ -16,21 +16,21 @@
         <el-form-item :label="$t('Password')">
             <el-input v-model="signData.password" :placeholder="$t('within24c')" type="password" show-password :maxlength="24" :disabled="loading">
                 <template #prefix>
-                    <i class="fad fa-lock h-center" style="margin-left: 6px;" />
+                    <i class="fa-solid fa-lock h-center" style="margin-left: 6px;" />
                 </template>
             </el-input>
         </el-form-item>
         <el-form-item :label="$t('Telephone')">
             <el-input v-model="signData.phone" :minlength="11" :maxlength="11" show-word-limit :disabled="loading">
                 <template #prefix>
-                    <i class="fad fa-phone-alt h-center" style="margin-left: 6px;" />
+                    <i class="fa-solid fa-phone-alt h-center" style="margin-left: 6px;" />
                 </template>
             </el-input>
         </el-form-item>
         <el-form-item :label="$t('VerificationCode')" class="oneline-code-button-box">
             <el-input v-model="signData.code" :minlength="6" :maxlength="6" show-word-limit :disabled="loading">
                 <template #prefix>
-                    <i class="fad fa-shield-check h-center" style="margin-left: 6px;" />
+                    <i class="fa-solid fa-shield h-center" style="margin-left: 6px;" />
                 </template>
             </el-input>
             <el-button style="padding: 12px;" :disabled="signData.phone.length !== 11 || codeSend || loading" @click="sendVerifyCode">

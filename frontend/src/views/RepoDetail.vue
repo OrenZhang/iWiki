@@ -18,7 +18,7 @@
                         <div class="search-bar">
                             <el-input v-model="searchKey" :placeholder="$t('title')" />
                             <el-button @click="doSearch">
-                                <i class="fa fa-search" />
+                                <i class="fa-solid fa-search" />
                             </el-button>
                         </div>
                         <DocSidebar />

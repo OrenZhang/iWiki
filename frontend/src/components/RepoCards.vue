@@ -18,18 +18,18 @@
                                     <el-tag size="mini" type="warning" v-else style="margin-right: 10px;">
                                         {{ $t('privateRepo') }}
                                     </el-tag>
-                                    <i class="far fa-user-cog" />&nbsp;{{ repo.creator_name }}
+                                    <i class="fa-solid fa-user" />&nbsp;{{ repo.creator_name }}
                                 </div>
                                 <div style="font-size: 14px;">
                                     <el-tag size="mini" type="info" style="margin-right: 10px">
                                         {{ $t('createAt') }}
                                     </el-tag>
-                                    <i class="far fa-calendar-alt" />&nbsp;{{ repo.create_at }}
+                                    <i class="fa-solid fa-calendar-alt" />&nbsp;{{ repo.create_at }}
                                 </div>
                             </div>
                         </div>
                         <div class="check-info" :class="checkUserStatus(repo) ? 'public-repo' : 'private-repo'" @click="goRepo(repo)">
-                            <i class="fad" :class="checkUserStatus(repo) ? 'fa-sign-in' : 'fa-lock'" />
+                            <i class="fa-solid" :class="checkUserStatus(repo) ? 'fa-arrow-right-to-bracket' : 'fa-lock'" />
                         </div>
                     </div>
                 </el-card>

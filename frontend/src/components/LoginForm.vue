@@ -3,14 +3,14 @@
         <el-form-item :label="$t('Username')">
             <el-input v-model="loginData.username" :minlength="4" :maxlength="24" type="text" clearable :disabled="loading">
                 <template #prefix>
-                    <i class="fad fa-user h-center" style="margin-left: 6px;" />
+                    <i class="fa-solid fa-user h-center" style="margin-left: 6px;" />
                 </template>
             </el-input>
         </el-form-item>
         <el-form-item :label="$t('Password')">
             <el-input type="password" v-model="loginData.password" :maxlength="24" clearable show-password :disabled="loading">
                 <template #prefix>
-                    <i class="fad fa-lock h-center" style="margin-left: 6px;" />
+                    <i class="fa-solid fa-lock h-center" style="margin-left: 6px;" />
                 </template>
             </el-input>
         </el-form-item>
