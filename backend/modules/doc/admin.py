@@ -2,7 +2,14 @@ from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
-from modules.doc.models import Doc, DocVersion, Comment, CommentVersion, PinDoc
+from modules.doc.models import (
+    Doc,
+    DocVersion,
+    Comment,
+    CommentVersion,
+    PinDoc,
+    DocCollaborator,
+)
 from modules.repo.models import Repo
 
 
@@ -34,15 +41,33 @@ class DocAdmin(DocAdmin):
     pass
 
 
+@admin.register(DocCollaborator)
+class DocCollaboratorAdmin(admin.ModelAdmin):
+    list_display = ["doc_title", "username", "add_at"]
+    ordering = ["id"]
+
+    @admin.display(description=_("标题"))
+    def doc_title(self, obj):
+        return Doc.objects.get(id=obj.doc_id).title
+
+    @admin.display(description=_("用户名"))
+    def username(self, obj):
+        return get_user_model().objects.get(uid=obj.uid).username
+
+
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ["id", "doc_title", "creator", "update_at", "is_deleted"]
+    list_display = ["id", "doc_title", "creator_name", "update_at", "is_deleted"]
     search_fields = ["content"]
     list_filter = ["is_deleted"]
 
     @admin.display(description=_("文章"))
     def doc_title(self, obj):
         return Doc.objects.get(id=obj.doc_id).title
+
+    @admin.display(description=_("用户名"))
+    def creator_name(self, obj):
+        return get_user_model().objects.get(uid=obj.creator).username
 
 
 @admin.register(CommentVersion)
