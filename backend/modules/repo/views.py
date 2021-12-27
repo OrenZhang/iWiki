@@ -302,8 +302,13 @@ class RepoCommonView(ListModelMixin, RetrieveModelMixin, GenericViewSet):
         repo_ids = RepoUser.objects.filter(
             Q(uid=request.user.uid) & ~Q(u_type=UserTypeChoices.VISITOR)
         ).values_list("repo_id", flat=True)
-        self.queryset = self.queryset.filter(id__in=repo_ids)
+        search_key = request.GET.get("searchKey", "")
+        self.queryset = self.queryset.filter(
+            id__in=repo_ids, name__icontains=search_key
+        )
         self.serializer_class = RepoCommonSerializer
+        if request.GET.get("page", None) is not None:
+            self.pagination_class = NumPagination
         return super().list(request, *args, **kwargs)
 
     @action(detail=False, methods=["GET"])
