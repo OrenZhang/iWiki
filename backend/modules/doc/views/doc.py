@@ -98,7 +98,7 @@ class DocManageView(ModelViewSet):
         serializer = DocUpdateSerializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         with transaction.atomic():
-            self.perform_update(serializer)
+            serializer.save(update_by=request.user.uid)
             DocVersion.objects.create(**DocVersionSerializer(instance).data)
         return Response({"id": instance.id})
 
