@@ -132,7 +132,7 @@
         http.delete(
             '/doc/manage/' + props.docData.id + '/'
         ).then(() => {
-            window.close()
+            window.location.replace(globalContext.siteUrl)
         }).finally(() => {
             store.dispatch('setMainLoading', false)
         })

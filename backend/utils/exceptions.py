@@ -13,7 +13,7 @@ def exception_handler(exc, context):
     """
 
     if isinstance(exc, Http404):
-        exc = exceptions.NotFound()
+        exc = Error404()
 
     if isinstance(exc, exceptions.APIException):
         headers = {}
