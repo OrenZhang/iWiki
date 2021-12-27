@@ -3,16 +3,6 @@
         <div class="tool-bar">
             <div style="display: flex">
                 <el-input size="medium" class="search-input" clearable :placeholder="$t('docTitle')" v-model="searchKey" />
-                <el-select size="medium" v-model="docType" :placeholder="$t('docType')" clearable>
-                    <el-option
-                        v-for="item in typeOptions"
-                        :key="item.value" :label="item.label" :value="item.value" />
-                </el-select>
-                <el-select size="medium" v-model="docPublish" :placeholder="$t('docStatus')" clearable>
-                    <el-option
-                        v-for="item in publishOptions"
-                        :key="item.value" :label="item.label" :value="item.value" />
-                </el-select>
                 <el-button size="medium" type="primary" @click="doSearch">
                     {{ $t('search') }}
                 </el-button>
@@ -98,30 +88,6 @@
         window.open(globalContext.siteUrl + url)
     }
 
-    const docType = ref('')
-    const typeOptions = ref([
-        {
-            value: 'public',
-            label: t('public')
-        },
-        {
-            value: 'private',
-            label: t('private')
-        }
-    ])
-
-    const docPublish = ref('')
-    const publishOptions = ref([
-        {
-            value: 'True',
-            label: t('published')
-        },
-        {
-            value: 'False',
-            label: t('draft')
-        }
-    ])
-
     const docs = ref([])
     const searchKey = ref('')
     const paginator = ref({
@@ -135,7 +101,7 @@
     const loadDocs = () => {
         setLoading(true)
         http.get(
-            '/doc/manage/?page=' + paginator.value.page + '&searchKey=' + searchKey.value + '&isPublish=' + docPublish.value + '&docType=' + docType.value
+            '/doc/manage/?page=' + paginator.value.page + '&searchKey=' + searchKey.value
         ).then(res => {
             docs.value = res.data.results
             paginator.value.count = res.data.count
