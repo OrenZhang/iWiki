@@ -9,6 +9,9 @@
                 :on-success="handleAvatarSuccess"
                 :before-upload="beforeAvatarUpload">
                 <el-avatar v-if="userInfo.avatar !== null && userInfo.avatar!== ''" :src="userInfo.avatar" :size="100" />
+                <el-avatar v-else-if="user.uid === userInfo.uid && user.auth" :size="100">
+                    <i class="fa-solid fa-plus" />
+                </el-avatar>
                 <el-avatar v-else :size="100">
                     <i class="fa-solid fa-user" />
                 </el-avatar>
@@ -59,14 +62,10 @@
     
     const { t } = useI18n()
     
-    defineProps({
+    const props = defineProps({
         userInfo: {
             type: Object,
             default: {}
-        },
-        avatarDisabled: {
-            type: Boolean,
-            default: true
         },
         showLogout: {
             type: Boolean,
@@ -74,6 +73,7 @@
         }
     })
 
+    const avatarDisabled = computed(() => user.value.uid !== props.userInfo.uid || !user.value.auth)
     const transIndex = (num) => {
         const numArray = num.toString().split('.')
         if (numArray.length > 1)
@@ -188,5 +188,10 @@
         background: rgba(255, 255, 255, 0.8);
         border: none;
         cursor: pointer;
+    }
+
+    .user-info-box .fa-plus {
+        font-size: 36px;
+        margin-top: 32px;
     }
 </style>
