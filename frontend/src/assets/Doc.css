@@ -53,7 +53,7 @@
 }
 
 @media screen and (max-width: 1099px) {
-    .author-box {
+    .info-box .author-box {
         display: none;
     }
     :deep(.v-md-editor--preview) .scrollbar {
@@ -61,6 +61,12 @@
     }
     :deep(.v-md-editor--preview) .scrollbar__wrap {
         overflow-x: unset;
+    }
+    .comment-container > .v-md-editor:nth-child(1){
+        display: none;
+    }
+    .operate-box {
+        display: none!important;
     }
 }
 

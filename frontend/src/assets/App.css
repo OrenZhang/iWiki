@@ -248,3 +248,10 @@ li {
 .fa-solid {
     color: #606266;
 }
+
+@media screen and (max-width: 419px) {
+    .vuepress-markdown-body div {
+        margin: unset!important;
+        border-radius: 6px!important;
+    }
+}

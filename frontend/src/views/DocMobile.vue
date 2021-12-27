@@ -3,11 +3,13 @@
         <el-skeleton :rows="6" animated v-if="loading" />
         <ErrorPage :error="errorCode" v-if="!loading && errorCode !== 0" />
         <DocInfoBox v-else :doc-data="docData" :loading="loading" />
+        <DocComment :doc-id="docID" />
     </div>
 </template>
 
 <script setup>
     import DocInfoBox from '../components/DocInfoBox.vue'
+    import DocComment from '../components/DocComment.vue'
     import ErrorPage from '../components/ErrorPage.vue'
     import { computed, onMounted, ref } from 'vue'
     import { useRoute } from 'vue-router'
