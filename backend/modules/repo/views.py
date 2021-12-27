@@ -56,16 +56,6 @@ class RepoView(ModelViewSet):
             instance.set_owner(request.user.uid)
         return Response(serializer.data)
 
-    def destroy(self, request, *args, **kwargs):
-        """删除仓库"""
-        instance = self.get_object()
-        with transaction.atomic():
-            instance.pages_delete()
-            instance.members_delete()
-            instance.is_deleted = True
-            instance.save()
-        return Response()
-
     @action(detail=True, methods=["GET"])
     def list_apply(self, request, *args, **kwargs):
         """申请人"""

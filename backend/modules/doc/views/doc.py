@@ -102,13 +102,6 @@ class DocManageView(ModelViewSet):
             DocVersion.objects.create(**DocVersionSerializer(instance).data)
         return Response({"id": instance.id})
 
-    def destroy(self, request, *args, **kwargs):
-        """删除文章"""
-        instance = self.get_object()
-        instance.is_deleted = True
-        instance.save()
-        return Response()
-
     @action(detail=True, methods=["GET"])
     def list_collaborator(self, request, *args, **kwargs):
         """获取协作者"""

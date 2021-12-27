@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.db import models
+from django.db import models, transaction
 from django.utils.translation import gettext_lazy as _
 
 from constents import (
@@ -33,6 +33,14 @@ class Repo(models.Model):
         verbose_name = _("库")
         verbose_name_plural = verbose_name
 
+    @transaction.atomic
+    def delete(self, using=None, keep_parents=False):
+        """删除"""
+        Doc.objects.filter(repo_id=self.id).update(is_deleted=True)
+        RepoUser.objects.filter(repo_id=self.id).delete()
+        self.is_deleted = True
+        self.save()
+
     def pages_transfer(self, destination=settings.DEFAULT_REPO_NAME):
         """迁移文章"""
         try:
@@ -40,14 +48,6 @@ class Repo(models.Model):
         except self.DoesNotExist:
             raise Error404()
         Doc.objects.filter(repo_id=self.id).update(repo_id=default_repo.id)
-
-    def pages_delete(self):
-        """删除文章"""
-        Doc.objects.filter(repo_id=self.id).update(is_deleted=True)
-
-    def members_delete(self):
-        """删除成员"""
-        RepoUser.objects.filter(repo_id=self.id).delete()
 
     def set_owner(self, uid, operator=None):
         """设置所有者"""

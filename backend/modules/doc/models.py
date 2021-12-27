@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, transaction
 from django.utils.translation import gettext_lazy as _
 
 from constents import (
@@ -47,6 +47,14 @@ class Doc(DocBase):
         verbose_name = _("文档")
         verbose_name_plural = verbose_name
         index_together = [["repo_id", "creator"], ["creator", "is_deleted"]]
+
+    @transaction.atomic
+    def delete(self, using=None, keep_parents=False):
+        Comment.objects.filter(doc_id=self.id).update(is_deleted=True)
+        DocCollaborator.objects.filter(doc_id=self.id).delete()
+        PinDoc.objects.filter(doc_id=self.id).update(in_use=False)
+        self.is_deleted = True
+        self.save()
 
 
 class DocVersion(DocBase):
