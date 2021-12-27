@@ -100,6 +100,12 @@ html, body {
         padding: 0;
         z-index: -1;
     }
+    .el-pagination__total {
+        display: none!important;
+    }
+    .el-pagination__jump {
+        display: none!important;
+    }
 }
 
 ul {

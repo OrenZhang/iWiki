@@ -169,7 +169,8 @@ const en = {
     docPublishStatistic: 'Doc Publish Statistic',
     docEditing: 'Someone else is editing this doc, please try again later.',
     mobileNotice: 'This page is not yet compatible with small screen devices.',
-    backendAdmin: 'Backend'
+    backendAdmin: 'Backend',
+    export: 'Export',
 }
 
 export default en

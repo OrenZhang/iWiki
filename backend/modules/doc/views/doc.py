@@ -1,9 +1,13 @@
 import datetime
+import os
+import shutil
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.db import transaction, IntegrityError
 from django.db.models import Q
+from django.http import FileResponse
 from django.utils.translation import gettext as _
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -11,7 +15,7 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
 from constents import DocAvailableChoices, RepoTypeChoices
 from modules.account.serializers import UserInfoSerializer
-from modules.doc.models import Doc, DocVersion, DocCollaborator
+from modules.doc.models import Doc, DocVersion, DocCollaborator, Comment
 from modules.doc.permissions import DocManagePermission, DocCommonPermission
 from modules.doc.serializers import (
     DocCommonSerializer,
@@ -145,6 +149,38 @@ class DocManageView(ModelViewSet):
         if uid is None or uid == request.user.uid:
             return Response(False)
         return Response(True)
+
+    @action(detail=True, methods=["GET"])
+    def export(self, request, *args, **kwargs):
+        """导出文章"""
+        instance = self.get_object()
+        sql = (
+            "SELECT dc.*, au.username FROM `doc_comment` dc "
+            "JOIN `auth_user` au ON au.uid=dc.creator "
+            "WHERE dc.doc_id=%s AND NOT dc.is_deleted "
+            "ORDER BY dc.id DESC;"
+        )
+        comments = Comment.objects.raw(sql, [instance.id])
+        file_dir = os.path.join(
+            settings.BASE_DIR, "tmp", "doc", request.user.uid, str(instance.id)
+        )
+        if os.path.exists(file_dir):
+            shutil.rmtree(file_dir)
+        os.makedirs(file_dir)
+        filename = "{}.md".format(instance.title.replace(" ", "").replace("/", ""))
+        file_path = os.path.join(file_dir, filename)
+        with open(file_path, "w", encoding="utf-8") as file:
+            file.write(f"# {instance.title}")
+            file.write("\n")
+            file.write(instance.content)
+            file.write("\n\n")
+            for comment in comments:
+                file.write(f"# {comment.username}")
+                file.write("\n")
+                file.write(comment.content)
+                file.write("\n\n")
+        file = open(file_path, "rb")
+        return FileResponse(file, filename=filename)
 
 
 class DocCommonView(GenericViewSet):

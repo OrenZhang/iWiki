@@ -97,7 +97,7 @@ def export_all_docs(repo_id, uid):
         available=DocAvailableChoices.PUBLIC,
     )
     try:
-        file_dir = os.path.join(settings.BASE_DIR, "tmp", uid, str(repo.id))
+        file_dir = os.path.join(settings.BASE_DIR, "tmp", "repo", uid, str(repo.id))
         if os.path.exists(file_dir):
             shutil.rmtree(file_dir)
         os.makedirs(file_dir)
