@@ -1,5 +1,21 @@
 <template>
-    <div>
+    <div class="repo-manage">
+        <div class="tool-bar">
+            <div style="display: flex">
+                <el-input size="medium" class="search-input" clearable :placeholder="$t('repoName')" v-model="searchKey" />
+                <el-button size="medium" type="primary" @click="doSearch">
+                    {{ $t('search') }}
+                </el-button>
+                <el-button size="medium" type="primary" @click="resetSearch">
+                    {{ $t('reset') }}
+                </el-button>
+            </div>
+            <el-pagination
+                background layout="prev, pager, next"
+                :total="paginator.count" :pager-count="5"
+                :current-page="paginator.page" @current-change="handlePageChange"
+            />
+        </div>
         <el-skeleton :rows="6" v-show="loading" animated style="margin-top: 20px" />
         <el-table size="medium" :data="repos" v-show="!loading">
             <el-table-column :label="$t('repoName')" prop="name" />
@@ -51,12 +67,18 @@
     }
     
     const repos = ref([])
+    const searchKey = ref('')
+    const paginator = ref({
+        page: 1,
+        count: 0
+    })
     const loadRepos = () => {
         setLoading(true)
         http.get(
-            '/repo/common/'
+            '/repo/common/?page=' + paginator.value.page + '&searchKey=' + searchKey.value
         ).then(res => {
-            repos.value = res.data
+            repos.value = res.data.results
+            paginator.value.count = res.data.count
         }, err => {
             message(err.data.msg, 'error')
         }).finally(() => {
@@ -64,6 +86,20 @@
         })
     }
     onMounted(loadRepos)
+
+    const handlePageChange = (page) => {
+        paginator.value.page = page
+        loadRepos()
+    }
+    const doSearch = () => {
+        paginator.value.page = 1
+        loadRepos()
+    }
+    const resetSearch = () => {
+        searchKey.value = ''
+        paginator.value.page = 1
+        loadRepos()
+    }
 
     const showExitConfirm = (row) => {
         const content = t('exitConfirmMsg', { name: row.name })
@@ -86,7 +122,18 @@
 </script>
 
 <style scoped>
+    .tool-bar {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
     .el-button--danger :deep(span) {
         color: #f56c6c;
+    }
+
+    .search-input {
+        margin-right: 10px;
     }
 </style>

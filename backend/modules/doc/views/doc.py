@@ -52,33 +52,18 @@ class DocManageView(ModelViewSet):
             "JOIN `repo_repo` r ON d.repo_id=r.id "
             "JOIN `auth_user` au ON au.uid=d.creator "
             "WHERE d.creator=%s AND NOT d.is_deleted "
-            "AND d.title like %s "
-            "{is_publish} "
-            "{available} "
+            "{} "
             "ORDER BY d.id DESC;"
         )
         # 标题关键字搜索
         search_key = request.GET.get("searchKey", "")
-        search_key = f"%%{search_key}%%" if search_key else "%%"
-        # 发布状态搜索
-        is_publish = request.GET.get("isPublish", "")
-        if is_publish and is_publish == "True":
-            is_publish = "AND d.is_publish"
-        elif is_publish and is_publish == "False":
-            is_publish = "AND NOT d.is_publish"
+        if search_key:
+            sql = sql.format("AND d.title like %s")
+            search_key = f"%%{search_key}%%"
+            self.queryset = self.queryset.raw(sql, [request.user.uid, search_key])
         else:
-            is_publish = ""
-        # 可见状态搜索
-        available = request.GET.get("docType", "")
-        if available and available == DocAvailableChoices.PUBLIC:
-            available = f"AND d.available='{DocAvailableChoices.PUBLIC}'"
-        elif available and available == DocAvailableChoices.PRIVATE:
-            available = f"AND d.available='{DocAvailableChoices.PRIVATE}'"
-        else:
-            available = ""
-        # SQL
-        sql = sql.format(available=available, is_publish=is_publish)
-        self.queryset = self.queryset.raw(sql, [request.user.uid, search_key])
+            sql = sql.format("")
+            self.queryset = self.queryset.raw(sql, [request.user.uid])
         return super().list(request, *args, **kwargs)
 
     def create(self, request, *args, **kwargs):

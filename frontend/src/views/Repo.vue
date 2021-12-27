@@ -56,7 +56,7 @@
             <template #footer>
                 <span class="dialog-footer">
                     <el-button @click="createDialog.visible = false">{{ $t('cancel') }}</el-button>
-                    <el-button type="success" @click="doCreate(createDialog.data)">{{ $t('create') }}</el-button>
+                    <el-button type="success" @click="doCreate(createDialog.data)" :disabled="createDialog.data.name.length === 0">{{ $t('create') }}</el-button>
                 </span>
             </template>
         </el-dialog>
