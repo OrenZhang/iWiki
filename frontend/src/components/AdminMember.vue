@@ -140,7 +140,6 @@
         const content = t('removeMemberMsg', { name: row.username })
         ElMessageBox.alert(content, t('removeConfirm'), {
             confirmButtonText: t('removeConfirmed'),
-            confirmButtonClass: 'el-button--danger',
             callback: (action) => {
                 if (action === 'confirm') {
                     http.post(

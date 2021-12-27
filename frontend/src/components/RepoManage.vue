@@ -105,7 +105,6 @@
         const content = t('exitConfirmMsg', { name: row.name })
         ElMessageBox.alert(content, t('exitConfirm'), {
             confirmButtonText: t('exitConfirmed'),
-            confirmButtonClass: 'el-button--danger',
             callback: (action) => {
                 if (action === 'confirm') {
                     http.post(
@@ -127,10 +126,6 @@
         display: flex;
         justify-content: space-between;
         margin-bottom: 20px;
-    }
-
-    .el-button--danger :deep(span) {
-        color: #f56c6c;
     }
 
     .search-input {

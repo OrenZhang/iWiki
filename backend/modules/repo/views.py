@@ -56,6 +56,11 @@ class RepoView(ModelViewSet):
             instance.set_owner(request.user.uid)
         return Response(serializer.data)
 
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response()
+
     @action(detail=True, methods=["GET"])
     def list_apply(self, request, *args, **kwargs):
         """申请人"""
