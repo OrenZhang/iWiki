@@ -92,10 +92,10 @@ class DocManageView(ModelViewSet):
             DocVersion.objects.create(**DocVersionSerializer(instance).data)
         return Response({"id": instance.id})
 
-    # def destroy(self, request, *args, **kwargs):
-    #     instance = self.get_object()
-    #     self.perform_destroy(instance)
-    #     return Response()
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response()
 
     @action(detail=True, methods=["GET"])
     def list_collaborator(self, request, *args, **kwargs):
