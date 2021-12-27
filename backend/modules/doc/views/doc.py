@@ -8,6 +8,7 @@ from django.core.cache import cache
 from django.db import transaction, IntegrityError
 from django.db.models import Q
 from django.http import FileResponse
+from django.utils.encoding import escape_uri_path
 from django.utils.translation import gettext as _
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -180,7 +181,12 @@ class DocManageView(ModelViewSet):
                 file.write(comment.content)
                 file.write("\n\n")
         file = open(file_path, "rb")
-        return FileResponse(file, filename=filename)
+        response = FileResponse(file)
+        response["Content-Type"] = "application/octet-stream"
+        response[
+            "Content-Disposition"
+        ] = f"attachment; filename={escape_uri_path(filename)}"
+        return response
 
 
 class DocCommonView(GenericViewSet):
