@@ -75,6 +75,9 @@
 
     const avatarDisabled = computed(() => user.value.uid !== props.userInfo.uid || !user.value.auth)
     const transIndex = (num) => {
+        if (!num) {
+            return ''
+        }
         const numArray = num.toString().split('.')
         if (numArray.length > 1)
             if (num < 10) {

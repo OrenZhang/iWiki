@@ -6,6 +6,7 @@ import store from './store'
 import VueAxios from 'vue-axios'
 import i18n from './locale'
 
+import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
 import VueMarkdownEditor from '@kangc/v-md-editor'
@@ -53,4 +54,5 @@ app.use(store)
 app.use(i18n)
 app.use(VueAxios, http)
 app.use(VueMarkdownEditor)
+app.use(ElementPlus)
 app.mount('#app')
