@@ -1,6 +1,9 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import prismjs from 'vite-plugin-prismjs'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 export default defineConfig({
     plugins: [
@@ -20,7 +23,13 @@ export default defineConfig({
                 'vim',
                 'yaml'
             ],
-        })
+        }),
+        AutoImport({
+            resolvers: [ElementPlusResolver()],
+        }),
+        Components({
+            resolvers: [ElementPlusResolver()],
+        }),
     ],
     base: '/',
     publicDir: 'public',
@@ -38,6 +47,18 @@ export default defineConfig({
             }
     },
     build: {
+        rollupOptions: {
+            output: {
+                manualChunks (id) {
+                    if (id.includes('node_modules/element-plus')) {
+                        return 'element-plus'
+                    }
+                    if (id.includes('node_modules/echarts')) {
+                        return 'echarts'
+                    }
+                }
+            }
+        },
         chunkSizeWarningLimit: 2000
     }
 })
