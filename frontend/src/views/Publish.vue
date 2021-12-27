@@ -269,7 +269,7 @@
                     url: res.data[0].url,
                     desc: res.data[0].filename,
                     width: 'auto',
-                    height: '300px'
+                    height: 'auto'
                 })
                 message(t('imgUploadSuccess'))
             }

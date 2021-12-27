@@ -6,7 +6,7 @@
                 :left-toolbar="leftTool"
                 :right-toolbar="rightTool"
                 :toolbar="toolbar"
-                v-model="commentDialog.content" :mode="editType ? 'editable' : 'edit'" :placeholder="$t('content')" height="200px"
+                v-model="newContent" :mode="editType ? 'editable' : 'edit'" :placeholder="$t('content')" height="200px"
                 :disabled-menus="[]" @upload-image="handleUploadImage" @save="doAddNewComment" />
             <el-card v-for="comment in comments" :key="comment.id" class="comment-box">
                 <div class="card-header">
@@ -75,7 +75,7 @@
             width="800px">
             <v-md-editor
                 :left-toolbar="leftTool"
-                :right-toolbar="rightTool"
+                :right-toolbar="rightToolWithoutSave"
                 :toolbar="toolbar"
                 v-model="commentDialog.content" :mode="editType ? 'editable' : 'edit'" :placeholder="$t('content')" height="200px"
                 :disabled-menus="[]" @upload-image="handleUploadImage" />
@@ -104,6 +104,7 @@
     const width = ref(window.innerWidth)
     const leftTool = 'h bold italic strikethrough quote | ul ol table hr tip emoji todo-list | link image code'
     const rightTool = 'fullscreen preview toc save'
+    const rightToolWithoutSave = 'fullscreen preview toc'
     onMounted(() => {
         window.addEventListener('resize', () => {
             width.value = window.innerWidth
@@ -216,6 +217,8 @@
             method: 'edit'
         }
     }
+
+    const newContent = ref('')
     const doAddNewComment = (text, html) => {
         handleNewComment(text, null)
     }
@@ -270,26 +273,10 @@
                 content: text
             }
         ).then(res => {
-            comments.value = addLocalComment(comments.value, res.data)
+            loadComments()
             commentDialog.value.content = ''
+            newContent.value = ''
         })
-    }
-    const addLocalComment = (comments, data) => {
-        if (data.reply_to !== null) {
-            for (const i in comments) {
-                if (comments[i].id === data.reply_to) {
-                    comments[i].children.unshift(data)
-                    break
-                }
-                if (comments[i].children.length > 0) {
-                    comments[i].children = addLocalComment(comments[i].children, data)
-                }
-            }
-        } else {
-            comments.unshift(data)
-        }
-        commentsPaginator.value.count++
-        return comments
     }
     const handleUploadImage = (event, insertImage, files) => {
         let form = new FormData()
@@ -305,7 +292,7 @@
                     url: res.data[0].url,
                     desc: res.data[0].filename,
                     width: 'auto',
-                    height: '300px'
+                    height: 'auto'
                 })
             }
         }, err => {
@@ -345,24 +332,11 @@
                         http.delete(
                             '/doc/comment/' + id + '/'
                         ).then(() => {
-                            comments.value = removeLocalComment(comments.value, id)
+                            loadComments()
                         })
                     }
                 },
             })
-    }
-    const removeLocalComment = (comments, id) => {
-        for (const i in comments) {
-            if (comments[i].id === id) {
-                comments.splice(i, 1)
-                break
-            }
-            if (comments[i].children.length > 0) {
-                comments[i].children = removeLocalComment(comments[i].children, id)
-            }
-        }
-        commentsPaginator.value.count--
-        return comments
     }
 </script>
 
