@@ -2,7 +2,7 @@
     <div class="h-100">
         <el-scrollbar always>
             <div class="head-box" />
-            <HUserInfoBox :user-info="userInfo" :avatar-disabled="false" />
+            <HUserInfoBox :user-info="userInfo" />
             <div class="content-box">
                 <div>
                     <el-aside width="120px">
