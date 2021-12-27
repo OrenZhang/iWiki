@@ -15,7 +15,7 @@
                 left-toolbar="undo redo | h bold italic strikethrough quote | ul ol table hr tip emoji todo-list | link image code"
                 :toolbar="toolbar"
                 v-model="docData.content" :mode="editType ? 'editable' : 'edit'" right-toolbar="fullscreen preview toc sync-scroll" :placeholder="$t('content')"
-                :disabled-menus="[]" @image-click="imgClick" @upload-image="handleUploadImage" />
+                :disabled-menus="[]" @image-click="imgClick" @save="checkSave" @upload-image="handleUploadImage" />
             <el-drawer
                 :size="480"
                 v-model="publishDrawer.visible"
@@ -219,6 +219,13 @@
         }
         return attachmentsTmp.value
     })
+
+    // 保存
+    const checkSave = () => {
+        if (!checkDocData.value) {
+            publishDrawer.value.visible = true
+        }
+    }
 
     // 发布抽屉
     const publishDrawer = ref({
