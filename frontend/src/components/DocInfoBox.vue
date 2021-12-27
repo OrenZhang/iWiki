@@ -26,6 +26,9 @@
                     </el-link>
                 </div>
                 <div class="operate-box">
+                    <el-link type="primary" :href="globalContext.backEndUrl + '/doc/manage/' + docData.id + '/export/'" target="_blank" v-if="docData.creator === user.uid || isCollaborator">
+                        {{ $t('export') }}
+                    </el-link>
                     <el-link type="primary" :href="globalContext.siteUrl + 'publish/' + docData.id" v-if="docData.creator === user.uid || isCollaborator">
                         {{ $t('edit') }}
                     </el-link>

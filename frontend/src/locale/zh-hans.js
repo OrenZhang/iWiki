@@ -169,7 +169,8 @@ const zh = {
     docPublishStatistic: '文章发布统计',
     docEditing: '其他人正在编辑此文档，请稍后重试',
     mobileNotice: '当前页面暂未适配小屏设备',
-    backendAdmin: '后端'
+    backendAdmin: '后端',
+    export: '导出',
 }
 
 export default zh
