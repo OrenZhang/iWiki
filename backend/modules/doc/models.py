@@ -30,6 +30,9 @@ class DocBase(models.Model):
     attachments = models.JSONField(_("附件"), default=attachments_default)
     creator = models.CharField(_("创建人"), max_length=SHORT_CHAR_LENGTH)
     update_at = models.DateTimeField(_("更新时间"), auto_now=True)
+    update_by = models.CharField(
+        _("更新人"), max_length=SHORT_CHAR_LENGTH, null=True, blank=True
+    )
     is_publish = models.BooleanField(_("发布状态"), default=True)
     is_deleted = models.BooleanField(_("软删除"), default=False)
 

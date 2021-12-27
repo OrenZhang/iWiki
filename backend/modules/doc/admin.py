@@ -21,6 +21,7 @@ class DocAdmin(admin.ModelAdmin):
         "repo_name",
         "creator_name",
         "update_at",
+        "update_by_name",
         "is_publish",
         "is_deleted",
     ]
@@ -34,6 +35,10 @@ class DocAdmin(admin.ModelAdmin):
     @admin.display(description=_("创建人"))
     def creator_name(self, obj):
         return get_user_model().objects.get(uid=obj.creator).username
+
+    @admin.display(description=_("更新人"))
+    def update_by_name(self, obj):
+        return get_user_model().objects.get(uid=obj.update_by).username
 
 
 @admin.register(DocVersion)

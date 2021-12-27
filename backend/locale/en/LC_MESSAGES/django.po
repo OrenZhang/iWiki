@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-24 15:48+0800\n"
+"POT-Creation-Date: 2021-12-27 11:21+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,7 +58,8 @@ msgstr "User Module"
 msgid "用户ID"
 msgstr "UID"
 
-#: .\modules\account\models.py:42 .\modules\repo\admin.py:30
+#: .\modules\account\models.py:42 .\modules\doc\admin.py:58
+#: .\modules\doc\admin.py:73 .\modules\repo\admin.py:30
 msgid "用户名"
 msgstr "Username"
 
@@ -82,8 +83,8 @@ msgstr "Avatar"
 msgid "联系电话"
 msgstr "Phone Number"
 
-#: .\modules\account\models.py:48 .\modules\doc\models.py:34
-#: .\modules\doc\models.py:86 .\modules\repo\models.py:29
+#: .\modules\account\models.py:48 .\modules\doc\models.py:37
+#: .\modules\doc\models.py:97 .\modules\repo\models.py:29
 msgid "软删除"
 msgstr "Soft Delete"
 
@@ -100,7 +101,7 @@ msgid "用户名格式有误"
 msgstr "Incorrect username format"
 
 #: .\modules\account\serializers.py:23 .\modules\account\serializers.py:26
-#: .\modules\account\views.py:135 .\modules\doc\views\doc.py:333
+#: .\modules\account\views.py:135 .\modules\doc\views\doc.py:327
 msgid "用户名不能为空"
 msgstr "Username cannot be empty"
 
@@ -141,7 +142,7 @@ msgid "上传失败"
 msgstr "Upload Failed"
 
 #: .\modules\cos\admin.py:36 .\modules\cos\models.py:15
-#: .\modules\doc\admin.py:70 .\modules\doc\models.py:120
+#: .\modules\doc\admin.py:100 .\modules\doc\models.py:131
 msgid "操作人"
 msgstr "Operator"
 
@@ -180,18 +181,26 @@ msgstr[1] "Please upload files within %(limit)dM"
 msgid "上传失败，请稍后再试"
 msgstr "Upload failed, please try again later"
 
-#: .\modules\doc\admin.py:23 .\modules\repo\admin.py:26
+#: .\modules\doc\admin.py:31 .\modules\repo\admin.py:26
 #: .\modules\repo\models.py:20
 msgid "库名"
 msgstr "Repo Name"
 
-#: .\modules\doc\admin.py:27 .\modules\doc\models.py:31
-#: .\modules\doc\models.py:84 .\modules\repo\admin.py:15
+#: .\modules\doc\admin.py:35 .\modules\doc\models.py:31
+#: .\modules\doc\models.py:95 .\modules\repo\admin.py:15
 #: .\modules\repo\models.py:27
 msgid "创建人"
 msgstr "Creator"
 
-#: .\modules\doc\admin.py:43 .\modules\doc\admin.py:66
+#: .\modules\doc\admin.py:39 .\modules\doc\models.py:34
+msgid "更新人"
+msgstr "Update By"
+
+#: .\modules\doc\admin.py:54 .\modules\doc\models.py:28
+msgid "标题"
+msgstr "Title"
+
+#: .\modules\doc\admin.py:69 .\modules\doc\admin.py:96
 #, fuzzy
 #| msgid "文章ID"
 msgid "文章"
@@ -201,7 +210,7 @@ msgstr "Doc ID"
 msgid "文档模块"
 msgstr "Doc Module"
 
-#: .\modules\doc\models.py:21 .\modules\doc\models.py:43
+#: .\modules\doc\models.py:21 .\modules\doc\models.py:46
 msgid "仓库id"
 msgstr "Repo ID"
 
@@ -209,11 +218,7 @@ msgstr "Repo ID"
 msgid "可见范围"
 msgstr "Available"
 
-#: .\modules\doc\models.py:28
-msgid "标题"
-msgstr "Title"
-
-#: .\modules\doc\models.py:29 .\modules\doc\models.py:83
+#: .\modules\doc\models.py:29 .\modules\doc\models.py:94
 msgid "内容"
 msgstr "Content"
 
@@ -221,83 +226,83 @@ msgstr "Content"
 msgid "附件"
 msgstr "Attachments"
 
-#: .\modules\doc\models.py:32 .\modules\doc\models.py:85
+#: .\modules\doc\models.py:32 .\modules\doc\models.py:96
 msgid "更新时间"
 msgstr "Update At"
 
-#: .\modules\doc\models.py:33
+#: .\modules\doc\models.py:36
 msgid "发布状态"
 msgstr "Publish Status"
 
-#: .\modules\doc\models.py:47
+#: .\modules\doc\models.py:50
 msgid "文档"
 msgstr "Doc"
 
-#: .\modules\doc\models.py:55 .\modules\doc\models.py:105
+#: .\modules\doc\models.py:66 .\modules\doc\models.py:116
 msgid "版本id"
 msgstr "Version ID"
 
-#: .\modules\doc\models.py:60
+#: .\modules\doc\models.py:71
 msgid "文档版本"
 msgstr "Doc Version"
 
-#: .\modules\doc\models.py:67 .\modules\doc\models.py:117
+#: .\modules\doc\models.py:78 .\modules\doc\models.py:128
 msgid "文章ID"
 msgstr "Doc ID"
 
-#: .\modules\doc\models.py:68
+#: .\modules\doc\models.py:79
 msgid "协作人ID"
 msgstr "Collaborator ID"
 
-#: .\modules\doc\models.py:69
+#: .\modules\doc\models.py:80
 msgid "添加时间"
 msgstr "Add At"
 
-#: .\modules\doc\models.py:73
+#: .\modules\doc\models.py:84
 msgid "协作成员"
 msgstr "Collaborator"
 
-#: .\modules\doc\models.py:81
+#: .\modules\doc\models.py:92
 msgid "文档id"
 msgstr "Doc ID"
 
-#: .\modules\doc\models.py:82
+#: .\modules\doc\models.py:93
 msgid "父级评论"
 msgstr "Parent Comment"
 
-#: .\modules\doc\models.py:97
+#: .\modules\doc\models.py:108
 msgid "评论"
 msgstr "Comment"
 
-#: .\modules\doc\models.py:110
+#: .\modules\doc\models.py:121
 msgid "评论版本"
 msgstr "Comment Version"
 
-#: .\modules\doc\models.py:118 .\modules\repo\models.py:28
+#: .\modules\doc\models.py:129 .\modules\repo\models.py:28
 msgid "创建时间"
 msgstr "Create At"
 
-#: .\modules\doc\models.py:119
+#: .\modules\doc\models.py:130
 msgid "置顶到期时间"
 msgstr "Pin To"
 
-#: .\modules\doc\models.py:121
+#: .\modules\doc\models.py:132
 msgid "使用中"
 msgstr "in use"
 
-#: .\modules\doc\models.py:125
+#: .\modules\doc\models.py:136
 msgid "置顶文章"
 msgstr "Pin Doc"
 
-#: .\modules\doc\views\doc.py:135
+#: .\modules\doc\views\doc.py:129
 msgid "已添加该用户为协作者，请勿重复添加"
 msgstr "Duplicated Add"
 
-#: .\modules\doc\views\doc.py:157
+#: .\modules\doc\views\doc.py:151
 msgid "已有用户编辑中"
 msgstr "Someone else is editing"
 
-#: .\modules\doc\views\doc.py:380
+#: .\modules\doc\views\doc.py:377
 msgid "搜索关键字不能为空"
 msgstr "Search keyword cannot be empty"
 
@@ -350,11 +355,11 @@ msgstr "Repo Member"
 msgid "库名重复"
 msgstr "Duplicated RepoName"
 
-#: .\modules\repo\views.py:96
+#: .\modules\repo\views.py:88
 msgid "该申请不存在"
 msgstr "Not Found"
 
-#: .\modules\repo\views.py:335
+#: .\modules\repo\views.py:337
 #, python-format
 msgid "已申请或加入%(name)s"
 msgid_plural "已申请或加入%(name)s"
