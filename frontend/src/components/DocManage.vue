@@ -54,7 +54,7 @@
                     <el-button type="text" @click="goTo('publish/' + scope.row.id)">
                         {{ $t('edit') }}
                     </el-button>
-                    <el-button type="text" class="el-button--danger" @click="showDeleteConfirm(scope.row)">
+                    <el-button type="text" @click="showDeleteConfirm(scope.row)">
                         {{ $t('delete') }}
                     </el-button>
                 </template>
@@ -127,7 +127,6 @@
         const content = t('deleteDocConfirmContent', { title: row.title })
         ElMessageBox.alert(content, t('deleteConfirm'), {
             confirmButtonText: t('deleteConfirmed'),
-            confirmButtonClass: 'el-button--danger',
             callback: (action) => {
                 if (action === 'confirm') {
                     http.delete(
@@ -161,10 +160,6 @@
 
     .el-table {
         margin-top: 20px;
-    }
-
-    .el-button--danger :deep(span) {
-        color: #f56c6c;
     }
 
     .tool-bar .el-input {

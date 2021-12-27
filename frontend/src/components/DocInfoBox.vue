@@ -122,7 +122,6 @@
             t('deleteConfirm'),
             {
                 confirmButtonText: t('deleteConfirmed'),
-                confirmButtonClass: 'el-button--danger',
                 callback: (action) => {
                     if (action === 'confirm') {
                         doDelete()
