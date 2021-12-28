@@ -1,4 +1,4 @@
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.utils.translation import gettext_lazy as _
 from rest_framework import exceptions, status
 from rest_framework.exceptions import APIException, Throttled, ValidationError
@@ -52,6 +52,35 @@ def exception_handler(exc, context):
         )
 
     return None
+
+
+def django_exception_handler(handler):
+    return JsonResponse(
+        {
+            "code": handler.default_code,
+            "result": False,
+            "data": None,
+            "msg": handler.default_detail,
+        },
+        status=handler.status_code,
+        json_dumps_params={"ensure_ascii": False},
+    )
+
+
+def bad_request(request, exception):
+    return django_exception_handler(OperationError)
+
+
+def permission_denied(request, exception):
+    return django_exception_handler(PermissionDenied)
+
+
+def page_not_found(request, exception):
+    return django_exception_handler(Error404)
+
+
+def server_error(request):
+    return django_exception_handler(ServerError)
 
 
 class ServerError(APIException):
