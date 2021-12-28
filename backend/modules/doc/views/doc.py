@@ -134,27 +134,17 @@ class DocManageView(ModelViewSet):
         DocCollaborator.objects.filter(doc_id=instance.id, uid=uid).delete()
         return Response()
 
-    @action(detail=True, methods=["POST"])
-    def set_edit_status(self, request, *args, **kwargs):
+    @action(detail=True, methods=["GET"])
+    def edit_status(self, request, *args, **kwargs):
         """为文章添加编辑中状态"""
         instance = self.get_object()
-        cache_key = f"{self.__class__.__name__}:edit_status:{instance.id}"
+        cache_key = f"{self.__class__.__name__}:{self.action}:{instance.id}"
         uid = cache.get(cache_key)
         if uid is None or uid == request.user.uid:
             cache.set(cache_key, request.user.uid, 60)
+            return Response(True)
         else:
-            raise OperationError(_("已有用户编辑中"))
-        return Response()
-
-    @action(detail=True, methods=["GET"])
-    def check_edit_status(self, request, *args, **kwargs):
-        """检测文章编辑中状态"""
-        instance = self.get_object()
-        cache_key = f"{self.__class__.__name__}:edit_status:{instance.id}"
-        uid = cache.get(cache_key)
-        if uid is None or uid == request.user.uid:
             return Response(False)
-        return Response(True)
 
     @action(detail=True, methods=["GET"])
     def export(self, request, *args, **kwargs):
@@ -323,8 +313,8 @@ class DocPublicView(GenericViewSet):
             r_type=RepoTypeChoices.PUBLIC, is_deleted=False
         ).values("id")
         queryset = self.queryset.filter(repo_id__in=public_repo_ids).order_by("-id")[
-            :10
-        ]
+                   :10
+                   ]
         serializer = DocListSerializer(queryset, many=True)
         cache.set(cache_key, serializer.data, 1800)
         return Response(serializer.data)
