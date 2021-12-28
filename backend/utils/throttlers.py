@@ -23,7 +23,7 @@ class UnAuthSMSSendThrottle(SimpleRateThrottle):
 
 class DocSearchThrottle(SimpleRateThrottle):
     num_requests = 1
-    duration = 1
+    duration = 3
 
     def get_rate(self):
         return {}

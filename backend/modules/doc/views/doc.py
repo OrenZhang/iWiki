@@ -166,15 +166,10 @@ class DocManageView(ModelViewSet):
         filename = "{}.md".format(instance.title.replace(" ", "").replace("/", ""))
         file_path = os.path.join(file_dir, filename)
         with open(file_path, "w", encoding="utf-8") as file:
-            file.write(f"# {instance.title}")
-            file.write("\n")
             file.write(instance.content)
-            file.write("\n\n")
             for comment in comments:
-                file.write(f"# {comment.username}")
-                file.write("\n")
+                file.write("\n\n---\n\n")
                 file.write(comment.content)
-                file.write("\n\n")
         file = open(file_path, "rb")
         response = FileResponse(file)
         response["Content-Type"] = "application/octet-stream"
@@ -406,19 +401,22 @@ class SearchDocView(ThrottleAPIView):
             "JOIN `auth_user` au ON au.uid = dd.creator "
             "WHERE NOT rr.is_deleted AND (ru.uid = %s OR rr.r_type = %s) "
             "AND NOT dd.is_deleted AND dd.is_publish AND (dd.available = %s OR dd.creator = %s) "
-            "AND ({}) "
+            "AND (({}) OR ({})) "
             "GROUP BY dd.id "
             "ORDER BY dd.id DESC;"
         )
         # 处理 key
-        extend_sqls = []
+        extend_title_sqls = []
+        extend_content_sqls = []
         params_keys = []
         for key in search_key:
             if key:
-                extend_sqls.append(" dd.title like %s OR dd.content like %s ")
-                params_keys.extend([f"%{key}%", f"%{key}%"])
-        extend_sql = "OR".join(extend_sqls)
-        sql = sql.format(extend_sql)
+                extend_title_sqls.append(" dd.title like %s ")
+                extend_content_sqls.append(" dd.content like %s ")
+                params_keys.append(f"%{key}%")
+        extend_title_sql = "AND".join(extend_title_sqls)
+        extend_content_sql = "AND".join(extend_content_sqls)
+        sql = sql.format(extend_title_sql, extend_content_sql)
         docs = Doc.objects.raw(
             sql,
             [
@@ -426,6 +424,7 @@ class SearchDocView(ThrottleAPIView):
                 RepoTypeChoices.PUBLIC,
                 DocAvailableChoices.PUBLIC,
                 request.user.uid,
+                *params_keys,
                 *params_keys,
             ],
         )
