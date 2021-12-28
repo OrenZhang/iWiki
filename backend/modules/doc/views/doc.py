@@ -313,8 +313,8 @@ class DocPublicView(GenericViewSet):
             r_type=RepoTypeChoices.PUBLIC, is_deleted=False
         ).values("id")
         queryset = self.queryset.filter(repo_id__in=public_repo_ids).order_by("-id")[
-                   :10
-                   ]
+            :10
+        ]
         serializer = DocListSerializer(queryset, many=True)
         cache.set(cache_key, serializer.data, 1800)
         return Response(serializer.data)
