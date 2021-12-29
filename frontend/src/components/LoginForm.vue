@@ -15,10 +15,7 @@
             </el-input>
         </el-form-item>
         <div style="display: flex">
-            <el-button style="width: 50%" type="primary" :disabled="!checkForm" :loading="loading" @click="doLogin(false)">
-                {{ $t('login') }}
-            </el-button>
-            <el-button style="width: 50%" type="primary" :disabled="!checkForm" :loading="loading" @click="doLogin(true)">
+            <el-button style="width: 100%" type="primary" :disabled="!checkForm" :loading="loading" @click="doLogin(true)">
                 {{ $t('login2refresh') }}
             </el-button>
         </div>

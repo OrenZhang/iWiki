@@ -49,7 +49,7 @@ const zh = {
     useJPGorPNG: '请使用JPG或PNG格式照片',
     upto2M: '头像大小不能超过2M',
     login: '登录',
-    login2refresh: '登录并刷新本页',
+    login2refresh: '登录并刷新',
     loginSuccess: '登录成功',
     Username: '用户名',
     Password: '密码',
@@ -171,6 +171,7 @@ const zh = {
     mobileNotice: '当前页面暂未适配小屏设备',
     backendAdmin: '后端',
     export: '导出',
+    weixinLogin: '微信登录',
 }
 
 export default zh
