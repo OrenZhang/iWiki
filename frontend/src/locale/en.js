@@ -171,6 +171,7 @@ const en = {
     mobileNotice: 'This page is not yet compatible with small screen devices.',
     backendAdmin: 'Backend',
     export: 'Export',
+    weixinLogin: '微信登录',
 }
 
 export default en
