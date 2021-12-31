@@ -107,26 +107,11 @@
         http.get(
             '/repo/manage/' + props.repoId + '/load_user/?page=' + paginator.value.page + '&size=' + paginator.value.size + '&searchKey=' + searchKey.value
         ).then(res => {
-            members.value = res.data.results.sort((a, b) => {
-                return getLevel(b) - getLevel(a)
-            })
+            members.value = res.data.results
             paginator.value.count = res.data.count
         })
     }
     onMounted(loadMembers)
-
-    const getLevel = (member) => {
-        switch (member.u_type) {
-            case 'visitor':
-                return 4
-            case 'owner':
-                return 3
-            case 'admin':
-                return 2
-            case 'member':
-                return 1
-        }
-    }
 
     watch(() => props.repoId, () => {
         loadMembers()
