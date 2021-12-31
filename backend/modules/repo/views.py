@@ -144,12 +144,17 @@ class RepoView(ModelViewSet):
         """库内所有用户"""
         instance = self.get_object()
         sql = (
-            "SELECT au.username, ru.* "
-            "FROM `auth_user` au "
+            "SELECT au.username, ru.* FROM `auth_user` au "
             "JOIN `repo_user` ru ON au.uid = ru.uid "
-            "WHERE ru.repo_id = {} "
-            "AND au.username like %s "
-        ).format(instance.id)
+            "WHERE ru.repo_id = {} AND au.username like %s "
+            "ORDER BY FIELD(ru.u_type, '{}', '{}', '{}', '{}') "
+        ).format(
+            instance.id,
+            UserTypeChoices.VISITOR,
+            UserTypeChoices.OWNER,
+            UserTypeChoices.ADMIN,
+            UserTypeChoices.MEMBER,
+        )
         search_key = request.GET.get("searchKey")
         search_key = f"%%{search_key}%%" if search_key else "%%"
         repo_users = RepoUser.objects.raw(sql, [search_key])
@@ -177,7 +182,7 @@ class RepoView(ModelViewSet):
             raise OperationError()
         RepoUser.objects.filter(
             Q(repo_id=instance.id) & Q(uid=uid) & ~Q(u_type=UserTypeChoices.OWNER)
-        ).update(u_type=u_type)
+        ).update(u_type=u_type, operator=request.user.uid)
         return Response()
 
     @action(detail=True, methods=["GET"])
@@ -206,7 +211,9 @@ class RepoView(ModelViewSet):
         """删除文章"""
         instance = self.get_object()
         doc_id = request.data.get("docID", "")
-        Doc.objects.filter(id=doc_id, repo_id=instance.id).update(is_deleted=True)
+        Doc.objects.filter(id=doc_id, repo_id=instance.id).update(
+            is_deleted=True, update_by=request.user.uid
+        )
         return Response()
 
     @action(detail=True, methods=["GET"])
