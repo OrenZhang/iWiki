@@ -20,9 +20,10 @@
         <el-table size="medium" :data="docs" v-show="!loading">
             <el-table-column :label="$t('title')">
                 <template #default="scope">
-                    <el-tooltip :content="scope.row.repo_name" placement="top" effect="light">
-                        <span>{{ scope.row.title }}</span>
-                    </el-tooltip>
+                    <el-tag size="small" effect="plain">
+                        {{ scope.row.repo_name }}
+                    </el-tag>
+                    {{ scope.row.title }}
                 </template>
             </el-table-column>
             <el-table-column :label="$t('docType')" width="80px">
