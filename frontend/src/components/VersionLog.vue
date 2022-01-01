@@ -94,11 +94,8 @@
 
     const changeVersion = (row) => {
         curVersion.value = row.vid
-    }
-
-    watch(() => curVersion.value, () => {
         loadVersionData()
-    })
+    }
 </script>
 
 <style scoped>
