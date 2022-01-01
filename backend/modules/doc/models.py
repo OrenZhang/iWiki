@@ -49,7 +49,11 @@ class Doc(DocBase):
         db_table = f"{DB_PREFIX}doc"
         verbose_name = _("文档")
         verbose_name_plural = verbose_name
-        index_together = [["repo_id", "creator"], ["creator", "is_deleted"]]
+        index_together = [
+            ["repo_id", "creator"],
+            ["creator", "is_deleted"],
+            ["update_at", "is_deleted", "available"],
+        ]
 
     @transaction.atomic
     def delete(self, using=None, keep_parents=False):

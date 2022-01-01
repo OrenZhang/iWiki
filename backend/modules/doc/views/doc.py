@@ -303,7 +303,7 @@ class DocPublicView(GenericViewSet):
         """近期文章"""
         cache_key = f"{self.__class__.__name__}:{self.action}"
         cache_data = cache.get(cache_key)
-        if cache_data:
+        if cache_data is not None:
             return Response(cache_data)
         # 公开库的近期文章
         public_repo_ids = Repo.objects.filter(
@@ -321,7 +321,7 @@ class DocPublicView(GenericViewSet):
         """热门库"""
         cache_key = f"{self.__class__.__name__}:{self.action}"
         cache_data = cache.get(cache_key)
-        if cache_data:
+        if cache_data is not None:
             return Response(cache_data)
         sql = (
             "SELECT rr.*, dd.repo_id, COUNT(1) 'count' "
@@ -366,16 +366,16 @@ class DocPublicView(GenericViewSet):
         """文章发布图表数据"""
         cache_key = f"{self.__class__.__name__}:{self.action}"
         cache_data = cache.get(cache_key)
-        if cache_data:
+        if cache_data is not None:
             return Response(cache_data)
         today = datetime.datetime.today()
         last_day = today - datetime.timedelta(days=30)
         sql = (
             "SELECT dd.id, DATE_FORMAT(dd.update_at, \"%%m-%%d\") 'date', COUNT(1) 'count' "
             "FROM `doc_doc` dd "
-            "WHERE dd.update_at>='{}' "
+            "WHERE dd.update_at>='{}' AND NOT dd.is_deleted AND dd.available = '{}' "
             "GROUP BY DATE(dd.update_at); "
-        ).format(last_day)
+        ).format(last_day, DocAvailableChoices.PUBLIC)
         docs_count = Doc.objects.raw(sql)
         serializer = DocPublishChartSerializer(docs_count, many=True)
         data = {item["date"]: item["count"] for item in serializer.data}

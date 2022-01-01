@@ -164,7 +164,7 @@ class UserInfoView(GenericViewSet):
         # 获取缓存
         cache_key = f"UserInfoView:user_info:{uid}"
         cache_data = cache.get(cache_key)
-        if cache_data:
+        if cache_data is not None:
             return cache_data
         # 初始化数据
         data = {
@@ -218,7 +218,7 @@ class UserInfoView(GenericViewSet):
         """用户活跃排行"""
         cache_key = f"{self.__class__.__name__}:{self.action}"
         cache_data = cache.get(cache_key)
-        if cache_data:
+        if cache_data is not None:
             return Response(cache_data)
         users = USER_MODEL.objects.filter(active_index__gt=0).order_by("-active_index")[
             :10
