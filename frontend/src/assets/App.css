@@ -112,11 +112,12 @@ ul {
     padding-left: 20px;
 }
 
-.v-md-editor-preview p {
-    font-size: 14px;
-}
-
-.v-md-editor-preview .v-md-editor__todo-list-item {
+.v-md-editor-preview p,
+.v-md-editor-preview .v-md-editor__todo-list-item,
+td,
+th,
+li,
+svg div {
     font-size: 14px;
 }
 
@@ -227,11 +228,6 @@ ul {
     font-size: 48px;
     color: white;
     font-weight: bold;
-}
-
-td,
-li {
-    font-size: 14px;
 }
 
 .vuepress-markdown-body i {
