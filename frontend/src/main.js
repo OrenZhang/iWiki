@@ -23,6 +23,10 @@ import createTodoListPlugin from '@kangc/v-md-editor/lib/plugins/todo-list/index
 import '@kangc/v-md-editor/lib/plugins/todo-list/todo-list.css'
 import createLineNumbertPlugin from '@kangc/v-md-editor/lib/plugins/line-number/index'
 import createAlignPlugin from '@kangc/v-md-editor/lib/plugins/align'
+import createHighlightLinesPlugin from '@kangc/v-md-editor/lib/plugins/highlight-lines/index'
+import '@kangc/v-md-editor/lib/plugins/highlight-lines/highlight-lines.css'
+import createCopyCodePlugin from '@kangc/v-md-editor/lib/plugins/copy-code/index'
+import '@kangc/v-md-editor/lib/plugins/copy-code/copy-code.css'
 import markdownItSub from 'markdown-it-sub'
 import markdownItSup from 'markdown-it-sup'
 import enUS from '@kangc/v-md-editor/lib/lang/en-US'
@@ -33,7 +37,10 @@ VueMarkdownEditor.use(vuepressTheme, {
     extend(md){
         md.set().use(markdownItSub)
         md.set().use(markdownItSup)
-    }
+    },
+    codeHighlightExtensionMap: {
+        vue: 'html'
+    },
 })
 VueMarkdownEditor.use(createEmojiPlugin())
 VueMarkdownEditor.use(createKatexPlugin())
@@ -41,6 +48,8 @@ VueMarkdownEditor.use(createMermaidPlugin())
 VueMarkdownEditor.use(createTodoListPlugin())
 VueMarkdownEditor.use(createLineNumbertPlugin())
 VueMarkdownEditor.use(createAlignPlugin())
+VueMarkdownEditor.use(createHighlightLinesPlugin())
+VueMarkdownEditor.use(createCopyCodePlugin())
 const userLocale = localStorage.getItem('locale')
 if (userLocale === 'en') {
     VueMarkdownEditor.lang.use('en-US', enUS)
