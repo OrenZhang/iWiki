@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "modules.cos",
     "modules.i18n",
     "modules.version",
+    "modules.conf",
 ]
 
 # 中间件
