@@ -103,7 +103,7 @@
                     <el-button @click="SaveContent()" :disabled="checkDocData">
                         {{ $t('saveAsDraft') }}
                     </el-button>
-                    <el-button type="success" @click="SaveContent(true)" :disabled="checkDocData">
+                    <el-button type="success" @click="SaveContent(true)" :disabled="checkDocDataAndRepo">
                         {{ $t('Publish') }}
                     </el-button>
                 </div>
@@ -206,9 +206,8 @@
             name: t('private')
         }
     ])
-    const checkDocData = computed(() => {
-        return docData.value.repo_id === '' || docData.value.title === '' || docData.value.content === ''
-    })
+    const checkDocData = computed(() => docData.value.title === '' || docData.value.content === '')
+    const checkDocDataAndRepo = computed(() => docData.value.repo_id === '' || docData.value.title === '' || docData.value.content === '')
     const attachments = computed(() => {
         const attachmentsTmp = ref([])
         for (const key in docData.value.attachments) {
