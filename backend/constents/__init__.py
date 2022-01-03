@@ -1,5 +1,6 @@
 from constents.repo import *  # noqa
 from constents.doc import *  # noqa
+from constents.conf import *  # noqa
 
 VERIFY_CODE_LENGTH = 6
 USERNAME_MIN_LENGTH = 4
