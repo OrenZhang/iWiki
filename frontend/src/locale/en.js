@@ -171,7 +171,9 @@ const en = {
     mobileNotice: 'This page is not yet compatible with small screen devices.',
     backendAdmin: 'Backend',
     export: 'Export',
-    weixinLogin: '微信登录',
+    weixinLogin: 'WeChat Login',
+    usernameOrPhone: 'Username / Phone',
+    uLogin: 'User',
 }
 
 export default en
