@@ -108,7 +108,11 @@ html, body {
     }
 }
 
-ul {
+.vuepress-markdown-body ol, .vuepress-markdown-body ul {
+    padding-left: 24px!important;
+}
+
+ul, ol {
     padding-left: 20px;
 }
 
