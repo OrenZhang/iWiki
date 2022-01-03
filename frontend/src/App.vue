@@ -25,8 +25,8 @@
                                 iWiki
                             </h2>
                         </router-link>
-                        <el-menu :default-active="activeIndex" :router="false" mode="horizontal" :ellipsis="false" @select="goTo">
-                            <el-menu-item v-for="item in menu" v-show="!item.disabled" :key="item.index" :route="item.route" :index="item.index">
+                        <el-menu :default-active="activeIndex" :router="false" mode="horizontal" :ellipsis="false">
+                            <el-menu-item v-for="item in menu" v-show="!item.disabled" :key="item.index" :route="item.route" :index="item.index" @click="goTo(item)">
                                 {{ item.name }}
                             </el-menu-item>
                         </el-menu>
@@ -133,6 +133,7 @@
                 name: 'Home'
             },
             index: 'home',
+            path: '',
             disabled: false
         },
         {
@@ -141,6 +142,7 @@
                 name: 'Repo'
             },
             index: 'repo',
+            path: 'repo',
             disabled: false
         },
         {
@@ -149,6 +151,7 @@
                 name: 'Self'
             },
             index: 'user',
+            path: 'user',
             disabled: false
         },
         {
@@ -157,6 +160,7 @@
                 name: 'Publish'
             },
             index: 'publish',
+            path: 'publish',
             disabled: false
         },
         {
@@ -165,11 +169,12 @@
                 name: 'Admin'
             },
             index: 'admin',
+            path: 'admin',
             disabled: computed(() => !isManager.value)
         }
     ])
-    const goTo = (index) => {
-        window.open(globalContext.siteUrl + index)
+    const goTo = (item) => {
+        window.open(globalContext.siteUrl + item.path)
     }
 
     // 管理员检测
