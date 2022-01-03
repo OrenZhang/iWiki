@@ -19,13 +19,13 @@
             <el-header class="app-header" height="61px" v-if="!isMobile">
                 <div class="el-menu-demo">
                     <div class="menu">
-                        <router-link to="/" class="header-menu-home">
+                        <router-link :to="globalContext.siteUrl" target="_blank" class="header-menu-home">
                             <img src="/favicon.png" alt="logo.jpg" style="width: 32px; height: 32px; margin: 0 10px 0 0;">
                             <h2 class="header-menu-home-title">
                                 iWiki
                             </h2>
                         </router-link>
-                        <el-menu :default-active="activeIndex" :router="true" mode="horizontal" :ellipsis="false">
+                        <el-menu :default-active="activeIndex" :router="false" mode="horizontal" :ellipsis="false" @select="goTo">
                             <el-menu-item v-for="item in menu" v-show="!item.disabled" :key="item.index" :route="item.route" :index="item.index">
                                 {{ item.name }}
                             </el-menu-item>
@@ -68,6 +68,7 @@
     import http from './api'
     import EditUserInfo from './components/EditUserInfo.vue'
     import VersionLog from './components/VersionLog.vue'
+    import globalContext from './context'
 
     // 国际化
     const { ctx } = getCurrentInstance()
@@ -167,6 +168,9 @@
             disabled: computed(() => !isManager.value)
         }
     ])
+    const goTo = (index) => {
+        window.open(globalContext.siteUrl + index)
+    }
 
     // 管理员检测
     const isManager = ref(false)
