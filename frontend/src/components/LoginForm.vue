@@ -1,7 +1,7 @@
 <template>
     <el-form label-position="left" label-width="80px">
-        <el-form-item :label="$t('Username')">
-            <el-input v-model="loginData.username" :minlength="4" :maxlength="24" type="text" clearable :disabled="loading">
+        <el-form-item :label="$t('uLogin')">
+            <el-input :placeholder="$t('usernameOrPhone')" v-model="loginData.username" :minlength="4" :maxlength="24" type="text" clearable :disabled="loading">
                 <template #prefix>
                     <i class="fa-solid fa-user h-center" style="margin-left: 6px;" />
                 </template>

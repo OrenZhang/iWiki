@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 
 USER_MODEL = get_user_model()
 
@@ -14,7 +15,9 @@ class ModelBackend(object):
             return None
         # 校验密码
         try:
-            user = USER_MODEL.objects.get(username=username, is_deleted=False)
+            user = USER_MODEL.objects.get(
+                Q(Q(username=username) | Q(phone=username)) & Q(is_deleted=False)
+            )
         except USER_MODEL.DoesNotExist:
             return None
         if user.check_password(password):

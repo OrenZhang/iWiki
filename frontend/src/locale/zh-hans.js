@@ -172,6 +172,8 @@ const zh = {
     backendAdmin: '后端',
     export: '导出',
     weixinLogin: '微信登录',
+    usernameOrPhone: '用户名 / 手机号',
+    uLogin: '用户',
 }
 
 export default zh
