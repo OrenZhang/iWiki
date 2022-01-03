@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-loading.fullscreen.lock="fullLoading">
         <el-skeleton :rows="6" animated v-if="loading" />
         <div v-if="!loading" class="comment-container">
             <v-md-editor
@@ -158,6 +158,7 @@
     const user = computed(() => store.state.user)
 
     // 加载状态
+    const fullLoading = ref(false)
     const loading = ref(false)
     const setLoading = (status) => {
         if (status) {
@@ -265,6 +266,7 @@
 
     // 新评论
     const handleNewComment = (text, reply_to) => {
+        fullLoading.value = true
         http.post(
             '/doc/comment/',
             {
@@ -276,9 +278,14 @@
             loadComments()
             commentDialog.value.content = ''
             newContent.value = ''
+        }).finally(() => {
+            setTimeout(() => {
+                fullLoading.value = false
+            }, 600)
         })
     }
     const handleUploadImage = (event, insertImage, files) => {
+        fullLoading.value = true
         let form = new FormData()
         form.append('file', files[0])
         http({
@@ -297,9 +304,14 @@
             }
         }, err => {
             message(err.data.msg, 'error')
+        }).finally(() => {
+            setTimeout(() => {
+                fullLoading.value = false
+            }, 600)
         })
     }
     const handleUpdateComment = (text, id) => {
+        fullLoading.value = true
         http.patch(
             '/doc/comment/' + id + '/',
             {
@@ -307,6 +319,10 @@
             }
         ).then(() => {
             comments.value = updateLocalContent(id, text, comments.value)
+        }).finally(() => {
+            setTimeout(() => {
+                fullLoading.value = false
+            }, 600)
         })
     }
     const updateLocalContent = (id, text, comments) => {
