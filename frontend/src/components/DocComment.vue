@@ -11,7 +11,7 @@
             <el-card v-for="comment in comments" :key="comment.id" class="comment-box">
                 <div class="card-header">
                     <div class="author-box">
-                        <el-link class="user-link" target="_blank" type="primary">
+                        <el-link class="user-link" :href="globalContext.siteUrl + 'user/' + comment.username" target="_blank" type="primary">
                             {{ comment.username }}
                         </el-link>
                         &nbsp;
@@ -96,6 +96,7 @@
     import { useStore } from 'vuex'
     import { ElMessageBox } from 'element-plus'
     import { useI18n } from 'vue-i18n'
+    import globalContext from '../context'
 
     const { t } = useI18n()
     

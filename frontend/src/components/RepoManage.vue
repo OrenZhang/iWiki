@@ -32,6 +32,10 @@
             <el-table-column :label="$t('operation')" width="120px">
                 <template #default="scope">
                     <el-button
+                        type="text" @click="goTo(globalContext.siteUrl + 'repo/' + scope.row.id)">
+                        {{ $t('open') }}
+                    </el-button>
+                    <el-button
                         type="text" @click="showExitConfirm(scope.row)"
                         :disabled="scope.row.id === 1 || scope.row.creator === user.uid">
                         {{ $t('exit') }}
@@ -49,6 +53,7 @@
     import { ElMessageBox } from 'element-plus'
     import { useStore } from 'vuex'
     import { useI18n } from 'vue-i18n'
+    import globalContext from '../context'
     
     const { t } = useI18n()
     
@@ -117,6 +122,10 @@
                 }
             },
         })
+    }
+
+    const goTo = (url) => {
+        window.open(url)
     }
 </script>
 
