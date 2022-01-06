@@ -74,6 +74,9 @@
     .doc-container .el-aside {
         display: none;
     }
+    .doc-container .el-main {
+        padding: 0;
+    }
 }
 
 .content-box :deep(.vuepress-markdown-body) {

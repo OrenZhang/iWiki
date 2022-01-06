@@ -311,7 +311,7 @@ svg div {
     align-items: center;
     justify-content: center;
     font-size: 48px;
-    color: var(--el-text-color-primary);
+    color: var(--el-color-white);
     font-weight: bold;
 }
 
