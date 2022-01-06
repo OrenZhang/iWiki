@@ -15,7 +15,7 @@
                             {{ comment.username }}
                         </el-link>
                         &nbsp;
-                        <div style="color: #909399; font-size: 12px;" class="update-at">
+                        <div style="color: var(--el-text-color-secondary); font-size: 12px;" class="update-at">
                             {{ comment.update_at }}
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                                 <el-link class="user-link" target="_blank" type="primary">
                                     {{ childComment.username }}
                                 </el-link>
-                                <div style="color: #909399; font-size: 12px;" class="update-at">
+                                <div style="color: var(--el-text-color-secondary); font-size: 12px;" class="update-at">
                                     {{ childComment.update_at }}
                                 </div>
                             </div>

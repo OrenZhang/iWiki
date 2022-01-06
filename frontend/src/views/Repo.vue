@@ -38,7 +38,7 @@
             <el-form label-width="60px" label-position="left">
                 <el-form-item :label="$t('repoName')">
                     <el-input v-model="createDialog.data.name" />
-                    <div style="color: #F56C6C; font-size: 12px; margin-bottom: -20px;">
+                    <div style="color: var(--el-color-danger); font-size: 12px; margin-bottom: -20px;">
                         {{ $t('repoNameWarning') }}
                     </div>
                 </el-form-item>
@@ -178,7 +178,7 @@
     .search-box :deep(.el-button),
     .search-box :deep(.el-select-v2__wrapper) {
         border: unset;
-        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+        box-shadow: var(--el-box-shadow-light);
     }
 
     .repo-container {

@@ -129,9 +129,9 @@
         padding: 40px;
         box-sizing: border-box;
         border-radius: 5px;
-        background: rgba(255, 255, 255, 0.8);
+        background: var(--u-bg-color-login);
         min-height: 300px;
-        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+        box-shadow: var(--el-box-shadow-light);
     }
 
     .user-avatars {
@@ -150,7 +150,7 @@
     }
 
     .head-avatar {
-        background: white;
+        background: var(--el-color-white);
         cursor: unset!important;
     }
 

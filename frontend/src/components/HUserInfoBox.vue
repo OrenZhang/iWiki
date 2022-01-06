@@ -129,19 +129,19 @@
     }
 
     .user-info-box .el-avatar {
-        background: white;
-        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+        background: var(--el-color-white);
+        box-shadow: var(--el-box-shadow-light);
     }
 
     .user-info-box i {
         font-size: 48px;
         margin-top: 24px;
-        color: #8cc5ff;
+        color: var(--el-color-primary-light-4);
     }
 
     .user-info-text {
         margin-left: 20px;
-        color: white;
+        color: var(--el-color-white);
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -157,7 +157,7 @@
     .user-info-text p {
         margin: 0;
         font-size: 14px;
-        color: #606266;
+        color: var(--el-text-color-regular);
     }
 
     .user-info-box > div {
@@ -168,8 +168,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-        background: white;
+        box-shadow: var(--el-box-shadow-light);
+        background: var(--el-color-white);
         border-radius: 5px;
         margin-left: 10px;
         box-sizing: border-box;
@@ -183,12 +183,12 @@
 
     .user-statistic-single p {
         margin: 20px 0 0 0;
-        color: #409EFF;
+        color: var(--el-color-primary);
     }
 
     .edit-info {
         margin-left: 10px;
-        background: rgba(255, 255, 255, 0.8);
+        background: var(--u-bg-color-login);
         border: none;
         cursor: pointer;
     }

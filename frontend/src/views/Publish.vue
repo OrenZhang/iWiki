@@ -58,7 +58,7 @@
                             <el-table-column width="40">
                                 <template #default="scope">
                                     <el-button type="text" @click="removeAttachment(scope.row)">
-                                        <i class="fa-solid fa-times" style="color: #F56C6C" />
+                                        <i class="fa-solid fa-times" style="color: var(--el-color-danger)" />
                                     </el-button>
                                 </template>
                             </el-table-column>

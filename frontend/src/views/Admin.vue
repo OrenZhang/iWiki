@@ -60,7 +60,7 @@
                 {{ $t('deleteRepoConfirmMsg1') }}
             </p>
             <p>
-                {{ $t('deleteRepoConfirmMsg2') }}<span style="font-weight: bold; color: #F56C6C">{{ repoName }}</span>{{ $t('deleteRepoConfirmMsg3') }}
+                {{ $t('deleteRepoConfirmMsg2') }}<span style="font-weight: bold; color: var(--el-color-danger)">{{ repoName }}</span>{{ $t('deleteRepoConfirmMsg3') }}
             </p>
             <el-input v-model="deleteConfirmStr" style="width: 100%" />
             <template #footer>

@@ -15,7 +15,7 @@
                 @current-change="handlePageChange" @size-change="handleSizeChange" />
         </div>
         <div class="admin-doc-main">
-            <el-table :data="docs" stripe>
+            <el-table :data="docs">
                 <el-table-column :label="$t('title')">
                     <template #default="scope">
                         <el-link type="primary" :underline="false" @click="goTo(scope.row)">

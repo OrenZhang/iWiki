@@ -18,7 +18,7 @@
                                         {{ $t('curVersion') }}
                                     </el-tag>
                                 </div>
-                                <span style="font-size: 12px; color: #909399">{{ item.release_at }}</span>
+                                <span style="font-size: 12px; color: var(--el-color-info)">{{ item.release_at }}</span>
                             </div>
                         </div>
                     </div>
@@ -107,14 +107,14 @@
         align-items: center;
         justify-content: center;
         z-index: 3000;
-        background: rgba(255, 255, 255, 0.8);
+        background: var(--u-bg-color-login);
     }
 
     .version-box {
         height: 480px;
         width: 800px;
-        background: white;
-        box-shadow: 0 2px 12px 2px rgba(0, 0, 0, 0.1);
+        background: var(--el-color-white);
+        box-shadow: var(--el-box-shadow-light);
         border-radius: 5px;
         overflow: hidden;
     }
@@ -149,7 +149,7 @@
 
     .version-box .el-main .menu {
         width: 180px;
-        background: #ecf5ff;
+        background: var(--el-color-primary-light-9);
         height: 100%;
     }
 
@@ -161,7 +161,7 @@
     }
 
     .single-version:hover {
-        color: #53a8ff;
+        color: var(--el-color-primary-light-1);
     }
 
     .single-version h4 {
@@ -169,7 +169,7 @@
     }
 
     .highlight-current {
-        color: #53a8ff;
+        color: var(--el-color-primary-light-1);
     }
 
     .close-button :deep(.el-link--inner) i {
@@ -183,7 +183,7 @@
     }
 
     .menu-scroll {
-        background: #ecf5ff;
+        background: var(--el-color-primary-light-9);
     }
 
     .el-main .el-scrollbar,

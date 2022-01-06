@@ -65,11 +65,11 @@
 
 <style scoped>
     .title {
-        color: #409eff;
+        color: var(--el-color-primary);
         font-size: 14px;
         text-align: center;
         padding-bottom: 9px;
-        border-bottom: 2px solid #e4e7ed;
+        border-bottom: 2px solid var(--el-border-color-light);
     }
 
     .active-user {
@@ -87,12 +87,12 @@
     }
 
     .el-avatar {
-        background: #c0c4cc;
+        background: var(--el-color-primary-light-7);
         box-sizing: border-box;
     }
 
     .el-avatar .fa-user {
-        color: white;
+        color: var(--el-color-white);
     }
 
     :deep(.avatar-column) .cell {

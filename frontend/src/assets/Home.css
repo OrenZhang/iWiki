@@ -19,7 +19,7 @@
 .search-box :deep(.el-button),
 .search-box :deep(.el-select__wrapper) {
     border: unset;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: var(--el-box-shadow-light);
 }
 
 .search-box :deep(.el-input__inner) {
