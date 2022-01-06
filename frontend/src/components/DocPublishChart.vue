@@ -16,7 +16,7 @@
     } from 'echarts/components'
     import { LabelLayout, UniversalTransition } from 'echarts/features'
     import { SVGRenderer } from 'echarts/renderers'
-    import { onMounted, ref } from 'vue'
+    import { onMounted, ref, markRaw } from 'vue'
     import http from '../api'
     import { useI18n } from 'vue-i18n'
 
@@ -42,10 +42,11 @@
             options.value.series[0].data.push(data[item])
         }
     }
+    const myChart = ref(null)
     const initChart = (data) => {
         initXY(data)
-        const myChart = echarts.init(document.getElementById('doc-publish-chart-main'), null, { renderer: 'svg' })
-        myChart.setOption(options.value)
+        myChart.value = markRaw(echarts.init(document.getElementById('doc-publish-chart-main'), null, { renderer: 'svg' }))
+        myChart.value.setOption(options.value)
         loading.value = false
     }
     const options = ref({
@@ -76,10 +77,7 @@
             {
                 data: [],
                 type: 'line',
-                areaStyle: {
-                    color: '#79bbff',
-                    opacity: 0.6
-                },
+                smooth: 0.2,
                 lineStyle: {
                     color: '#409eff',
                     type: 'inherit'
@@ -108,6 +106,12 @@
     }
 
     onMounted(loadData)
+
+    onMounted(() => {
+        window.addEventListener('resize', () => {
+            myChart.value.resize()
+        })
+    })
 </script>
 
 <style scoped>
