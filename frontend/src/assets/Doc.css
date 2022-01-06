@@ -21,13 +21,13 @@
 
 .info-box {
     margin-bottom: 20px;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: var(--el-box-shadow-light);
     padding: 20px;
     border-radius: 5px;
 }
 
 .attach-box {
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: var(--el-box-shadow-light);
     padding: 20px;
     border-radius: 5px;
 }
@@ -136,7 +136,7 @@
 .child-comment {
     margin-bottom: 20px;
     box-shadow: none;
-    border: 1px solid #dcdfe6;
+    border: 1px solid var(--el-border-color-base);
     border-radius: 5px;
     padding: 20px;
     box-sizing: border-box;

@@ -2,9 +2,7 @@
     <div class="login-container">
         <div class="login-box">
             <el-aside width="400px">
-                <div style="width: 100%; height: 100%; overflow: hidden;">
-                    <img alt="side-pic.jpg" class="side-pic" src="/extra-assests/imgs/bg-3.jpg">
-                </div>
+                <div style="width: 100%; height: 100%; overflow: hidden;" />
             </el-aside>
             <el-main style="width:100%">
                 <el-header>

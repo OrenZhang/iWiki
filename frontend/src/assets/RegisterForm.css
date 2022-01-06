@@ -2,7 +2,7 @@
     text-align: right;
     line-height: 24px;
     margin-bottom: -10px;
-    color: #909399;
+    color: var(--el-color-info);
 }
 
 .oneline-code-button-box :deep(.el-form-item__content) {

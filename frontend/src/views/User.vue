@@ -1,5 +1,5 @@
 <template>
-    <div class="h-100">
+    <div class="h-100 user-view">
         <el-scrollbar always>
             <div class="head-box" />
             <HUserInfoBox :show-logout="false" :user-info="searchUserInfo" />

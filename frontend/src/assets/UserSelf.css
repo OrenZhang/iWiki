@@ -19,7 +19,7 @@
 .content-box > div {
     display: flex;
     box-sizing: border-box;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: var(--el-box-shadow-light);
     border-radius: 5px;
     min-height: 360px;
     overflow: hidden;
@@ -35,6 +35,6 @@
 }
 
 :deep(.el-menu-item.is-active) {
-    background: #53a8ff;
-    color: white;
+    background: var(--el-color-primary-light-1);
+    color: var(--el-color-white);
 }

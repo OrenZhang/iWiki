@@ -6,10 +6,10 @@
                     <i class="fa-solid fa-user h-center" style="margin-left: 6px;" />
                 </template>
             </el-input>
-            <div style="color: #F56C6C; margin-bottom: -10px; height: 32px; margin-top: -10px;" v-if="!usernameValid">
+            <div style="color: var(--el-color-danger); margin-bottom: -10px; height: 32px; margin-top: -10px;" v-if="!usernameValid">
                 {{ $t('DuplicateUserName') }}
             </div>
-            <div style="color: #F56C6C; margin-bottom: -10px; height: 32px; margin-top: -10px;" v-if="!usernameLengthValid">
+            <div style="color: var(--el-color-danger); margin-bottom: -10px; height: 32px; margin-top: -10px;" v-if="!usernameLengthValid">
                 {{ $t('UserNameTooShort') }}
             </div>
         </el-form-item>

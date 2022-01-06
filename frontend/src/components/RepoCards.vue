@@ -6,11 +6,11 @@
                     <div class="card-container">
                         <div class="text-info">
                             <div style="height: 100%; display: flex; align-items: center;">
-                                <h4 style="margin-top: 0; color: #303133">
+                                <h4 style="margin-top: 0; color: var(--el-text-color-primary)">
                                     {{ repo.name }}
                                 </h4>
                             </div>
-                            <div style="color: #606266">
+                            <div style="color: var(--el-text-color-regular)">
                                 <div style="display: flex; align-items: center; font-size: 14px; margin-bottom: 6px;">
                                     <el-tag size="mini" type="success" v-if="repo.r_type === 'public'" style="margin-right: 10px;">
                                         {{ $t('publicRepo') }}
@@ -139,25 +139,25 @@
     }
 
     .public-repo {
-        background: #C3E0C3;
+        background: var(--u-bg-color-repo-public);
         transition-duration: 0.4s;
     }
 
     .public-repo:hover {
-        background: #e1f3d8;
+        background: var(--el-color-success-light);
     }
 
     .private-repo {
-        background: #E3D3C4;
+        background: var(--u-bg-color-repo-private);
         transition-duration: 0.4s;
     }
 
     .private-repo:hover {
-        background: #faecd8;
+        background: var(--el-color-warning-light);
     }
 
     .check-info i {
         font-size: 24px;
-        color: white;
+        color: var(--el-color-white);
     }
 </style>

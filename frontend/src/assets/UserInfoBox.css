@@ -6,7 +6,7 @@
     display: flex;
     align-items: center;
     padding: 20px;
-    background: #8cc5ff;
+    background: var(--el-color-primary-light-4);
 }
 
 .user-statistic {
@@ -16,16 +16,16 @@
 .user-name {
     font-size: 16px;
     font-weight: bold;
-    color: white;
+    color: var(--el-color-white);
     word-break: break-all;
 }
 
 .default-avatar {
-    background: white;
+    background: var(--el-color-white);
 }
 
 .default-avatar .fa-user {
-    color: #8cc5ff;
+    color: var(--el-color-primary-light-4);
     font-size: 16px;
     margin-top: 12px;
 }

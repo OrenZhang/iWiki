@@ -14,7 +14,7 @@
                 background layout="total, prev, pager, next, sizes" :current-page="paginator.page" :total="paginator.count" :page-size="paginator.size"
                 @current-change="handlePageChange" @size-change="handleSizeChange" />
         </div>
-        <el-table :data="members" stripe>
+        <el-table :data="members">
             <el-table-column prop="username" :label="$t('username')" />
             <el-table-column :label="$t('userType')">
                 <template #default="scope">

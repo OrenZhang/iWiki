@@ -6,7 +6,14 @@
     align-items: center;
     justify-content: center;
     z-index: 2001;
-    background: rgba(255, 255, 255, 0.8);
+    background: var(--u-bg-color-login);
+}
+
+.login-box .el-aside > div {
+    background-image: url("/extra-assests/imgs/bg-3.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .side-pic {
@@ -19,9 +26,9 @@
 
 .login-box {
     width: 760px;
-    background: white;
+    background: var(--el-color-white);
     display: flex;
-    box-shadow: 0 2px 12px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--el-box-shadow-light);
     border-radius: 5px;
     overflow: hidden;
 }
@@ -57,7 +64,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-bottom: 2px solid #d9ecff;
+    border-bottom: 2px solid var(--el-color-primary-light-8);
 }
 
 .login-box .el-header,
@@ -71,7 +78,7 @@
 }
 
 .el-footer .el-link {
-    color: #909399;
+    color: var(--el-color-info);
 }
 
 .edit-user {

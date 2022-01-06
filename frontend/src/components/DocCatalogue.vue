@@ -13,7 +13,7 @@
                 </li>
             </template>
         </ul>
-        <div v-else style="text-align: center; margin-top: 20px; color: #909399">
+        <div v-else style="text-align: center; margin-top: 20px; color: var(--el-text-color-secondary)">
             {{ $t('noMoreCat') }}
         </div>
     </el-card>
@@ -45,10 +45,10 @@
     }
 
     .title {
-        color: #409eff;
+        color: var(--el-color-primary);
         font-size: 14px;
         text-align: center;
         padding-bottom: 9px;
-        border-bottom: 2px solid #e4e7ed;
+        border-bottom: 2px solid var(--el-border-color-light);
     }
 </style>
