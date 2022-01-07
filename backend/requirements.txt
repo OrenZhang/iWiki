@@ -15,4 +15,4 @@ tencentcloud-sdk-python==3.0.532
 cos-python-sdk-v5==1.9.11
 
 # Celery
-celery==5.1.2
+celery==5.2.2
