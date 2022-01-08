@@ -67,4 +67,5 @@
 .home-notice-box .el-alert {
     margin-top: 20px;
     margin-bottom: -20px;
+    box-shadow: var(--el-box-shadow-light);
 }
