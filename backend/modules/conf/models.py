@@ -13,9 +13,9 @@ def get_default_c_val():
 class ConfManager(models.Manager):
     """配置管理器"""
 
-    def get(self, c_key):
+    def get(self, c_key, sensitive=False):
         try:
-            conf = super().get(c_key=c_key)
+            conf = super().get(c_key=c_key, sensitive=sensitive)
             return conf.val
         except self.model.DoesNotExist:
             return None
@@ -32,6 +32,7 @@ class Conf(models.Model):
         _("配置内容字典"), default=get_default_c_val, null=True, blank=True
     )
     c_bool = models.BooleanField(_("配置内容布尔"), default=True)
+    sensitive = models.BooleanField(_("敏感信息"), default=False)
 
     objects = ConfManager()
 

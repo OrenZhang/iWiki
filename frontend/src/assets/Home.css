@@ -56,3 +56,15 @@
 .next-container .el-aside {
     overflow: unset;
 }
+
+.home-notice-box {
+    box-sizing: border-box;
+    padding: 0 40px;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.home-notice-box .el-alert {
+    margin-top: 20px;
+    margin-bottom: -20px;
+}

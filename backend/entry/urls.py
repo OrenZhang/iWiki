@@ -20,6 +20,7 @@ urlpatterns = [
     path("doc/", include("modules.doc.urls")),
     path("cos/", include("modules.cos.urls")),
     path("version/", include("modules.version.urls")),
+    path("conf/", include("modules.conf.urls")),
 ]
 
 handler400 = exceptions.bad_request

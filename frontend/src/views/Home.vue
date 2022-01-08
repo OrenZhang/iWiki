@@ -29,6 +29,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="home-notice-box" v-if="showHomeNotice">
+                    <el-alert :title="homeNotice.title" :description="homeNotice.desc" :type="homeNotice.type" :show-icon="homeNotice.showIcon" />
+                </div>
                 <el-container class="next-container">
                     <el-main>
                         <DocPublishChart />
@@ -128,6 +131,29 @@
             loadDocs()
         }
     }
+
+    // 提示信息
+    const showHomeNotice = ref(false)
+    const homeNotice = ref({
+        title: '',
+        desc: '',
+        showIcon: true,
+        type: 'info'
+    })
+    const getHomeNotice = () => {
+        http.post(
+            '/conf/common/',
+            {
+                cKey: 'home_notice'
+            }
+        ).then(res => {
+            if (res.result) {
+                homeNotice.value = res.data
+                showHomeNotice.value = true
+            }
+        })
+    }
+    onMounted(getHomeNotice)
 </script>
 
 <style scoped>
