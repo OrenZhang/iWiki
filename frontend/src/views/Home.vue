@@ -29,11 +29,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="home-notice-box" v-if="showHomeNotice">
-                    <el-alert :title="homeNotice.title" :description="homeNotice.desc" :type="homeNotice.type" :show-icon="homeNotice.showIcon" />
-                </div>
                 <el-container class="next-container">
                     <el-main>
+                        <div class="home-notice-box" v-if="showHomeNotice">
+                            <el-alert :title="homeNotice.title" :description="homeNotice.desc" :type="homeNotice.type" :show-icon="homeNotice.showIcon" />
+                        </div>
                         <DocPublishChart />
                         <el-skeleton :rows="6" animated v-show="loading" />
                         <DocList :data="docs" @pageChange="handlePageChange" v-show="!loading" />
