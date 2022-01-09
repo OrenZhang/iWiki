@@ -71,6 +71,7 @@
         </div>
         <el-dialog
             v-model="commentDialog.visible"
+            :close-on-press-escape="false"
             :title="$t('comment')"
             width="800px">
             <v-md-editor
