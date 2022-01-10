@@ -224,7 +224,7 @@ COS_BUCKET = getenv_or_raise("COS_BUCKET")
 COS_RANDOM_PATH_LENGTH = 10
 COS_DOMAIN = getenv_or_raise("COS_DOMAIN")
 COS_MAX_FILE_SIZE = os.getenv("COS_MAX_FILE_SIZE", 120) * 1024 * 1024  # Bytes
-COS_MAX_AVATAR_SIZE = os.getenv("COS_MAX_AVATAR_SIZE", 2) * 1024 * 1024  # Bytes
+COS_MAX_AVATAR_SIZE = os.getenv("COS_MAX_AVATAR_SIZE", 1) * 1024 * 1024  # Bytes
 
 # Admin Site
 SIMPLEUI_INDEX = getenv_or_raise("FRONTEND_URL")

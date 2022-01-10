@@ -97,14 +97,14 @@
     }
     const beforeAvatarUpload = (file) => {
         const isPic = file.type === 'image/jpeg' || file.type === 'image/png'
-        const isLt2M = file.size / 1024 / 1024 < 2
+        const isLt1M = file.size / 1024 / 1024 < 1
         if (!isPic) {
             message(t('useJPGorPNG'), 'error')
         }
-        if (!isLt2M) {
-            message(t('upto2M'), 'error')
+        if (!isLt1M) {
+            message(t('upto1M'), 'error')
         }
-        return isPic && isLt2M
+        return isPic && isLt1M
     }
     
     const doLogout = () => {

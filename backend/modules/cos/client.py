@@ -1,8 +1,8 @@
 import datetime
 import logging
 
-from django.db import IntegrityError
 from django.conf import settings
+from django.db import IntegrityError
 from qcloud_cos import CosConfig
 from qcloud_cos import CosS3Client
 
@@ -25,6 +25,16 @@ class COSClient(object):
             )
         )
         self.bucket = settings.COS_BUCKET
+
+    def verify_filename(self, filename: str):
+        replace_map = {" ": "", "$": "_", "[": "(", "]": ")", "{": "(", "}": ")"}
+        for item, new_item in replace_map.items():
+            filename = filename.replace(item, new_item)
+        if filename.count("(") != filename.count(")") or filename.find(
+            ")"
+        ) < filename.find("("):
+            filename = filename.replace("(", "_").replace(")", "_")
+        return filename
 
     def upload(self, filename, file):
         """上传文件"""
