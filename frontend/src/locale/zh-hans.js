@@ -47,7 +47,7 @@ const zh = {
     commentCount: '参与互动',
     activeIndex: '活跃指数',
     useJPGorPNG: '请使用JPG或PNG格式照片',
-    upto2M: '头像大小不能超过2M',
+    upto1M: '头像大小不能超过1M',
     login: '登录',
     login2refresh: '登录并刷新',
     loginSuccess: '登录成功',

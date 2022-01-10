@@ -32,7 +32,8 @@ class UploadAvatarView(GenericViewSet):
             )
         # 上传文件
         client = get_client_by_user(request.user.uid)
-        result, url = client.cos.upload(file.name, file)
+        filename = client.cos.verify_filename(file.name)
+        result, url = client.cos.upload(filename, file)
         if result:
             request.user.avatar = url
             request.user.save()
@@ -49,7 +50,7 @@ class UploadFileView(GenericViewSet):
     def upload(self, client, file):
         """上传文件"""
         # 优化用户名与文件数据流
-        file_name = file.name.replace(" ", "")
+        file_name = client.cos.verify_filename(file.name)
         file = file.file
         if os.name == "nt" and isinstance(file, temp.TemporaryFile):
             file = file.file

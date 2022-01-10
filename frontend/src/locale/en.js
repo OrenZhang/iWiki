@@ -47,7 +47,7 @@ const en = {
     commentCount: 'Comments',
     activeIndex: 'Active',
     useJPGorPNG: 'Please use JPG or PNG format photos',
-    upto2M: 'File size should exceed 2M',
+    upto1M: 'File size should exceed 1M',
     login: 'Sign in',
     login2refresh: 'Sign and Refresh',
     loginSuccess: 'Success',
