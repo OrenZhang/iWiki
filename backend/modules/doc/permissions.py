@@ -2,12 +2,12 @@ from django.db.models import Q
 from rest_framework.permissions import BasePermission
 
 from constents import UserTypeChoices, RepoTypeChoices, DocAvailableChoices
-from modules.doc.models import Doc, DocCollaborator
+from modules.doc.models import Doc, DocCollaborator, Comment
 from modules.repo.models import RepoUser, Repo
 from utils.exceptions import PermissionDenied, Error404
 
 
-def check_repo_user_or_public(repo_id, uid):
+def check_repo_user_or_public(repo_id: int, uid: str):
     """检查是否为仓库成员或仓库为公开"""
     try:
         repo = Repo.objects.get(id=repo_id, is_deleted=False)
@@ -25,7 +25,7 @@ def check_repo_user_or_public(repo_id, uid):
         raise PermissionDenied()
 
 
-def check_doc_privacy(obj, uid):
+def check_doc_privacy(obj: Doc, uid: str):
     """检查文章为公开或作者"""
     if obj.available == DocAvailableChoices.PUBLIC:
         return True
@@ -34,7 +34,7 @@ def check_doc_privacy(obj, uid):
     raise PermissionDenied()
 
 
-def is_manager(uid, repo_id):
+def is_manager(uid: str, repo_id: int):
     try:
         RepoUser.objects.get(
             Q(repo_id=repo_id)
@@ -65,7 +65,7 @@ class DocManagePermission(BasePermission):
             return check_repo_user_or_public(repo_id, request.user.uid)
         return True
 
-    def has_object_permission(self, request, view, obj):
+    def has_object_permission(self, request, view, obj: Doc):
         # 超管/库管理/创建者 授权
         if (
             obj.creator == request.user.uid
@@ -100,7 +100,7 @@ class DocCommonPermission(BasePermission):
             return check_repo_user_or_public(repo_id, request.user.uid)
         return True
 
-    def has_object_permission(self, request, view, obj):
+    def has_object_permission(self, request, view, obj: Doc):
         if request.user.is_superuser:
             return True
         check_repo_user_or_public(obj.repo_id, request.user.uid)
@@ -127,7 +127,7 @@ class CommentPermission(BasePermission):
                 raise Error404()
         return True
 
-    def has_object_permission(self, request, view, obj):
+    def has_object_permission(self, request, view, obj: Comment):
         if obj.creator == request.user.uid:
             return True
         raise PermissionDenied()

@@ -1,7 +1,7 @@
 import os
 
 
-def get_logging_config_dict(log_level, log_dir):
+def get_logging_config_dict(log_level: str, log_dir: str):
     log_class = "logging.handlers.RotatingFileHandler"
     logging_format = {
         "format": (

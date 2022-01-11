@@ -14,7 +14,7 @@ def uniq_id():
     return "%s%s" % (str(int(time.time() * 1000)), str(uniq))
 
 
-def get_auth_token(uid):
+def get_auth_token(uid: str):
     uniq = f"{uniq_id()}{uid}"
     in_use = cache.get(uniq)
     if in_use is None:
@@ -23,7 +23,7 @@ def get_auth_token(uid):
     return get_auth_token(uid)
 
 
-def simple_uniq_id(length):
+def simple_uniq_id(length: int):
     base = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
     random.seed(uniq_id())
     uniq = ""
@@ -32,7 +32,7 @@ def simple_uniq_id(length):
     return uniq
 
 
-def num_code(length):
+def num_code(length: int):
     random.seed(uniq_id())
     uniq = ""
     for i in range(length):
@@ -48,15 +48,6 @@ def get_ip(request):
     if request.META.get("HTTP_X_FORWARD_FOR"):
         return request.META.get("HTTP_X_FORWARD_FOR").replace(" ", "").split(",")[0]
     return request.META.get("REMOTE_ADDR")
-
-
-def trans_html(data):
-    data = str(data)
-    data = data.replace(">", r"&gt;")
-    data = data.replace("<", "&lt;")
-    data = data.replace("'", "&#39;")
-    data = data.replace('"', "&quot;")
-    return data
 
 
 def field_handler(data):
@@ -80,7 +71,7 @@ def model_to_dict(instance, fields=None, exclude=None):
     return data
 
 
-def getenv_or_raise(key):
+def getenv_or_raise(key: str):
     val = os.getenv(key)
     if val is None:
         raise Exception(f"Env Not Set, Key [{key}]")

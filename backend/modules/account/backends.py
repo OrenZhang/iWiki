@@ -7,7 +7,9 @@ USER_MODEL = get_user_model()
 class ModelBackend(object):
     """用户后端"""
 
-    def authenticate(self, request, username=None, password=None, **kwargs):
+    def authenticate(
+        self, request, username: str = None, password: str = None, **kwargs
+    ):
         """认证"""
 
         # 用户名或密码为空
@@ -24,7 +26,7 @@ class ModelBackend(object):
             return user
         return None
 
-    def get_user(self, uid):
+    def get_user(self, uid: str):
         """获取用户对象"""
 
         try:

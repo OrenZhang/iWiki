@@ -15,7 +15,7 @@ class RepoSerializer(serializers.ModelSerializer):
         model = Repo
         fields = ["id", "name", "r_type"]
 
-    def validate_name(self, value):
+    def validate_name(self, value: str):
         try:
             Repo.objects.get(name=value)
             raise serializers.ValidationError(_("库名重复"))
@@ -50,7 +50,7 @@ class RepoListSerializer(serializers.ModelSerializer):
         model = Repo
         fields = "__all__"
 
-    def get_create_at(self, obj):
+    def get_create_at(self, obj: Repo):
         return obj.create_at.strftime("%Y-%m-%d")
 
 

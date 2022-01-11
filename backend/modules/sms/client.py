@@ -12,7 +12,7 @@ logger = logging.getLogger("sms")
 
 
 class SMSClient(object):
-    def __init__(self, operator):
+    def __init__(self, operator: str):
         self.secretId = settings.SMS_SECRET_ID
         self.secretKey = settings.SMS_SECRET_KEY
         self.app_id = settings.SMS_APP_ID

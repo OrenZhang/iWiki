@@ -41,7 +41,7 @@ class Repo(models.Model):
         self.is_deleted = True
         self.save()
 
-    def pages_transfer(self, destination=settings.DEFAULT_REPO_NAME):
+    def pages_transfer(self, destination: str = settings.DEFAULT_REPO_NAME):
         """迁移文章"""
         try:
             default_repo = self.objects.get(name=destination, is_deleted=False)
@@ -49,7 +49,7 @@ class Repo(models.Model):
             raise Error404()
         Doc.objects.filter(repo_id=self.id).update(repo_id=default_repo.id)
 
-    def set_owner(self, uid, operator=None):
+    def set_owner(self, uid: str, operator: str = None):
         """设置所有者"""
         repo_user, _ = RepoUser.objects.get_or_create(repo_id=self.id, uid=uid)
         repo_user.u_type = UserTypeChoices.OWNER

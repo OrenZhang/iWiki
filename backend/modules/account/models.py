@@ -16,7 +16,7 @@ DB_PREFIX = "auth_"
 class UserManager(models.Manager):
     """用户管理器"""
 
-    def get_by_natural_key(self, username):
+    def get_by_natural_key(self, username: str):
         """通过用户名获取用户"""
         self.get(username=username)
 
@@ -72,7 +72,7 @@ class User(AbstractBaseUser, PermissionsMixin):
             return uid
 
     @staticmethod
-    def do_send_code(phone):
+    def do_send_code(phone: str):
         """发送验证码"""
         # 初始化键值
         code_key = f"phone_verify_code:{phone}"
@@ -91,7 +91,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return result
 
     @staticmethod
-    def send_code(phone):
+    def send_code(phone: str):
         """发送注册验证码"""
         # 校验参数
         if not phone:
@@ -101,7 +101,7 @@ class User(AbstractBaseUser, PermissionsMixin):
             raise PhoneNumberExist()
         return User.do_send_code(phone)
 
-    def send_re_pass_code(self, phone):
+    def send_re_pass_code(self, phone: str):
         """发送重置密码验证码"""
         # 校验参数
         if not phone:
@@ -111,7 +111,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.do_send_code(phone)
 
     @staticmethod
-    def verify_code(phone, code_input):
+    def verify_code(phone: str, code_input: str):
         """校验验证码"""
         code_key = f"phone_verify_code:{phone}"
         code = cache.get(code_key)

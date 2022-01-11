@@ -57,11 +57,11 @@ class RegisterSerializer(serializers.ModelSerializer):
         model = USER_MODEL
         fields = ["username", "phone", "password", "code"]
 
-    def validate_username(self, value):
-        if str(value).isdigit():
+    def validate_username(self, value: str):
+        if value.isdigit():
             raise serializers.ValidationError("用户名不能为纯数字")
 
-    def validate_code(self, value):
+    def validate_code(self, value: str):
         if value.isdigit() and len(value) == VERIFY_CODE_LENGTH:
             return value
         raise serializers.ValidationError("验证码格式有误")
