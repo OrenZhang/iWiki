@@ -24,7 +24,7 @@ export const loadUserDocPublicAPI = (username, page) => {
     })
 }
 
-export const searchDocAPI = (keywords, size, page) => {
+export const searchDocAPI = (keywords, page, size) => {
     return new Promise((resolve, reject) => {
         http.post(
             '/doc/search/?page=' + page + '&size=' + size,
