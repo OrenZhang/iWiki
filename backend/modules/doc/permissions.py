@@ -54,8 +54,14 @@ class DocManagePermission(BasePermission):
     """
 
     def has_permission(self, request, view):
-        if view.action == "create":
-            repo_id = request.data.get("repo_id", None)
+        # 超级管理员拥有全部权限
+        if request.user.is_superuser:
+            return True
+        # 正常鉴权
+        repo_id = request.data.get("repo_id", None)
+        if view.action == "create" or (
+            view.action in ["partial_update", "update"] and repo_id is not None
+        ):
             return check_repo_user_or_public(repo_id, request.user.uid)
         return True
 
@@ -68,7 +74,7 @@ class DocManagePermission(BasePermission):
         ):
             return True
         # 协作者 获取/更新 授权
-        if view.action in ["partial_update", "retrieve"]:
+        if view.action in ["partial_update", "update", "retrieve"]:
             try:
                 DocCollaborator.objects.get(doc_id=obj.id, uid=request.user.uid)
                 return True
@@ -85,7 +91,11 @@ class DocCommonPermission(BasePermission):
     """
 
     def has_permission(self, request, view):
-        if view.action == "list":
+        # 超级管理员拥有全部权限
+        if request.user.is_superuser:
+            return True
+        # 正常鉴权
+        if view.action in ["list", "load_pin_doc"]:
             repo_id = request.GET.get("repo_id", None)
             return check_repo_user_or_public(repo_id, request.user.uid)
         return True
@@ -106,7 +116,7 @@ class CommentPermission(BasePermission):
     """
 
     def has_permission(self, request, view):
-        if view.action == "list" or view.action == "create":
+        if view.action in ["list", "create"]:
             doc_id = request.GET.get("doc_id") or request.data.get("doc_id")
             try:
                 doc = Doc.objects.get(id=doc_id, is_deleted=False)
