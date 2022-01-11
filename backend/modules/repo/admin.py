@@ -34,7 +34,7 @@ class RepoUserAdmin(admin.ModelAdmin):
     @admin.display(description=_("处理人"))
     def operator_name(self, obj):
         if obj.operator:
-            return get_user_model().objects.get(uid=obj.uid).username
+            return get_user_model().objects.get(uid=obj.operator).username
         return "-"
 
     def get_search_results(self, request, queryset, search_term):
