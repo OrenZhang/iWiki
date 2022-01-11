@@ -1,9 +1,5 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router'
-import http from './api'
-import store from './store'
-import VueAxios from 'vue-axios'
 import i18n from './locale'
 
 import ElementPlus from 'element-plus'
@@ -58,10 +54,7 @@ if (userLocale === 'en') {
 }
 
 const app = createApp(App)
-app.use(router)
-app.use(store)
 app.use(i18n)
-app.use(VueAxios, http)
 app.use(VueMarkdownEditor)
 app.use(ElementPlus)
 app.mount('#app')

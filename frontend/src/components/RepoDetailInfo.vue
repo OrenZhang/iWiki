@@ -56,14 +56,14 @@
 </template>
 
 <script setup>
-    import { computed, ref } from 'vue'
-    import http from '../api'
+    import { computed } from 'vue'
     import { ElMessageBox } from 'element-plus'
     import { useRouter } from 'vue-router'
     import message from '../utils/message'
     import { useStore } from 'vuex'
     import { useI18n } from 'vue-i18n'
     import globalContext from '../context'
+    import { applyForRepoAPI } from '../api/modules/repo'
     
     const { t } = useI18n()
     
@@ -111,9 +111,7 @@
             confirmButtonText: t('applyConfirmed'),
             callback: (action) => {
                 if (action === 'confirm') {
-                    http.post(
-                        '/repo/common/' + props.repo.id + '/apply/'
-                    ).then(() => {
+                    applyForRepoAPI(props.repo.id).then(() => {
                         message(t('applySuccess'))
                     }, err => {
                         message(err.data.msg, 'error')

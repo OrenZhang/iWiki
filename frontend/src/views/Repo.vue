@@ -65,10 +65,10 @@
 
 <script setup>
     import { computed, onMounted, ref } from 'vue'
-    import http from '../api'
     import RepoCards from '../components/RepoCards.vue'
     import message from '../utils/message'
     import { useI18n } from 'vue-i18n'
+    import { createRepoAPI, loadRepoWithUserAPI } from '../api/modules/repo'
     
     const { t } = useI18n()
     
@@ -84,9 +84,7 @@
     const repos = ref([])
     const loadRepo = (refresh) => {
         loading.value = true
-        http.get(
-            '/repo/common/with_user/?page=' + paginator.value.page + '&searchKey=' +searchKey.value
-        ).then(res => {
+        loadRepoWithUserAPI(paginator.value.page, searchKey.value).then(res => {
             if (refresh) {
                 repos.value = res.data.results
             } else {
@@ -135,10 +133,7 @@
         }
     }
     const doCreate = (data) => {
-        http.post(
-            '/repo/manage/',
-            data
-        ).then(() => {
+        createRepoAPI(data).then(() => {
             createDialog.value.visible = false
             loadRepo(true)
         }, err => {
@@ -153,9 +148,8 @@
 
 <style scoped>
     .search-box {
-        background: url("/extra-assests/imgs/bg-1.png");
         background-size: cover;
-        background-repeat: no-repeat;
+        background: url("/extra-assests/imgs/bg-1.png") no-repeat;
         height: 30vh;
         min-height: 240px;
         max-height: 600px;

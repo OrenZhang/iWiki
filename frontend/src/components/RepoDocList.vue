@@ -33,7 +33,7 @@
     import globalContext from '../context'
     import { useRouter } from 'vue-router'
     import { onMounted, ref } from 'vue'
-    import http from '../api'
+    import { loadHotRepoAPI, loadRecentDocAPI } from '../api/modules/doc'
 
     const router = useRouter()
 
@@ -41,9 +41,7 @@
     
     const hotRepos = ref([])
     const loadHotRepo = () => {
-        http.get(
-            '/doc/public/hot_repo/'
-        ).then(res => {
+        loadHotRepoAPI().then(res => {
             hotRepos.value = res.data
         })
     }
@@ -51,9 +49,7 @@
 
     const recentDocs = ref([])
     const loadRecentDoc = () => {
-        http.get(
-            '/doc/public/recent/'
-        ).then(res => {
+        loadRecentDocAPI().then(res => {
             recentDocs.value = res.data
         })
     }

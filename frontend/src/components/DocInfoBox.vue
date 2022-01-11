@@ -62,9 +62,9 @@
     import globalContext from '../context'
     import { computed, nextTick, onMounted, ref, watch } from 'vue'
     import { ElMessageBox } from 'element-plus'
-    import http from '../api'
     import { useStore } from 'vuex'
     import { useI18n } from 'vue-i18n'
+    import { checkDocCollaboratorAPI, deleteDocAPI } from '../api/modules/doc'
     
     const { t } = useI18n()
 
@@ -131,9 +131,7 @@
     }
     const doDelete = () => {
         store.dispatch('setMainLoading', true)
-        http.delete(
-            '/doc/manage/' + props.docData.id + '/'
-        ).then(() => {
+        deleteDocAPI(props.docData.id).then(() => {
             window.location.replace(globalContext.siteUrl)
         }).finally(() => {
             store.dispatch('setMainLoading', false)
@@ -167,9 +165,7 @@
 
     const isCollaborator = ref(false)
     const checkCollaborator = () => {
-        http.get(
-            '/doc/common/' + props.docData.id + '/is_collaborator/'
-        ).then(res => {
+        checkDocCollaboratorAPI(props.docData.id).then(res => {
             isCollaborator.value = res.result
         })
     }

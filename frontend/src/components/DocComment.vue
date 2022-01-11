@@ -92,12 +92,13 @@
 
 <script setup>
     import { computed, onMounted, ref, watch } from 'vue'
-    import http from '../api'
     import message from '../utils/message'
     import { useStore } from 'vuex'
     import { ElMessageBox } from 'element-plus'
     import { useI18n } from 'vue-i18n'
     import globalContext from '../context'
+    import { createCommentAPI, deleteCommentAPI, loadCommentAPI, updateCommentAPI } from '../api/modules/comment'
+    import { uploadFileAPI } from '../api/modules/common'
 
     const { t } = useI18n()
     
@@ -222,7 +223,7 @@
     }
 
     const newContent = ref('')
-    const doAddNewComment = (text, html) => {
+    const doAddNewComment = (text) => {
         handleNewComment(text, null)
     }
 
@@ -242,9 +243,7 @@
             return
         }
         setLoading(true)
-        http.get(
-            '/doc/comments/?doc_id=' + props.docId + '&size=' + commentsPaginator.value.size + '&page=' + commentsPaginator.value.page
-        ).then(res => {
+        loadCommentAPI(props.docId, commentsPaginator.value.size, commentsPaginator.value.page).then(res => {
             comments.value = res.data.results
             commentsPaginator.value.count = res.data.count
             commentsPaginator.value.page = res.data.page
@@ -269,14 +268,7 @@
     // 新评论
     const handleNewComment = (text, reply_to) => {
         fullLoading.value = true
-        http.post(
-            '/doc/comment/',
-            {
-                doc_id: props.docId,
-                reply_to: reply_to,
-                content: text
-            }
-        ).then(res => {
+        createCommentAPI(props.docId, reply_to, text).then(() => {
             loadComments()
             commentDialog.value.content = ''
             newContent.value = ''
@@ -290,12 +282,7 @@
         fullLoading.value = true
         let form = new FormData()
         form.append('file', files[0])
-        http({
-            url: '/cos/upload/',
-            method: 'POST',
-            headers: { 'Content-Type':'multipart/form-data' },
-            data: form
-        }).then(res => {
+        uploadFileAPI('/cos/upload/', form).then(res => {
             if (res.result) {
                 insertImage({
                     url: res.data[0].url,
@@ -314,12 +301,7 @@
     }
     const handleUpdateComment = (text, id) => {
         fullLoading.value = true
-        http.patch(
-            '/doc/comment/' + id + '/',
-            {
-                content: text
-            }
-        ).then(() => {
+        updateCommentAPI(id, text).then(() => {
             comments.value = updateLocalContent(id, text, comments.value)
         }).finally(() => {
             setTimeout(() => {
@@ -347,9 +329,7 @@
                 confirmButtonText: t('deleteConfirmed'),
                 callback: (action) => {
                     if (action === 'confirm') {
-                        http.delete(
-                            '/doc/comment/' + id + '/'
-                        ).then(() => {
+                        deleteCommentAPI(id).then(() => {
                             loadComments()
                         })
                     }

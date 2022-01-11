@@ -29,12 +29,12 @@
 
 <script setup>
     import { computed, onMounted, ref } from 'vue'
-    import http from '../api'
     import { useStore } from 'vuex'
     import HUserInfoBox from '../components/HUserInfoBox.vue'
     import DocManage from '../components/DocManage.vue'
     import RepoManage from '../components/RepoManage.vue'
     import { useI18n } from 'vue-i18n'
+    import { loginCheckAPI } from '../api/modules/user'
 
     const { t } = useI18n()
     
@@ -42,9 +42,7 @@
     const userInfo = computed(() => store.state.user)
 
     const checkLogin = () => {
-        http.get(
-            '/account/login_check/'
-        ).then(() => {}, () => {
+        loginCheckAPI().then(() => {}, () => {
             store.commit('setLogin', true)
         })
     }

@@ -13,13 +13,13 @@
     import ErrorPage from '../components/ErrorPage.vue'
     import { computed, onMounted, ref } from 'vue'
     import { useRoute } from 'vue-router'
-    import http from '../api'
     import message from '../utils/message'
     import globalContext from '../context'
+    import { getDocCommonAPI } from '../api/modules/doc'
 
     onMounted(() => {
         if (window.innerWidth >= 1000 && window.innerHeight >= 600) {
-            window.location.replace(globalContext.siteUrl + 'doc/' + docID)
+            window.location.replace(globalContext.siteUrl + 'doc/' + docID.value)
         }
     })
     
@@ -57,9 +57,7 @@
     })
     const loadDoc = () => {
         setLoading(true)
-        http.get(
-            '/doc/common/' + docID + '/'
-        ).then(res => {
+        getDocCommonAPI(docID.value).then(res => {
             if (res.result) {
                 docData.value = res.data
             }
@@ -77,7 +75,7 @@
     onMounted(loadDoc)
 
     const route = useRoute()
-    const docID = route.params.id
+    const docID = ref(route.params.id)
 </script>
 
 <style scoped>

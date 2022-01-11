@@ -51,9 +51,10 @@
     import { onMounted, ref } from 'vue'
     import DocSidebar from '../components/DocSidebar.vue'
     import DocList from '../components/DocList.vue'
-    import http from '../api'
     import message from '../utils/message'
     import DocPublishChart from '../components/DocPublishChart.vue'
+    import { loadDocPublicAPI, searchDocAPI } from '../api/modules/doc'
+    import { getConfAPI } from '../api/modules/common'
 
     // 加载状态
     const loading = ref(true)
@@ -79,9 +80,7 @@
     })
     const loadDocs = () => {
         setLoading(true)
-        http.get(
-            '/doc/public/?size=' + docs.value.paginator.size + '&page=' + docs.value.paginator.page
-        ).then(res => {
+        loadDocPublicAPI(docs.value.paginator.size, docs.value.paginator.page).then(res => {
             docs.value.data = res.data.results
             docs.value.paginator.count = res.data.count
             docs.value.paginator.page = res.data.page
@@ -102,12 +101,7 @@
     const options = ref([])
     const searchDocs = () => {
         setLoading(true)
-        http.post(
-            '/doc/search/?page=' + docs.value.paginator.page + '&size=' + docs.value.paginator.size,
-            {
-                searchKey: searchKey.value
-            }
-        ).then(res => {
+        searchDocAPI(searchKey.value, docs.value.paginator.page, docs.value.paginator.size).then(res => {
             docs.value.data = res.data.results
             docs.value.paginator.count = res.data.count
             docs.value.paginator.page = res.data.page
@@ -141,12 +135,7 @@
         type: 'info'
     })
     const getHomeNotice = () => {
-        http.post(
-            '/conf/common/',
-            {
-                cKey: 'home_notice'
-            }
-        ).then(res => {
+        getConfAPI('home_notice').then(res => {
             if (res.result) {
                 homeNotice.value = res.data
                 showHomeNotice.value = true

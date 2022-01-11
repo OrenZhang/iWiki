@@ -39,7 +39,7 @@
 <script setup>
     import globalContext from '../context'
     import { onMounted, ref, watch } from 'vue'
-    import http from '../api'
+    import { loadPinDocAPI } from '../api/modules/doc'
 
     const props = defineProps({
         repoId: {
@@ -53,9 +53,7 @@
         if (!props.repoId) {
             return
         }
-        http.get(
-            '/doc/common/load_pin_doc/?repo_id=' + props.repoId
-        ).then(res => {
+        loadPinDocAPI(props.repoId).then(res => {
             docs.value = res.data
         })
     } 

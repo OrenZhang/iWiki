@@ -117,10 +117,19 @@
     import { computed, onMounted, ref, watch } from 'vue'
     import { useStore } from 'vuex'
     import { onBeforeRouteLeave, useRoute, useRouter } from 'vue-router'
-    import http from '../api'
     import message from '../utils/message'
     import globalContext from '../context'
     import { useI18n } from 'vue-i18n'
+    import { loadRepoAPI } from '../api/modules/repo'
+    import { uploadFileAPI } from '../api/modules/common'
+    import {
+        addDocCollaboratorAPI, checkDocEditingAPI,
+        createOrUpdateDocAPI,
+        loadDocCollaboratorAPI,
+        loadDocDataManageAPI,
+        removeDocCollaboratorAPI
+    } from '../api/modules/doc'
+    import { searchUserAPI } from '../api/modules/user'
     
     const { t } = useI18n()
     
@@ -194,7 +203,8 @@
         title: '',
         content: '',
         attachments: {},
-        is_publish: false
+        is_publish: false,
+        creator: ''
     })
     const available = ref([
         {
@@ -233,9 +243,7 @@
 
     // 仓库数据
     const loadRepos = () => {
-        http.get(
-            '/repo/common/'
-        ).then(res => {
+        loadRepoAPI().then(res => {
             if (res.result) {
                 repos.value = res.data
                 if (repos.value.length > 0 && docData.value.repo_id === '') {
@@ -257,12 +265,7 @@
         setLoading(true, t('imgUploading'))
         let form = new FormData()
         form.append('file', files[0])
-        http({
-            url: '/cos/upload/',
-            method: 'POST',
-            headers: { 'Content-Type':'multipart/form-data' },
-            data: form
-        }).then(res => {
+        uploadFileAPI('/cos/upload/', form).then(res => {
             if (res.result) {
                 insertImage({
                     url: res.data[0].url,
@@ -290,11 +293,7 @@
             url.value = '/doc/manage/' + docID.value + '/'
             method.value = 'PATCH'
         }
-        http({
-            url: url.value,
-            method: method.value,
-            data: docData.value
-        }).then(res => {
+        createOrUpdateDocAPI(url.value, method.value, docData.value).then(res => {
             if (res.result) {
                 message(messageContent)
                 if (isPublish) {
@@ -326,9 +325,7 @@
     })
     const loadDocData = () => {
         setLoading(true)
-        http.get(
-            '/doc/manage/' + docID.value + '/'
-        ).then(res => {
+        loadDocDataManageAPI(docID.value).then(res => {
             docData.value = {
                 repo_id: res.data.repo_id,
                 available: res.data.available,
@@ -379,32 +376,20 @@
             return
         }
         remoteLoading.value = true
-        http.post(
-            '/account/search/search_user/',
-            {
-                searchKey: searchKey
-            }
-        ).then(res => {
+        searchUserAPI(searchKey).then(res => {
             userOptions.value = res.data
         }).finally(() => {
             remoteLoading.value = false
         })
     }
     const loadCol = () => {
-        http.get(
-            '/doc/manage/' + docID.value + '/list_collaborator/'
-        ).then(res => {
+        loadDocCollaboratorAPI(docID.value).then(res => {
             collaborators.value = res.data
             collaborators.value.push({ username: '', uid: '', type: 'add' })
         })
     }
     const removeCol = (row) => {
-        http.post(
-            '/doc/manage/' + docID.value + '/remove_collaborator/',
-            {
-                uid: row.uid
-            }
-        ).finally(() => {
+        removeDocCollaboratorAPI(docID.value, row.uid).finally(() => {
             loadCol()
         })
     }
@@ -421,12 +406,7 @@
         return false
     })
     const doAddCol = () => {
-        http.post(
-            '/doc/manage/' + docID.value + '/add_collaborator/',
-            {
-                uid: newUID.value
-            }
-        ).then(() => {
+        addDocCollaboratorAPI(docID.value, newUID.value).then(() => {
             newUID.value = ''
         }, err => {
             message(err.data.msg, 'error')
@@ -463,9 +443,7 @@
         if (!docID.value) {
             return
         }
-        http.get(
-            '/doc/manage/' + docID.value + '/edit_status/'
-        ).then(res => {
+        checkDocEditingAPI(docID.value).then(res => {
             editStatus.value = res.data
         }).finally(() => {
             setTimeout(() => {

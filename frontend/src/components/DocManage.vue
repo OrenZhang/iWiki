@@ -66,11 +66,11 @@
 
 <script setup>
     import { onMounted, ref } from 'vue'
-    import http from '../api'
     import message from '../utils/message'
     import { ElMessageBox } from 'element-plus'
     import { useI18n } from 'vue-i18n'
     import globalContext from '../context'
+    import { deleteDocAPI, listDocManageAPI } from '../api/modules/doc'
     
     const { t } = useI18n()
     
@@ -101,9 +101,7 @@
     }
     const loadDocs = () => {
         setLoading(true)
-        http.get(
-            '/doc/manage/?page=' + paginator.value.page + '&searchKey=' + searchKey.value
-        ).then(res => {
+        listDocManageAPI(paginator.value.page, searchKey.value).then(res => {
             docs.value = res.data.results
             paginator.value.count = res.data.count
         }, err => {
@@ -130,9 +128,7 @@
             confirmButtonText: t('deleteConfirmed'),
             callback: (action) => {
                 if (action === 'confirm') {
-                    http.delete(
-                        '/doc/manage/' + row.id + '/'
-                    ).then(() => {
+                    deleteDocAPI(row.id).then(() => {
                         loadDocs()
                     }, err => {
                         message(err.data.msg, 'error')

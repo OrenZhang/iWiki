@@ -45,10 +45,11 @@
 
 <script setup>
     import { computed, ref, watch } from 'vue'
-    import http from '../api'
     import message from '../utils/message'
     import { useStore } from 'vuex'
     import { useI18n } from 'vue-i18n'
+    import { checkUserNameAPI, signUpAPI } from '../api/modules/user'
+    import { sendRegistryCodeAPI } from '../api/modules/common'
     
     const { t } = useI18n()
     
@@ -84,12 +85,7 @@
         return true
     })
     const checkUsername = () => {
-        http.post(
-            '/account/search/check_username/',
-            {
-                username: signData.value.username
-            }
-        ).then(() => {
+        checkUserNameAPI(signData.value.username).then(() => {
             usernameValid.value = true
         }, () => {
             usernameValid.value = false
@@ -143,12 +139,7 @@
     }
     const sendVerifyCode = () => {
         codeSend.value = true
-        http.post(
-            '/sms/send/register_code/',
-            {
-                phone: signData.value.phone
-            }
-        ).then(res => {
+        sendRegistryCodeAPI(signData.value.phone).then(res => {
             if (res.result) {
                 message(t('sendCodeSuccess'))
             }
@@ -163,10 +154,7 @@
     // 注册
     const doRegister = () => {
         setLoading(true)
-        http.post(
-            '/account/sign_up/',
-            signData.value
-        ).then(res => {
+        signUpAPI(signData.value).then(res => {
             if (res.result) {
                 store.commit('setLogin', false)
                 store.dispatch('getUserInfo')

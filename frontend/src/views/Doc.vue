@@ -26,10 +26,10 @@
     import { useRoute } from 'vue-router'
     import { useStore } from 'vuex'
     import { computed, onMounted, ref, watch } from 'vue'
-    import http from '../api'
     import message from '../utils/message'
     import DocCatalogue from '../components/DocCatalogue.vue'
     import globalContext from '../context'
+    import { getDocCommonAPI } from '../api/modules/doc'
 
     const appleInfo = ref({
         visible: true,
@@ -77,9 +77,7 @@
     })
     const loadDoc = () => {
         setLoading(true)
-        http.get(
-            '/doc/common/' + docID.value + '/'
-        ).then(res => {
+        getDocCommonAPI(docID.value).then(res => {
             if (res.result) {
                 docData.value = res.data
             }

@@ -71,10 +71,15 @@
 <script setup>
     import moment from 'moment'
     import { onMounted, ref, watch } from 'vue'
-    import http from '../api'
     import { ElMessageBox } from 'element-plus'
     import { useI18n } from 'vue-i18n'
     import globalContext from '../context'
+    import {
+        changeDocStatusAdminAPI,
+        deleteDocAdminAPI,
+        loadDocByRepoAdminAPI, pinDocAdminAPI,
+        unPinDocAdminAPI
+    } from '../api/modules/doc'
     
     const { t } = useI18n()
     
@@ -104,10 +109,8 @@
     const loadDoc = () => {
         if (!props.repoId) {
             return
-        } 
-        http.get(
-            '/repo/manage/' + props.repoId + '/load_doc/?page=' + paginator.value.page + '&size=' + paginator.value.size + '&searchKey=' + searchKey.value
-        ).then(res => {
+        }
+        loadDocByRepoAdminAPI(props.repoId, paginator.value.page, paginator.value.size, searchKey.value).then(res => {
             docs.value = res.data.results
             paginator.value.count = res.data.count
         })
@@ -123,13 +126,7 @@
             confirmButtonText: t('deleteConfirmed'),
             callback: (action) => {
                 if (action === 'confirm') {
-                    http({
-                        url: '/repo/manage/' + props.repoId + '/delete_doc/',
-                        method: 'DELETE',
-                        data: {
-                            docID: row.id
-                        }
-                    }).finally(() => {
+                    deleteDocAdminAPI(props.repoId, row.id).finally(() => {
                         loadDoc()
                     })
                 }
@@ -144,11 +141,7 @@
     const changeDoc = (row, key, val) => {
         const data = {}
         data[key] = val
-        console.log(data)
-        http.patch(
-            '/doc/manage/' + row.id + '/',
-            data
-        ).finally(() => {
+        changeDocStatusAdminAPI(row.id, data).finally(() => {
             loadDoc()
         })
     }
@@ -170,12 +163,7 @@
         return date < new Date(new Date(new Date().toLocaleDateString()).getTime())
     }
     const unpinDoc = (row) => {
-        http.post(
-            '/repo/manage/' + props.repoId + '/unpin_doc/',
-            {
-                doc_id: row.id
-            }
-        ).then(() => {
+        unPinDocAdminAPI(props.repoId, row.id).then(() => {
             loadDoc()
         })
     }
@@ -187,10 +175,7 @@
         }
         pinDocDialog.value.data.doc_id = ''
         pinDocDialog.value.data.title = ''
-        http.post(
-            '/repo/manage/' + props.repoId + '/pin_doc/',
-            data
-        ).then(() => {
+        pinDocAdminAPI(props.repoId, data).then(() => {
             loadDoc()
         })
     }

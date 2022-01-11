@@ -36,9 +36,9 @@
 
 <script setup>
     import { useStore } from 'vuex'
-    import { computed, onMounted, ref, watch } from 'vue'
-    import http from '../api'
+    import { computed, onMounted, ref } from 'vue'
     import { marked } from 'marked'
+    import { listVersionAPI, loadVersionDataAPI } from '../api/modules/common'
 
     const store = useStore()
 
@@ -68,18 +68,14 @@
             content: ''
         }
         setLoading(true)
-        http.get(
-            '/version/log/' + curVersion.value + '/'
-        ).then(res => {
+        loadVersionDataAPI(curVersion.value).then(res => {
             versionData.value = res.data
         }).finally(() => {
             setLoading(false)
         })
     }
     const loadVersion = () => {
-        http.get(
-            '/version/log/'
-        ).then(res => {
+        listVersionAPI().then(res => {
             versions.value = res.data
             if (versions.value.length > 0) {
                 curVersion.value = versions.value[0].vid

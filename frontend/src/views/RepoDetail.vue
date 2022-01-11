@@ -31,13 +31,14 @@
 
 <script setup>
     import { useRoute } from 'vue-router'
-    import http from '../api'
-    import { computed, onMounted, ref, watch } from 'vue'
+    import { computed, onMounted, ref } from 'vue'
     import RepoDetailInfo from '../components/RepoDetailInfo.vue'
     import DocSidebar from '../components/DocSidebar.vue'
     import DocList from '../components/DocList.vue'
     import { useStore } from 'vuex'
     import PinDocList from '../components/PinDocList.vue'
+    import { loadRepoDetailAPI } from '../api/modules/repo'
+    import { loadRepoDocAPI } from '../api/modules/doc'
 
     const store = useStore()
     const user = computed(() => store.state.user)
@@ -47,9 +48,7 @@
     
     const repo = ref({})
     const loadRepoInfo = () => {
-        http.get(
-            '/repo/common/' + repo_id + '/'
-        ).then(res => {
+        loadRepoDetailAPI(repo_id).then(res => {
             repo.value = res.data
         })
     }
@@ -86,9 +85,7 @@
     }
     const loadDocs = () => {
         setLoading(true)
-        http.get(
-            '/doc/common/?repo_id=' + repo_id + '&searchKey=' + searchKey.value + '&page=' + docs.value.paginator.page
-        ).then(res => {
+        loadRepoDocAPI(repo_id, searchKey.value, docs.value.paginator.page).then(res => {
             docs.value.data = res.data.results
             docs.value.paginator.count = res.data.count
         }).finally(() => {
