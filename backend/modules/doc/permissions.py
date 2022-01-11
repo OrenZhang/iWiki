@@ -74,7 +74,13 @@ class DocManagePermission(BasePermission):
         ):
             return True
         # 协作者 获取/更新 授权
-        if view.action in ["partial_update", "update", "retrieve", "edit_status", "export"]:
+        if view.action in [
+            "partial_update",
+            "update",
+            "retrieve",
+            "edit_status",
+            "export",
+        ]:
             try:
                 DocCollaborator.objects.get(doc_id=obj.id, uid=request.user.uid)
                 return True
