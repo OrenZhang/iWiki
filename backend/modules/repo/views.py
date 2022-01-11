@@ -18,7 +18,7 @@ from modules.cel.tasks import export_all_docs, send_apply_result
 from modules.doc.models import Doc, PinDoc
 from modules.doc.serializers import DocListSerializer, DocPinSerializer
 from modules.repo.models import Repo, RepoUser
-from modules.repo.permissions import RepoAdminPermission, RepoCommonPermission
+from modules.repo.permissions import RepoAdminPermission
 from modules.repo.serializers import (
     RepoSerializer,
     RepoApplyDealSerializer,
@@ -281,7 +281,6 @@ class RepoCommonView(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     queryset = Repo.objects.filter(is_deleted=False)
     serializer_class = RepoSerializer
     pagination_class = None
-    permission_classes = [RepoCommonPermission]
 
     def get_users(self, repo_id: int, u_types: list):
         """获取成员"""
