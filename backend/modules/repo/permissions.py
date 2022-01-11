@@ -2,12 +2,12 @@ from django.db.models import Q
 from rest_framework.permissions import BasePermission
 
 from constents import UserTypeChoices
-from modules.repo.models import RepoUser
+from modules.repo.models import RepoUser, Repo
 from utils.exceptions import PermissionDenied
 
 
 class RepoAdminPermission(BasePermission):
-    def has_object_permission(self, request, view, obj):
+    def has_object_permission(self, request, view, obj: Repo):
         # 超级管理员拥有全部权限
         if request.user.is_superuser:
             return True
@@ -25,7 +25,7 @@ class RepoAdminPermission(BasePermission):
 
 
 class RepoCommonPermission(BasePermission):
-    def has_object_permission(self, request, view, obj):
+    def has_object_permission(self, request, view, obj: Repo):
         # 超级管理员拥有全部权限
         if request.user.is_superuser:
             return True

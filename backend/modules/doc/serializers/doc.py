@@ -25,10 +25,10 @@ class DocCommonSerializer(serializers.ModelSerializer):
         model = Doc
         fields = "__all__"
 
-    def get_repo_name(self, obj):
+    def get_repo_name(self, obj: Doc):
         return Repo.objects.get(id=obj.repo_id).name
 
-    def get_creator_name(self, obj):
+    def get_creator_name(self, obj: Doc):
         return USER_MODEL.objects.get(uid=obj.creator).username
 
 

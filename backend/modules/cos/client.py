@@ -1,5 +1,6 @@
 import datetime
 import logging
+from io import BytesIO
 
 from django.conf import settings
 from django.db import IntegrityError
@@ -15,7 +16,7 @@ logger = logging.getLogger("cos")
 class COSClient(object):
     """对象存储客户端"""
 
-    def __init__(self, operator):
+    def __init__(self, operator: str):
         self.operator = operator
         self.client = CosS3Client(
             CosConfig(
@@ -36,7 +37,7 @@ class COSClient(object):
             filename = filename.replace("(", "_").replace(")", "_")
         return filename
 
-    def upload(self, filename, file):
+    def upload(self, filename: str, file: BytesIO):
         """上传文件"""
         # 文件存储位置
         key = "upload/{date_path}/{random_path}".format(

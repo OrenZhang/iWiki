@@ -6,7 +6,7 @@ from utils.exceptions import ParamsNotFound, UserNotExist
 
 
 class UnionClient(object):
-    def __init__(self, operator):
+    def __init__(self, operator: str):
         self.operator = operator
 
     @property
@@ -18,7 +18,7 @@ class UnionClient(object):
         return COSClient(operator=self.operator)
 
 
-def get_client_by_user(uid=None, username=None):
+def get_client_by_user(uid: str = None, username: str = None):
     if uid is None and username is None:
         raise ParamsNotFound("操作用户不能为空")
     elif uid is not None:

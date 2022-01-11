@@ -13,7 +13,7 @@ def get_default_c_val():
 class ConfManager(models.Manager):
     """配置管理器"""
 
-    def get(self, c_key, sensitive=False):
+    def get(self, c_key: str, sensitive: bool = False):
         try:
             conf = super().get(c_key=c_key, sensitive=sensitive)
             return conf.val

@@ -283,7 +283,7 @@ class RepoCommonView(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     pagination_class = None
     permission_classes = [RepoCommonPermission]
 
-    def get_users(self, repo_id, u_types):
+    def get_users(self, repo_id: int, u_types: list):
         """获取成员"""
         repo_users = RepoUser.objects.filter(
             repo_id=repo_id, u_type__in=u_types
@@ -344,7 +344,7 @@ class RepoCommonView(ListModelMixin, RetrieveModelMixin, GenericViewSet):
         serializer = RepoListSerializer(queryset, many=True)
         return page.get_paginated_response(serializer.data)
 
-    def apply_for_repo(self, repo, uid):
+    def apply_for_repo(self, repo: Repo, uid: str):
         """申请库"""
         try:
             RepoUser.objects.create(

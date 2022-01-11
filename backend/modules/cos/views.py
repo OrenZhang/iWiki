@@ -2,13 +2,14 @@ import os
 
 from django.conf import settings
 from django.core.files import temp
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils.translation import gettext as _
 from django.utils.translation import ngettext
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from modules.cos.models import UploadLog
-from utils.client import get_client_by_user
+from utils.client import get_client_by_user, UnionClient
 from utils.exceptions import ServerError, OperationError
 
 
@@ -47,7 +48,7 @@ class UploadFileView(GenericViewSet):
 
     queryset = UploadLog.objects.all()
 
-    def upload(self, client, file):
+    def upload(self, client: UnionClient, file: InMemoryUploadedFile):
         """上传文件"""
         # 优化用户名与文件数据流
         file_name = client.cos.verify_filename(file.name)

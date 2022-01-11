@@ -24,13 +24,13 @@ class CommentListSerializer(serializers.ModelSerializer):
         model = Comment
         exclude = ["is_deleted"]
 
-    def get_username(self, obj):
+    def get_username(self, obj: Comment):
         username = getattr(obj, "username", None)
         if username is not None:
             return username
         return USER_MODEL.objects.get(uid=obj.creator).username
 
-    def get_children(self, obj):
+    def get_children(self, obj: Comment):
         sql = (
             "SELECT dc.*, au.username FROM `doc_comment` dc "
             "JOIN `auth_user` au ON au.uid=dc.creator "

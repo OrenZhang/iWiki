@@ -159,7 +159,7 @@ class UserInfoView(GenericViewSet):
     queryset = USER_MODEL.objects.all()
     authentication_classes = [SessionAuthenticate]
 
-    def get_statistic_info(self, uid, active_index):
+    def get_statistic_info(self, uid: str, active_index: float):
         """获取统计信息"""
         # 获取缓存
         cache_key = f"UserInfoView:user_info:{uid}"

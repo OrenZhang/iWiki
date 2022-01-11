@@ -83,7 +83,7 @@ def auto_check_pin_doc():
 
 
 @app.task
-def export_all_docs(repo_id, uid):
+def export_all_docs(repo_id: int, uid: str):
     """导出仓库所有文章"""
     client = get_client_by_user(uid)
     # 获取用户和库对象
@@ -171,7 +171,9 @@ def remind_apply_info():
 
 
 @app.task
-def send_apply_result(operator, repo_id, apply_user, result=True):
+def send_apply_result(
+    operator: str, repo_id: int, apply_user: str, result: bool = True
+):
     """管理员处理结果"""
     result_msg = "已通过" if result else "已拒绝"
     user_model = get_user_model()
