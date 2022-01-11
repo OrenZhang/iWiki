@@ -17,8 +17,8 @@
     import { LabelLayout, UniversalTransition } from 'echarts/features'
     import { SVGRenderer } from 'echarts/renderers'
     import { onMounted, ref, markRaw } from 'vue'
-    import http from '../api'
     import { useI18n } from 'vue-i18n'
+    import { loadDocChartDataAPI } from '../api/modules/doc'
 
     echarts.use([
         TitleComponent,
@@ -95,9 +95,7 @@
 
     const showChart = ref(true)
     const loadData = () => {
-        http.get(
-            '/doc/public/recent_chart/'
-        ).then(res => {
+        loadDocChartDataAPI().then(res => {
             initChart(res.data)
             if (Object.keys(res.data).length <= 1) {
                 showChart.value = false

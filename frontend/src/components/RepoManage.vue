@@ -48,12 +48,12 @@
 
 <script setup>
     import { computed, onMounted, ref } from 'vue'
-    import http from '../api'
     import message from '../utils/message'
     import { ElMessageBox } from 'element-plus'
     import { useStore } from 'vuex'
     import { useI18n } from 'vue-i18n'
     import globalContext from '../context'
+    import { exitRepoAPI, loadRepoAPI } from '../api/modules/repo'
     
     const { t } = useI18n()
     
@@ -79,9 +79,7 @@
     })
     const loadRepos = () => {
         setLoading(true)
-        http.get(
-            '/repo/common/?page=' + paginator.value.page + '&searchKey=' + searchKey.value
-        ).then(res => {
+        loadRepoAPI(paginator.value.page, searchKey.value).then(res => {
             repos.value = res.data.results
             paginator.value.count = res.data.count
         }, err => {
@@ -112,9 +110,7 @@
             confirmButtonText: t('exitConfirmed'),
             callback: (action) => {
                 if (action === 'confirm') {
-                    http.post(
-                        '/repo/common/' + row.id + '/exit/'
-                    ).then(() => {
+                    exitRepoAPI(row.id).then(() => {
                         loadRepos()
                     }, err => {
                         message(err.data.msg, 'error')

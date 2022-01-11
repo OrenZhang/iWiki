@@ -75,11 +75,12 @@
 
 <script setup>
     import { computed, onMounted, ref, watch } from 'vue'
-    import http from '../api'
     import AdminMember from '../components/AdminMember.vue'
     import AdminDoc from '../components/AdminDoc.vue'
     import { useI18n } from 'vue-i18n'
     import globalContext from '../context'
+    import { changeRepoTypeAPI, checkOwnerAPI, deleteRepoAPI, loadManageRepoAPI } from '../api/modules/repo'
+    import { checkSuperAdminAPI } from '../api/modules/user'
     
     const { t } = useI18n()
 
@@ -98,12 +99,7 @@
         if (!value) {
             return
         }
-        http.patch(
-            '/repo/manage/' + curRepoID.value + '/',
-            {
-                r_type: value
-            }
-        ).then(() => {
+        changeRepoTypeAPI(curRepoID.value, value).then(() => {
             loadRepo()
         })
     }
@@ -138,9 +134,7 @@
         })
     })
     const loadRepo = () => {
-        http.get(
-            '/repo/manage/load_repo/'
-        ).then(res => {
+        loadManageRepoAPI().then(res => {
             repos.value = res.data
             if (repos.value.length > 0 && !curRepoID.value) {
                 curRepoID.value = repos.value[0].id
@@ -156,9 +150,7 @@
     
     const isOwner = ref(false)
     const checkOwner = () => {
-        http.get(
-            '/repo/manage/' + curRepoID.value + '/is_owner/'
-        ).then(res => {
+        checkOwnerAPI(curRepoID.value).then(res => {
             isOwner.value = res.data
         })
     }
@@ -168,9 +160,7 @@
 
     const isSuperAdmin = ref(false)
     const checkSuperAdmin = () => {
-        http.get(
-            '/account/user_info/is_superuser/'
-        ).then(res => {
+        checkSuperAdminAPI().then(res => {
             isSuperAdmin.value = res.data
         })
     }
@@ -188,9 +178,7 @@
     }
 
     const doDeleteRepo = () => {
-        http.delete(
-            '/repo/manage/' + curRepoID.value + '/'
-        ).then(() => {
+        deleteRepoAPI(curRepoID.value).then(() => {
             window.location.reload()
         })
     }

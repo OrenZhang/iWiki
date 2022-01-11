@@ -63,8 +63,9 @@
     import { useStore } from 'vuex'
     import { computed, ref } from 'vue'
     import { useI18n } from 'vue-i18n'
-    import http from '../api'
     import message from '../utils/message'
+    import { sendRepassCodeAPI } from '../api/modules/common'
+    import { repassAPI } from '../api/modules/user'
     
     const { t } = useI18n()
     const store = useStore()
@@ -125,13 +126,7 @@
     }
     const sendVerifyCode = () => {
         codeSend.value = true
-        http.post(
-            '/sms/send/repass_code/',
-            {
-                username: username.value,
-                phone: phone.value
-            }
-        ).then(res => {
+        sendRepassCodeAPI(username.value, phone.value).then(res => {
             if (res.result) {
                 message(t('sendCodeSuccess'))
             }
@@ -151,15 +146,7 @@
     }
     const doEdit = () => {
         setLoading(true)
-        http.post(
-            '/account/user_info/re_pass/',
-            {
-                username: username.value,
-                password: password.value,
-                code: code.value,
-                phone: phone.value
-            }
-        ).then(res => {
+        repassAPI(username.value, password.value, code.value, phone.value).then(() => {
             message(t('changeSuccess'))
             clearData()
             store.commit('setEditUser', false)

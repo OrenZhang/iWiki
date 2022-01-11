@@ -19,9 +19,6 @@
             <div class="user-info-text">
                 <h2>
                     {{ userInfo.username }}
-                    <el-tag v-show="showLogout && user.uid === userInfo.uid && user.auth" class="edit-info" effect="plain" size="small" @click="doLogout">
-                        {{ $t('logout') }}
-                    </el-tag>
                 </h2>
                 <p>{{ $t('registryAt') }}:&nbsp;{{ userInfo.date_joined }}</p>
             </div>
@@ -52,7 +49,6 @@
     import message from '../utils/message'
     import { computed } from 'vue'
     import globalContext from '../context'
-    import http from '../api'
     import { useRouter } from 'vue-router'
     import { useI18n } from 'vue-i18n'
 
@@ -65,11 +61,9 @@
     const props = defineProps({
         userInfo: {
             type: Object,
-            default: {}
-        },
-        showLogout: {
-            type: Boolean,
-            default: true
+            default: {
+                uid: ''
+            }
         }
     })
 
@@ -105,15 +99,6 @@
             message(t('upto1M'), 'error')
         }
         return isPic && isLt1M
-    }
-    
-    const doLogout = () => {
-        http.get(
-            '/account/sign_out/'
-        ).then(() => {
-            store.dispatch('getUserInfo')
-            router.push({ name: 'Home' })
-        })
     }
 </script>
 

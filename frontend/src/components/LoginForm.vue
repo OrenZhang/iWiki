@@ -25,9 +25,9 @@
 <script setup>
     import { computed, ref } from 'vue'
     import { useStore } from 'vuex'
-    import http from '../api'
     import message from '../utils/message'
     import { useI18n } from 'vue-i18n'
+    import { signInAPI } from '../api/modules/user'
     
     const { t } = useI18n()
     
@@ -60,10 +60,7 @@
     // 登录
     const doLogin = (refresh = false) => {
         setLoading(true)
-        http.post(
-            '/account/sign_in/',
-            loginData.value
-        ).then(res => {
+        signInAPI(loginData.value).then(res => {
             if (res.result) {
                 message(t('loginSuccess'))
                 store.commit('setLogin', false)

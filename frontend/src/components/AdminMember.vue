@@ -66,11 +66,15 @@
 
 <script setup>
     import { computed, onMounted, ref, watch } from 'vue'
-    import http from '../api'
     import { useStore } from 'vuex'
-    import message from '../utils/message'
     import { useI18n } from 'vue-i18n'
     import { ElMessageBox } from 'element-plus'
+    import {
+        changeRepoUserTypeAdminAPI,
+        dealRepoUserApplyAdminAPI,
+        loadRepoUserAdminAPI,
+        removeRepoUserAdminAPI
+    } from '../api/modules/repo'
     
     const { t } = useI18n()
     
@@ -104,9 +108,7 @@
         if (!props.repoId) {
             return
         }
-        http.get(
-            '/repo/manage/' + props.repoId + '/load_user/?page=' + paginator.value.page + '&size=' + paginator.value.size + '&searchKey=' + searchKey.value
-        ).then(res => {
+        loadRepoUserAdminAPI(props.repoId, paginator.value.page, paginator.value.size, searchKey.value).then(res => {
             members.value = res.data.results
             paginator.value.count = res.data.count
         })
@@ -127,12 +129,7 @@
             confirmButtonText: t('removeConfirmed'),
             callback: (action) => {
                 if (action === 'confirm') {
-                    http.post(
-                        '/repo/manage/' + props.repoId + '/remove_user/',
-                        {
-                            uid: row.uid
-                        }
-                    ).then(() => {
+                    removeRepoUserAdminAPI(props.repoId, row.uid).then(() => {
                         loadMembers()
                     })
                 }
@@ -141,20 +138,14 @@
     }
 
     const dealApply = (row, status) => {
-        http.post(
-            '/repo/manage/' + props.repoId + '/deal_apply/',
-            {
-                status: status,
-                uid: row.uid
-            }
-        ).then(() => {
+        dealRepoUserApplyAdminAPI(props.repoId, status, row.uid).then(() => {
             loadMembers()
         })
     }
 
     const showUType = (command) => {
         const u_type = command[0]
-        let uType = null
+        let uType
         const uid = command.slice(1, command.length)
         switch (u_type) {
             case 'a':
@@ -166,13 +157,7 @@
             default:
                 uType = 'member'
         }
-        http.post(
-            '/repo/manage/' + props.repoId + '/change_u_type/',
-            {
-                uid,
-                uType
-            }
-        ).then(() => {
+        changeRepoUserTypeAdminAPI(props.repoId, uid, uType).then(() => {
             loadMembers()
         })
     }

@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import http from '../api'
+import { getUserInfoAPI } from '../api/modules/user'
 
 const store = createStore({
     state () {
@@ -47,9 +47,7 @@ const store = createStore({
         },
         getUserInfo ({ commit, dispatch }) {
             dispatch('setMainLoading', true)
-            http.get(
-                '/account/user_info/'
-            ).then(res => {
+            getUserInfoAPI().then(res => {
                 if (res.result) {
                     commit('setUser', {
                         uid: res.data.uid,

@@ -59,18 +59,18 @@
 
 <script setup>
     import Login from './views/Login.vue'
-    import { computed, getCurrentInstance, onMounted, ref } from 'vue'
+    import { computed, onMounted, ref } from 'vue'
     import { useStore } from 'vuex'
     import { useRoute, useRouter } from 'vue-router'
     import { useI18n } from 'vue-i18n'
     import zhCn from 'element-plus/es/locale/lang/zh-cn'
     import en from 'element-plus/es/locale/lang/en'
-    import http from './api'
     import EditUserInfo from './components/EditUserInfo.vue'
     import VersionLog from './components/VersionLog.vue'
+    import { changeLangAPI } from './api/modules/common'
+    import { isManagerAPI, signOutAPI } from './api/modules/user'
 
     // 国际化
-    const { ctx } = getCurrentInstance()
     const { t } = useI18n()
     const userLocale = ref(localStorage.getItem('locale'))
     const curLocaleName = computed(() => userLocale.value === 'en' ? 'English' : '简体中文')
@@ -88,12 +88,7 @@
     }
     const changeBackendLang  = (langCode) => {
         store.commit('setMainLoading', true)
-        http.post(
-            '/i18n/',
-            {
-                language: langCode
-            }
-        ).finally(() => {
+        changeLangAPI(langCode).finally(() => {
             setTimeout(() => {
                 window.location.reload()
             }, 2000)
@@ -171,9 +166,7 @@
     // 管理员检测
     const isManager = ref(false)
     const checkManager = () => {
-        http.get(
-            '/account/user_info/is_manager/'
-        ).then(res => {
+        isManagerAPI().then(res => {
             if (res.result && res.data) {
                 isManager.value = true
             }
@@ -199,9 +192,7 @@
     // 登录登出
     const doLogout = () => {
         store.commit('setMainLoading', true)
-        http.get(
-            '/account/sign_out/'
-        ).then(() => {
+        signOutAPI().then(() => {
             window.location.reload()
         }).finally(() => {
             store.dispatch('setMainLoading', false)

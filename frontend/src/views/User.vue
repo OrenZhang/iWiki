@@ -14,10 +14,11 @@
 <script setup>
     import { onMounted, ref, watch } from 'vue'
     import { useRoute } from 'vue-router'
-    import http from '../api'
     import message from '../utils/message'
     import DocList from '../components/DocList.vue'
     import HUserInfoBox from '../components/HUserInfoBox.vue'
+    import { getExactUserInfoAPI } from '../api/modules/user'
+    import { loadUserDocPublicAPI } from '../api/modules/doc'
     
     const roure = useRoute()
 
@@ -35,9 +36,7 @@
         }
     })
     const loadUser = () => {
-        http.get(
-            '/account/user_info/' + searchUser.value + '/'
-        ).then(res => {
+        getExactUserInfoAPI(searchUser.value).then(res => {
             searchUserInfo.value = res.data
         }, err => {
             message(err.data.msg, 'error')
@@ -59,9 +58,7 @@
     const docLoading = ref(true)
     const loadUserDoc = () => {
         docLoading.value = true
-        http.get(
-            '/doc/public/user_doc/?username=' + searchUser.value + '&page=' + docData.value.paginator.page
-        ).then(res => {
+        loadUserDocPublicAPI(searchUser.value, docData.value.paginator.page).then(res => {
             docData.value.data = res.data.results
             docData.value.paginator.count = res.data.count
         }, err => {

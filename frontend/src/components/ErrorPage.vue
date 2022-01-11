@@ -19,9 +19,9 @@
     import { computed } from 'vue'
     import { useRouter } from 'vue-router'
     import { useStore } from 'vuex'
-    import http from '../api'
     import message from '../utils/message'
     import { useI18n } from 'vue-i18n'
+    import { applyByDocAPI } from '../api/modules/repo'
     
     const { t } = useI18n()
     
@@ -53,12 +53,7 @@
     })
 
     const doApply = () => {
-        http.post(
-            '/repo/common/apply_by_doc/',
-            {
-                doc_id: props.applyInfo.doc_id
-            }
-        ).then(() => {
+        applyByDocAPI(props.applyInfo.doc_id).then(() => {
             message(t('applyForGroupSuccessMsg'))
         }, err => {
             message(err.data.msg, 'error')

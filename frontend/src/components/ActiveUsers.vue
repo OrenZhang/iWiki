@@ -33,16 +33,14 @@
 <script setup>
     import globalContext from '../context'
     import { onMounted, ref } from 'vue'
-    import http from '../api'
     import { useRouter } from 'vue-router'
+    import { loadActiveUserAPI } from '../api/modules/user'
     
     const router = useRouter()
     
     const activeUsers = ref([])
     const loadActiveUser = () => {
-        http.get(
-            '/account/user_info/active_user/'
-        ).then(res => {
+        loadActiveUserAPI().then(res => {
             activeUsers.value = res.data
         })
     }
