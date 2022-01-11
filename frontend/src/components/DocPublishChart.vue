@@ -109,7 +109,12 @@
 
     onMounted(() => {
         window.addEventListener('resize', () => {
-            myChart.value.resize()
+            if (window.innerWidth < 1000 || window.innerHeight < 600) {
+                return
+            }
+            try {
+                myChart.value.resize()
+            } catch (e) {}
         })
     })
 </script>
