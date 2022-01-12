@@ -104,17 +104,6 @@
     }
 
     onMounted(loadData)
-
-    onMounted(() => {
-        window.addEventListener('resize', () => {
-            if (window.innerWidth < 1000 || window.innerHeight < 600) {
-                return
-            }
-            try {
-                myChart.value.resize()
-            } catch (e) {}
-        })
-    })
 </script>
 
 <style scoped>
