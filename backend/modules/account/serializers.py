@@ -60,6 +60,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     def validate_username(self, value: str):
         if value.isdigit():
             raise serializers.ValidationError("用户名不能为纯数字")
+        return value
 
     def validate_code(self, value: str):
         if value.isdigit() and len(value) == VERIFY_CODE_LENGTH:
