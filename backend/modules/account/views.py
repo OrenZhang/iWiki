@@ -55,22 +55,22 @@ class RegisterView(APIView):
         # 创建用户
         try:
             user = USER_MODEL.objects.create(**data)
-            auth.login(request, user)
-            repo = Repo.objects.get(name=settings.DEFAULT_REPO_NAME)
-            RepoUser.objects.create(
-                repo_id=repo.id, uid=user.uid, join_at=datetime.datetime.now()
-            )
-            serializer = UserInfoSerializer(request.user)
-            response = Response(serializer.data)
-            response.set_cookie(
-                settings.AUTH_TOKEN_NAME,
-                get_auth_token(user.uid),
-                max_age=settings.SESSION_COOKIE_AGE,
-                domain=settings.SESSION_COOKIE_DOMAIN,
-            )
-            return response
         except IntegrityError:
             raise UsernameExist()
+        auth.login(request, user)
+        repo = Repo.objects.get(name=settings.DEFAULT_REPO_NAME)
+        RepoUser.objects.create(
+            repo_id=repo.id, uid=user.uid, join_at=datetime.datetime.now()
+        )
+        serializer = UserInfoSerializer(request.user)
+        response = Response(serializer.data)
+        response.set_cookie(
+            settings.AUTH_TOKEN_NAME,
+            get_auth_token(user.uid),
+            max_age=settings.SESSION_COOKIE_AGE,
+            domain=settings.SESSION_COOKIE_DOMAIN,
+        )
+        return response
 
 
 class LoginView(ThrottleAPIView):
