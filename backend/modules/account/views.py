@@ -73,7 +73,6 @@ class RegisterView(APIView):
         return response
 
 
-
 class LoginView(ThrottleAPIView):
     """登录入口"""
 
