@@ -14,7 +14,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
-from constents import DocAvailableChoices, RepoTypeChoices
+from constents import DocAvailableChoices, RepoTypeChoices, UserTypeChoices
 from modules.account.serializers import UserInfoSerializer
 from modules.doc.models import Doc, DocVersion, DocCollaborator, Comment
 from modules.doc.permissions import DocManagePermission, DocCommonPermission
@@ -276,7 +276,7 @@ class DocPublicView(GenericViewSet):
         sql = (
             "SELECT d.*, au.username creator_name, r.name repo_name "
             "FROM `repo_repo` r "
-            "JOIN `repo_user` ru ON r.id=ru.repo_id "
+            "JOIN `repo_user` ru ON r.id=ru.repo_id AND ru.u_type!=%s "
             "JOIN `doc_doc` d ON r.id=d.repo_id "
             "JOIN `auth_user` au ON au.uid=d.creator "
             "WHERE NOT r.is_deleted AND (ru.uid=%s OR r.r_type=%s) "
@@ -287,6 +287,7 @@ class DocPublicView(GenericViewSet):
         docs = Doc.objects.raw(
             sql,
             [
+                UserTypeChoices.VISITOR,
                 request.user.uid,
                 RepoTypeChoices.PUBLIC,
                 DocAvailableChoices.PUBLIC,
@@ -349,7 +350,9 @@ class DocPublicView(GenericViewSet):
         except USER_MODEL.DoesNotExist:
             raise UserNotExist()
         # 共同或公开仓库 的 公开文章
-        union_repo_ids = RepoUser.objects.filter(uid=request.user.uid).values("repo_id")
+        union_repo_ids = RepoUser.objects.filter(
+            Q(uid=request.user.uid) & ~Q(u_type=UserTypeChoices.VISITOR)
+        ).values("repo_id")
         allowed_repo_ids = Repo.objects.filter(
             Q(r_type=RepoTypeChoices.PUBLIC) | Q(id__in=union_repo_ids)
         ).values("id")
@@ -398,7 +401,7 @@ class SearchDocView(ThrottleAPIView):
         sql = (
             "SELECT dd.*, au.username creator_name, rr.name repo_name "
             "FROM `repo_repo` rr "
-            "JOIN `repo_user` ru ON ru.repo_id=rr.id "
+            "JOIN `repo_user` ru ON ru.repo_id=rr.id AND ru.u_type!=%s "
             "JOIN `doc_doc` dd ON rr.id = dd.repo_id "
             "JOIN `auth_user` au ON au.uid = dd.creator "
             "WHERE NOT rr.is_deleted AND (ru.uid = %s OR rr.r_type = %s) "
@@ -422,6 +425,7 @@ class SearchDocView(ThrottleAPIView):
         docs = Doc.objects.raw(
             sql,
             [
+                UserTypeChoices.VISITOR,
                 request.user.uid,
                 RepoTypeChoices.PUBLIC,
                 DocAvailableChoices.PUBLIC,
