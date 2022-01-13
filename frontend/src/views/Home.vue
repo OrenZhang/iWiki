@@ -31,7 +31,7 @@
                 </div>
                 <el-container class="next-container">
                     <el-main>
-                        <div class="home-notice-box" v-if="showHomeNotice">
+                        <div class="home-notice-box" v-if="homeNotice.showNotice">
                             <el-alert :title="homeNotice.title" :description="homeNotice.desc" :type="homeNotice.type" :show-icon="homeNotice.showIcon" />
                         </div>
                         <DocPublishChart />
@@ -127,18 +127,17 @@
     }
 
     // 提示信息
-    const showHomeNotice = ref(false)
     const homeNotice = ref({
         title: '',
         desc: '',
         showIcon: true,
-        type: 'info'
+        type: 'info',
+        showNotice: false
     })
     const getHomeNotice = () => {
         getConfAPI('home_notice').then(res => {
             if (res.result) {
                 homeNotice.value = res.data
-                showHomeNotice.value = true
             }
         })
     }
