@@ -209,4 +209,11 @@
     .el-select {
         width: 100%;
     }
+
+    .el-form-item .el-input :deep(.el-input__inner),
+    .el-form-item .el-select :deep(.select-trigger),
+    .el-form-item .el-select :deep(.select-trigger) .el-input,
+    .el-form-item .el-select :deep(.select-trigger) .el-input .el-input__inner {
+        height: 36px!important;
+    }
 </style>

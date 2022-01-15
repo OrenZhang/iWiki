@@ -63,3 +63,9 @@
     background: var(--el-color-white);
     border-radius: 5px;
 }
+
+.search-box .el-select :deep(.select-trigger),
+.search-box .el-select :deep(.select-trigger) .el-input,
+.search-box .el-select :deep(.select-trigger) .el-input .el-input__inner {
+    height: 36px!important;
+}

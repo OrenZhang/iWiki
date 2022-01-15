@@ -5,14 +5,14 @@
                 <div class="search-box">
                     <div>
                         <div style="display: flex;">
-                            <div style="width: 100%; margin-right: 10px; ">
+                            <div style="width: 100%; margin-right: 10px; height: 36px;">
                                 <el-select
                                     :no-data-text="$t('homeSearchNotice')"
                                     popper-class="home-select-popper"
                                     v-model="searchKey"
                                     :options="options"
                                     :placeholder="$t('homeSearchKey')"
-                                    style="width: 100%;"
+                                    style="width: 100%; height: 36px;"
                                     allow-create
                                     filterable
                                     multiple
