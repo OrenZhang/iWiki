@@ -74,3 +74,9 @@
 :deep(.delete-dialog) .el-dialog__body {
     padding: 0 20px 20px 20px;
 }
+
+.main-box .el-select :deep(.select-trigger),
+.main-box .el-select :deep(.select-trigger) .el-input,
+.main-box .el-select :deep(.select-trigger) .el-input .el-input__inner {
+    height: 36px!important;
+}

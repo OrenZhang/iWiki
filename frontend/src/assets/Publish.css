@@ -78,3 +78,9 @@
     padding: 0;
     width: 100%;
 }
+
+.publish-form .el-select :deep(.select-trigger),
+.publish-form .el-select :deep(.select-trigger) .el-input,
+.publish-form .el-select :deep(.select-trigger) .el-input .el-input__inner {
+    height: 36px!important;
+}
