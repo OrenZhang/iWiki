@@ -117,6 +117,7 @@
     }
     onMounted(loadDoc)
     watch(() => props.repoId, () => {
+        paginator.value.page = 1
         loadDoc()
     })
 
