@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-08 19:44+0800\n"
+"POT-Creation-Date: 2022-01-21 14:16+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -109,7 +109,7 @@ msgid "用户名格式有误"
 msgstr "Incorrect username format"
 
 #: .\modules\account\serializers.py:23 .\modules\account\serializers.py:26
-#: .\modules\account\views.py:135 .\modules\doc\views\doc.py:346
+#: .\modules\account\views.py:135 .\modules\doc\views\doc.py:347
 msgid "用户名不能为空"
 msgstr "Username cannot be empty"
 
@@ -132,6 +132,22 @@ msgstr "Password cannot be empty"
 #: .\modules\account\serializers.py:34
 msgid "密码过长"
 msgstr "Password too long"
+
+#: .\modules\account\serializers.py:62
+#, fuzzy
+#| msgid "用户名不能为空"
+msgid "用户名不能为纯数字"
+msgstr "Username cannot be Numbers only"
+
+#: .\modules\account\serializers.py:67
+msgid "用户名只能包含a-z,A-Z,0-9,-,_"
+msgstr "Username should be a-z,A-Z,0-9,-,_"
+
+#: .\modules\account\serializers.py:73
+#, fuzzy
+#| msgid "密码格式有误"
+msgid "验证码格式有误"
+msgstr "Incorrect code format"
 
 #: .\modules\account\views.py:93
 msgid "登陆失败，用户名或密码错误"
@@ -206,14 +222,14 @@ msgstr "Upload At"
 msgid "上传日志"
 msgstr "Upload Log"
 
-#: .\modules\cos\views.py:27 .\modules\cos\views.py:71
+#: .\modules\cos\views.py:28 .\modules\cos\views.py:73
 #, python-format
 msgid "请上传 %(limit)dM 以内文件"
 msgid_plural "请上传 %(limit)dM 以内文件"
 msgstr[0] "Please upload files within %(limit)dM"
 msgstr[1] "Please upload files within %(limit)dM"
 
-#: .\modules\cos\views.py:41 .\modules\cos\views.py:61
+#: .\modules\cos\views.py:43 .\modules\cos\views.py:63
 msgid "上传失败，请稍后再试"
 msgstr "Upload failed, please try again later"
 
@@ -334,7 +350,7 @@ msgstr "Pin Doc"
 msgid "已添加该用户为协作者，请勿重复添加"
 msgstr "Duplicated Add"
 
-#: .\modules\doc\views\doc.py:396
+#: .\modules\doc\views\doc.py:399
 msgid "搜索关键字不能为空"
 msgstr "Search keyword cannot be empty"
 
@@ -342,7 +358,7 @@ msgstr "Search keyword cannot be empty"
 msgid "国际化模块"
 msgstr "International Module"
 
-#: .\modules\i18n\views.py:16
+#: .\modules\i18n\views.py:21
 msgid "不支持的语言"
 msgstr "Unsupported Language"
 
@@ -1478,39 +1494,39 @@ msgid "No"
 msgstr ""
 
 #. Translators: Please do not add spaces around commas.
-#: .\venv\Lib\site-packages\django\template\defaultfilters.py:827
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:839
 msgid "yes,no,maybe"
 msgstr ""
 
-#: .\venv\Lib\site-packages\django\template\defaultfilters.py:856
-#: .\venv\Lib\site-packages\django\template\defaultfilters.py:873
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:868
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:885
 #, python-format
 msgid "%(size)d byte"
 msgid_plural "%(size)d bytes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: .\venv\Lib\site-packages\django\template\defaultfilters.py:875
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:887
 #, python-format
 msgid "%s KB"
 msgstr ""
 
-#: .\venv\Lib\site-packages\django\template\defaultfilters.py:877
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:889
 #, python-format
 msgid "%s MB"
 msgstr ""
 
-#: .\venv\Lib\site-packages\django\template\defaultfilters.py:879
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:891
 #, python-format
 msgid "%s GB"
 msgstr ""
 
-#: .\venv\Lib\site-packages\django\template\defaultfilters.py:881
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:893
 #, python-format
 msgid "%s TB"
 msgstr ""
 
-#: .\venv\Lib\site-packages\django\template\defaultfilters.py:883
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:895
 #, python-format
 msgid "%s PB"
 msgstr ""

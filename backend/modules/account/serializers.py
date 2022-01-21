@@ -59,13 +59,18 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def validate_username(self, value: str):
         if value.isdigit():
-            raise serializers.ValidationError("用户名不能为纯数字")
+            raise serializers.ValidationError(_("用户名不能为纯数字"))
+        # 只允许a-z,A-Z,0-9,-,_
+        for letter in value:
+            if letter.isdigit() or letter.isalpha() or letter == "_" or letter == "-":
+                continue
+            raise serializers.ValidationError(_("用户名只能包含a-z,A-Z,0-9,-,_"))
         return value
 
     def validate_code(self, value: str):
         if value.isdigit() and len(value) == VERIFY_CODE_LENGTH:
             return value
-        raise serializers.ValidationError("验证码格式有误")
+        raise serializers.ValidationError(_("验证码格式有误"))
 
 
 class RePasswordSerializer(RegisterSerializer):
