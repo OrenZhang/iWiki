@@ -20,6 +20,7 @@ from modules.account.serializers import (
     RePasswordSerializer,
 )
 from modules.doc.models import Doc, Comment
+from modules.log.utils import db_logger
 from modules.repo.models import RepoUser, Repo
 from utils.authenticators import SessionAuthenticate
 from utils.exceptions import (
@@ -62,6 +63,7 @@ class RegisterView(APIView):
         RepoUser.objects.create(
             repo_id=repo.id, uid=user.uid, join_at=datetime.datetime.now()
         )
+        db_logger.view_log(request, self, USER_MODEL, True, user)
         serializer = UserInfoSerializer(request.user)
         response = Response(serializer.data)
         response.set_cookie(
@@ -93,6 +95,7 @@ class LoginView(ThrottleAPIView):
             raise LoginFailed(_("登陆失败，用户名或密码错误"))
         # session登录
         auth.login(request, user)
+        db_logger.view_log(request, self, USER_MODEL, True, user)
         serializer = UserInfoSerializer(request.user)
         response = Response(serializer.data)
         response.set_cookie(
@@ -109,6 +112,7 @@ class LogoutView(APIView):
 
     def get(self, request, *args, **kwargs):
         """用户登出"""
+        db_logger.view_log(request, self, USER_MODEL, True, None)
         auth.logout(request)
         auth_token = request.COOKIES.get(settings.AUTH_TOKEN_NAME, None)
         if auth_token is not None:
@@ -262,6 +266,7 @@ class UserInfoView(GenericViewSet):
             user.save()
         except USER_MODEL.DoesNotExist:
             raise UserNotExist()
+        db_logger.view_log(request, self, USER_MODEL, True, user)
         return Response()
 
     @action(detail=False, methods=["GET"])

@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "modules.i18n",
     "modules.version",
     "modules.conf",
+    "modules.log",
 ]
 
 # 中间件
