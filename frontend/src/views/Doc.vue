@@ -30,6 +30,7 @@
     import DocCatalogue from '../components/DocCatalogue.vue'
     import globalContext from '../context'
     import { getDocCommonAPI } from '../api/modules/doc'
+    import { setTitle } from '../utils/controller'
 
     const appleInfo = ref({
         visible: true,
@@ -80,6 +81,7 @@
         getDocCommonAPI(docID.value).then(res => {
             if (res.result) {
                 docData.value = res.data
+                setTitle(docData.value.title)
             }
         }, err => {
             message(err.data.msg, 'error')

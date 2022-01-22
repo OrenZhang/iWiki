@@ -130,9 +130,14 @@
         removeDocCollaboratorAPI
     } from '../api/modules/doc'
     import { searchUserAPI } from '../api/modules/user'
-    
+    import { setTitle } from '../utils/controller'
+
     const { t } = useI18n()
-    
+
+    onMounted(() => {
+        setTitle(t('New'))
+    })
+
     // vuex
     const store = useStore()
     const user = computed(() => store.state.user)

@@ -56,9 +56,9 @@ if (userLocale === 'en') {
 }
 
 const app = createApp(App)
-app.use(router)
-app.use(store)
 app.use(i18n)
+app.use(store)
+app.use(router)
 app.use(VueMarkdownEditor)
 app.use(ElementPlus)
 app.mount('#app')
