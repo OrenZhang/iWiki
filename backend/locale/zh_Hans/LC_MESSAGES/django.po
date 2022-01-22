@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-21 14:16+0800\n"
+"POT-Creation-Date: 2022-01-22 14:50+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,11 +50,11 @@ msgstr "成员"
 msgid "访客"
 msgstr "访客"
 
-#: .\entry\settings.py:163
+#: .\entry\settings.py:164
 msgid "English"
 msgstr "英语"
 
-#: .\entry\settings.py:164
+#: .\entry\settings.py:165
 msgid "中文简体"
 msgstr "中文简体"
 
@@ -109,7 +109,7 @@ msgid "用户名格式有误"
 msgstr "用户名格式有误"
 
 #: .\modules\account\serializers.py:23 .\modules\account\serializers.py:26
-#: .\modules\account\views.py:135 .\modules\doc\views\doc.py:347
+#: .\modules\account\views.py:139 .\modules\doc\views\doc.py:347
 msgid "用户名不能为空"
 msgstr "用户名不能为空"
 
@@ -149,7 +149,7 @@ msgstr "用户名只能包含a-z,A-Z,0-9,-,_"
 msgid "验证码格式有误"
 msgstr "验证码格式有误"
 
-#: .\modules\account\views.py:93
+#: .\modules\account\views.py:95
 msgid "登陆失败，用户名或密码错误"
 msgstr "登陆失败，用户名或密码错误"
 
@@ -195,6 +195,7 @@ msgstr "上传失败"
 
 #: .\modules\cos\admin.py:36 .\modules\cos\models.py:15
 #: .\modules\doc\admin.py:100 .\modules\doc\models.py:135
+#: .\modules\log\admin.py:15 .\modules\log\models.py:17
 msgid "操作人"
 msgstr "操作人"
 
@@ -329,7 +330,8 @@ msgstr "评论"
 msgid "评论版本"
 msgstr "评论版本"
 
-#: .\modules\doc\models.py:133 .\modules\repo\models.py:28
+#: .\modules\doc\models.py:133 .\modules\log\models.py:24
+#: .\modules\repo\models.py:28
 msgid "创建时间"
 msgstr "创建时间"
 
@@ -360,6 +362,38 @@ msgstr "国际化模块"
 #: .\modules\i18n\views.py:21
 msgid "不支持的语言"
 msgstr "不支持的语言"
+
+#: .\modules\log\apps.py:8
+msgid "日志模块"
+msgstr "日志模块"
+
+#: .\modules\log\models.py:19
+msgid "模型"
+msgstr "模型"
+
+#: .\modules\log\models.py:20
+msgid "方法"
+msgstr "方法"
+
+#: .\modules\log\models.py:21
+#, fuzzy
+#| msgid "上传结果"
+msgid "结果"
+msgstr "上传结果"
+
+#: .\modules\log\models.py:22
+msgid "详细信息"
+msgstr "详细信息"
+
+#: .\modules\log\models.py:23
+msgid "IP地址"
+msgstr "IP地址"
+
+#: .\modules\log\models.py:28
+#, fuzzy
+#| msgid "上传日志"
+msgid "日志"
+msgstr "上传日志"
 
 #: .\modules\repo\admin.py:34 .\modules\repo\models.py:73
 #: .\modules\sms\admin.py:27 .\modules\sms\models.py:16
