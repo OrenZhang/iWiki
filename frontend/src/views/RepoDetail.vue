@@ -39,6 +39,7 @@
     import PinDocList from '../components/PinDocList.vue'
     import { loadRepoDetailAPI } from '../api/modules/repo'
     import { loadRepoDocAPI } from '../api/modules/doc'
+    import { setTitle } from '../utils/controller'
 
     const store = useStore()
     const user = computed(() => store.state.user)
@@ -50,6 +51,7 @@
     const loadRepoInfo = () => {
         loadRepoDetailAPI(repo_id).then(res => {
             repo.value = res.data
+            setTitle(repo.value.name)
         })
     }
     onMounted(loadRepoInfo)

@@ -81,6 +81,7 @@
     import globalContext from '../context'
     import { changeRepoTypeAPI, checkOwnerAPI, deleteRepoAPI, loadManageRepoAPI } from '../api/modules/repo'
     import { checkSuperAdminAPI } from '../api/modules/user'
+    import { setTitle } from '../utils/controller'
     
     const { t } = useI18n()
 
@@ -182,6 +183,10 @@
             window.location.reload()
         })
     }
+
+    onMounted(() => {
+        setTitle(t('AdminTab'))
+    })
 </script>
 
 <style scoped>

@@ -174,6 +174,7 @@ const en = {
     weixinLogin: 'WeChat Login',
     usernameOrPhone: 'Username / Phone',
     uLogin: 'User',
+    wikiRepo: 'iWiki',
 }
 
 export default en

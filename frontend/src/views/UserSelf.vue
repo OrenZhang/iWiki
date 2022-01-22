@@ -35,11 +35,16 @@
     import RepoManage from '../components/RepoManage.vue'
     import { useI18n } from 'vue-i18n'
     import { loginCheckAPI } from '../api/modules/user'
+    import { setTitle } from '../utils/controller'
 
     const { t } = useI18n()
     
     const store = useStore()
     const userInfo = computed(() => store.state.user)
+
+    onMounted(() => {
+        setTitle(t('User'))
+    })
 
     const checkLogin = () => {
         loginCheckAPI().then(() => {}, () => {

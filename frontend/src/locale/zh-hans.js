@@ -174,6 +174,7 @@ const zh = {
     weixinLogin: '微信登录',
     usernameOrPhone: '用户名 / 手机号',
     uLogin: '用户',
+    wikiRepo: 'iWiki 知识库',
 }
 
 export default zh

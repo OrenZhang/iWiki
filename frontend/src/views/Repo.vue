@@ -69,6 +69,7 @@
     import message from '../utils/message'
     import { useI18n } from 'vue-i18n'
     import { createRepoAPI, loadRepoWithUserAPI } from '../api/modules/repo'
+    import { setTitle } from '../utils/controller'
     
     const { t } = useI18n()
     
@@ -144,6 +145,10 @@
             }
         })
     }
+
+    onMounted(() => {
+        setTitle(t('Repo'))
+    })
 </script>
 
 <style scoped>

@@ -55,6 +55,7 @@
     import DocPublishChart from '../components/DocPublishChart.vue'
     import { loadDocPublicAPI, searchDocAPI } from '../api/modules/doc'
     import { getConfAPI } from '../api/modules/common'
+    import { setTitle } from '../utils/controller'
 
     // 加载状态
     const loading = ref(true)
@@ -142,6 +143,10 @@
         })
     }
     onMounted(getHomeNotice)
+
+    onMounted(() => {
+        setTitle()
+    })
 </script>
 
 <style scoped>

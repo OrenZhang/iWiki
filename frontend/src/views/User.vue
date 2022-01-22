@@ -19,7 +19,8 @@
     import HUserInfoBox from '../components/HUserInfoBox.vue'
     import { getExactUserInfoAPI } from '../api/modules/user'
     import { loadUserDocPublicAPI } from '../api/modules/doc'
-    
+    import { setTitle } from '../utils/controller'
+
     const roure = useRoute()
 
     const searchUser = ref('')
@@ -38,6 +39,7 @@
     const loadUser = () => {
         getExactUserInfoAPI(searchUser.value).then(res => {
             searchUserInfo.value = res.data
+            setTitle(searchUserInfo.value.username)
         }, err => {
             message(err.data.msg, 'error')
         })

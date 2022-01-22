@@ -189,3 +189,4 @@ nohup.out
 tmp
 
 backend/entry/settings.json
+frontend/yarn.lock

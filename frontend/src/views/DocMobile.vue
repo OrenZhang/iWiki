@@ -16,6 +16,7 @@
     import message from '../utils/message'
     import globalContext from '../context'
     import { getDocCommonAPI } from '../api/modules/doc'
+    import { setTitle } from '../utils/controller'
 
     onMounted(() => {
         if (window.innerWidth >= 1000 && window.innerHeight >= 600) {
@@ -60,6 +61,7 @@
         getDocCommonAPI(docID.value).then(res => {
             if (res.result) {
                 docData.value = res.data
+                setTitle(docData.value.title)
             }
         }, err => {
             message(err.data.msg, 'error')
