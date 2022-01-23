@@ -175,6 +175,7 @@ const en = {
     usernameOrPhone: 'Username / Phone',
     uLogin: 'User',
     wikiRepo: 'iWiki',
+    hotDoc: 'Hot Docs'
 }
 
 export default en

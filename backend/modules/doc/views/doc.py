@@ -224,6 +224,8 @@ class DocCommonView(GenericViewSet):
     def retrieve(self, request, *args, **kwargs):
         """获取文章详情"""
         instance = self.get_object()
+        instance.pv += 1
+        instance.save()
         serializer = DocCommonSerializer(instance)
         return Response(serializer.data)
 
@@ -301,7 +303,7 @@ class DocPublicView(GenericViewSet):
 
     @action(detail=False, methods=["GET"])
     def recent(self, request, *args, **kwargs):
-        """近期文章"""
+        """热门文章"""
         cache_key = f"{self.__class__.__name__}:{self.action}"
         cache_data = cache.get(cache_key)
         if cache_data is not None:
@@ -310,9 +312,9 @@ class DocPublicView(GenericViewSet):
         public_repo_ids = Repo.objects.filter(
             r_type=RepoTypeChoices.PUBLIC, is_deleted=False
         ).values("id")
-        queryset = self.queryset.filter(repo_id__in=public_repo_ids).order_by("-id")[
-            :10
-        ]
+        queryset = self.queryset.filter(repo_id__in=public_repo_ids, pv__gt=0).order_by(
+            "-pv"
+        )[:10]
         serializer = DocListSerializer(queryset, many=True)
         cache.set(cache_key, serializer.data, 1800)
         return Response(serializer.data)
