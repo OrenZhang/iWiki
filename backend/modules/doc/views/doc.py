@@ -6,7 +6,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.db import transaction, IntegrityError
-from django.db.models import Q
+from django.db.models import Q, F
 from django.http import FileResponse
 from django.utils.encoding import escape_uri_path
 from django.utils.translation import gettext as _
@@ -224,8 +224,8 @@ class DocCommonView(GenericViewSet):
     def retrieve(self, request, *args, **kwargs):
         """获取文章详情"""
         instance = self.get_object()
+        Doc.objects.filter(id=instance.id).update(pv=F("pv") + 1)
         instance.pv += 1
-        instance.save()
         serializer = DocCommonSerializer(instance)
         return Response(serializer.data)
 
