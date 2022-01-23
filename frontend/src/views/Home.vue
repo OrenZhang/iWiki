@@ -20,7 +20,7 @@
                                     default-first-option
                                 />
                             </div>
-                            <el-button type="primary" size="medium" @click="searchDocs">
+                            <el-button type="primary" size="medium" @click="docs.paginator.page = 1; searchDocs()">
                                 {{ $t('search') }}
                             </el-button>
                             <el-button type="primary" size="medium" @click="resetSearch">
