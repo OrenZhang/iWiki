@@ -13,7 +13,7 @@
                     </el-table-column>
                 </el-table>
             </el-tab-pane>
-            <el-tab-pane :label="$t('newDoc')" name="doc">
+            <el-tab-pane :label="$t('hotDoc')" name="doc">
                 <el-table :show-header="false" :data="recentDocs" size="small">
                     <el-table-column type="index" width="40" />
                     <el-table-column>

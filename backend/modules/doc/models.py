@@ -28,6 +28,7 @@ class DocBase(models.Model):
     title = models.CharField(_("标题"), max_length=MEDIUM_CHAR_LENGTH)
     content = models.TextField(_("内容"), null=True, blank=True)
     attachments = models.JSONField(_("附件"), default=attachments_default)
+    pv = models.IntegerField(_("访问量"), db_index=True, default=0)
     creator = models.CharField(_("创建人"), max_length=SHORT_CHAR_LENGTH)
     update_at = models.DateTimeField(_("更新时间"), auto_now=True)
     update_by = models.CharField(
