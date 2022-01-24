@@ -6,6 +6,7 @@ from django.views.generic import RedirectView
 from utils import exceptions
 
 urlpatterns = [
+    path("", include("modules.home.urls")),
     path(
         "favicon.ico",
         RedirectView.as_view(url=f"{settings.SIMPLEUI_INDEX}/favicon.ico"),
