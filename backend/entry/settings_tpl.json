@@ -1,5 +1,6 @@
 {
     "DEBUG": "False",
+    "SERVICE_CLOSED": "False",
     "APP_CODE": "wiki-repo",
     "APP_SECRET_KEY": "",
     "BACKEND_HOST": "dev.api.incv.net",

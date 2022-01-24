@@ -27,6 +27,7 @@ except FileNotFoundError:
 
 # DEBUG
 DEBUG = True if os.getenv("DEBUG", "False") == "True" else False
+SERVICE_CLOSED = True if os.getenv("SERVICE_CLOSED", "False") == "True" else False
 
 # APP_CODE & SECRET
 APP_CODE = getenv_or_raise("APP_CODE")

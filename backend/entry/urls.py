@@ -28,3 +28,7 @@ handler400 = exceptions.bad_request
 handler403 = exceptions.permission_denied
 handler404 = exceptions.page_not_found
 handler500 = exceptions.server_error
+
+if settings.SERVICE_CLOSED:
+    urlpatterns = [path("", include("modules.home.urls"))]
+    handler404 = exceptions.service_closed
