@@ -83,6 +83,10 @@ def server_error(request):
     return django_exception_handler(ServerError)
 
 
+def service_closed(request, exception):
+    return django_exception_handler(ServiceClosed)
+
+
 class ServerError(APIException):
     status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
     default_code = 500500
@@ -159,3 +163,9 @@ class Error404(APIException):
     status_code = status.HTTP_404_NOT_FOUND
     default_code = 500404
     default_detail = _("资源不存在")
+
+
+class ServiceClosed(APIException):
+    status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+    default_code = 500500
+    default_detail = _("服务维护中，请稍后再试")
