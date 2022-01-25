@@ -20,7 +20,7 @@
                 <div class="el-menu-demo">
                     <div class="menu">
                         <router-link to="/" class="header-menu-home">
-                            <img src="/favicon.png" alt="logo.jpg" style="width: 32px; height: 32px; margin: 0 10px 0 0;">
+                            <img src="/favicon.webp" alt="logo.jpg" style="width: 32px; height: 32px; margin: 0 10px 0 0;">
                             <h2 class="header-menu-home-title">
                                 iWiki
                             </h2>
