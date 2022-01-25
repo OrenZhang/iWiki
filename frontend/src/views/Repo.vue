@@ -153,7 +153,7 @@
 
 <style scoped>
     .search-box {
-        background: url("/extra-assests/imgs/bg-1.png") no-repeat;
+        background: url("/extra-assests/imgs/bg-1.webp") no-repeat;
         background-size: cover;
         height: 30vh;
         min-height: 240px;
