@@ -19,7 +19,27 @@ GLOBAL_NOTICE = {
     "c_val": {},
     "c_bool": True,
 }
+HOME_NOTICE = {
+    "c_key": "home_notice",
+    "c_type": ConfTypeChoices.JSON,
+    "c_val": {
+        "desc": "",
+        "type": "info",
+        "title": "",
+        "showIcon": True,
+        "showNotice": False,
+    },
+    "c_bool": True,
+}
+SHOW_DOC_PUBLISH_CHART = {
+    "c_key": "show_doc_publish_chart",
+    "c_type": ConfTypeChoices.BOOL,
+    "c_val": {},
+    "c_bool": True,
+}
 AUTO_REGISTRY_KEYS = (
     SIGN_UP_KEY,
     GLOBAL_NOTICE,
+    HOME_NOTICE,
+    SHOW_DOC_PUBLISH_CHART,
 )
