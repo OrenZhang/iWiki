@@ -43,6 +43,7 @@
                     </el-aside>
                 </el-container>
             </div>
+            <AppFooter />
         </el-scrollbar>
     </div>
 </template>
@@ -56,6 +57,7 @@
     import { loadDocPublicAPI, searchDocAPI } from '../api/modules/doc'
     import { getConfAPI } from '../api/modules/common'
     import { setTitle } from '../utils/controller'
+    import AppFooter from '../components/AppFooter.vue'
 
     // 加载状态
     const loading = ref(true)

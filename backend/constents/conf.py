@@ -37,9 +37,20 @@ SHOW_DOC_PUBLISH_CHART = {
     "c_val": {},
     "c_bool": True,
 }
+FOOTER_INFO = {
+    "c_key": "footer_info",
+    "c_type": ConfTypeChoices.JSON,
+    "c_val": {
+        "showFooter": True,
+        "siteStartup": "2021-12-16 00:00:00",
+        "copyright": "Oren Zhang"
+    },
+    "c_bool": True,
+}
 AUTO_REGISTRY_KEYS = (
     SIGN_UP_KEY,
     GLOBAL_NOTICE,
     HOME_NOTICE,
     SHOW_DOC_PUBLISH_CHART,
+    FOOTER_INFO,
 )

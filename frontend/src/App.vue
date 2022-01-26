@@ -211,6 +211,11 @@
             store.dispatch('setMainLoading', false)
         })
     }
+
+    // 加载页尾信息
+    onMounted(() => {
+        store.dispatch('getFooterInfo')
+    })
 </script>
 
 <style>
