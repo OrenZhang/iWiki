@@ -175,7 +175,9 @@ const zh = {
     usernameOrPhone: '用户名 / 手机号',
     uLogin: '用户',
     wikiRepo: 'iWiki 知识库',
-    hotDoc: '热门文章'
+    hotDoc: '热门文章',
+    logoutConfirm: '确认退出当前账户？',
+    logoutConfirmed: '确认退出',
 }
 
 export default zh
