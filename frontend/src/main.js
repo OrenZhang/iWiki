@@ -37,7 +37,10 @@ VueMarkdownEditor.use(vuepressTheme, {
         md.set().use(markdownItSup)
     },
     codeHighlightExtensionMap: {
-        vue: 'html'
+        vue: 'html',
+        shell: 'bash',
+        sh: 'bash',
+        'c++': 'cpp'
     },
 })
 VueMarkdownEditor.use(createEmojiPlugin())
