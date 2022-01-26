@@ -43,8 +43,9 @@
                             <el-link :underline="false" type="primary" v-show="!user.auth" @click="store.commit('setLogin', true)">
                                 {{ $t('loginLogout') }}
                             </el-link>
-                            <el-link :underline="false" type="danger" v-show="user.auth" @click="doLogout">
-                                {{ $t('logout') }}
+                            <el-link :underline="false" class="logout-button" type="primary" v-show="user.auth" @click="showLogout">
+                                <i class="fa-solid fa-user" />
+                                {{ user.username }}
                             </el-link>
                         </div>
                     </div>
@@ -69,6 +70,7 @@
     import VersionLog from './components/VersionLog.vue'
     import { changeLangAPI } from './api/modules/common'
     import { isManagerAPI, signOutAPI } from './api/modules/user'
+    import { ElMessageBox } from 'element-plus'
 
     // 国际化
     const { t } = useI18n()
@@ -190,6 +192,17 @@
     })
 
     // 登录登出
+    const showLogout = () => {
+        const msg = t('logoutConfirm')
+        ElMessageBox.alert(msg, t('logout'), {
+            confirmButtonText: t('logoutConfirmed'),
+            callback: action => {
+                if (action === 'confirm') {
+                    doLogout()
+                }
+            }
+        })
+    }
     const doLogout = () => {
         store.commit('setMainLoading', true)
         signOutAPI().then(() => {

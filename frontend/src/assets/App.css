@@ -342,3 +342,9 @@ svg div {
         border-radius: 6px!important;
     }
 }
+
+.logout-button .fa-solid {
+    margin-right: 6px;
+    margin-top: 2px;
+    color: unset;
+}

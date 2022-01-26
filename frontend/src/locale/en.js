@@ -175,7 +175,9 @@ const en = {
     usernameOrPhone: 'Username / Phone',
     uLogin: 'User',
     wikiRepo: 'iWiki',
-    hotDoc: 'Hot Docs'
+    hotDoc: 'Hot Docs',
+    logoutConfirm: 'You will sign out this site.',
+    logoutConfirmed: 'Sign Out',
 }
 
 export default en
