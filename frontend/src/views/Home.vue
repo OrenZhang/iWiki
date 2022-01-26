@@ -34,7 +34,7 @@
                         <div class="home-notice-box" v-if="homeNotice.showNotice">
                             <el-alert :title="homeNotice.title" :description="homeNotice.desc" :type="homeNotice.type" :show-icon="homeNotice.showIcon" />
                         </div>
-                        <DocPublishChart />
+                        <DocPublishChart v-if="showChart" />
                         <el-skeleton :rows="6" animated v-show="loading" />
                         <DocList :data="docs" @pageChange="handlePageChange" v-show="!loading" />
                     </el-main>
@@ -147,6 +147,16 @@
     onMounted(() => {
         setTitle()
     })
+
+    const showChart = ref(false)
+    const checkShowChart = () => {
+        getConfAPI('show_doc_publish_chart').then(res => {
+            if (res.result) {
+                showChart.value = res.data
+            }
+        })
+    }
+    onMounted(checkShowChart)
 </script>
 
 <style scoped>
