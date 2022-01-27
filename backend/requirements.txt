@@ -1,14 +1,11 @@
 # Django
 django==4.0.1
+mysqlclient==2.0.3
 djangorestframework==3.12.4
 django-cors-headers==3.10.1
 django-simpleui==2022.1
 
-# wsgi
-uwsgi==2.0.20
-
 # Storage
-mysqlclient==2.0.3
 redis==4.0.2
 
 # Sms
