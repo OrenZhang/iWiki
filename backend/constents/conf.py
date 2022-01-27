@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -42,7 +44,7 @@ FOOTER_INFO = {
     "c_type": ConfTypeChoices.JSON,
     "c_val": {
         "showFooter": True,
-        "siteStartup": "2021-12-16 00:00:00",
+        "siteStartup": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "copyright": "Oren Zhang",
     },
     "c_bool": True,
