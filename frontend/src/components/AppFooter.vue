@@ -21,9 +21,14 @@
     const footerInfo = computed(() => store.state.footerInfo)
 
     // 初始化时间
-    const startDateTime = new Date(footerInfo.value.siteStartup.replace(/-/g, '/'))
+    const startDateTime = computed(() => {
+        if (footerInfo.value.siteStartup) {
+            return new Date(footerInfo.value.siteStartup.replace(/-/g, '/'))
+        }
+        return new Date()
+    })
+    const startYear = computed(() => startDateTime.value.getFullYear())
     const now = ref(new Date())
-    const startYear = startDateTime.getFullYear()
     const currentYear = computed(() => now.value.getFullYear())
     const day = ref(0)
     const hour = ref(0)
@@ -37,7 +42,7 @@
     const calculateTime = () => {
         now.value = new Date()
         // 两时间戳差值
-        const dateDiff = now.value.getTime() - startDateTime.getTime()
+        const dateDiff = now.value.getTime() - startDateTime.value.getTime()
         let leftDiff
         // 计算天数
         day.value = Math.floor(dateDiff / (24 * 3600 * 1000))
