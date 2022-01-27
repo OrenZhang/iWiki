@@ -4,7 +4,7 @@
             {{ $t('continuousRunning') }} - {{ continuousRunningTime }}
         </div>
         <div>
-            Copyright <i class="fa-regular fa-copyright" /> {{ startYear }} - {{ now.getFullYear() }} {{ footerInfo.copyright }}. All Rights Reserved.
+            Copyright <i class="fa-regular fa-copyright" /> {{ startYear }} - {{ currentYear }} {{ footerInfo.copyright }}. All Rights Reserved.
         </div>
     </div>
 </template>
@@ -24,6 +24,7 @@
     const startDateTime = new Date(footerInfo.value.siteStartup.replace(/-/g, '/'))
     const now = ref(new Date())
     const startYear = startDateTime.getFullYear()
+    const currentYear = computed(() => now.value.getFullYear())
     const day = ref(0)
     const hour = ref(0)
     const minute = ref(0)
