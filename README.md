@@ -9,7 +9,7 @@ iWiki 是一个知识共享平台，也可用作个人博客。依赖 `Python 3.
 ## 部署
 
 - [Github Release](https://github.com/OrenZhang/iWiki/releases/latest)
-- [Wiki Mirror](https://github.com/OrenZhang/iWiki/releases/latest)
+- [Wiki Mirror](https://www.wiki.incv.net/release/latest.tar.gz)
 
 由于 iWiki 为前后端分离开发与部署项目，并使用到了腾讯云的部分服务，首次部署的步骤、耗时较多，可以邮件至 `incv2020@outlook.com` 获得帮助。
 
