@@ -84,7 +84,7 @@ python manage.py migrate
 
 ### 5. 在 `/backend` 目录，重启相关进程
 
-此步需要根据实际配置进行调整，`APIDIR` 为后端目录(含父级目录), `BASEDIR` 为项目跟目录的父级目录，使用 `BASEDIR` 和 `APIDIR` 拼接可以得到后端目录。
+此步需要根据实际配置进行调整，`APIDIR` 为后端目录(含父级目录), `BASEDIR` 为项目根目录的父级目录，使用 `BASEDIR` 和 `APIDIR` 拼接可以得到后端目录。
 
 ```bash
 APIDIR=wiki_repo/backend
