@@ -1,4 +1,4 @@
-<img alt="iWiki Logo" height="60" src="./assets/favicon.png">
+<img alt="iWiki Logo" height="50" src="./assets/favicon.png">
 
 iWiki 是一个知识共享平台，也可用作个人博客。依赖 `Python 3.9` + `Node.js 16.13.1` + `Vue 3` + ···  
 
