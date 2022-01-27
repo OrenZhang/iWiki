@@ -84,7 +84,7 @@ python manage.py migrate
 
 ### 5. 在 `/backend` 目录，重启相关进程
 
-此步需要根据实际配置进行调整，`APIDIR` 为后端目录(含父级目录), `BASEDIR` 为项目跟目录的父级目录，使用 `BASEDIR` 和 `APIDIR` 拼接可以得到后端目录。
+此步需要根据实际配置进行调整，`APIDIR` 为后端目录(含父级目录), `BASEDIR` 为项目根目录的父级目录完整路径，使用 `BASEDIR` 和 `APIDIR` 拼接可以得到后端目录。
 
 ```bash
 APIDIR=wiki_repo/backend
@@ -95,9 +95,20 @@ nohup celery -A modules.cel worker -l INFO -f $BASEDIR/$APIDIR/logs/celery-worke
 nohup celery -A modules.cel beat -l INFO -f $BASEDIR/$APIDIR/logs/celery-beat.log > /dev/null 2>&1 &
 ```
 
-### 6. 配置 NGINX 反向代理访问
+### 6. 配置 NGINX 反向代理访问，并配置静态文件代理
 
-具体配置步骤请自行完成。
+部分代码如下，具体配置步骤请自行完成。
+
+```
+location ^~/static {
+    alias /www/wwwroot/wiki_repo/backend/static;
+}
+
+location / {
+    include uwsgi_params;
+    uwsgi_pass 127.0.0.1:8014;
+}
+```
 
 ## 部署完成
 
