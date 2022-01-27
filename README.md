@@ -1,4 +1,6 @@
-<img alt="iWiki Logo" height="50" src="./assets/favicon.png">
+<a href="https://wiki.incv.net" target="_blank">
+    <img alt="iWiki Logo" height="50" src="./assets/favicon.png">
+</a>
 
 iWiki 是一个知识共享平台，也可用作个人博客。依赖 `Python 3.9` + `Node.js 16.13.1` + `Vue 3` + ···  
 
@@ -40,8 +42,7 @@ yarn install && yarn build
 ### 1. 在 `/backend/entry` 目录，修改后端配置
 
 复制 `settings_tpl.json` 为 `settings.json` 并根据实际情况进行配置。   
-如果不配置腾讯云相关的接口，那么将无法使用对应的服务，如短信服务(注册，重置密码等),对象存储(照片、文件上传等)。
-本地注册用户可以使用 Django 的 `createsuperuser` 的形式进行注册。
+如果不配置腾讯云相关的接口，那么将无法使用对应的服务，如短信服务(注册，重置密码等),对象存储(照片、文件上传等)。 本地注册用户可以使用 Django 的 `createsuperuser` 的形式进行注册。
 
 - DEBUG: 调试模式
 - SERVICE_CLOSED: 关闭所有服务
