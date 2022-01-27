@@ -43,7 +43,7 @@ FOOTER_INFO = {
     "c_val": {
         "showFooter": True,
         "siteStartup": "2021-12-16 00:00:00",
-        "copyright": "Oren Zhang"
+        "copyright": "Oren Zhang",
     },
     "c_bool": True,
 }
