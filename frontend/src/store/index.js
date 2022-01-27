@@ -20,7 +20,7 @@ const store = createStore({
             footerInfo: {
                 'copyright': '',
                 'showFooter': false,
-                'siteStartup': ''
+                'siteStartup': new Date()
             }
         }
     },
