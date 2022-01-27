@@ -178,6 +178,7 @@ const zh = {
     hotDoc: '热门文章',
     logoutConfirm: '确认退出当前账户？',
     logoutConfirmed: '确认退出',
+    countinuousRunning:'本站已运行'
 }
 
 export default zh

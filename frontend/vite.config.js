@@ -22,11 +22,6 @@ export default defineConfig({
             ],
         }),
     ],
-    resolve: {
-        alias: {
-          '@': '/src'
-        }
-    },
     base: '/',
     publicDir: 'public',
     server: {

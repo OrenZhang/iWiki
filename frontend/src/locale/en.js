@@ -178,6 +178,7 @@ const en = {
     hotDoc: 'Hot Docs',
     logoutConfirm: 'You will sign out this site.',
     logoutConfirmed: 'Sign Out',
+    countinuousRunning:'Countinuous Running'
 }
 
 export default en
