@@ -178,6 +178,11 @@ const en = {
     hotDoc: 'Hot Docs',
     logoutConfirm: 'You will sign out this site.',
     logoutConfirmed: 'Sign Out',
+    continuousRunning:'Continuous Running',
+    daySimple: 'd ',
+    hourSimple: 'h ',
+    minuteSimple: 'm ',
+    secondSimple: 's',
 }
 
 export default en

@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import { getUserInfoAPI } from '../api/modules/user'
+import { getConfAPI } from '../api/modules/common'
 
 const store = createStore({
     state () {
@@ -15,6 +16,11 @@ const store = createStore({
                 date_joined: '',
                 property: {},
                 auth: false
+            },
+            footerInfo: {
+                'copyright': '',
+                'showFooter': false,
+                'siteStartup': ''
             }
         }
     },
@@ -33,6 +39,9 @@ const store = createStore({
         },
         setVersion (state, payload) {
             state.showVersion = payload
+        },
+        setFooterInfo (state, payload) {
+            state.footerInfo = payload
         }
     },
     actions: {
@@ -69,6 +78,13 @@ const store = createStore({
                 }
             }).finally(() => {
                 dispatch('setMainLoading', false)
+            })
+        },
+        getFooterInfo ({ commit }) {
+            getConfAPI('footer_info').then(res => {
+                if (res.result) {
+                    commit('setFooterInfo', res.data)
+                }
             })
         }
     }
