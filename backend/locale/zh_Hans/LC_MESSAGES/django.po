@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-22 14:50+0800\n"
+"POT-Creation-Date: 2022-01-27 09:50+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,11 +50,11 @@ msgstr "成员"
 msgid "访客"
 msgstr "访客"
 
-#: .\entry\settings.py:164
+#: .\entry\settings.py:166
 msgid "English"
 msgstr "英语"
 
-#: .\entry\settings.py:165
+#: .\entry\settings.py:167
 msgid "中文简体"
 msgstr "中文简体"
 
@@ -91,8 +91,8 @@ msgstr "头像"
 msgid "联系电话"
 msgstr "联系电话"
 
-#: .\modules\account\models.py:50 .\modules\doc\models.py:37
-#: .\modules\doc\models.py:101 .\modules\repo\models.py:29
+#: .\modules\account\models.py:50 .\modules\doc\models.py:38
+#: .\modules\doc\models.py:102 .\modules\repo\models.py:29
 msgid "软删除"
 msgstr "软删除"
 
@@ -109,7 +109,7 @@ msgid "用户名格式有误"
 msgstr "用户名格式有误"
 
 #: .\modules\account\serializers.py:23 .\modules\account\serializers.py:26
-#: .\modules\account\views.py:139 .\modules\doc\views\doc.py:347
+#: .\modules\account\views.py:139 .\modules\doc\views\doc.py:349
 msgid "用户名不能为空"
 msgstr "用户名不能为空"
 
@@ -134,8 +134,6 @@ msgid "密码过长"
 msgstr "密码过长"
 
 #: .\modules\account\serializers.py:62
-#, fuzzy
-#| msgid "用户名不能为空"
 msgid "用户名不能为纯数字"
 msgstr "用户名不能为纯数字"
 
@@ -144,8 +142,6 @@ msgid "用户名只能包含a-z,A-Z,0-9,-,_"
 msgstr "用户名只能包含a-z,A-Z,0-9,-,_"
 
 #: .\modules\account\serializers.py:73
-#, fuzzy
-#| msgid "密码格式有误"
 msgid "验证码格式有误"
 msgstr "验证码格式有误"
 
@@ -194,7 +190,7 @@ msgid "上传失败"
 msgstr "上传失败"
 
 #: .\modules\cos\admin.py:36 .\modules\cos\models.py:15
-#: .\modules\doc\admin.py:100 .\modules\doc\models.py:135
+#: .\modules\doc\admin.py:100 .\modules\doc\models.py:136
 #: .\modules\log\admin.py:15 .\modules\log\models.py:17
 msgid "操作人"
 msgstr "操作人"
@@ -228,6 +224,7 @@ msgstr "上传日志"
 msgid "请上传 %(limit)dM 以内文件"
 msgid_plural "请上传 %(limit)dM 以内文件"
 msgstr[0] "请上传 %(limit)dM 以内文件"
+msgstr[1] "请上传 %(limit)dM 以内文件"
 
 #: .\modules\cos\views.py:43 .\modules\cos\views.py:63
 msgid "上传失败，请稍后再试"
@@ -238,13 +235,13 @@ msgstr "上传失败，请稍后再试"
 msgid "库名"
 msgstr "库名"
 
-#: .\modules\doc\admin.py:35 .\modules\doc\models.py:31
-#: .\modules\doc\models.py:99 .\modules\repo\admin.py:15
+#: .\modules\doc\admin.py:35 .\modules\doc\models.py:32
+#: .\modules\doc\models.py:100 .\modules\repo\admin.py:15
 #: .\modules\repo\models.py:27
 msgid "创建人"
 msgstr "创建人"
 
-#: .\modules\doc\admin.py:39 .\modules\doc\models.py:34
+#: .\modules\doc\admin.py:39 .\modules\doc\models.py:35
 msgid "更新人"
 msgstr "更新人"
 
@@ -253,16 +250,14 @@ msgid "标题"
 msgstr "标题"
 
 #: .\modules\doc\admin.py:69 .\modules\doc\admin.py:96
-#, fuzzy
-#| msgid "文章ID"
 msgid "文章"
-msgstr "文章ID"
+msgstr "文章"
 
 #: .\modules\doc\apps.py:8
 msgid "文档模块"
 msgstr "文档模块"
 
-#: .\modules\doc\models.py:21 .\modules\doc\models.py:46
+#: .\modules\doc\models.py:21 .\modules\doc\models.py:47
 msgid "仓库id"
 msgstr "仓库id"
 
@@ -270,7 +265,7 @@ msgstr "仓库id"
 msgid "可见范围"
 msgstr "可见范围"
 
-#: .\modules\doc\models.py:29 .\modules\doc\models.py:98
+#: .\modules\doc\models.py:29 .\modules\doc\models.py:99
 msgid "内容"
 msgstr "内容"
 
@@ -278,72 +273,76 @@ msgstr "内容"
 msgid "附件"
 msgstr "附件"
 
-#: .\modules\doc\models.py:32 .\modules\doc\models.py:100
+#: .\modules\doc\models.py:31
+msgid "访问量"
+msgstr "访问量"
+
+#: .\modules\doc\models.py:33 .\modules\doc\models.py:101
 msgid "更新时间"
 msgstr "更新时间"
 
-#: .\modules\doc\models.py:36
+#: .\modules\doc\models.py:37
 msgid "发布状态"
 msgstr "发布状态"
 
-#: .\modules\doc\models.py:50
+#: .\modules\doc\models.py:51
 msgid "文档"
 msgstr "文档"
 
-#: .\modules\doc\models.py:70 .\modules\doc\models.py:120
+#: .\modules\doc\models.py:71 .\modules\doc\models.py:121
 msgid "版本id"
 msgstr "版本id"
 
-#: .\modules\doc\models.py:75
+#: .\modules\doc\models.py:76
 msgid "文档版本"
 msgstr "文档版本"
 
-#: .\modules\doc\models.py:82 .\modules\doc\models.py:132
+#: .\modules\doc\models.py:83 .\modules\doc\models.py:133
 msgid "文章ID"
 msgstr "文章ID"
 
-#: .\modules\doc\models.py:83
+#: .\modules\doc\models.py:84
 msgid "协作人ID"
 msgstr "协作人ID"
 
-#: .\modules\doc\models.py:84
+#: .\modules\doc\models.py:85
 msgid "添加时间"
 msgstr "添加时间"
 
-#: .\modules\doc\models.py:88
+#: .\modules\doc\models.py:89
 msgid "协作成员"
 msgstr "协作成员"
 
-#: .\modules\doc\models.py:96
+#: .\modules\doc\models.py:97
 msgid "文档id"
 msgstr "文档id"
 
-#: .\modules\doc\models.py:97
+#: .\modules\doc\models.py:98
 msgid "父级评论"
 msgstr "父级评论"
 
-#: .\modules\doc\models.py:112
+#: .\modules\doc\models.py:113
 msgid "评论"
 msgstr "评论"
 
-#: .\modules\doc\models.py:125
+#: .\modules\doc\models.py:126
 msgid "评论版本"
 msgstr "评论版本"
 
-#: .\modules\doc\models.py:133 .\modules\log\models.py:24
+#: .\modules\doc\models.py:134 .\modules\log\models.py:24
 #: .\modules\repo\models.py:28
 msgid "创建时间"
 msgstr "创建时间"
 
-#: .\modules\doc\models.py:134
+#: .\modules\doc\models.py:135
 msgid "置顶到期时间"
 msgstr "置顶到期时间"
 
-#: .\modules\doc\models.py:136
+#: .\modules\doc\models.py:137
 msgid "使用中"
 msgstr "使用中"
 
-#: .\modules\doc\models.py:140
+#: .\modules\doc\models.py:141
 msgid "置顶文章"
 msgstr "置顶文章"
 
@@ -351,7 +350,7 @@ msgstr "置顶文章"
 msgid "已添加该用户为协作者，请勿重复添加"
 msgstr "已添加该用户为协作者，请勿重复添加"
 
-#: .\modules\doc\views\doc.py:399
+#: .\modules\doc\views\doc.py:401
 msgid "搜索关键字不能为空"
 msgstr "搜索关键字不能为空"
 
@@ -376,10 +375,8 @@ msgid "方法"
 msgstr "方法"
 
 #: .\modules\log\models.py:21
-#, fuzzy
-#| msgid "上传结果"
 msgid "结果"
-msgstr "上传结果"
+msgstr "结果"
 
 #: .\modules\log\models.py:22
 msgid "详细信息"
@@ -390,10 +387,8 @@ msgid "IP地址"
 msgstr "IP地址"
 
 #: .\modules\log\models.py:28
-#, fuzzy
-#| msgid "上传日志"
 msgid "日志"
-msgstr "上传日志"
+msgstr "日志"
 
 #: .\modules\repo\admin.py:34 .\modules\repo\models.py:73
 #: .\modules\sms\admin.py:27 .\modules\sms\models.py:16
@@ -445,6 +440,7 @@ msgstr "该申请不存在"
 msgid "已申请或加入%(name)s"
 msgid_plural "已申请或加入%(name)s"
 msgstr[0] "已申请或加入%(name)s"
+msgstr[1] "已申请或加入%(name)s"
 
 #: .\modules\sms\admin.py:20 .\modules\sms\models.py:15
 msgid "发送情况"
@@ -471,36 +467,28 @@ msgid "发送时间"
 msgstr "发送时间"
 
 #: .\modules\sms\models.py:21
-#, fuzzy
-#| msgid "短信模块"
 msgid "短信"
-msgstr "短信模块"
+msgstr "短信"
 
 #: .\modules\sms\views.py:21
-#, fuzzy
-#| msgid "服务器异常，请联系管理员"
 msgid "暂未开放注册，请联系管理员"
-msgstr "服务器异常，请联系管理员"
+msgstr "暂未开放注册，请联系管理员"
 
 #: .\modules\sms\views.py:24 .\modules\sms\views.py:40
 msgid "手机号为空或格式有误"
 msgstr "手机号为空或格式有误"
 
 #: .\modules\sms\views.py:42
-#, fuzzy
-#| msgid "用户名格式有误"
 msgid "用户名为空或格式有误"
-msgstr "用户名格式有误"
+msgstr "用户名为空或格式有误"
 
 #: .\modules\version\apps.py:36
 msgid "版本模块"
 msgstr "版本模块"
 
 #: .\modules\version\models.py:12
-#, fuzzy
-#| msgid "版本id"
 msgid "版本号"
-msgstr "版本id"
+msgstr "版本号"
 
 #: .\modules\version\models.py:13
 msgid "日志内容"
@@ -515,69 +503,69 @@ msgid "当前版本"
 msgstr "当前版本"
 
 #: .\modules\version\models.py:19
-#, fuzzy
-#| msgid "版本id"
 msgid "版本"
-msgstr "版本id"
+msgstr "版本"
 
-#: .\utils\exceptions.py:89
+#: .\utils\exceptions.py:93
 msgid "服务器异常，请联系管理员"
 msgstr "服务器异常，请联系管理员"
 
-#: .\utils\exceptions.py:95
+#: .\utils\exceptions.py:99
 msgid "未登录用户"
 msgstr "未登录用户"
 
-#: .\utils\exceptions.py:101
+#: .\utils\exceptions.py:105
 msgid "登录失败"
 msgstr "登录失败"
 
-#: .\utils\exceptions.py:107
+#: .\utils\exceptions.py:111
 msgid "验证码有误"
 msgstr "验证码有误"
 
-#: .\utils\exceptions.py:113
+#: .\utils\exceptions.py:117
 msgid "用户不存在"
 msgstr "用户不存在"
 
-#: .\utils\exceptions.py:119
+#: .\utils\exceptions.py:123
 msgid "用户名已存在"
 msgstr "用户名已存在"
 
-#: .\utils\exceptions.py:123
+#: .\utils\exceptions.py:127
 msgid "手机号已被注册"
 msgstr "手机号已被注册"
 
-#: .\utils\exceptions.py:129
+#: .\utils\exceptions.py:133
 msgid "未经授权访问"
 msgstr "未经授权访问"
 
-#: .\utils\exceptions.py:135
+#: .\utils\exceptions.py:139
 msgid "参数缺失"
 msgstr "参数缺失"
 
-#: .\utils\exceptions.py:141
+#: .\utils\exceptions.py:145
 msgid "请求次数受限"
 msgstr "请求次数受限"
 
-#: .\utils\exceptions.py:142
+#: .\utils\exceptions.py:146
 #, python-brace-format
 msgid "请在{wait}秒后再试"
 msgstr "请在{wait}秒后再试"
 
-#: .\utils\exceptions.py:149
-#, fuzzy
-#| msgid "上传失败，请稍后再试"
+#: .\utils\exceptions.py:153
 msgid "短信发送失败，请稍后再试"
 msgstr "短信发送失败，请稍后再试"
 
-#: .\utils\exceptions.py:155
+#: .\utils\exceptions.py:159
 msgid "异常操作"
 msgstr "异常操作"
 
-#: .\utils\exceptions.py:161
+#: .\utils\exceptions.py:165
 msgid "资源不存在"
 msgstr "资源不存在"
+
+#: .\utils\exceptions.py:171
+msgid "服务维护中，请稍后再试"
+msgstr "服务维护中，请稍后再试"
 
 #: .\venv\Lib\site-packages\click\_termui_impl.py:496
 #, python-brace-format
@@ -647,6 +635,7 @@ msgstr ""
 msgid "Got unexpected extra argument ({args})"
 msgid_plural "Got unexpected extra arguments ({args})"
 msgstr[0] ""
+msgstr[1] ""
 
 #: .\venv\Lib\site-packages\click\core.py:1390
 msgid "DeprecationWarning: The command {name!r} is deprecated."
@@ -673,6 +662,7 @@ msgstr ""
 msgid "Takes {nargs} values but 1 was given."
 msgid_plural "Takes {nargs} values but {len} were given."
 msgstr[0] ""
+msgstr[1] ""
 
 #: .\venv\Lib\site-packages\click\core.py:2701
 #, python-brace-format
@@ -754,6 +744,7 @@ msgstr ""
 msgid "Did you mean {possibility}?"
 msgid_plural "(Possible options: {possibilities})"
 msgstr[0] ""
+msgstr[1] ""
 
 #: .\venv\Lib\site-packages\click\exceptions.py:261
 msgid "unknown error"
@@ -775,6 +766,7 @@ msgstr ""
 msgid "Option {name!r} requires an argument."
 msgid_plural "Option {name!r} requires {nargs} arguments."
 msgstr[0] ""
+msgstr[1] ""
 
 #: .\venv\Lib\site-packages\click\shell_completion.py:316
 msgid "Shell completion is not supported for Bash versions older than 4.4."
@@ -820,11 +812,13 @@ msgstr ""
 msgid "{value!r} is not {choice}."
 msgid_plural "{value!r} is not one of {choices}."
 msgstr[0] ""
+msgstr[1] ""
 
 #: .\venv\Lib\site-packages\click\types.py:380
 msgid "{value!r} does not match the format {format}."
 msgid_plural "{value!r} does not match the formats {formats}."
 msgstr[0] ""
+msgstr[1] ""
 
 #: .\venv\Lib\site-packages\click\types.py:402
 msgid "{value!r} is not a valid {number_type}."
@@ -880,6 +874,7 @@ msgstr ""
 msgid "{len_type} values are required, but {len_value} was given."
 msgid_plural "{len_type} values are required, but {len_value} were given."
 msgstr[0] ""
+msgstr[1] ""
 
 #: .\venv\Lib\site-packages\django\contrib\messages\apps.py:7
 msgid "Messages"
@@ -2301,6 +2296,7 @@ msgstr ""
 msgid "%(counter)s result"
 msgid_plural "%(counter)s results"
 msgstr[0] ""
+msgstr[1] ""
 
 #: .\venv\Lib\site-packages\simpleui\templates\admin\search_form.html:99
 #, python-format
@@ -2439,29 +2435,3 @@ msgstr ""
 #: .\venv\Lib\site-packages\simpleui\templates\registration\password_reset_form.html:25
 msgid "Reset my password"
 msgstr ""
-
-#~ msgid "已有用户编辑中"
-#~ msgstr "已有用户编辑中"
-
-#~ msgid "默认库"
-#~ msgstr "默认库"
-
-#, fuzzy
-#~| msgid "用户名不能为空"
-#~ msgid "用户名不过短"
-#~ msgstr "用户名不能为空"
-
-#, python-brace-format
-#~ msgid "用户名不能超过{max_length}字符"
-#~ msgstr "用户名不能超过{max_length}字符"
-
-#, python-brace-format
-#~ msgid "用户名不能少于{min_length}字符"
-#~ msgstr "用户名不能少于{min_length}字符"
-
-#, python-brace-format
-#~ msgid "密码不能超过{max_length}字符"
-#~ msgstr "密码不能超过{max_length}字符"
-
-#~ msgid "test"
-#~ msgstr "测试"
