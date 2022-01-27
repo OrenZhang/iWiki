@@ -1,11 +1,8 @@
-<div style="display: flex; align-items: center; margin-top: 20px;">
-    <img alt="iWiki Logo" height="60" width="60" src="https://wiki.incv.net/favicon.webp">
-    <div style="font-weight: bold; font-size: 32px; margin: 0 10px">iWiki</div>
-</div>
+<img alt="iWiki Logo" height="300" width="920" src="./assets/favicon.png">
 
 iWiki 是一个知识共享平台，也可用作个人博客。依赖 `Python 3.9` + `Node.js 16.13.1` + `Vue 3` + ···  
 
-![wiki.incv.net_(Laptop).png](https://wiki.incv.net/upload/202201/27/miFGUqDkmf/wiki.incv.net_(Laptop).png)
+![wiki.incv.net_(Laptop).png](./assets/wiki.incv.net_(Laptop).webp)
 
 ## 部署
 
