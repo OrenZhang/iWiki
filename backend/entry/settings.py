@@ -2,7 +2,6 @@
 Django 4.0
 """
 
-import json
 import os
 from pathlib import Path
 
@@ -17,11 +16,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # 环境配置
 try:
     with open(
-        os.path.join(BASE_DIR, "entry", "settings.json"), "r", encoding="utf-8"
+        os.path.join(BASE_DIR, ".env"), "r", encoding="utf-8"
     ) as env_setting_file:
-        env_settings = json.loads(env_setting_file.read())
-        for key, val in env_settings.items():
-            os.environ[key] = val
+        while True:
+            env_setting = env_setting_file.readline()
+            if env_setting:
+                key, val = env_setting.strip("\n").split("=")
+                os.environ[key] = val
+            else:
+                break
 except FileNotFoundError:
     pass
 

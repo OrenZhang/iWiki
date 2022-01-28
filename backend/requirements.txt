@@ -16,3 +16,6 @@ cos-python-sdk-v5==1.9.11
 
 # Celery
 celery==5.2.2
+
+# Server
+uwsgi==2.0.20
