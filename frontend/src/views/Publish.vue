@@ -100,7 +100,7 @@
                     </el-form-item>
                 </el-form>
                 <div class="publish-button-box">
-                    <el-button @click="SaveContent()" :disabled="checkDocData">
+                    <el-button @click="SaveContent()" :disabled="checkDocDataAndRepo">
                         {{ $t('saveAsDraft') }}
                     </el-button>
                     <el-button type="success" @click="SaveContent(true)" :disabled="checkDocDataAndRepo">

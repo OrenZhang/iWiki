@@ -107,16 +107,16 @@ DATABASES = {
         "NAME": getenv_or_raise("DB_NAME"),
         "USER": getenv_or_raise("DB_USER"),
         "PASSWORD": getenv_or_raise("DB_PASSWORD"),
-        "HOST": os.getenv("DB_HOST", "127.0.0.1"),
-        "PORT": int(os.getenv("DB_PORT", 3306)),
+        "HOST": getenv_or_raise("DB_HOST"),
+        "PORT": int(getenv_or_raise("DB_PORT")),
         "OPTIONS": {"charset": "utf8mb4"},
     }
 }
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-REDIS_HOST = os.getenv("REDIS_HOST", "127.0.0.1")
-REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
-REDIS_PASSWORD = os.getenv("REDIS_PASSWORD", "")
-REDIS_DB = int(os.getenv("REDIS_DB", 0))
+REDIS_HOST = getenv_or_raise("REDIS_HOST")
+REDIS_PORT = int(getenv_or_raise("REDIS_PORT"))
+REDIS_PASSWORD = getenv_or_raise("REDIS_PASSWORD")
+REDIS_DB = int(getenv_or_raise("REDIS_DB"))
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
@@ -203,29 +203,29 @@ REST_FRAMEWORK = {
 }
 
 # tencent cloud
-TCLOUD_SECRET_ID = getenv_or_raise("TCLOUD_SECRET_ID")
-TCLOUD_SECRET_KEY = getenv_or_raise("TCLOUD_SECRET_KEY")
+TCLOUD_SECRET_ID = os.getenv("TCLOUD_SECRET_ID")
+TCLOUD_SECRET_KEY = os.getenv("TCLOUD_SECRET_KEY")
 
 # sms
-SMS_APP_ID = getenv_or_raise("SMS_APP_ID")
-SMS_SIGN_NAME = getenv_or_raise("SMS_SIGN_NAME")
+SMS_APP_ID = os.getenv("SMS_APP_ID")
+SMS_SIGN_NAME = os.getenv("SMS_SIGN_NAME")
 SMS_SECRET_ID = TCLOUD_SECRET_ID
 SMS_SECRET_KEY = TCLOUD_SECRET_KEY
-SMS_PHONE_CODE_TID = getenv_or_raise("SMS_PHONE_CODE_TID")
+SMS_PHONE_CODE_TID = os.getenv("SMS_PHONE_CODE_TID")
 SMS_PHONE_CODE_EX = 120
 SMS_PHONE_CODE_PERIOD = 60
-SMS_REPO_EXPORT_FAIL_TID = getenv_or_raise("SMS_REPO_EXPORT_FAIL_TID")
-SMS_REPO_EXPORT_SUCCESS_TID = getenv_or_raise("SMS_REPO_EXPORT_SUCCESS_TID")
-SMS_REPO_APPLY_TID = getenv_or_raise("SMS_REPO_APPLY_TID")
-SMS_REPO_APPLY_RESULT_TID = getenv_or_raise("SMS_REPO_APPLY_RESULT_TID")
+SMS_REPO_EXPORT_FAIL_TID = os.getenv("SMS_REPO_EXPORT_FAIL_TID")
+SMS_REPO_EXPORT_SUCCESS_TID = os.getenv("SMS_REPO_EXPORT_SUCCESS_TID")
+SMS_REPO_APPLY_TID = os.getenv("SMS_REPO_APPLY_TID")
+SMS_REPO_APPLY_RESULT_TID = os.getenv("SMS_REPO_APPLY_RESULT_TID")
 
 # cos
 COS_SECRET_ID = TCLOUD_SECRET_ID
 COS_SECRET_KEY = TCLOUD_SECRET_KEY
-COS_REGION = getenv_or_raise("COS_REGION")
-COS_BUCKET = getenv_or_raise("COS_BUCKET")
+COS_REGION = os.getenv("COS_REGION")
+COS_BUCKET = os.getenv("COS_BUCKET")
 COS_RANDOM_PATH_LENGTH = 10
-COS_DOMAIN = getenv_or_raise("COS_DOMAIN")
+COS_DOMAIN = os.getenv("COS_DOMAIN")
 COS_MAX_FILE_SIZE = os.getenv("COS_MAX_FILE_SIZE", 120) * 1024 * 1024  # Bytes
 COS_MAX_AVATAR_SIZE = os.getenv("COS_MAX_AVATAR_SIZE", 1) * 1024 * 1024  # Bytes
 

@@ -1,5 +1,6 @@
 import datetime
 
+from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -45,7 +46,7 @@ FOOTER_INFO = {
     "c_val": {
         "showFooter": True,
         "siteStartup": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "copyright": "Oren Zhang",
+        "copyright": settings.APP_CODE,
     },
     "c_bool": True,
 }
