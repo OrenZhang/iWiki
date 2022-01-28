@@ -35,7 +35,13 @@ yarn install && yarn build
 
 ### 3. NGINX 配置静态网站访问，运行网站
 
-具体配置步骤请自行完成。
+部分代码如下，具体配置步骤请自行完成。
+
+```
+location / {
+    try_files $uri $uri/ /index.html;
+}
+```
 
 ## 部署后端
 
@@ -84,15 +90,14 @@ python manage.py migrate
 
 ### 5. 在 `/backend` 目录，重启相关进程
 
-此步需要根据实际配置进行调整，`APIDIR` 为后端目录(含父级目录), `BASEDIR` 为项目根目录的父级目录完整路径，使用 `BASEDIR` 和 `APIDIR` 拼接可以得到后端目录。
+此步需要根据实际配置进行调整，`APIDIR` 为完整后端目录，请根据实际情况调整。
 
 ```bash
-APIDIR=wiki_repo/backend
-BASEDIR=/www/wwwroot
+APIDIR=/www/wwwroot/wiki_repo/backend
 ps -ef |grep $APIDIR |awk '{print $2}'|xargs kill -9
-nohup uwsgi --ini $BASEDIR/$APIDIR/uwsgi.ini -w wsgi.wsgi:application > /dev/null 2>&1 &
-nohup celery -A modules.cel worker -l INFO -f $BASEDIR/$APIDIR/logs/celery-worker.log > /dev/null 2>&1 &
-nohup celery -A modules.cel beat -l INFO -f $BASEDIR/$APIDIR/logs/celery-beat.log > /dev/null 2>&1 &
+nohup uwsgi --ini $APIDIR/uwsgi.ini -w wsgi.wsgi:application > /dev/null 2>&1 &
+nohup celery -A modules.cel worker -l INFO -f $APIDIR/logs/celery-worker.log > /dev/null 2>&1 &
+nohup celery -A modules.cel beat -l INFO -f $APIDIR/logs/celery-beat.log > /dev/null 2>&1 &
 ```
 
 ### 6. 配置 NGINX 反向代理访问，并配置静态文件代理
