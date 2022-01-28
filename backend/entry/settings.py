@@ -15,11 +15,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # 环境配置
 try:
-    with open(os.path.join(BASE_DIR, ".env"), "r", encoding="utf-8") as env_setting_file:
+    with open(
+        os.path.join(BASE_DIR, ".env"), "r", encoding="utf-8"
+    ) as env_setting_file:
         while True:
             env_setting = env_setting_file.readline()
             if env_setting:
-                key, val = env_setting.strip('\n').split("=")
+                key, val = env_setting.strip("\n").split("=")
                 os.environ[key] = val
             else:
                 break
