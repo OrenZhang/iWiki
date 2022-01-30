@@ -32,6 +32,9 @@
                         </el-menu>
                     </div>
                     <div class="right-bar">
+                        <el-link v-for="item in navLinks" :key="item" :underline="false" target="_blank" :href="item.url" class="extra-links">
+                            <i :class="item.icon" />
+                        </el-link>
                         <el-link :underline="false" class="version" @click="showVersionTab">
                             <i class="fa-regular fa-question-circle" />
                         </el-link>
@@ -120,6 +123,7 @@
     const showLogin = computed(() => store.state.showLogin)
     const showEditUser = computed(() => store.state.showEditUser)
     const showVersion = computed(() => store.state.showVersion)
+    const navLinks = computed(() => store.state.navLinks)
 
     // 菜单
     const menu = ref([
@@ -212,9 +216,10 @@
         })
     }
 
-    // 加载页尾信息
+    // 加载页尾信息，导航栏信息
     onMounted(() => {
         store.dispatch('getFooterInfo')
+        store.dispatch('getNavLinks')
     })
 </script>
 
