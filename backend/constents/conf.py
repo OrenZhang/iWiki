@@ -50,10 +50,19 @@ FOOTER_INFO = {
     },
     "c_bool": True,
 }
+NAV_LINK = {
+    "c_key": "nav_link",
+    "c_type": ConfTypeChoices.JSON,
+    "c_val": [
+        {"url": "https://github.com/OrenZhang/iWiki", "icon": "fa-brands fa-github"}
+    ],
+    "c_bool": True,
+}
 AUTO_REGISTRY_KEYS = (
     SIGN_UP_KEY,
     GLOBAL_NOTICE,
     HOME_NOTICE,
     SHOW_DOC_PUBLISH_CHART,
     FOOTER_INFO,
+    NAV_LINK,
 )

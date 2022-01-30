@@ -348,3 +348,8 @@ svg div {
     margin-top: 2px;
     color: unset;
 }
+
+.app-header .right-bar .extra-links {
+    margin-top: 2px;
+    margin-right: 20px;
+}

@@ -21,7 +21,8 @@ const store = createStore({
                 'copyright': '',
                 'showFooter': false,
                 'siteStartup': ''
-            }
+            },
+            navLinks: []
         }
     },
     mutations: {
@@ -42,6 +43,9 @@ const store = createStore({
         },
         setFooterInfo (state, payload) {
             state.footerInfo = payload
+        },
+        setNavLinks (state, payload) {
+            state.navLinks = payload
         }
     },
     actions: {
@@ -86,7 +90,14 @@ const store = createStore({
                     commit('setFooterInfo', res.data)
                 }
             })
-        }
+        },
+        getNavLinks ({ commit }) {
+            getConfAPI('nav_link').then(res => {
+                if (res.result) {
+                    commit('setNavLinks', res.data)
+                }
+            })
+        },
     }
 })
 
