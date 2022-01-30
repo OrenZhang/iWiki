@@ -75,7 +75,7 @@
     // 国际化
     const { t } = useI18n()
     const userLocale = ref(localStorage.getItem('locale'))
-    const curLocaleName = computed(() => userLocale.value === 'en' ? 'English' : '简体中文')
+    const curLocaleName = computed(() => userLocale.value === 'en' ? '简体中文' : 'English')
     const locale = computed(() => userLocale.value === 'en' ? en : zhCn)
     const toggleLang = () => {
         if (userLocale.value === 'en') {
