@@ -11,8 +11,8 @@ class ConfView(APIView):
 
     authentication_classes = [SessionAuthenticate]
 
-    def post(self, request, *args, **kwargs):
-        c_key = request.data.get("cKey")
+    def get(self, request, *args, **kwargs):
+        c_key = kwargs.get("pk")
         conf = Conf.objects.get(c_key=c_key, sensitive=False)
         if conf is not None:
             return Response(conf)
