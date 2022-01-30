@@ -13,11 +13,8 @@ export const changeLangAPI = (langCode) => {
 
 export const getConfAPI = (key) => {
     return new Promise((resolve, reject) => {
-        http.post(
-            '/conf/common/',
-            {
-                cKey: key
-            }
+        http.get(
+            '/conf/common/' + key + '/'
         ).then(res => resolve(res), err => reject(err))
     })
 }
