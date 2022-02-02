@@ -1,9 +1,11 @@
-from modules.cel.tasks import app as celery_app
+import os
 
-__all__ = ("celery_app",)
+from celery import Celery
+from django.conf import settings
 
-"""
-nohup celery -A modules.cel worker -l INFO -P solo -f ./logs/celery-worker.log &
-nohup celery -A modules.cel worker -l INFO -f ./logs/celery-worker.log &
-nohup celery -A modules.cel beat -l INFO -f ./logs/celery-beat.log &
-"""
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "entry.settings")
+os.environ.setdefault("C_FORCE_ROOT", "True")
+
+app = Celery("main", broker=settings.BROKER_URL)
+app.config_from_object("django.conf:settings", namespace="CELERY")
+app.autodiscover_tasks()

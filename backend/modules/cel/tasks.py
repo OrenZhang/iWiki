@@ -1,38 +1,28 @@
 import datetime
 import json
-import logging
 import os
 import shutil
 import time
 import traceback
 import zipfile
 
-import django
+from celery.schedules import crontab
+from celery.utils.log import get_task_logger
+from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.core.cache import cache
+from django.db import connection
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "entry.settings")
-os.environ.setdefault("C_FORCE_ROOT", "True")
-django.setup()
+from constents import DocAvailableChoices, UserTypeChoices
+from modules.account.models import User
+from modules.cel import app
+from modules.cel.serializers import StatisticSerializer
+from modules.doc.models import Doc
+from modules.doc.models import PinDoc
+from modules.repo.models import Repo
+from utils.client import get_client_by_user
 
-from celery import Celery  # noqa
-from celery.schedules import crontab  # noqa
-from django.core.cache import cache  # noqa
-from django.conf import settings  # noqa
-from django.db import connection  # noqa
-
-from constents import DocAvailableChoices, UserTypeChoices  # noqa
-from modules.account.models import User  # noqa
-from modules.doc.models import PinDoc  # noqa
-from modules.cel.serializers import StatisticSerializer  # noqa
-from modules.doc.models import Doc  # noqa
-from modules.repo.models import Repo, RepoUser  # noqa
-from utils.client import get_client_by_user  # noqa
-
-app = Celery("main", broker=settings.BROKER_URL)
-app.config_from_object("django.conf:settings", namespace="CELERY")
-app.autodiscover_tasks()
-
-logger = logging.getLogger("celery")
+logger = get_task_logger("cel")
 
 # 周期任务
 app.conf.beat_schedule = {
@@ -57,6 +47,8 @@ app.conf.beat_schedule = {
 @app.task
 def auto_update_active_index():
     """自动更新用户活跃度"""
+    logger.info("[auto_update_active_index] Start")
+
     sql_path = os.path.join(
         settings.BASE_DIR, "modules", "cel", "sql", "auto_update_active_index.sql"
     )
@@ -72,19 +64,24 @@ def auto_update_active_index():
     for info in data:
         logger.info(info)
 
+    logger.info("[auto_update_active_index] End")
+
 
 @app.task
 def auto_check_pin_doc():
     """自动取消置顶到期的文章"""
+    logger.info("[auto_check_pin_doc] Start")
     now = datetime.datetime.now()
     PinDoc.objects.filter(in_use=True, pin_to__lt=now).update(
         in_use=False, operator=settings.ADMIN_USERNAME
     )
+    logger.info("[auto_check_pin_doc] End")
 
 
 @app.task
 def export_all_docs(repo_id: int, uid: str):
     """导出仓库所有文章"""
+    logger.info("[export_all_docs] Start")
     client = get_client_by_user(uid)
     # 获取用户和库对象
     user = User.objects.get(uid=uid)
@@ -134,11 +131,13 @@ def export_all_docs(repo_id: int, uid: str):
         client.sms.send_sms(
             user.phone, settings.SMS_REPO_EXPORT_FAIL_TID, [user.username, repo.name]
         )
+    logger.info("[export_all_docs] End")
 
 
 @app.task
 def remind_apply_info():
     """向管理员发送申请通知"""
+    logger.info("[remind_apply_info] Start")
     sql_path = os.path.join(
         settings.BASE_DIR, "modules", "cel", "sql", "remind_apply_info.sql"
     )
@@ -168,6 +167,7 @@ def remind_apply_info():
             [" / ".join(u["repos"]), str(u["count"])],
         )
         time.sleep(0.1)
+    logger.info("[remind_apply_info] End")
 
 
 @app.task
@@ -175,6 +175,7 @@ def send_apply_result(
     operator: str, repo_id: int, apply_user: str, result: bool = True
 ):
     """管理员处理结果"""
+    logger.info("[send_apply_result] Start")
     result_msg = "已通过" if result else "已拒绝"
     user_model = get_user_model()
     try:
@@ -187,3 +188,4 @@ def send_apply_result(
         client.sms.send_sms(
             user.phone, settings.SMS_REPO_APPLY_RESULT_TID, [repo.name, result_msg]
         )
+    logger.info("[send_apply_result] End")
