@@ -59,7 +59,7 @@ def get_logging_config_dict(log_level: str, log_dir: str):
                 "backupCount": 5,
                 "encoding": "utf8",
             },
-            "celery": {
+            "cel": {
                 "class": log_class,
                 "formatter": "verbose",
                 "filename": os.path.join(log_dir, "celery.log"),
@@ -98,7 +98,7 @@ def get_logging_config_dict(log_level: str, log_dir: str):
             "mysql": {"handlers": ["mysql"], "level": log_level, "propagate": True},
             "sms": {"handlers": ["sms"], "level": log_level, "propagate": True},
             "cos": {"handlers": ["cos"], "level": log_level, "propagate": True},
-            "celery": {"handlers": ["celery"], "level": log_level, "propagate": True},
+            "cel": {"handlers": ["cel"], "level": log_level, "propagate": True},
             "error": {"handlers": ["error"], "level": log_level, "propagate": True},
         },
     }
