@@ -42,9 +42,8 @@ class UnHandleExceptionMiddleware(MiddlewareMixin):
     """未处理异常捕获中间件"""
 
     def process_exception(self, request, exception):
-        exception_logger.error(
-            "[unhandled exception]", str(exception), traceback.print_exc()
-        )
+        msg = traceback.format_exc()
+        exception_logger.error("[unhandled exception] %s\n%s", str(exception), msg)
         error = ServerError()
         return JsonResponse(
             {
