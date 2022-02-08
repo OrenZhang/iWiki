@@ -1,17 +1,12 @@
 from django.contrib.auth import get_user_model
 
 from modules.cos.client import COSClient
-from modules.sms.client import SMSClient
 from utils.exceptions import ParamsNotFound, UserNotExist
 
 
 class UnionClient(object):
     def __init__(self, operator: str):
         self.operator = operator
-
-    @property
-    def sms(self):
-        return SMSClient(operator=self.operator)
 
     @property
     def cos(self):

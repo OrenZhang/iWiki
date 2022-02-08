@@ -12,6 +12,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.db import connection
+from incv_client import INCVUnionClient
 
 from constents import DocAvailableChoices, UserTypeChoices
 from modules.account.models import User
@@ -83,6 +84,7 @@ def export_all_docs(repo_id: int, uid: str):
     """导出仓库所有文章"""
     logger.info("[export_all_docs] Start")
     client = get_client_by_user(uid)
+    incv_client = INCVUnionClient()
     # 获取用户和库对象
     user = User.objects.get(uid=uid)
     repo = Repo.objects.get(id=repo_id)
@@ -123,14 +125,15 @@ def export_all_docs(repo_id: int, uid: str):
             logger.info("库 %s 导出上传成功 (%s)", repo.name, url)
         else:
             raise Exception("Upload Error")
-        client.sms.send_sms(
+        resp = incv_client.tof.sms.send(
             user.phone, settings.SMS_REPO_EXPORT_SUCCESS_TID, [user.username, repo.name]
         )
     except Exception as err:
         logger.error(err, traceback.print_exc())
-        client.sms.send_sms(
+        resp = incv_client.tof.sms.send(
             user.phone, settings.SMS_REPO_EXPORT_FAIL_TID, [user.username, repo.name]
         )
+    logger.info(resp)
     logger.info("[export_all_docs] End")
 
 
@@ -159,14 +162,15 @@ def remind_apply_info():
             send_kwargs[c.uid]["repos"].append(c.name)
             send_kwargs[c.uid]["count"] += c.count
     logger.info("[remind_apply_info] %s", json.dumps(send_kwargs))
-    client = get_client_by_user(settings.ADMIN_USERNAME)
+    client = INCVUnionClient()
     for u in send_kwargs.values():
-        client.sms.send_sms(
+        resp = client.tof.sms.send(
             u["phone"],
             settings.SMS_REPO_APPLY_TID,
             [" / ".join(u["repos"]), str(u["count"])],
         )
-        time.sleep(0.1)
+        logger.info(resp)
+        time.sleep(10)
     logger.info("[remind_apply_info] End")
 
 
@@ -184,8 +188,9 @@ def send_apply_result(
     except (user_model.DoesNotExist, Repo.DoesNotExist):
         return
     if user.phone:
-        client = get_client_by_user(operator)
-        client.sms.send_sms(
+        client = INCVUnionClient()
+        resp = client.tof.sms.send(
             user.phone, settings.SMS_REPO_APPLY_RESULT_TID, [repo.name, result_msg]
         )
+        logger.info(resp)
     logger.info("[send_apply_result] End")

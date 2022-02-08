@@ -35,6 +35,10 @@ SERVICE_CLOSED = True if os.getenv("SERVICE_CLOSED", "False") == "True" else Fal
 # APP_CODE & SECRET
 APP_CODE = getenv_or_raise("APP_CODE")
 SECRET_KEY = getenv_or_raise("APP_SECRET_KEY")
+APP_SECRET = SECRET_KEY
+
+# INCV API
+INCV_API_DOMAIN = os.getenv("INCV_API_DOMAIN")
 
 # 允许的host
 ALLOWED_HOSTS = [getenv_or_raise("BACKEND_HOST")]
@@ -210,8 +214,6 @@ TCLOUD_SECRET_ID = os.getenv("TCLOUD_SECRET_ID")
 TCLOUD_SECRET_KEY = os.getenv("TCLOUD_SECRET_KEY")
 
 # sms
-SMS_APP_ID = os.getenv("SMS_APP_ID")
-SMS_SIGN_NAME = os.getenv("SMS_SIGN_NAME")
 SMS_SECRET_ID = TCLOUD_SECRET_ID
 SMS_SECRET_KEY = TCLOUD_SECRET_KEY
 SMS_PHONE_CODE_TID = os.getenv("SMS_PHONE_CODE_TID")

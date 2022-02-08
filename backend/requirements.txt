@@ -8,9 +8,6 @@ django-simpleui==2022.1
 # Storage
 redis==4.0.2
 
-# Sms
-tencentcloud-sdk-python==3.0.532
-
 # Cos
 cos-python-sdk-v5==1.9.11
 
@@ -19,3 +16,6 @@ celery==5.2.2
 
 # Server
 uwsgi==2.0.20
+
+# INCV_API
+incv-client==0.0.4
