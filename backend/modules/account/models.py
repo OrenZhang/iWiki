@@ -4,9 +4,9 @@ from django.contrib.auth.models import PermissionsMixin, AnonymousUser
 from django.core.cache import cache
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from incv_client import INCVUnionClient
 
 from constents import SHORT_CHAR_LENGTH, PHONE_NUMBER_CHAR_LENGTH, VERIFY_CODE_LENGTH
-from utils.client import get_client_by_user
 from utils.exceptions import PhoneNumberExist, OperationError
 from utils.tools import simple_uniq_id, num_code
 
@@ -83,8 +83,9 @@ class User(AbstractBaseUser, PermissionsMixin):
             return False
         # 生成新的验证码
         code = num_code(VERIFY_CODE_LENGTH)
-        client = get_client_by_user(settings.ADMIN_USERNAME)
-        result = client.sms.send_sms(phone, settings.SMS_PHONE_CODE_TID, [code])
+        client = INCVUnionClient()
+        resp = client.tof.sms.send(phone, settings.SMS_PHONE_CODE_TID, [code])
+        result = resp.get("result")
         if result:
             cache.set(send_key, code, timeout=settings.SMS_PHONE_CODE_PERIOD)
             cache.set(code_key, code, timeout=settings.SMS_PHONE_CODE_EX)
