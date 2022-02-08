@@ -4,8 +4,7 @@ from io import BytesIO
 
 from django.conf import settings
 from django.db import IntegrityError
-from qcloud_cos import CosConfig
-from qcloud_cos import CosS3Client
+from incv_client import INCVUnionClient
 
 from modules.cos.models import UploadLog
 from utils.tools import simple_uniq_id
@@ -18,14 +17,6 @@ class COSClient(object):
 
     def __init__(self, operator: str):
         self.operator = operator
-        self.client = CosS3Client(
-            CosConfig(
-                Region=settings.COS_REGION,
-                SecretId=settings.TCLOUD_SECRET_ID,
-                SecretKey=settings.TCLOUD_SECRET_KEY,
-            )
-        )
-        self.bucket = settings.COS_BUCKET
 
     def verify_filename(self, filename: str):
         replace_map = {" ": "", "$": "_", "[": "(", "]": ")", "{": "(", "}": ")"}
@@ -54,12 +45,15 @@ class COSClient(object):
                 name=filename, path=key, operator=self.operator
             )
             # 上传文件
-            resp = self.client.put_object(Bucket=self.bucket, Key=full_path, Body=file)
+            client = INCVUnionClient()
+            result, resp = client.cos.upload(full_path, file)
             log.response = resp
             log.save()
-            url = "{}/{}".format(settings.COS_DOMAIN, full_path)
-            logger.info("Upload File Success %s", url)
-            result = True
+            if result:
+                url = "{}/{}".format(settings.COS_DOMAIN, full_path)
+                logger.info("Upload File Success %s", url)
+            else:
+                raise Exception(resp)
         except IntegrityError:
             return self.upload(filename, file)
         except Exception as err:
