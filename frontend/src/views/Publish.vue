@@ -327,7 +327,7 @@
         autoSaveInterval.value = setInterval(() => {
             docData.value.is_publish = false
             createOrUpdateDocAPI(`/doc/manage/${docID.value}/`, 'PATCH', docData.value)
-        }, 10000)
+        }, 60000)
     })
     onUnmounted(() => {
         clearInterval(autoSaveInterval.value)
