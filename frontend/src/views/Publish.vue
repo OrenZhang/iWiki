@@ -114,7 +114,7 @@
 
 <script setup>
     import ErrorPage from '../components/ErrorPage.vue'
-    import { computed, onMounted, ref, watch } from 'vue'
+    import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
     import { useStore } from 'vuex'
     import { onBeforeRouteLeave, useRoute, useRouter } from 'vue-router'
     import message from '../utils/message'
@@ -298,6 +298,9 @@
             url.value = '/doc/manage/' + docID.value + '/'
             method.value = 'PATCH'
         }
+        if (isPublish) {
+            clearInterval(autoSaveInterval.value)
+        }
         createOrUpdateDocAPI(url.value, method.value, docData.value).then(res => {
             if (res.result) {
                 message(messageContent)
@@ -314,6 +317,21 @@
             setLoading(false)
         })
     }
+
+    // 自动保存
+    const autoSaveInterval = ref(null)
+    onMounted(() => {
+        if (!docID.value) {
+            return
+        }
+        autoSaveInterval.value = setInterval(() => {
+            docData.value.is_publish = false
+            createOrUpdateDocAPI(`/doc/manage/${docID.value}/`, 'PATCH', docData.value)
+        }, 10000)
+    })
+    onUnmounted(() => {
+        clearInterval(autoSaveInterval.value)
+    })
 
     // 文章数据
     const permissionDenied = ref(false)
@@ -444,6 +462,7 @@
 
     // 编辑状态
     const editStatus = ref(true)
+    const editStatusInterval = ref(null)
     const checkEditStatus = () => {
         if (!docID.value) {
             return
@@ -451,12 +470,17 @@
         checkDocEditingAPI(docID.value).then(res => {
             editStatus.value = res.data
         }).finally(() => {
-            setTimeout(() => {
-                checkEditStatus()
-            }, 10000)
+            if (editStatus.value) {
+                editStatusInterval.value = setInterval(() => {
+                    checkDocEditingAPI(docID.value)
+                }, 10000)
+            }
         })
     }
     onMounted(checkEditStatus)
+    onUnmounted(() => {
+        clearInterval(editStatusInterval.value)
+    })
 </script>
 
 <style scoped>
