@@ -299,7 +299,7 @@
             method.value = 'PATCH'
         }
         if (isPublish) {
-            clearInterval(autoSaveInterval.value)
+            clearInterval(autoSaveInterval)
         }
         createOrUpdateDocAPI(url.value, method.value, docData.value).then(res => {
             if (res.result) {
