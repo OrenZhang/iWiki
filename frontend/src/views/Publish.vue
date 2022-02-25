@@ -319,18 +319,18 @@
     }
 
     // 自动保存
-    const autoSaveInterval = ref(null)
+    let autoSaveInterval
     onMounted(() => {
         if (!docID.value) {
             return
         }
-        autoSaveInterval.value = setInterval(() => {
+        autoSaveInterval = setInterval(() => {
             docData.value.is_publish = false
             createOrUpdateDocAPI(`/doc/manage/${docID.value}/`, 'PATCH', docData.value)
         }, 60000)
     })
     onUnmounted(() => {
-        clearInterval(autoSaveInterval.value)
+        clearInterval(autoSaveInterval)
     })
 
     // 文章数据
@@ -462,7 +462,7 @@
 
     // 编辑状态
     const editStatus = ref(true)
-    const editStatusInterval = ref(null)
+    let editStatusInterval
     const checkEditStatus = () => {
         if (!docID.value) {
             return
@@ -471,7 +471,7 @@
             editStatus.value = res.data
         }).finally(() => {
             if (editStatus.value) {
-                editStatusInterval.value = setInterval(() => {
+                editStatusInterval = setInterval(() => {
                     checkDocEditingAPI(docID.value)
                 }, 10000)
             }
@@ -479,7 +479,7 @@
     }
     onMounted(checkEditStatus)
     onUnmounted(() => {
-        clearInterval(editStatusInterval.value)
+        clearInterval(editStatusInterval)
     })
 </script>
 
