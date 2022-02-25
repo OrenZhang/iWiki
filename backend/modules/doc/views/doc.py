@@ -330,12 +330,12 @@ class DocPublicView(GenericViewSet):
             "SELECT rr.*, dd.repo_id, COUNT(1) 'count' "
             "FROM `doc_doc` dd "
             "JOIN (SELECT MIN(dd2.id) 'min_id' from `doc_doc` dd2 ORDER BY dd2.id DESC LIMIT 100) dd3 "
-            "JOIN `repo_repo` rr ON rr.id=dd.repo_id "
+            "JOIN `repo_repo` rr ON rr.id=dd.repo_id AND rr.r_type='{}' "
             "WHERE dd.id>=dd3.min_id "
             "GROUP BY dd.repo_id "
             "ORDER BY count DESC "
             "LIMIT 10"
-        )
+        ).format(RepoTypeChoices.PUBLIC)
         repos = Repo.objects.raw(sql)
         serializer = RepoSerializer(repos, many=True)
         cache.set(cache_key, serializer.data, 1800)

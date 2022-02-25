@@ -116,7 +116,7 @@ DATABASES = {
         "PASSWORD": getenv_or_raise("DB_PASSWORD"),
         "HOST": getenv_or_raise("DB_HOST"),
         "PORT": int(getenv_or_raise("DB_PORT")),
-        "OPTIONS": {"charset": "utf8mb4"},
+        "CHARSET": "utf8mb4",
     }
 }
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
