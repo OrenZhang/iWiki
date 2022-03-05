@@ -1,32 +1,14 @@
-from modules.log.models import DocVisitLog, Log
-from utils.tools import model_to_dict, get_ip
+from modules.cel.tasks import create_doc_log, create_log
+from utils.tools import get_ip, model_to_dict
 
 
 class LogHandler:
-    def create_log(
-        self,
-        operator: str,
-        model: str,
-        function: str,
-        result: bool,
-        detail: dict,
-        ip: str,
-    ):
-        Log.objects.create(
-            operator=operator,
-            model=model,
-            function=function,
-            result=result,
-            detail=detail,
-            ip=ip,
-        )
-
     def view_log(self, request, view, model, result, instance):
         if hasattr(view, "action"):
             function = f"{view.__class__.__name__}:{view.action}"
         else:
             function = view.__class__.__name__
-        self.create_log(
+        create_log.delay(
             request.user.uid,
             model.__name__,
             function,
@@ -36,7 +18,7 @@ class LogHandler:
         )
 
     def doc_log(self, instance, visitor):
-        DocVisitLog.objects.create(doc_id=instance.id, visitor=visitor)
+        create_doc_log.delay(instance.id, visitor)
 
 
 db_logger = LogHandler()
