@@ -1,4 +1,4 @@
-from modules.log.models import Log
+from modules.log.models import DocVisitLog, Log
 from utils.tools import model_to_dict, get_ip
 
 
@@ -34,6 +34,9 @@ class LogHandler:
             model_to_dict(instance) if instance is not None else {},
             get_ip(request),
         )
+
+    def doc_log(self, instance, visitor):
+        DocVisitLog.objects.create(doc_id=instance.id, visitor=visitor)
 
 
 db_logger = LogHandler()

@@ -22,8 +22,6 @@
                     </el-link>
                     <i class="fa-regular fa-clock ml-10 mr-2" />
                     {{ docData.update_at }}
-                    <i class="fa-regular fa-eye ml-10 mr-2" />
-                    {{ docData.pv }}
                 </div>
                 <div class="operate-box">
                     <el-link type="primary" :href="globalContext.backEndUrl + '/doc/manage/' + docData.id + '/export/'" target="_blank" v-if="docData.creator === user.uid || isCollaborator">
