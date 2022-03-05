@@ -20,6 +20,7 @@ from modules.cel import app
 from modules.cel.serializers import StatisticSerializer
 from modules.doc.models import Doc
 from modules.doc.models import PinDoc
+from modules.log.models import DocVisitLog, Log
 from modules.repo.models import Repo
 from utils.client import get_client_by_user
 
@@ -194,3 +195,20 @@ def send_apply_result(
         )
         logger.info(resp)
     logger.info("[send_apply_result] End")
+
+
+@app.task
+def create_log(operator, model, function, result, detail, ip):
+    Log.objects.create(
+        operator=operator,
+        model=model,
+        function=function,
+        result=result,
+        detail=detail,
+        ip=ip,
+    )
+
+
+@app.task
+def create_doc_log(doc_id, uid):
+    DocVisitLog.objects.create(doc_id=doc_id, visitor=uid)
