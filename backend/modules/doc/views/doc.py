@@ -5,30 +5,30 @@ import shutil
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
-from django.db import transaction, IntegrityError
-from django.db.models import Q, F
+from django.db import IntegrityError, transaction
+from django.db.models import Q
 from django.http import FileResponse
 from django.utils.encoding import escape_uri_path
 from django.utils.translation import gettext as _
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
 from constents import DocAvailableChoices, RepoTypeChoices, UserTypeChoices
 from modules.account.serializers import UserInfoSerializer
-from modules.doc.models import Doc, DocVersion, DocCollaborator, Comment
-from modules.doc.permissions import DocManagePermission, DocCommonPermission
+from modules.doc.models import Comment, Doc, DocCollaborator, DocVersion
+from modules.doc.permissions import DocCommonPermission, DocManagePermission
 from modules.doc.serializers import (
     DocCommonSerializer,
     DocListSerializer,
+    DocPublishChartSerializer,
     DocUpdateSerializer,
     DocVersionSerializer,
-    DocPublishChartSerializer,
 )
+from modules.log.utils import db_logger
 from modules.repo.models import Repo, RepoUser
-from modules.repo.serializers import RepoSerializer
 from utils.authenticators import SessionAuthenticate
-from utils.exceptions import Error404, ParamsNotFound, UserNotExist, OperationError
+from utils.exceptions import Error404, OperationError, ParamsNotFound, UserNotExist
 from utils.paginations import NumPagination
 from utils.throttlers import DocSearchThrottle
 from utils.viewsets import ThrottleAPIView
@@ -224,8 +224,7 @@ class DocCommonView(GenericViewSet):
     def retrieve(self, request, *args, **kwargs):
         """获取文章详情"""
         instance = self.get_object()
-        Doc.objects.filter(id=instance.id).update(pv=F("pv") + 1)
-        instance.pv += 1
+        db_logger.doc_log(instance, request.user.uid)
         serializer = DocCommonSerializer(instance)
         return Response(serializer.data)
 
@@ -309,35 +308,21 @@ class DocPublicView(GenericViewSet):
         if cache_data is not None:
             return Response(cache_data)
         # 公开库的近期文章
-        public_repo_ids = Repo.objects.filter(
-            r_type=RepoTypeChoices.PUBLIC, is_deleted=False
-        ).values("id")
-        queryset = self.queryset.filter(repo_id__in=public_repo_ids, pv__gt=0).order_by(
-            "-pv"
-        )[:10]
-        serializer = DocListSerializer(queryset, many=True)
-        cache.set(cache_key, serializer.data, 1800)
-        return Response(serializer.data)
-
-    @action(detail=False, methods=["GET"])
-    def hot_repo(self, request, *args, **kwargs):
-        """热门库"""
-        cache_key = f"{self.__class__.__name__}:{self.action}"
-        cache_data = cache.get(cache_key)
-        if cache_data is not None:
-            return Response(cache_data)
         sql = (
-            "SELECT rr.*, dd.repo_id, COUNT(1) 'count' "
-            "FROM `doc_doc` dd "
-            "JOIN (SELECT MIN(dd2.id) 'min_id' from `doc_doc` dd2 ORDER BY dd2.id DESC LIMIT 100) dd3 "
-            "JOIN `repo_repo` rr ON rr.id=dd.repo_id AND rr.r_type='{}' "
-            "WHERE dd.id>=dd3.min_id "
-            "GROUP BY dd.repo_id "
-            "ORDER BY count DESC "
-            "LIMIT 10"
+            "SELECT dd.*, dp.pv_temp 'pv' "
+            "FROM doc_doc dd "
+            "JOIN "
+            "(SELECT ldv.doc_id, COUNT(1) 'pv_temp' "
+            "from `log_doc_visit` ldv "
+            "WHERE ldv.visit_at >= DATE_ADD(NOW(), INTERVAL -180 DAY) "
+            "GROUP BY ldv.doc_id ) dp ON dp.doc_id = dd.id "
+            "WHERE dd.repo_id in "
+            "(SELECT rr.id FROM repo_repo rr "
+            "WHERE rr.r_type = '{}' AND NOT rr.is_deleted) "
+            "ORDER BY pv DESC LIMIT 10; "
         ).format(RepoTypeChoices.PUBLIC)
-        repos = Repo.objects.raw(sql)
-        serializer = RepoSerializer(repos, many=True)
+        queryset = self.queryset.raw(sql)
+        serializer = DocListSerializer(queryset, many=True)
         cache.set(cache_key, serializer.data, 1800)
         return Response(serializer.data)
 

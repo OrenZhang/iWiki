@@ -12,7 +12,7 @@ from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
-from constents import UserTypeChoices, DocAvailableChoices
+from constents import RepoTypeChoices, UserTypeChoices, DocAvailableChoices
 from modules.account.serializers import UserInfoSerializer
 from modules.cel.tasks import export_all_docs, send_apply_result
 from modules.doc.models import Doc, PinDoc
@@ -26,6 +26,7 @@ from modules.repo.serializers import (
     RepoCommonSerializer,
     RepoUserSerializer,
 )
+from utils.authenticators import SessionAuthenticate
 from utils.exceptions import (
     OperationError,
     UserNotExist,
@@ -387,3 +388,36 @@ class RepoCommonView(ListModelMixin, RetrieveModelMixin, GenericViewSet):
             return Response()
         except RepoUser.DoesNotExist:
             raise OperationError()
+
+
+class RepoPublicView(GenericViewSet):
+    """仓库公共入口"""
+
+    queryset = Repo.objects.filter(is_deleted=False)
+    serializer_class = RepoSerializer
+    authentication_classes = [SessionAuthenticate]
+
+    @action(detail=False, methods=["GET"])
+    def hot_repo(self, request, *args, **kwargs):
+        """热门库"""
+        cache_key = f"{self.__class__.__name__}:{self.action}"
+        cache_data = cache.get(cache_key)
+        if cache_data is not None:
+            return Response(cache_data)
+        sql = (
+            "SELECT rr.*, SUM(dp.pv_temp) 'pv' "
+            "FROM `repo_repo` rr "
+            "JOIN doc_doc dd ON dd.repo_id = rr.id "
+            "JOIN "
+            "(SELECT ldv.doc_id, COUNT(1) 'pv_temp' "
+            "from `log_doc_visit` ldv "
+            "WHERE ldv.visit_at >= DATE_ADD(NOW(), INTERVAL -180 DAY) "
+            "GROUP BY ldv.doc_id "
+            ") dp ON dp.doc_id = dd.id "
+            "WHERE rr.r_type = '{}' "
+            "GROUP BY rr.id ORDER BY pv DESC LIMIT 10;"
+        ).format(RepoTypeChoices.PUBLIC)
+        repos = Repo.objects.raw(sql)
+        serializer = RepoSerializer(repos, many=True)
+        cache.set(cache_key, serializer.data, 1800)
+        return Response(serializer.data)

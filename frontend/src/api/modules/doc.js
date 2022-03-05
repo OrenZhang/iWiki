@@ -110,7 +110,7 @@ export const loadDocChartDataAPI = () => {
 export const loadHotRepoAPI = () => {
     return new Promise((resolve, reject) => {
         http.get(
-            '/doc/public/hot_repo/'
+            '/repo/public/hot_repo/'
         ).then(res => resolve(res), err => reject(err))
     })
 }
