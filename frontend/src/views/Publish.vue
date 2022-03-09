@@ -4,9 +4,6 @@
         <div v-loading="loading" :element-loading-text="loadingText" class="editor-box" v-if="errorCode === 0">
             <div class="header">
                 <el-input :placeholder="$t('title')" :maxlength="64" show-word-limit v-model="docData.title" />
-                <el-button class="close-button" type="info" @click="router.go(-1)">
-                    {{ $t('back') }}
-                </el-button>
                 <el-button class="save-button" type="primary" @click="publishDrawer.visible = true" :disabled="checkDocData">
                     {{ $t('save') }}
                 </el-button>
@@ -298,12 +295,11 @@
             url.value = '/doc/manage/' + docID.value + '/'
             method.value = 'PATCH'
         }
-        if (isPublish) {
-            clearInterval(autoSaveInterval)
-        }
         createOrUpdateDocAPI(url.value, method.value, docData.value).then(res => {
             if (res.result) {
                 message(messageContent)
+                clearInterval(autoSaveInterval)
+                clearLocalData()
                 if (isPublish) {
                     savedStatus.value = true
                     router.push({ path: '/doc/' + res.data.id })
@@ -318,20 +314,26 @@
         })
     }
 
-    // 自动保存
+    // 自动保存(本地)
+    const localStorageKey = computed(() => docID.value ? 'autoSavePublishContent-' + docID.value : 'autoSavePublishContent')
     let autoSaveInterval
     onMounted(() => {
-        if (!docID.value) {
-            return
-        }
         autoSaveInterval = setInterval(() => {
-            docData.value.is_publish = false
-            createOrUpdateDocAPI(`/doc/manage/${docID.value}/`, 'PATCH', docData.value)
-        }, 60000)
+            localStorage.setItem(localStorageKey.value, docData.value.content)
+        }, 10000)
     })
     onUnmounted(() => {
         clearInterval(autoSaveInterval)
     })
+    const loadLocalData = () => {
+        const localData = localStorage.getItem(localStorageKey.value)
+        if (localData) {
+            docData.value.content = localData
+        }
+    }
+    const clearLocalData = () => {
+        localStorage.removeItem(localStorageKey.value)
+    }
 
     // 文章数据
     const permissionDenied = ref(false)
@@ -366,6 +368,7 @@
                 error404.value = true
             }
         }).finally(() => {
+            loadLocalData()
             setLoading(false)
         })
     }
@@ -445,6 +448,8 @@
         if (docID.value !== undefined) {
             loadDocData()
             loadCol()
+        } else {
+            loadLocalData()
         }
     })
     watch(() => docID.value, () => {
