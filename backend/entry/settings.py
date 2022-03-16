@@ -72,6 +72,7 @@ INSTALLED_APPS = [
 # 中间件
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
+    "utils.middlewares.GlobalLogMiddleware",
     "utils.middlewares.CSRFExemptMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",

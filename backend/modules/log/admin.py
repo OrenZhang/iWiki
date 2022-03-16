@@ -10,8 +10,8 @@ USER_MODEL = get_user_model()
 
 @admin.register(Log)
 class LogAdmin(admin.ModelAdmin):
-    list_display = ["id", "operator_name", "function", "result", "ip", "create_at"]
-    list_filter = ["function", "model"]
+    list_display = ["id", "operator_name", "path", "code", "ip", "create_at"]
+    list_filter = ["code"]
 
     @admin.display(description=_("操作人"))
     def operator_name(self, obj):

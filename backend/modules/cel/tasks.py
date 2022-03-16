@@ -198,15 +198,8 @@ def send_apply_result(
 
 
 @app.task
-def create_log(operator, model, function, result, detail, ip):
-    Log.objects.create(
-        operator=operator,
-        model=model,
-        function=function,
-        result=result,
-        detail=detail,
-        ip=ip,
-    )
+def create_log(**kwargs):
+    Log.objects.create(**kwargs)
 
 
 @app.task
