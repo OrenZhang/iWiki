@@ -199,9 +199,13 @@ def send_apply_result(
 
 @app.task
 def create_log(**kwargs):
+    logger.info("[create_log] Start")
     Log.objects.create(**kwargs)
+    logger.info("[create_log] End")
 
 
 @app.task
 def create_doc_log(doc_id, uid):
+    logger.info("[create_doc_log] Start")
     DocVisitLog.objects.create(doc_id=doc_id, visitor=uid)
+    logger.info("[create_doc_log] End")
