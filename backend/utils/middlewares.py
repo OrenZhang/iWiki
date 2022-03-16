@@ -13,6 +13,7 @@ from modules.log.utils import db_logger
 from utils.exceptions import ServerError
 from utils.tools import get_ip
 
+logger = logging.getLogger("app")
 exception_logger = logging.getLogger("error")
 mysql_logger = logging.getLogger("mysql")
 
@@ -67,11 +68,7 @@ class GlobalLogMiddleware(MiddlewareMixin):
 
     req_start_time_key = "_global_log_req_start_time"
 
-    def process_request(self, request):
-        setattr(request, self.req_start_time_key, datetime.datetime.now().timestamp())
-        return None
-
-    def process_response(self, request, response):
+    def log(self, request, response):
         req_end_time = datetime.datetime.now().timestamp()
         req_start_time = getattr(request, self.req_start_time_key, req_end_time)
         duration = int((req_end_time - req_start_time) * 1000)
@@ -89,4 +86,16 @@ class GlobalLogMiddleware(MiddlewareMixin):
             "ip": get_ip(request),
         }
         db_logger(**log_detail)
+
+    def process_request(self, request):
+        setattr(request, self.req_start_time_key, datetime.datetime.now().timestamp())
+        return None
+
+    def process_response(self, request, response):
+        try:
+            self.log(request, response)
+            logger.info("[DB Logging Success]")
+        except Exception as err:
+            msg = traceback.format_exc()
+            logger.error("[DB Logging Failed] %s\n%s", str(err), msg)
         return response
