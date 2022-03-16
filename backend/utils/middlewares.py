@@ -1,4 +1,6 @@
+import datetime
 import logging
+import sys
 import traceback
 from functools import wraps
 
@@ -6,7 +8,10 @@ from django.conf import settings
 from django.http import JsonResponse
 from django.utils.deprecation import MiddlewareMixin
 
+from modules.account.models import CustomAnonymousUser
+from modules.log.utils import db_logger
 from utils.exceptions import ServerError
+from utils.tools import get_ip
 
 exception_logger = logging.getLogger("error")
 mysql_logger = logging.getLogger("mysql")
@@ -55,3 +60,33 @@ class UnHandleExceptionMiddleware(MiddlewareMixin):
             status=error.status_code,
             json_dumps_params={"ensure_ascii": False},
         )
+
+
+class GlobalLogMiddleware(MiddlewareMixin):
+    """全局日志中间件"""
+
+    req_start_time_key = "_global_log_req_start_time"
+
+    def process_request(self, request):
+        setattr(request, self.req_start_time_key, datetime.datetime.now().timestamp())
+        return None
+
+    def process_response(self, request, response):
+        req_end_time = datetime.datetime.now().timestamp()
+        req_start_time = getattr(request, self.req_start_time_key, req_end_time)
+        duration = int((req_end_time - req_start_time) * 1000)
+        log_detail = {
+            "operator": getattr(request.user, "uid", CustomAnonymousUser.uid),
+            "path": request.path,
+            "detail": {
+                "full_url": request.build_absolute_uri(),
+                "params": request.GET,
+                "resp_size": sys.getsizeof(response.content),
+                "req_header": dict(request.headers),
+            },
+            "code": response.status_code,
+            "duration": duration,
+            "ip": get_ip(request),
+        }
+        db_logger(**log_detail)
+        return response
