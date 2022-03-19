@@ -15,12 +15,13 @@ from django.db import connection
 from incv_client import INCVUnionClient
 
 from constents import DocAvailableChoices, UserTypeChoices
+from django_global_log.models import DjangoGlobalLog
 from modules.account.models import User
 from modules.cel import app
 from modules.cel.serializers import StatisticSerializer
 from modules.doc.models import Doc
 from modules.doc.models import PinDoc
-from modules.log.models import DocVisitLog, Log
+from modules.log.models import DocVisitLog
 from modules.repo.models import Repo
 from utils.client import get_client_by_user
 
@@ -198,9 +199,9 @@ def send_apply_result(
 
 
 @app.task
-def create_log(**kwargs):
+def create_log(detail):
     logger.info("[create_log] Start")
-    Log.objects.create(**kwargs)
+    DjangoGlobalLog.objects.create(**detail)
     logger.info("[create_log] End")
 
 

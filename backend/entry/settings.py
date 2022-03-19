@@ -49,6 +49,7 @@ CSRF_TRUSTED_ORIGINS = [getenv_or_raise("FRONTEND_URL")]
 # APPs
 INSTALLED_APPS = [
     "corsheaders",
+    "django_global_log",
     "simpleui",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -72,7 +73,7 @@ INSTALLED_APPS = [
 # 中间件
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
-    "utils.middlewares.GlobalLogMiddleware",
+    "django_global_log.middlewares.DjangoGlobalLogMiddleware",
     "utils.middlewares.CSRFExemptMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -195,6 +196,7 @@ AUTH_TOKEN_NAME = os.getenv("AUTH_TOKEN_NAME", f"{APP_CODE}-auth-token")
 LOG_LEVEL = "INFO"
 LOG_DIR = os.path.join(BASE_DIR, "logs")
 LOGGING = get_logging_config_dict(LOG_LEVEL, LOG_DIR)
+GLOBAL_LOG_CELERY_FUNC = "modules.cel.tasks.create_log"
 
 # rest_framework
 REST_FRAMEWORK = {
