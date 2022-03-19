@@ -1,17 +1,12 @@
 import logging
-import sys
 import traceback
 from functools import wraps
-from timeit import default_timer as timer
 
 from django.conf import settings
 from django.http import JsonResponse
 from django.utils.deprecation import MiddlewareMixin
 
-from modules.account.models import CustomAnonymousUser
-from modules.log.utils import db_logger
 from utils.exceptions import ServerError
-from utils.tools import get_ip
 
 logger = logging.getLogger("app")
 exception_logger = logging.getLogger("error")
@@ -61,41 +56,3 @@ class UnHandleExceptionMiddleware(MiddlewareMixin):
             status=error.status_code,
             json_dumps_params={"ensure_ascii": False},
         )
-
-
-class GlobalLogMiddleware(MiddlewareMixin):
-    """全局日志中间件"""
-
-    req_start_time_key = "_global_log_req_start_time"
-
-    def log(self, request, response):
-        req_end_time = timer()
-        req_start_time = getattr(request, self.req_start_time_key, req_end_time)
-        duration = int((req_end_time - req_start_time) * 1000)
-        log_detail = {
-            "operator": getattr(request.user, "uid", CustomAnonymousUser.uid),
-            "path": request.path,
-            "detail": {
-                "full_url": request.build_absolute_uri(),
-                "params": request.GET,
-                "resp_size": sys.getsizeof(response.content),
-                "req_header": dict(request.headers),
-            },
-            "code": response.status_code,
-            "duration": duration,
-            "ip": get_ip(request),
-        }
-        db_logger(**log_detail)
-
-    def process_request(self, request):
-        setattr(request, self.req_start_time_key, timer())
-        return None
-
-    def process_response(self, request, response):
-        try:
-            self.log(request, response)
-            logger.info("[DB Logging Success]")
-        except Exception as err:
-            msg = traceback.format_exc()
-            logger.error("[DB Logging Failed] %s\n%s", str(err), msg)
-        return response
