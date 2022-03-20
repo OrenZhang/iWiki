@@ -4,7 +4,8 @@ mysqlclient==2.0.3
 djangorestframework==3.12.4
 django-cors-headers==3.10.1
 django-simpleui==2022.1
-django-global-log==0.0.4
+django-global-log==0.0.5
+django-duration-log==0.0.1
 
 # Storage
 redis==4.0.2

@@ -12,10 +12,10 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.db import connection
+from django_global_log.utils import SaveLogHandler
 from incv_client import INCVUnionClient
 
 from constents import DocAvailableChoices, UserTypeChoices
-from django_global_log.models import DjangoGlobalLog
 from modules.account.models import User
 from modules.cel import app
 from modules.cel.serializers import StatisticSerializer
@@ -201,7 +201,7 @@ def send_apply_result(
 @app.task
 def create_log(detail):
     logger.info("[create_log] Start")
-    DjangoGlobalLog.objects.create(**detail)
+    SaveLogHandler(detail)()
     logger.info("[create_log] End")
 
 
