@@ -1,11 +1,13 @@
+import re
+
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 from constents import (
+    MEDIUM_CHAR_LENGTH,
     SHORT_CHAR_LENGTH,
     USERNAME_MIN_LENGTH,
-    MEDIUM_CHAR_LENGTH,
     VERIFY_CODE_LENGTH,
 )
 
@@ -61,9 +63,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         if value.isdigit():
             raise serializers.ValidationError(_("用户名不能为纯数字"))
         # 只允许a-z,A-Z,0-9,-,_
-        for letter in value:
-            if letter.isdigit() or letter.isalpha() or letter == "_" or letter == "-":
-                continue
+        if re.match("^[a-zA-Z0-9-_]+$", value) is None:
             raise serializers.ValidationError(_("用户名只能包含a-z,A-Z,0-9,-,_"))
         return value
 
