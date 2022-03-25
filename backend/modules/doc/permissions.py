@@ -1,10 +1,10 @@
 from django.db.models import Q
 from rest_framework.permissions import BasePermission
 
-from constents import UserTypeChoices, RepoTypeChoices, DocAvailableChoices
-from modules.doc.models import Doc, DocCollaborator, Comment
-from modules.repo.models import RepoUser, Repo
-from utils.exceptions import PermissionDenied, Error404
+from constents import DocAvailableChoices, RepoTypeChoices, UserTypeChoices
+from modules.doc.models import Comment, Doc, DocCollaborator
+from modules.repo.models import Repo, RepoUser
+from utils.exceptions import Error404, PermissionDenied
 
 
 def check_repo_user_or_public(repo_id: int, uid: str):
@@ -44,6 +44,18 @@ def is_manager(uid: str, repo_id: int):
         return True
     except RepoUser.DoesNotExist:
         return False
+
+
+class DocSuperPermission(BasePermission):
+    """
+    文章管理权限 Plus
+    """
+
+    def has_permission(self, request, view):
+        # 超级管理员才可以使用
+        if request.user.is_superuser:
+            return True
+        raise PermissionDenied()
 
 
 class DocManagePermission(BasePermission):

@@ -1,4 +1,5 @@
 import datetime
+import logging
 import os
 import shutil
 
@@ -10,6 +11,7 @@ from django.db.models import Q
 from django.http import FileResponse
 from django.utils.encoding import escape_uri_path
 from django.utils.translation import gettext as _
+from django.utils.translation import ngettext
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
@@ -17,7 +19,11 @@ from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from constents import DocAvailableChoices, RepoTypeChoices, UserTypeChoices
 from modules.account.serializers import UserInfoSerializer
 from modules.doc.models import Comment, Doc, DocCollaborator, DocVersion
-from modules.doc.permissions import DocCommonPermission, DocManagePermission
+from modules.doc.permissions import (
+    DocCommonPermission,
+    DocManagePermission,
+    DocSuperPermission,
+)
 from modules.doc.serializers import (
     DocCommonSerializer,
     DocListSerializer,
@@ -25,6 +31,7 @@ from modules.doc.serializers import (
     DocUpdateSerializer,
     DocVersionSerializer,
 )
+from modules.doc.serializers.doc import DocMigrateSerializer
 from modules.log.utils import db_logger
 from modules.repo.models import Repo, RepoUser
 from utils.authenticators import SessionAuthenticate
@@ -33,7 +40,49 @@ from utils.paginations import NumPagination
 from utils.throttlers import DocSearchThrottle
 from utils.viewsets import ThrottleAPIView
 
+logger = logging.getLogger("app")
 USER_MODEL = get_user_model()
+
+
+class DocSuperView(GenericViewSet):
+    """文章管理入口 Plus"""
+
+    queryset = Doc.objects.filter(is_deleted=False)
+    permission_classes = [
+        DocSuperPermission,
+    ]
+
+    @action(methods=["POST"], detail=False)
+    def migrate(self, request, *args, **kwargs):
+        """更换文章所有权"""
+        # 校验数据
+        serializer = DocMigrateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        old_user = serializer.validated_data["old_user"]
+        new_user = serializer.validated_data["new_user"]
+        repo_id = serializer.validated_data["repo_id"]
+        # 获取文章
+        docs = self.queryset.filter(creator=old_user, repo_id=repo_id)
+        doc_ids = [str(doc.id) for doc in docs]
+        logger.warning(
+            "[Doc Creator Migrate] [%s] From [%s] To [%s]\nDoc IDs: %s",
+            repo_id,
+            old_user,
+            new_user,
+            ";".join(doc_ids),
+        )
+        # 更新文章作者
+        with transaction.atomic():
+            docs.update(creator=new_user)
+            DocCollaborator.objects.filter(doc_id__in=doc_ids, uid=new_user).delete()
+        return Response(
+            ngettext(
+                "成功更新%(count)d篇文章的作者",
+                "成功更新%(count)d篇文章的作者",
+                len(doc_ids),
+            )
+            % {"count": len(doc_ids)}
+        )
 
 
 class DocManageView(ModelViewSet):
