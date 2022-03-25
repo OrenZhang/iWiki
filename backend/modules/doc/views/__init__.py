@@ -1,7 +1,8 @@
+from modules.doc.views.comment import CommentCommonView, CommentListView
 from modules.doc.views.doc import (
     DocCommonView,
     DocManageView,
-    SearchDocView,
     DocPublicView,
+    DocSuperView,
+    SearchDocView,
 )
-from modules.doc.views.comment import CommentCommonView, CommentListView
