@@ -4,12 +4,13 @@ from django.utils.translation import gettext_lazy as _
 
 from constents import (
     RepoTypeChoices,
-    UserTypeChoices,
     SHORT_CHAR_LENGTH,
     SMALL_SHORT_CHAR_LENGTH,
+    UserTypeChoices,
 )
 from modules.doc.models import Doc
 from utils.exceptions import Error404
+from utils.tools import simple_uniq_id
 
 DB_PREFIX = "repo_"
 
@@ -38,6 +39,8 @@ class Repo(models.Model):
         """删除"""
         Doc.objects.filter(repo_id=self.id).update(is_deleted=True)
         RepoUser.objects.filter(repo_id=self.id).delete()
+        new_name = "[Deleted]{}".format(simple_uniq_id(SHORT_CHAR_LENGTH))
+        self.name = new_name[:SHORT_CHAR_LENGTH]
         self.is_deleted = True
         self.save()
 

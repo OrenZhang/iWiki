@@ -82,6 +82,7 @@
     import { changeRepoTypeAPI, checkOwnerAPI, deleteRepoAPI, loadManageRepoAPI } from '../api/modules/repo'
     import { checkSuperAdminAPI } from '../api/modules/user'
     import { setTitle } from '../utils/controller'
+    import message from '../utils/message'
     
     const { t } = useI18n()
 
@@ -179,9 +180,10 @@
     }
 
     const doDeleteRepo = () => {
-        deleteRepoAPI(curRepoID.value).then(() => {
-            window.location.reload()
-        })
+        deleteRepoAPI(curRepoID.value).then(
+            () => window.location.reload(),
+            err => message(err.data.msg, 'error')
+        )
     }
 
     onMounted(() => {
