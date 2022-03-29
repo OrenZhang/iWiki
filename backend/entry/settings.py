@@ -52,7 +52,6 @@ CSRF_TRUSTED_ORIGINS = [getenv_or_raise("FRONTEND_URL")]
 INSTALLED_APPS = [
     "corsheaders",
     "django_global_log",
-    "django_duration_log",
     "simpleui",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -77,7 +76,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django_global_log.middlewares.DjangoGlobalLogMiddleware",
-    "django_duration_log.middlewares.DjangoDurationLogMiddleware",
     "utils.middlewares.CSRFExemptMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -201,12 +199,6 @@ LOG_LEVEL = "INFO"
 LOG_DIR = os.path.join(BASE_DIR, "logs")
 LOGGING = get_logging_config_dict(LOG_LEVEL, LOG_DIR)
 GLOBAL_LOG_CELERY_FUNC = "modules.cel.tasks.create_log"
-
-# InfluxDB
-INFLUXDB_ACCESS_TOKEN = os.getenv("INFLUXDB_ACCESS_TOKEN")
-INFLUXDB_ORG = os.getenv("INFLUXDB_ORG")
-INFLUXDB_BUCKET = os.getenv("INFLUXDB_BUCKET")
-INFLUXDB_URL = os.getenv("INFLUXDB_URL")
 
 # rest_framework
 REST_FRAMEWORK = {
