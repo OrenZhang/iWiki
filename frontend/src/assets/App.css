@@ -383,3 +383,22 @@ svg div {
     display: flex;
     justify-content: center;
 }
+
+svg g .task {
+    stroke: none!important;
+    fill: var(--el-color-primary-light-2)!important;
+    color: white!important;
+}
+
+svg g [class*=crit]:not(.taskText) {
+    fill: var(--el-color-danger) !important;
+}
+
+svg g [class*=done] {
+    fill: var(--el-text-color-placeholder) !important;
+}
+
+svg g .section0,
+svg g .section2 {
+    fill: var(--el-color-primary-light-4)!important;
+}
