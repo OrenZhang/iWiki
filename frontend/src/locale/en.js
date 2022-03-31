@@ -186,6 +186,7 @@ const en = {
     noticeCenter: 'Notice Center',
     readNotice: 'Read',
     readAllNotice: 'ReadAll',
+    noMoreNotice: 'Empty Notice',
 }
 
 export default en

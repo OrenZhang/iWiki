@@ -78,7 +78,7 @@
                         :total="noticePaginator.count" :page-size="noticePaginator.size" :current-page="noticePaginator.page" :hide-on-single-page="true"
                         @current-change="handleNoticePageChange" />
                 </div>
-                <el-empty v-if="notices.length <= 0" description="暂无通知" />
+                <el-empty v-if="notices.length <= 0" :description="$t('noMoreNotice')" />
             </template>
         </el-drawer>
     </el-config-provider>
