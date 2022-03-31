@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path
 from django.views.generic import RedirectView
 
 from utils import exceptions
@@ -22,6 +22,7 @@ urlpatterns = [
     path("cos/", include("modules.cos.urls")),
     path("version/", include("modules.version.urls")),
     path("conf/", include("modules.conf.urls")),
+    path("notice/", include("modules.notice.urls")),
 ]
 
 handler400 = exceptions.bad_request

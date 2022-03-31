@@ -12,3 +12,10 @@ class UserTypeChoices(models.TextChoices):
     ADMIN = "admin", _("管理员")
     MEMBER = "member", _("成员")
     VISITOR = "visitor", _("访客")
+
+    @classmethod
+    def get_name(cls, u_type):
+        for key, val in cls.choices:
+            if key == u_type:
+                return val
+        return u_type

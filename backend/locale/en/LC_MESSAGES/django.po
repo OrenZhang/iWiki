@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-25 18:19+0800\n"
+"POT-Creation-Date: 2022-03-31 16:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,11 +50,11 @@ msgstr "Member"
 msgid "访客"
 msgstr "Visitor"
 
-#: entry/settings.py:179
+#: entry/settings.py:178
 msgid "English"
 msgstr "English"
 
-#: entry/settings.py:180
+#: entry/settings.py:179
 msgid "中文简体"
 msgstr "Chinese Simplified"
 
@@ -62,7 +62,7 @@ msgstr "Chinese Simplified"
 msgid "用户模块"
 msgstr "User Module"
 
-#: modules/account/models.py:41
+#: modules/account/models.py:41 modules/notice/models.py:31
 msgid "用户ID"
 msgstr "UID"
 
@@ -92,7 +92,7 @@ msgid "联系电话"
 msgstr "Phone Number"
 
 #: modules/account/models.py:50 modules/doc/models.py:37
-#: modules/doc/models.py:101 modules/repo/models.py:29
+#: modules/doc/models.py:101 modules/repo/models.py:30
 msgid "软删除"
 msgstr "Deleted"
 
@@ -109,7 +109,7 @@ msgid "用户名格式有误"
 msgstr "Username format is incorrect"
 
 #: modules/account/serializers.py:25 modules/account/serializers.py:28
-#: modules/account/views.py:135 modules/doc/views/doc.py:380
+#: modules/account/views.py:138 modules/doc/views/doc.py:387
 msgid "用户名不能为空"
 msgstr "Username can not be empty"
 
@@ -145,7 +145,7 @@ msgstr "Username can only contain a-z,A-Z,0-9,-,_"
 msgid "验证码格式有误"
 msgstr "Wrong verification code format"
 
-#: modules/account/views.py:93
+#: modules/account/views.py:96
 msgid "登陆失败，用户名或密码错误"
 msgstr "Login failed, wrong username or password"
 
@@ -231,12 +231,12 @@ msgstr[1] "Please upload file within %(limit)dM"
 msgid "上传失败，请稍后再试"
 msgstr "Upload failed, please try again later"
 
-#: modules/doc/admin.py:31 modules/repo/admin.py:26 modules/repo/models.py:20
+#: modules/doc/admin.py:31 modules/repo/admin.py:26 modules/repo/models.py:21
 msgid "库名"
 msgstr "Repo Name"
 
 #: modules/doc/admin.py:35 modules/doc/models.py:31 modules/doc/models.py:99
-#: modules/repo/admin.py:15 modules/repo/models.py:27
+#: modules/repo/admin.py:15 modules/repo/models.py:28
 msgid "创建人"
 msgstr "Creator"
 
@@ -244,7 +244,8 @@ msgstr "Creator"
 msgid "更新人"
 msgstr "Update By"
 
-#: modules/doc/admin.py:54 modules/doc/models.py:28
+#: modules/doc/admin.py:54 modules/doc/models.py:28 modules/notice/admin.py:22
+#: modules/notice/models.py:12
 msgid "标题"
 msgstr "Title"
 
@@ -265,16 +266,13 @@ msgid "可见范围"
 msgstr "Available"
 
 #: modules/doc/models.py:29 modules/doc/models.py:98
+#: modules/notice/models.py:13
 msgid "内容"
 msgstr "Content"
 
 #: modules/doc/models.py:30
 msgid "附件"
 msgstr "Attachment"
-
-#: .\modules\doc\models.py:31
-msgid "访问量"
-msgstr "PV"
 
 #: modules/doc/models.py:32 modules/doc/models.py:100
 msgid "更新时间"
@@ -328,7 +326,8 @@ msgstr "Comment"
 msgid "评论版本"
 msgstr "Comment Version"
 
-#: modules/doc/models.py:133 modules/repo/models.py:28
+#: modules/doc/models.py:133 modules/notice/models.py:18
+#: modules/repo/models.py:29
 #: venv/lib/python3.9/site-packages/django_global_log/models.py:20
 msgid "创建时间"
 msgstr "Create At"
@@ -353,18 +352,25 @@ msgstr "UserName Duplicated"
 msgid "库不存在"
 msgstr "Repo Not Exists"
 
-#: modules/doc/views/doc.py:76
+#: modules/doc/views/doc.py:82
 #, python-format
 msgid "成功更新%(count)d篇文章的作者"
 msgid_plural "成功更新%(count)d篇文章的作者"
 msgstr[0] "Migrate success for %(count)d doc"
 msgstr[1] "Migrate success for %(count)d docs"
 
-#: modules/doc/views/doc.py:170
+#: modules/doc/views/doc.py:175
 msgid "已添加该用户为协作者，请勿重复添加"
 msgstr "Collaborator Exists"
 
-#: modules/doc/views/doc.py:432
+msgid "添加"
+msgstr "Add"
+
+#: modules/doc/views/doc.py:187
+msgid "移除"
+msgstr "Remove"
+
+#: modules/doc/views/doc.py:439
 msgid "搜索关键字不能为空"
 msgstr "Search Keyword cannot be empty"
 
@@ -397,7 +403,43 @@ msgstr ""
 msgid "访问日志"
 msgstr ""
 
-#: modules/repo/admin.py:34 modules/repo/models.py:73
+#: modules/notice/admin.py:29
+msgid "接受人"
+msgstr "Receiver"
+
+#: modules/notice/apps.py:8
+msgid "通知模块"
+msgstr "Notice Module"
+
+#: modules/notice/models.py:15
+msgid "按钮文本"
+msgstr "Button Text"
+
+#: modules/notice/models.py:17
+msgid "跳转链接"
+msgstr "Jump Url"
+
+#: modules/notice/models.py:22
+msgid "通知"
+msgstr "Notice"
+
+#: modules/notice/models.py:30
+msgid "消息ID"
+msgstr "Msg ID"
+
+#: modules/notice/models.py:32
+msgid "阅读状态"
+msgstr "Read Status"
+
+#: modules/notice/models.py:33
+msgid "阅读时间"
+msgstr "Read At"
+
+#: modules/notice/models.py:37
+msgid "通知读取"
+msgstr "Notice Read"
+
+#: modules/repo/admin.py:34 modules/repo/models.py:76
 msgid "处理人"
 msgstr "Operator"
 
@@ -405,31 +447,31 @@ msgstr "Operator"
 msgid "文库模块"
 msgstr "Repo Module"
 
-#: modules/repo/models.py:22
+#: modules/repo/models.py:23
 msgid "类型"
 msgstr "Type"
 
-#: modules/repo/models.py:33
+#: modules/repo/models.py:34
 msgid "库"
 msgstr "Repo"
 
-#: modules/repo/models.py:63
+#: modules/repo/models.py:66
 msgid "库id"
 msgstr "Repo ID"
 
-#: modules/repo/models.py:64
+#: modules/repo/models.py:67
 msgid "用户id"
 msgstr "UID"
 
-#: modules/repo/models.py:66
+#: modules/repo/models.py:69
 msgid "用户类型"
 msgstr "User Type"
 
-#: modules/repo/models.py:75
+#: modules/repo/models.py:78
 msgid "加入时间"
 msgstr "Join At"
 
-#: modules/repo/models.py:79
+#: modules/repo/models.py:82
 msgid "库成员"
 msgstr "Repo Member"
 
@@ -437,11 +479,26 @@ msgstr "Repo Member"
 msgid "库名重复"
 msgstr "Repo Name Exists"
 
-#: modules/repo/views.py:94
+#: modules/repo/views.py:102
 msgid "该申请不存在"
 msgstr "Apply not exists"
 
-#: modules/repo/views.py:355
+#: modules/repo/views.py:108
+msgid "已拒绝"
+msgstr "Rejected"
+
+#: modules/repo/views.py:120
+msgid "已通过"
+msgstr "Allowed"
+
+msgid "删除"
+msgstr "Deleted"
+
+#: modules/repo/views.py:290
+msgid "取消置顶"
+msgstr "UnPin"
+
+#: modules/repo/views.py:371
 #, python-format
 msgid "已申请或加入%(name)s"
 msgid_plural "已申请或加入%(name)s"
@@ -2058,10 +2115,6 @@ msgstr ""
 msgid "Connect, get help, or contribute"
 msgstr ""
 
-#: venv/lib/python3.9/site-packages/django_duration_log/apps.py:8
-msgid "Django请求耗时日志"
-msgstr ""
-
 #: venv/lib/python3.9/site-packages/django_global_log/apps.py:8
 msgid "Django访问日志"
 msgstr ""
@@ -2458,6 +2511,9 @@ msgstr ""
 #: venv/lib/python3.9/site-packages/simpleui/templates/registration/password_reset_form.html:25
 msgid "Reset my password"
 msgstr ""
+
+#~ msgid "访问量"
+#~ msgstr "PV"
 
 #~ msgid "模型"
 #~ msgstr "Model"

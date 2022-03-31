@@ -3,7 +3,7 @@ import datetime
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
-from django.db import transaction, IntegrityError
+from django.db import IntegrityError, transaction
 from django.db.models import Q
 from django.utils.translation import gettext as _
 from django.utils.translation import ngettext
@@ -12,27 +12,35 @@ from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
-from constents import RepoTypeChoices, UserTypeChoices, DocAvailableChoices
+from constents import DocAvailableChoices, RepoTypeChoices, UserTypeChoices
 from modules.account.serializers import UserInfoSerializer
 from modules.cel.tasks import export_all_docs, send_apply_result
 from modules.doc.models import Doc, PinDoc
 from modules.doc.serializers import DocListSerializer, DocPinSerializer
+from modules.notice.notices import (
+    ChangeUserTypeNotice,
+    DocHandlerNotice,
+    ExitRepoNotice,
+    RemoveRepoUserNotice,
+    RepoApplyNotice,
+    RepoApplyResultNotice,
+)
 from modules.repo.models import Repo, RepoUser
 from modules.repo.permissions import RepoAdminPermission
 from modules.repo.serializers import (
-    RepoSerializer,
     RepoApplyDealSerializer,
-    RepoListSerializer,
     RepoCommonSerializer,
+    RepoListSerializer,
+    RepoSerializer,
     RepoUserSerializer,
 )
 from utils.authenticators import SessionAuthenticate
 from utils.exceptions import (
-    OperationError,
-    UserNotExist,
     Error404,
-    ThrottledError,
+    OperationError,
     ParamsNotFound,
+    ThrottledError,
+    UserNotExist,
 )
 from utils.paginations import NumPagination, RepoListNumPagination
 
@@ -97,6 +105,7 @@ class RepoView(ModelViewSet):
                 request.user.uid, repo_user.repo_id, repo_user.uid, False
             )
             repo_user.delete()
+            RepoApplyResultNotice(repo_user.uid, instance.name, _("已拒绝"))()
             return Response()
         serializer = RepoApplyDealSerializer(instance=repo_user, data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -108,6 +117,7 @@ class RepoView(ModelViewSet):
         send_apply_result.delay(
             request.user.uid, repo_user.repo_id, repo_user.uid, True
         )
+        RepoApplyResultNotice(repo_user.uid, instance.name, _("已通过"))()
         return Response()
 
     @action(detail=True, methods=["POST"])
@@ -171,6 +181,7 @@ class RepoView(ModelViewSet):
         RepoUser.objects.filter(
             Q(repo_id=instance.id) & Q(uid=uid) & ~Q(u_type=UserTypeChoices.OWNER)
         ).delete()
+        RemoveRepoUserNotice(uid, instance.name)()
         return Response()
 
     @action(detail=True, methods=["POST"])
@@ -184,6 +195,7 @@ class RepoView(ModelViewSet):
         RepoUser.objects.filter(
             Q(repo_id=instance.id) & Q(uid=uid) & ~Q(u_type=UserTypeChoices.OWNER)
         ).update(u_type=u_type, operator=request.user.uid)
+        ChangeUserTypeNotice(uid, instance.name, u_type)()
         return Response()
 
     @action(detail=True, methods=["GET"])
@@ -215,6 +227,7 @@ class RepoView(ModelViewSet):
         Doc.objects.filter(id=doc_id, repo_id=instance.id).update(
             is_deleted=True, update_by=request.user.uid
         )
+        DocHandlerNotice(doc_id, _("删除"))()
         return Response()
 
     @action(detail=True, methods=["GET"])
@@ -251,6 +264,7 @@ class RepoView(ModelViewSet):
             pin.save()
         except PinDoc.DoesNotExist:
             serializer.save()
+        DocHandlerNotice(data["doc_id"], _("置顶"))()
         return Response()
 
     @action(detail=True, methods=["POST"])
@@ -273,6 +287,7 @@ class RepoView(ModelViewSet):
         PinDoc.objects.filter(doc_id=doc_id, in_use=True).update(
             in_use=False, operator=request.user.uid
         )
+        DocHandlerNotice(doc_id, _("取消置顶"))()
         return Response()
 
 
@@ -350,6 +365,7 @@ class RepoCommonView(ListModelMixin, RetrieveModelMixin, GenericViewSet):
             RepoUser.objects.create(
                 repo_id=repo.id, uid=uid, u_type=UserTypeChoices.VISITOR
             )
+            RepoApplyNotice(repo, uid)()
         except IntegrityError:
             raise OperationError(
                 ngettext("已申请或加入%(name)s", "已申请或加入%(name)s", 1) % {"name": repo.name}
@@ -385,6 +401,7 @@ class RepoCommonView(ListModelMixin, RetrieveModelMixin, GenericViewSet):
                 & Q(uid=request.user.uid)
                 & ~Q(u_type=UserTypeChoices.OWNER)
             ).delete()
+            ExitRepoNotice(instance, request.user.username)()
             return Response()
         except RepoUser.DoesNotExist:
             raise OperationError()

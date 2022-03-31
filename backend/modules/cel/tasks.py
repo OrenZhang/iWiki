@@ -22,6 +22,7 @@ from modules.cel.serializers import StatisticSerializer
 from modules.doc.models import Doc
 from modules.doc.models import PinDoc
 from modules.log.models import DocVisitLog
+from modules.notice.utils import notice_handler
 from modules.repo.models import Repo
 from utils.client import get_client_by_user
 
@@ -210,3 +211,10 @@ def create_doc_log(doc_id, uid):
     logger.info("[create_doc_log] Start")
     DocVisitLog.objects.create(doc_id=doc_id, visitor=uid)
     logger.info("[create_doc_log] End")
+
+
+@app.task
+def send_notice(receivers, title, content, button_text, url):
+    logger.info("[send_notice] Start")
+    notice_handler.send(receivers, title, content, button_text, url)
+    logger.info("[send_notice] End")

@@ -20,6 +20,7 @@ from modules.account.serializers import (
     UserInfoSerializer,
 )
 from modules.doc.models import Comment, Doc
+from modules.notice.notices import RegistryNotice
 from modules.repo.models import Repo, RepoUser
 from utils.authenticators import SessionAuthenticate
 from utils.exceptions import (
@@ -70,6 +71,8 @@ class RegisterView(APIView):
             max_age=settings.SESSION_COOKIE_AGE,
             domain=settings.SESSION_COOKIE_DOMAIN,
         )
+        # 向管理员发通知
+        RegistryNotice(user)()
         return response
 
 

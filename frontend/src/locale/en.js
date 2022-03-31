@@ -183,6 +183,10 @@ const en = {
     hourSimple: 'h ',
     minuteSimple: 'm ',
     secondSimple: 's',
+    noticeCenter: 'Notice Center',
+    readNotice: 'Read',
+    readAllNotice: 'ReadAll',
+    noMoreNotice: 'Empty Notice',
 }
 
 export default en
