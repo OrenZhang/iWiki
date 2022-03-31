@@ -7,6 +7,7 @@ from modules.doc.models import Comment, CommentVersion
 from modules.doc.permissions import CommentPermission
 from modules.doc.serializers import CommentCommonSerializer
 from modules.doc.serializers.comment import CommentListSerializer
+from modules.notice.notices import CommentNotice
 from utils.authenticators import SessionAuthenticate
 
 
@@ -55,6 +56,7 @@ class CommentCommonView(
         with transaction.atomic():
             instance = self.perform_create(serializer)
             CommentVersion.objects.create(**CommentCommonSerializer(instance).data)
+        CommentNotice(request.user, instance.doc_id)()
         return Response(CommentListSerializer(instance).data)
 
     def update(self, request, *args, **kwargs):

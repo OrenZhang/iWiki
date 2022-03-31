@@ -183,6 +183,9 @@ const en = {
     hourSimple: 'h ',
     minuteSimple: 'm ',
     secondSimple: 's',
+    noticeCenter: 'Notice Center',
+    readNotice: 'Read',
+    readAllNotice: 'ReadAll',
 }
 
 export default en

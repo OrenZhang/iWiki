@@ -33,6 +33,7 @@ from modules.doc.serializers import (
 )
 from modules.doc.serializers.doc import DocMigrateSerializer
 from modules.log.utils import db_logger
+from modules.notice.notices import CollaboratorNotice, DocMigrateNotice
 from modules.repo.models import Repo, RepoUser
 from utils.authenticators import SessionAuthenticate
 from utils.exceptions import Error404, OperationError, ParamsNotFound, UserNotExist
@@ -75,6 +76,7 @@ class DocSuperView(GenericViewSet):
         with transaction.atomic():
             docs.update(creator=new_user)
             DocCollaborator.objects.filter(doc_id__in=doc_ids, uid=new_user).delete()
+        DocMigrateNotice(old_user, new_user, repo_id)()
         return Response(
             ngettext(
                 "成功更新%(count)d篇文章的作者",
@@ -171,6 +173,7 @@ class DocManageView(ModelViewSet):
             DocCollaborator.objects.create(doc_id=instance.id, uid=uid)
         except IntegrityError:
             raise OperationError(_("已添加该用户为协作者，请勿重复添加"))
+        CollaboratorNotice(uid, instance, _("添加"))()
         return Response()
 
     @action(detail=True, methods=["POST"])
@@ -181,6 +184,7 @@ class DocManageView(ModelViewSet):
         if not uid or uid == request.user.uid:
             raise OperationError()
         DocCollaborator.objects.filter(doc_id=instance.id, uid=uid).delete()
+        CollaboratorNotice(uid, instance, _("移除"))()
         return Response()
 
     @action(detail=True, methods=["GET"])

@@ -35,6 +35,9 @@
                         <el-link v-for="item in navLinks" :key="item" :underline="false" target="_blank" :href="item.url" class="extra-links">
                             <i :class="item.icon" />
                         </el-link>
+                        <el-link :underline="false" class="notice" @click="toggleNotice">
+                            <i class="fa-solid fa-bell" :class="hasNoReadNotice ? 'icon-red' : ''" />
+                        </el-link>
                         <el-link :underline="false" class="version" @click="showVersionTab">
                             <i class="fa-regular fa-question-circle" />
                         </el-link>
@@ -58,6 +61,26 @@
                 <router-view />
             </el-main>
         </div>
+        <el-drawer v-model="noticeVisible" direction="rtl" custom-class="notice-drawer" :size="480">
+            <template #title>
+                <div style="font-size: 18px; font-weight: bold; display: flex; align-items: center;">
+                    {{ $t('noticeCenter') }}
+                    <el-link v-if="hasNoReadNotice" @click="readAllNotice" :underline="false" type="primary" style="margin-left: 6px;">
+                        {{ $t('readAllNotice') }}
+                    </el-link>
+                </div>
+            </template>
+            <template #default>
+                <NoticeItem v-for="item in notices" :key="item.id" :data="item" @readNotice="readNotice" />
+                <div class="paginator" v-if="notices.length > 0">
+                    <el-pagination
+                        layout="prev, pager, next" :pager-count="5"
+                        :total="noticePaginator.count" :page-size="noticePaginator.size" :current-page="noticePaginator.page" :hide-on-single-page="true"
+                        @current-change="handleNoticePageChange" />
+                </div>
+                <el-empty v-if="notices.length <= 0" description="暂无通知" />
+            </template>
+        </el-drawer>
     </el-config-provider>
 </template>
 
@@ -73,7 +96,10 @@
     import VersionLog from './components/VersionLog.vue'
     import { changeLangAPI } from './api/modules/common'
     import { isManagerAPI, signOutAPI } from './api/modules/user'
+    import { getNoticeCommonAPI, readAllNoticeAPI, readNoticeAPI } from './api/modules/notice'
+    import NoticeItem from './components/NoticeItem.vue'
     import { ElMessageBox } from 'element-plus'
+    import message from './utils/message'
 
     // 国际化
     const { t } = useI18n()
@@ -221,6 +247,55 @@
         store.dispatch('getFooterInfo')
         store.dispatch('getNavLinks')
     })
+
+    // 通知消息
+    const noticeVisible = ref(false)
+    const notices = ref([])
+    const noticePaginator = ref({
+        page: 1,
+        count: 0,
+        size: 20
+    })
+    const toggleNotice = () => {
+        noticeVisible.value = !noticeVisible.value
+    }
+    const hasNoReadNotice = computed(() => {
+        for (const notice of notices.value) {
+            if (!notice.is_read) {
+                return true
+            }
+        }
+        return false
+    })
+    const loadNotice = () => {
+        getNoticeCommonAPI(noticePaginator.value.page, noticePaginator.value.size).then(
+            res => {
+                notices.value = res.data.results
+                noticePaginator.value.count = res.data.count
+            },
+            err => message(err.data.msg, 'error')
+        )
+    }
+    const readNotice = (id) => {
+        readNoticeAPI(id).then(
+            () => loadNotice(),
+            err => message(err.data.msg, 'error')
+        )
+    }
+    const handleNoticePageChange = (page) => {
+        noticePaginator.value.page = page
+        loadNotice()
+    }
+    const readAllNotice = () => {
+        readAllNoticeAPI().then(
+            res => {
+                noticePaginator.value.page = 1
+                loadNotice()
+            },
+            err => message(err.data.msg, 'error')
+        )
+    }
+    onMounted(loadNotice)
 </script>
 
 <style>

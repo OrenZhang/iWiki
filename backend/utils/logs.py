@@ -75,6 +75,14 @@ def get_logging_config_dict(log_level: str, log_dir: str):
                 "backupCount": 5,
                 "encoding": "utf8",
             },
+            "notice": {
+                "class": log_class,
+                "formatter": "verbose",
+                "filename": os.path.join(log_dir, "notice.log"),
+                "maxBytes": 1024 * 1024 * 10,
+                "backupCount": 5,
+                "encoding": "utf8",
+            },
         },
         "loggers": {
             "django": {"handlers": ["null"], "level": "INFO", "propagate": True},
@@ -100,5 +108,6 @@ def get_logging_config_dict(log_level: str, log_dir: str):
             "cos": {"handlers": ["cos"], "level": log_level, "propagate": True},
             "cel": {"handlers": ["cel"], "level": log_level, "propagate": True},
             "error": {"handlers": ["error"], "level": log_level, "propagate": True},
+            "notice": {"handlers": ["notice"], "level": log_level, "propagate": True},
         },
     }

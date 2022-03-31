@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     "modules.version",
     "modules.conf",
     "modules.log",
+    "modules.notice",
 ]
 
 # 中间件

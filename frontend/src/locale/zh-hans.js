@@ -183,6 +183,9 @@ const zh = {
     hourSimple: '时',
     minuteSimple: '分',
     secondSimple: '秒',
+    noticeCenter: '通知中心',
+    readNotice: '已读',
+    readAllNotice: '全部已读',
 }
 
 export default zh
