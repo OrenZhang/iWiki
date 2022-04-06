@@ -19,4 +19,3 @@ class LogoutViewTest(TestCase):
         """登出失败：未登录"""
         resp = self.client.get(self.api_url).json()
         self.assertFalse(resp["result"])
-        self.assertEqual(resp["msg"], "未登录用户")

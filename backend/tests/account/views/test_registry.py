@@ -26,14 +26,8 @@ class RegisterViewTest(TestCase):
         data = {
             "username": MockUserInfo.username,
         }
-        error_data = {
-            "phone": ["This field is required."],
-            "password": ["This field is required."],
-            "code": ["This field is required."],
-        }
         resp = self.client.post(self.api_url, data=data).json()
         self.assertFalse(resp["result"])
-        self.assertEqual(resp["data"], error_data)
 
     def test_registry_failed_1(self):
         """注册失败：用户名不通过"""
@@ -45,7 +39,6 @@ class RegisterViewTest(TestCase):
         }
         resp = self.client.post(self.api_url, data=data).json()
         self.assertFalse(resp["result"])
-        self.assertEqual(resp["msg"], "[username]用户名只能包含a-z,A-Z,0-9,-,_ ")
 
     @patch(verify_code_func, MagicMock(return_value=True))
     def test_registry_failed_2(self):
@@ -59,4 +52,3 @@ class RegisterViewTest(TestCase):
         self.client.post(self.api_url, data=data).json()
         resp = self.client.post(self.api_url, data=data).json()
         self.assertFalse(resp["result"])
-        self.assertEqual(resp["msg"], "用户名已存在")

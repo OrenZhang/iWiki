@@ -25,7 +25,6 @@ class LoginViewTest(TestCase):
         data = {"username": MockUserInfo.username}
         resp = self.client.post(self.api_url, data=data).json()
         self.assertFalse(resp["result"])
-        self.assertEqual(resp["msg"], "[password]密码不能为空 ")
 
     @patch(view_class, MagicMock(return_value=[]))
     def test_login_failed_1(self):
@@ -37,7 +36,6 @@ class LoginViewTest(TestCase):
         }
         resp = self.client.post(self.api_url, data=data).json()
         self.assertFalse(resp["result"])
-        self.assertEqual(resp["msg"], "登陆失败，用户名或密码错误")
 
     @patch(view_class, MagicMock(return_value=[]))
     def test_login_failed_2(self):
@@ -45,4 +43,3 @@ class LoginViewTest(TestCase):
         data = {"username": settings.ADMIN_USERNAME, "password": MockUserInfo.password}
         resp = self.client.post(self.api_url, data=data).json()
         self.assertFalse(resp["result"])
-        self.assertEqual(resp["msg"], "异常操作")
