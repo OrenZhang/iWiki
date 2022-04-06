@@ -20,6 +20,7 @@ jobs:
         python-version: 3.9
     - name: Generate Report
       run: |
+        cd backend
         pip install -r requirements.txt
         pip install -r requirements_dev.txt
         coverage run manage.py test
