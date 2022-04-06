@@ -1,28 +1,54 @@
 name: CodeCov
 
 on:
-  push:
-    branches: [master, develop]
-  pull_request:
-    branches: [master, develop]
-    
+    push:
+        branches: [ master, develop ]
+    pull_request:
+        branches: [ master, develop ]
+
+env:
+    APP_CODE: iWiki
+    APP_SECRET_KEY: iWiki
+    BACKEND_HOST: 127.0.0.1
+    FRONTEND_URL: http://127.0.0.1
+    DB_NAME: iwiki
+    DB_USER: root
+    DB_PASSWORD: root
+    DB_HOST: localhost
+    DB_PORT: 3306
+    REDIS_HOST: 127.0.0.1
+    REDIS_PORT: 6379
+    REDIS_PASSWORD: ""
+    REDIS_DB: 0
+    DEFAULT_REPO_NAME: default
+
 jobs:
-  run:
-    runs-on: ubuntu-latest
-    env:
-      OS: ubuntu-latest
-      PYTHON: '3.9'
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup Python
-      uses: actions/setup-python@master
-      with:
-        python-version: 3.9
-    - name: Generate Report
-      run: |
-        cd backend
-        pip install -r requirements.txt
-        pip install -r requirements_dev.txt
-        coverage run manage.py test
-    - name: Upload Coverage to Codecov
-      uses: codecov/codecov-action@v1
+    run:
+        runs-on: ubuntu-latest
+        env:
+            OS: ubuntu-latest
+            PYTHON: '3.9'
+        services:
+            redis:
+                image: redis
+                ports:
+                    - 6379:6379
+                options: >-
+                    --health-cmd "redis-cli ping"
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
+        steps:
+            -   uses: actions/checkout@v2
+            -   name: Setup Python
+                uses: actions/setup-python@master
+                with:
+                    python-version: 3.9
+            -   name: Generate Report
+                run: |
+                    cd backend
+                    pip install -r requirements.txt
+                    pip install -r requirements_dev.txt
+                    coverage run manage.py test
+            -   name: Upload Coverage to Codecov
+                uses: codecov/codecov-action@v1
