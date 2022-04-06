@@ -20,7 +20,9 @@ class UploadAvatarViewTest(TestCase):
     @patch(upload, MagicMock(return_value=MockClient()))
     def test_upload_success(self):
         """上传成功"""
-        self.client.login(username=MockUserInfo.username, password=MockUserInfo.password)
+        self.client.login(
+            username=MockUserInfo.username, password=MockUserInfo.password
+        )
         with open(self.file_path, "rb") as file:
             resp = self.client.post(self.api_url, {"file": file}).json()
         self.assertTrue(resp["result"])
@@ -28,7 +30,9 @@ class UploadAvatarViewTest(TestCase):
     @patch(upload, MagicMock(return_value=MockClientFailed()))
     def test_upload_failed(self):
         """上传失败"""
-        self.client.login(username=MockUserInfo.username, password=MockUserInfo.password)
+        self.client.login(
+            username=MockUserInfo.username, password=MockUserInfo.password
+        )
         with open(self.file_path, "rb") as file:
             resp = self.client.post(self.api_url, {"file": file}).json()
         self.assertFalse(resp["result"])

@@ -10,9 +10,7 @@ class ConfMock:
     @classmethod
     def add_bool_conf(cls):
         Conf.objects.create(
-            c_key=cls.c_bool_key,
-            c_type=ConfTypeChoices.BOOL,
-            c_bool=cls.c_bool
+            c_key=cls.c_bool_key, c_type=ConfTypeChoices.BOOL, c_bool=cls.c_bool
         )
 
     @classmethod
@@ -20,7 +18,5 @@ class ConfMock:
         Conf.objects.create(
             c_key=cls.c_json_key,
             c_type=ConfTypeChoices.JSON,
-            c_val={
-                cls.c_json_key: cls.c_bool
-            }
+            c_val={cls.c_json_key: cls.c_bool},
         )
