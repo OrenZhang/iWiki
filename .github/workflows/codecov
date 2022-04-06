@@ -1,0 +1,27 @@
+name: CodeCov
+
+on:
+  push:
+    branches: [master, develop]
+  pull_request:
+    branches: [master, develop]
+    
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    env:
+      OS: ubuntu-latest
+      PYTHON: '3.9'
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Python
+      uses: actions/setup-python@master
+      with:
+        python-version: 3.9
+    - name: Generate Report
+      run: |
+        pip install -r requirements.txt
+        pip install -r requirements_dev.txt
+        coverage run manage.py test
+    - name: Upload Coverage to Codecov
+      uses: codecov/codecov-action@v1
