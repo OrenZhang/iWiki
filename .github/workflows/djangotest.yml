@@ -13,9 +13,9 @@ env:
     FRONTEND_URL: http://127.0.0.1
     DB_NAME: iwiki
     DB_USER: root
-    DB_PASSWORD: 0000
-    DB_HOST: 127.0.0.1
-    DB_PORT: 33306
+    DB_PASSWORD: root
+    DB_HOST: localhost
+    DB_PORT: 3306
     REDIS_HOST: 127.0.0.1
     REDIS_PORT: 6379
     REDIS_PASSWORD: ""
@@ -30,15 +30,6 @@ jobs:
             matrix:
                 python-version: [ 3.9 ]
         services:
-            mysql:
-                image: mysql:5.7
-                env:
-                    MYSQL_DATABASE: iwiki
-                    MYSQL_USER: root
-                    MYSQL_PASSWORD: 0000
-                    MYSQL_ROOT_PASSWORD: 0000
-                ports:
-                    - 33306:3306
             redis:
                 image: redis
                 ports:
@@ -54,6 +45,10 @@ jobs:
                     cd backend
                     python -m pip install --upgrade pip
                     pip install -r requirements.txt
+            -   name: Set up MySQL
+                run: |
+                    sudo /etc/init.d/mysql start
+                    mysql -e 'CREATE DATABASE ${{ env.DB_NAME }} charset utf8mb4;' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
             -   name: Run Tests
                 run: |
                     cd backend

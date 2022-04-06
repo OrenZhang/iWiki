@@ -1,2 +1,6 @@
+# pre-commit run -a
 pre-commit==2.17.0
+
+# coverage run manage.py test --keepdb
+# coverage report -m
 coverage==6.3.2
