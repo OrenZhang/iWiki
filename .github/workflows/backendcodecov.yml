@@ -1,4 +1,4 @@
-name: CodeCov
+name: Backend Code Cov
 
 on:
     push:
