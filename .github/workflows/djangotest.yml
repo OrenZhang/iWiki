@@ -10,7 +10,7 @@ env:
   APP_CODE: iWiki
   APP_SECRET_KEY: iWiki
   BACKEND_HOST: 127.0.0.1
-  FRONTEND_URL: 127.0.0.1
+  FRONTEND_URL: http://127.0.0.1
   DB_NAME: iwiki
   DB_USER: root
   DB_PASSWORD: 0000
