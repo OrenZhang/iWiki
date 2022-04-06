@@ -18,7 +18,7 @@ env:
   DB_PORT: 33306
   REDIS_HOST: 127.0.0.1
   REDIS_PORT: 6379
-  REDIS_PASSWORD: 0000
+  REDIS_PASSWORD: ""
   REDIS_DB: 0
   DEFAULT_REPO_NAME: default
 
@@ -44,7 +44,6 @@ jobs:
         image: redis
         ports:
           - 6379:6379
-        options: --requirepass 0000
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
