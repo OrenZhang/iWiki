@@ -2,15 +2,13 @@ name: Frontend Code Check
 
 on:
     push:
-        branches: [ master ]
+        branches: [ master, develop ]
     pull_request:
-        branches: [ master ]
+        branches: [ master, develop ]
 
 jobs:
     build:
-
         runs-on: ubuntu-latest
-
         steps:
             -   uses: actions/checkout@v2
             -   name: Frontend - Install Packages

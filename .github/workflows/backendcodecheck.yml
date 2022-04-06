@@ -2,18 +2,16 @@ name: Backend Code Check
 
 on:
     push:
-        branches: [ master ]
+        branches: [ master, develop ]
     pull_request:
-        branches: [ master ]
+        branches: [ master, develop ]
 
 jobs:
     build:
-
         runs-on: ubuntu-latest
         strategy:
             matrix:
                 python-version: [ 3.9 ]
-
         steps:
             -   uses: actions/checkout@v2
             -   name: Backend - Setup Python3.9
