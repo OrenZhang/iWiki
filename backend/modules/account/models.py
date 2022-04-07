@@ -1,14 +1,14 @@
 from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.models import PermissionsMixin, AnonymousUser
+from django.contrib.auth.models import AnonymousUser, PermissionsMixin
 from django.core.cache import cache
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from incv_client import INCVUnionClient
 
-from constents import SHORT_CHAR_LENGTH, PHONE_NUMBER_CHAR_LENGTH, VERIFY_CODE_LENGTH
-from utils.exceptions import PhoneNumberExist, OperationError
-from utils.tools import simple_uniq_id, num_code
+from constents import PHONE_NUMBER_CHAR_LENGTH, SHORT_CHAR_LENGTH, VERIFY_CODE_LENGTH
+from utils.exceptions import OperationError, PhoneNumberExist
+from utils.tools import num_code, simple_uniq_id
 
 DB_PREFIX = "auth_"
 
@@ -57,9 +57,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         db_table = f"{DB_PREFIX}user"
         verbose_name = _("成员")
         verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return self.username
 
     @staticmethod
     def init_uid():
