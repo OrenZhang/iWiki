@@ -12,3 +12,4 @@ class MockUserInfo:
         user = User.objects.create(username=cls.username, phone=cls.phone)
         user.set_password(MockUserInfo.password)
         user.save()
+        return user
