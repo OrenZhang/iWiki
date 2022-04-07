@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.10
 RUN mkdir /usr/src/iwiki-backend/logs /usr/src/iwiki-backend/celery-logs -p
 COPY . /usr/src/iwiki-backend
 WORKDIR /usr/src/iwiki-backend
