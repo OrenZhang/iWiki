@@ -28,7 +28,7 @@ class NoticeCommonView(GenericViewSet):
             "FROM `notice_notice` nn "
             "JOIN `notice_read` nr ON nr.notice_id = nn.id "
             "WHERE nr.uid = %s "
-            "ORDER BY nn.create_at DESC "
+            "ORDER BY nr.is_read, nn.create_at DESC "
         )
         notices = Notice.objects.raw(sql, [request.user.uid])
         page = NumPagination()
