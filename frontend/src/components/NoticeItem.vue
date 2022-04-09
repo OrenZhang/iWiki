@@ -1,7 +1,7 @@
 <template>
     <el-card class="notice-item-container">
         <template #header>
-            <div class="card-header">
+            <div class="card-header" :class="data.is_read ? 'already-read' : ''">
                 <div class="info">
                     <div style="font-weight: bold; padding: 12px 0">
                         {{ data.title }}
@@ -18,7 +18,7 @@
             </div>
         </template>
         <div class="content" :class="data.is_read ? 'already-read' : ''" v-html="data.content" />
-        <div v-if="data.button_text && !data.is_read" class="deal-button">
+        <div v-if="data.button_text" class="deal-button" :class="data.is_read ? 'already-read' : ''">
             <el-button type="text" @click="dealNotice(data.log_id, data.url)">
                 {{ data.button_text }}
             </el-button>
@@ -73,6 +73,7 @@
         color: var(--el-text-color-secondary);
         margin-top: -12px;
         padding: 0 0 12px 0;
+        font-size: 14px;
     }
 
     .notice-item-container .card-header {
@@ -92,7 +93,18 @@
         min-height: unset;
     }
 
-    :deep(.already-read) a {
-        color: unset!important;
+    :deep(.already-read){
+        color: var(--el-text-color-secondary);
+        /*text-decoration:line-through;*/
+    }
+
+    :deep(.already-read) a,
+    :deep(.already-read) .el-button--text {
+        color: var(--el-color-primary-light-4) !important;
+        /*text-decoration:line-through;*/
+    }
+
+    .content {
+        font-size: 14px;
     }
 </style>
