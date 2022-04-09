@@ -3,12 +3,8 @@ name: Backend Code Check
 on:
     push:
         branches: [ master, develop ]
-        paths:
-            -   backend/*
     pull_request:
         branches: [ master, develop ]
-        paths:
-            -   backend/*
 
 jobs:
     build:
