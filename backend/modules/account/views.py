@@ -1,5 +1,3 @@
-import datetime
-
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth import get_user_model
@@ -21,7 +19,7 @@ from modules.account.serializers import (
 )
 from modules.doc.models import Comment, Doc
 from modules.notice.notices import RegistryNotice
-from modules.repo.models import Repo, RepoUser
+from modules.repo.models import RepoUser
 from utils.authenticators import SessionAuthenticate
 from utils.exceptions import (
     LoginFailed,
@@ -59,10 +57,6 @@ class RegisterView(APIView):
         except IntegrityError:
             raise UsernameExist()
         auth.login(request, user)
-        repo = Repo.objects.get(name=settings.DEFAULT_REPO_NAME)
-        RepoUser.objects.create(
-            repo_id=repo.id, uid=user.uid, join_at=datetime.datetime.now()
-        )
         serializer = UserInfoSerializer(request.user)
         response = Response(serializer.data)
         response.set_cookie(
