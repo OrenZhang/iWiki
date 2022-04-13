@@ -15,8 +15,17 @@
                 </div>
             </div>
         </div>
+        <div class="repo-type-box">
+            <el-button :type="!isMember ? 'primary' : ''" @click="handleRepoTypeChange(false)">
+                {{ $t('allRepos') }}
+            </el-button>
+            <el-button :type="isMember ? 'primary' : ''" @click="handleRepoTypeChange(true)">
+                {{ $t('myJoinedRepos') }}
+            </el-button>
+        </div>
         <div class="card-container">
-            <RepoCards :repos="repos" @loadMore="loadMore" />
+            <el-skeleton :rows="5" animated v-if="loading" />
+            <RepoCards :repos="repos" @loadMore="loadMore" v-else />
         </div>
         <div class="load-more" v-show="hasMore">
             <el-link :underline="false" v-show="!loading" @click="loadMore">
@@ -68,7 +77,7 @@
     import RepoCards from '../components/RepoCards.vue'
     import message from '../utils/message'
     import { useI18n } from 'vue-i18n'
-    import { createRepoAPI, loadRepoWithUserAPI } from '../api/modules/repo'
+    import { createRepoAPI, loadRepoAPI, loadRepoWithUserAPI } from '../api/modules/repo'
     import { setTitle } from '../utils/controller'
     
     const { t } = useI18n()
@@ -82,10 +91,17 @@
 
     const loading = ref(true)
 
+    const isMember = ref(false)
     const repos = ref([])
     const loadRepo = (refresh) => {
         loading.value = true
-        loadRepoWithUserAPI(paginator.value.page, searchKey.value).then(res => {
+        let loadFunc
+        if (isMember.value) {
+            loadFunc = loadRepoAPI(paginator.value.page, searchKey.value)
+        } else {
+            loadFunc = loadRepoWithUserAPI(paginator.value.page, searchKey.value)
+        }
+        loadFunc.then(res => {
             if (refresh) {
                 repos.value = res.data.results
             } else {
@@ -93,11 +109,18 @@
             }
             paginator.value.count = res.data.count
         }).finally(() => {
-            loading.value = false
+            setTimeout(() => {
+                loading.value = false
+            }, 600)
         })
     }
     onMounted(loadRepo)
     const doSearch = () => {
+        paginator.value.page = 1
+        loadRepo(true)
+    }
+    const handleRepoTypeChange = (typeString) => {
+        isMember.value = typeString
         paginator.value.page = 1
         loadRepo(true)
     }
@@ -190,11 +213,16 @@
         margin-right: 10px;
     }
 
+    .repo-type-box,
     .card-container {
         box-sizing: border-box;
         padding: 40px;
         max-width: 1440px;
         margin: 0 auto;
+    }
+
+    .repo-type-box {
+        padding-bottom: 0;
     }
 
     .load-more {
