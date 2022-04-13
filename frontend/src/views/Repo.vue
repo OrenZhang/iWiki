@@ -16,16 +16,15 @@
             </div>
         </div>
         <div class="repo-type-box">
-            <el-button :type="!isMember ? 'primary' : ''" @click="handleRepoTypeChange(false)">
+            <el-button size="medium" :type="!isMember ? 'primary' : ''" @click="handleRepoTypeChange(false)">
                 {{ $t('allRepos') }}
             </el-button>
-            <el-button :type="isMember ? 'primary' : ''" @click="handleRepoTypeChange(true)">
+            <el-button size="medium" :type="isMember ? 'primary' : ''" @click="handleRepoTypeChange(true)">
                 {{ $t('myJoinedRepos') }}
             </el-button>
         </div>
         <div class="card-container">
-            <el-skeleton :rows="5" animated v-if="loading" />
-            <RepoCards :repos="repos" @loadMore="loadMore" v-else />
+            <RepoCards :repos="repos" @loadMore="loadMore" />
         </div>
         <div class="load-more" v-show="hasMore">
             <el-link :underline="false" v-show="!loading" @click="loadMore">
