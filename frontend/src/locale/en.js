@@ -187,6 +187,8 @@ const en = {
     readNotice: 'Read',
     readAllNotice: 'ReadAll',
     noMoreNotice: 'Empty Notice',
+    allRepos: 'All Repos',
+    myJoinedRepos: 'My Repos',
 }
 
 export default en

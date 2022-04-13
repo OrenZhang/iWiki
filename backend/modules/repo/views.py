@@ -29,7 +29,6 @@ from modules.repo.models import Repo, RepoUser
 from modules.repo.permissions import RepoAdminPermission
 from modules.repo.serializers import (
     RepoApplyDealSerializer,
-    RepoCommonSerializer,
     RepoListSerializer,
     RepoSerializer,
     RepoUserSerializer,
@@ -327,14 +326,19 @@ class RepoCommonView(ListModelMixin, RetrieveModelMixin, GenericViewSet):
 
     def list(self, request, *args, **kwargs):
         """获取自己的库"""
-        repo_ids = RepoUser.objects.filter(
-            Q(uid=request.user.uid) & ~Q(u_type=UserTypeChoices.VISITOR)
-        ).values_list("repo_id", flat=True)
-        search_key = request.GET.get("searchKey", "")
-        self.queryset = self.queryset.filter(
-            id__in=repo_ids, name__icontains=search_key
+        search_key = request.GET.get("searchKey")
+        search_key = f"%%{search_key}%%" if search_key else "%%"
+        sql = (
+            "SELECT rr.*, au.username creator_name, ru.u_type member_type "
+            "FROM `repo_repo` rr "
+            "LEFT JOIN `auth_user` au ON au.uid = rr.creator "
+            "JOIN `repo_user` ru ON ru.repo_id = rr.id AND ru.uid = %s "
+            "WHERE NOT rr.is_deleted "
+            "AND rr.name like %s "
+            "ORDER BY rr.id;"
         )
-        self.serializer_class = RepoCommonSerializer
+        self.queryset = Repo.objects.raw(sql, [request.user.uid, search_key])
+        self.serializer_class = RepoListSerializer
         if request.GET.get("page", None) is not None:
             self.pagination_class = NumPagination
         return super().list(request, *args, **kwargs)

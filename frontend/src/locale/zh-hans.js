@@ -187,6 +187,8 @@ const zh = {
     readNotice: '已读',
     readAllNotice: '全部已读',
     noMoreNotice: '暂无通知',
+    allRepos: '全部库',
+    myJoinedRepos: '我加入的',
 }
 
 export default zh
