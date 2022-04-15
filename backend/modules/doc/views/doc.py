@@ -16,7 +16,14 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
-from constents import DocAvailableChoices, RepoTypeChoices, UserTypeChoices
+from constents import (
+    DocAvailableChoices,
+    EDIT_STATUS_CACHE_KEY,
+    RECENT_CHART_CACHE_KEY,
+    RECENT_DOCS_CACHE_KEY,
+    RepoTypeChoices,
+    UserTypeChoices,
+)
 from modules.account.serializers import UserInfoSerializer
 from modules.doc.models import Comment, Doc, DocCollaborator, DocVersion
 from modules.doc.permissions import (
@@ -191,7 +198,7 @@ class DocManageView(ModelViewSet):
     def edit_status(self, request, *args, **kwargs):
         """为文章添加编辑中状态"""
         instance = self.get_object()
-        cache_key = f"{self.__class__.__name__}:{self.action}:{instance.id}"
+        cache_key = EDIT_STATUS_CACHE_KEY.format(id=instance.id)
         uid = cache.get(cache_key)
         if uid is None or uid == request.user.uid:
             cache.set(cache_key, request.user.uid, 60)
@@ -356,8 +363,7 @@ class DocPublicView(GenericViewSet):
     @action(detail=False, methods=["GET"])
     def recent(self, request, *args, **kwargs):
         """热门文章"""
-        cache_key = f"{self.__class__.__name__}:{self.action}"
-        cache_data = cache.get(cache_key)
+        cache_data = cache.get(RECENT_DOCS_CACHE_KEY)
         if cache_data is not None:
             return Response(cache_data)
         # 公开库的近期文章
@@ -376,7 +382,7 @@ class DocPublicView(GenericViewSet):
         ).format(RepoTypeChoices.PUBLIC)
         queryset = self.queryset.raw(sql)
         serializer = DocListSerializer(queryset, many=True)
-        cache.set(cache_key, serializer.data, 1800)
+        cache.set(RECENT_DOCS_CACHE_KEY, serializer.data, 1800)
         return Response(serializer.data)
 
     @action(detail=False, methods=["GET"])
@@ -407,8 +413,7 @@ class DocPublicView(GenericViewSet):
     @action(detail=False, methods=["GET"])
     def recent_chart(self, request, *args, **kwargs):
         """文章发布图表数据"""
-        cache_key = f"{self.__class__.__name__}:{self.action}"
-        cache_data = cache.get(cache_key)
+        cache_data = cache.get(RECENT_CHART_CACHE_KEY)
         if cache_data is not None:
             return Response(cache_data)
         today = datetime.datetime.today()
@@ -422,7 +427,7 @@ class DocPublicView(GenericViewSet):
         docs_count = Doc.objects.raw(sql)
         serializer = DocPublishChartSerializer(docs_count, many=True)
         data = {item["date"]: item["count"] for item in serializer.data}
-        cache.set(cache_key, data, 1800)
+        cache.set(RECENT_CHART_CACHE_KEY, data, 1800)
         return Response(data)
 
 

@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 
-from constents import UserTypeChoices
+from constents import ACTIVE_USER_CACHE_KEY, STATISTIC_INFO_CACHE_KEY, UserTypeChoices
 from modules.account.serializers import (
     LoginFormSerializer,
     RePasswordSerializer,
@@ -159,7 +159,7 @@ class UserInfoView(GenericViewSet):
     def get_statistic_info(self, uid: str, active_index: float):
         """获取统计信息"""
         # 获取缓存
-        cache_key = f"UserInfoView:user_info:{uid}"
+        cache_key = STATISTIC_INFO_CACHE_KEY.format(uid=uid)
         cache_data = cache.get(cache_key)
         if cache_data is not None:
             return cache_data
@@ -213,15 +213,14 @@ class UserInfoView(GenericViewSet):
     @action(detail=False, methods=["GET"])
     def active_user(self, request, *args, **kwargs):
         """用户活跃排行"""
-        cache_key = f"{self.__class__.__name__}:{self.action}"
-        cache_data = cache.get(cache_key)
+        cache_data = cache.get(ACTIVE_USER_CACHE_KEY)
         if cache_data is not None:
             return Response(cache_data)
         users = USER_MODEL.objects.filter(active_index__gt=0).order_by("-active_index")[
             :10
         ]
         serializer = UserInfoSerializer(users, many=True)
-        cache.set(cache_key, serializer.data, 86400)
+        cache.set(ACTIVE_USER_CACHE_KEY, serializer.data, 86400)
         return Response(serializer.data)
 
     @action(detail=False, methods=["GET"])

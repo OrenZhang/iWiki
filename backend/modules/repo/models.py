@@ -1,8 +1,10 @@
 from django.conf import settings
+from django.core.cache import cache
 from django.db import models, transaction
 from django.utils.translation import gettext_lazy as _
 
 from constents import (
+    HOT_REPO_CACHE_KEY,
     RepoTypeChoices,
     SHORT_CHAR_LENGTH,
     SMALL_SHORT_CHAR_LENGTH,
@@ -37,6 +39,7 @@ class Repo(models.Model):
     @transaction.atomic
     def delete(self, using=None, keep_parents=False):
         """删除"""
+        cache.delete(HOT_REPO_CACHE_KEY)
         Doc.objects.filter(repo_id=self.id).update(is_deleted=True)
         RepoUser.objects.filter(repo_id=self.id).delete()
         new_name = "[Deleted]{}".format(simple_uniq_id(SHORT_CHAR_LENGTH))
