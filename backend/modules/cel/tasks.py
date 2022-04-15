@@ -15,7 +15,7 @@ from django.db import connection
 from django_global_log.utils import SaveLogHandler
 from incv_client import INCVUnionClient
 
-from constents import DocAvailableChoices, UserTypeChoices
+from constents import ACTIVE_USER_CACHE_KEY, DocAvailableChoices, UserTypeChoices
 from modules.account.models import User
 from modules.cel import app
 from modules.cel.serializers import StatisticSerializer
@@ -60,7 +60,7 @@ def auto_update_active_index():
         with open(sql_path) as sql_file:
             cursor.execute(sql_file.read())
 
-    cache.delete("UserInfoView:active_user")
+    cache.delete(ACTIVE_USER_CACHE_KEY)
 
     statistics = User.objects.values("uid", "username", "active_index")
     serializer = StatisticSerializer(statistics, many=True)
