@@ -19,3 +19,7 @@ class UserTypeChoices(models.TextChoices):
             if key == u_type:
                 return val
         return u_type
+
+
+HOT_REPO_CACHE_KEY = "RepoPublicView:hot_repo"
+EXPORT_DOCS_CACHE_KEY = "ExportAllDocs:{id}:{uid}"

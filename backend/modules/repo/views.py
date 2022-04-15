@@ -12,7 +12,13 @@ from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
-from constents import DocAvailableChoices, RepoTypeChoices, UserTypeChoices
+from constents import (
+    DocAvailableChoices,
+    EXPORT_DOCS_CACHE_KEY,
+    HOT_REPO_CACHE_KEY,
+    RepoTypeChoices,
+    UserTypeChoices,
+)
 from modules.account.serializers import UserInfoSerializer
 from modules.cel.tasks import export_all_docs, send_apply_result
 from modules.doc.models import Doc, PinDoc
@@ -124,7 +130,7 @@ class RepoView(ModelViewSet):
         """导出文章"""
         instance = self.get_object()
         # 检验是否有执行中任务
-        cache_key = "ExportAllDocs:{}:{}".format(instance.id, request.user.uid)
+        cache_key = EXPORT_DOCS_CACHE_KEY.format(id=instance.id, uid=request.user.uid)
         running = cache.get(cache_key)
         if running:
             raise ThrottledError()
@@ -421,8 +427,7 @@ class RepoPublicView(GenericViewSet):
     @action(detail=False, methods=["GET"])
     def hot_repo(self, request, *args, **kwargs):
         """热门库"""
-        cache_key = f"{self.__class__.__name__}:{self.action}"
-        cache_data = cache.get(cache_key)
+        cache_data = cache.get(HOT_REPO_CACHE_KEY)
         if cache_data is not None:
             return Response(cache_data)
         sql = (
@@ -435,10 +440,10 @@ class RepoPublicView(GenericViewSet):
             "WHERE ldv.visit_at >= DATE_ADD(NOW(), INTERVAL -180 DAY) "
             "GROUP BY ldv.doc_id "
             ") dp ON dp.doc_id = dd.id "
-            "WHERE rr.r_type = '{}' "
+            "WHERE rr.r_type = '{}' AND not rr.is_deleted "
             "GROUP BY rr.id ORDER BY pv DESC LIMIT 10;"
         ).format(RepoTypeChoices.PUBLIC)
         repos = Repo.objects.raw(sql)
         serializer = RepoSerializer(repos, many=True)
-        cache.set(cache_key, serializer.data, 1800)
+        cache.set(HOT_REPO_CACHE_KEY, serializer.data, 1800)
         return Response(serializer.data)
