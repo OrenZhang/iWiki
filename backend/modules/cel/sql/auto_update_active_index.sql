@@ -31,4 +31,3 @@ UPDATE
     ) s
 SET au.active_index = IF(s.new_index >= s.active_index, s.new_index, IF(s.active_index > 1, s.active_index - 1, 0))
 WHERE s.uid = au.uid;
-
