@@ -2,7 +2,7 @@ UPDATE
     `auth_user` au,
     (
         SELECT
-            au.uid, au.active_index,
+            au.uid,
             LOG(IFNULL(dc.comment_count, 0) + 1) + LOG(IFNULL(dd.doc_count, 0) + 1) * 10 + LOG(IFNULL(dgl.visit_count, 0) + 1) new_index
         FROM `auth_user` au
         LEFT JOIN (
@@ -29,5 +29,5 @@ UPDATE
             GROUP BY dgl.operator
         ) dgl ON dgl.uid = au.uid
     ) s
-SET au.active_index = IF(s.new_index >= s.active_index, s.new_index, IF(s.active_index > 1, s.active_index - 1, 0))
+SET au.active_index = s.new_index
 WHERE s.uid = au.uid;
