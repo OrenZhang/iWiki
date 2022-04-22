@@ -105,7 +105,7 @@
     // 界面适配
     const editType = computed(() => window.innerWidth >= 1100 )
     const width = ref(window.innerWidth)
-    const leftTool = 'h bold italic strikethrough quote | ul ol table hr tip emoji todo-list | link image code'
+    const leftTool = 'h bold italic strikethrough quote align | ul ol table hr tip emoji todo-list | link image code'
     const rightTool = 'fullscreen preview toc save'
     const rightToolWithoutSave = 'fullscreen preview toc'
     onMounted(() => {
@@ -153,7 +153,61 @@
                     },
                 },
             ],
-        }
+        },
+        align: {
+            title: t('align'),
+            icon: 'fa-solid fa-align-left',
+            menus: [
+                {
+                    name: 'left',
+                    text: t('alignLeft'),
+                    action(editor) {
+                        editor.insert(function (selected) {
+                            const prefix = ':::align-left\n'
+                            const suffix = '\n:::'
+                            const placeholder = 'you text here'
+                            const content = selected || placeholder
+                            return {
+                                text: `${prefix}${content}${suffix}`,
+                                selected: content,
+                            }
+                        })
+                    }
+                },
+                {
+                    name: 'center',
+                    text: t('alignCenter'),
+                    action(editor) {
+                        editor.insert(function (selected) {
+                            const prefix = ':::align-center\n'
+                            const suffix = '\n:::'
+                            const placeholder = 'you text here'
+                            const content = selected || placeholder
+                            return {
+                                text: `${prefix}${content}${suffix}`,
+                                selected: content,
+                            }
+                        })
+                    }
+                },
+                {
+                    name: 'right',
+                    text: t('alignRight'),
+                    action(editor) {
+                        editor.insert(function (selected) {
+                            const prefix = ':::align-right\n'
+                            const suffix = '\n:::'
+                            const placeholder = 'you text here'
+                            const content = selected || placeholder
+                            return {
+                                text: `${prefix}${content}${suffix}`,
+                                selected: content,
+                            }
+                        })
+                    }
+                },
+            ]
+        },
     })
 
     // 全局

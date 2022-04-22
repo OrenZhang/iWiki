@@ -191,6 +191,10 @@ const en = {
     myJoinedRepos: 'My Repos',
     commentManage: 'Comment',
     deleteCommentMsg: 'Are you confirm of deleting this comment ?',
+    align: 'Align',
+    alignLeft: 'Left',
+    alignCenter: 'Center',
+    alignRight: 'Right',
 }
 
 export default en

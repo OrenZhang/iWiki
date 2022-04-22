@@ -191,6 +191,10 @@ const zh = {
     myJoinedRepos: '我加入的',
     commentManage: '评论管理',
     deleteCommentMsg: '确认删除此条评论吗？',
+    align: '对齐',
+    alignLeft: '左对齐',
+    alignCenter: '居中对齐',
+    alignRight: '右对齐',
 }
 
 export default zh

@@ -58,6 +58,13 @@ NAV_LINK = {
     ],
     "c_bool": True,
 }
+DOC_INIT = {
+    "c_key": "doc_init",
+    "c_type": ConfTypeChoices.BOOL,
+    "c_val": {},
+    "c_bool": False,
+    "sensitive": True,
+}
 AUTO_REGISTRY_KEYS = (
     SIGN_UP_KEY,
     GLOBAL_NOTICE,
@@ -65,4 +72,5 @@ AUTO_REGISTRY_KEYS = (
     SHOW_DOC_PUBLISH_CHART,
     FOOTER_INFO,
     NAV_LINK,
+    DOC_INIT,
 )

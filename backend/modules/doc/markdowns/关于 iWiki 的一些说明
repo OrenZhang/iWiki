@@ -1,0 +1,7 @@
+:::align-center
+![bg-2.png](https://wiki.incv.net/favicon.png){{{width="auto" height="100px"}}}
+:::
+
+### 项目简述
+
+iWiki 是一个知识库，在线的文章编辑器支持大部分的 `markdown` 语法。在这里，使用了**库**的概念来划分不同的文章或者不同用户的专属区域，希望能够打造一个以共享为基准的知识平台。
