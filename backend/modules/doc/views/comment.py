@@ -1,12 +1,16 @@
 from django.db import transaction
 from rest_framework import mixins
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from modules.doc.models import Comment, CommentVersion
 from modules.doc.permissions import CommentPermission
 from modules.doc.serializers import CommentCommonSerializer
-from modules.doc.serializers.comment import CommentListSerializer
+from modules.doc.serializers.comment import (
+    CommentListDocSerializer,
+    CommentListSerializer,
+)
 from modules.notice.notices import CommentNotice
 from utils.authenticators import SessionAuthenticate
 
@@ -42,9 +46,7 @@ class CommentCommonView(
 
     queryset = Comment.objects.filter(is_deleted=False)
     serializer_class = CommentCommonSerializer
-    permission_classes = [
-        CommentPermission,
-    ]
+    permission_classes = [CommentPermission]
 
     def perform_create(self, serializer):
         return serializer.save()
@@ -75,3 +77,24 @@ class CommentCommonView(
         instance.save()
         Comment.objects.filter(reply_to=instance.id).update(is_deleted=True)
         return Response()
+
+    @action(methods=["GET"], detail=False)
+    def all(self, request, *args, **kwargs):
+        sql = (
+            "SELECT dc.*, dd.title "
+            "FROM `doc_comment` dc "
+            "JOIN `doc_doc` dd ON dd.id=dc.doc_id {} "
+            "WHERE dc.creator = %s "
+            "AND NOT dc.is_deleted "
+        )
+        search_key = request.GET.get("search_key")
+        if search_key:
+            sql = sql.format("AND dd.title like %s")
+            search_key = f"%{search_key}%"
+            queryset = Comment.objects.raw(sql, (search_key, request.user.uid))
+        else:
+            sql = sql.format("")
+            queryset = Comment.objects.raw(sql, (request.user.uid,))
+        page = self.paginate_queryset(queryset)
+        serializer = CommentListDocSerializer(page, many=True)
+        return self.get_paginated_response(serializer.data)

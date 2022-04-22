@@ -32,13 +32,16 @@
     import { useStore } from 'vuex'
     import HUserInfoBox from '../components/HUserInfoBox.vue'
     import DocManage from '../components/DocManage.vue'
+    import CommentManage from '../components/CommentManage.vue'
     import RepoManage from '../components/RepoManage.vue'
     import { useI18n } from 'vue-i18n'
     import { loginCheckAPI } from '../api/modules/user'
     import { setTitle } from '../utils/controller'
+    import { useRoute } from 'vue-router'
 
     const { t } = useI18n()
-    
+
+    const route = useRoute()
     const store = useStore()
     const userInfo = computed(() => store.state.user)
 
@@ -59,6 +62,8 @@
                 return DocManage
             case 'repo':
                 return RepoManage
+            case 'comment':
+                return CommentManage
             default:
                 return DocManage
         }
@@ -71,11 +76,24 @@
             icon: 'fa-solid fa-copy',
         },
         {
+            index: 'comment',
+            name: t('commentManage'),
+            icon: 'fa-solid fa-message'
+        },
+        {
             index: 'repo',
             name: t('repoManage'),
             icon: 'fa-solid fa-cube'
-        }
+        },
     ])
+
+    onMounted(() => {
+        if (route.params.hasOwnProperty('tab')) {
+            if (route.params.tab) {
+                activeMenu.value = route.params.tab
+            }
+        }
+    })
 </script>
 
 <style scoped>

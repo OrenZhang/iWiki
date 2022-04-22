@@ -14,6 +14,12 @@ class CommentCommonSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class CommentListDocSerializer(CommentCommonSerializer):
+    """评论带文章信息"""
+
+    title = serializers.CharField()
+
+
 class CommentListSerializer(serializers.ModelSerializer):
     """评论列表"""
 

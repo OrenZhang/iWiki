@@ -1,8 +1,8 @@
 <template>
-    <div class="repo-manage">
+    <div class="comment-manage">
         <div class="tool-bar">
             <div style="display: flex">
-                <el-input size="medium" class="search-input" clearable :placeholder="$t('repoName')" v-model="searchKey" />
+                <el-input size="medium" class="search-input" clearable :placeholder="$t('docTitle')" v-model="searchKey" />
                 <el-button size="medium" type="primary" @click="doSearch">
                     {{ $t('search') }}
                 </el-button>
@@ -17,28 +17,26 @@
             />
         </div>
         <el-skeleton :rows="6" v-show="loading" animated style="margin-top: 20px" />
-        <el-table size="medium" :data="repos" v-show="!loading" :show-header="false">
-            <el-table-column :label="$t('repoName')" prop="name" />
-            <el-table-column :label="$t('repoType')" width="120px">
+        <el-table size="medium" :data="comments" v-show="!loading" :show-header="false">
+            <el-table-column :label="$t('comment')">
                 <template #default="scope">
-                    <el-tag size="small" v-if="scope.row.r_type === 'public'">
-                        {{ $t('publicRepo') }}
+                    <el-tag size="small" type="plain">
+                        {{ scope.row.title }}
                     </el-tag>
-                    <el-tag size="small" v-else type="warning">
-                        {{ $t('privateRepo') }}
-                    </el-tag>
+                    <br>
+                    {{ getContent(scope.row) }}
                 </template>
             </el-table-column>
+            <el-table-column :label="$t('updateAt')" prop="update_at" width="200px" />
             <el-table-column :label="$t('operation')" width="120px">
                 <template #default="scope">
                     <el-button
-                        type="text" @click="goTo(globalContext.siteUrl + 'repo/' + scope.row.id)">
+                        type="text" @click="goTo(globalContext.siteUrl + 'doc/' + scope.row.doc_id)">
                         {{ $t('open') }}
                     </el-button>
                     <el-button
-                        type="text" @click="showExitConfirm(scope.row)"
-                        :disabled="scope.row.id === 1 || scope.row.creator === user.uid">
-                        {{ $t('exit') }}
+                        type="text" @click="deleteConfirm(scope.row)">
+                        {{ $t('delete') }}
                     </el-button>
                 </template>
             </el-table-column>
@@ -53,14 +51,14 @@
     import { useStore } from 'vuex'
     import { useI18n } from 'vue-i18n'
     import globalContext from '../context'
-    import { exitRepoAPI, loadRepoAPI } from '../api/modules/repo'
-    
+    import { deleteCommentAPI, loadUserCommentAPI } from '../api/modules/comment'
+
     const { t } = useI18n()
     
     const store = useStore()
     const user = computed(() => store.state.user)
     
-    const loading = ref(true)
+    const loading = ref(false)
     const setLoading = (status) => {
         if (status) {
             loading.value = true
@@ -71,47 +69,50 @@
         }
     }
     
-    const repos = ref([])
+    const comments = ref([])
     const searchKey = ref('')
     const paginator = ref({
         page: 1,
         count: 0
     })
-    const loadRepos = () => {
-        setLoading(true)
-        loadRepoAPI(paginator.value.page, searchKey.value).then(res => {
-            repos.value = res.data.results
-            paginator.value.count = res.data.count
-        }, err => {
-            message(err.data.msg, 'error')
-        }).finally(() => {
-            setLoading(false)
-        })
+    const getContent = (row) => {
+        if (row.content.length > 50) {
+            return row.content.slice(0, 50) + '……'
+        }
+        return row.content
     }
-    onMounted(loadRepos)
-
+    const loadComments = () => {
+        loadUserCommentAPI(paginator.value.page, 10, searchKey.value).then(
+            res => {
+                comments.value = res.data.results
+                paginator.value.count = res.data.count
+            },
+            err => message(err.data.msg, 'error')
+        )
+    }
     const handlePageChange = (page) => {
         paginator.value.page = page
-        loadRepos()
+        loadComments()
     }
     const doSearch = () => {
         paginator.value.page = 1
-        loadRepos()
+        loadComments()
     }
     const resetSearch = () => {
         searchKey.value = ''
         paginator.value.page = 1
-        loadRepos()
+        loadComments()
     }
+    onMounted(loadComments)
 
-    const showExitConfirm = (row) => {
-        const content = t('exitConfirmMsg', { name: row.name })
-        ElMessageBox.alert(content, t('exitConfirm'), {
-            confirmButtonText: t('exitConfirmed'),
+    const deleteConfirm = (row) => {
+        const content = t('deleteCommentMsg', { name: row.name })
+        ElMessageBox.alert(content, t('deleteConfirm'), {
+            confirmButtonText: t('deleteConfirmed'),
             callback: (action) => {
                 if (action === 'confirm') {
-                    exitRepoAPI(row.id).then(() => {
-                        loadRepos()
+                    deleteCommentAPI(row.id).then(() => {
+                        loadComments()
                     }, err => {
                         message(err.data.msg, 'error')
                     })
