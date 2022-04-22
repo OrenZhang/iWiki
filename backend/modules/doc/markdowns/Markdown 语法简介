@@ -1,0 +1,212 @@
+### 标题
+
+```
+# 一级标题
+## 二级标题
+### 三级标题
+#### 四级标题
+##### 五级标题
+###### 六级标题
+```
+
+### **粗体**
+
+```
+**粗体文本**
+```
+
+### *斜体*
+
+```
+*斜体文本*
+```
+
+### 分割线
+
+```
+***
+---
+```
+
+### ^上^角~下~标
+
+```
+上角标 x^2^
+下角标 H~2~0
+```
+
+### ~~中划线~~
+
+```
+~~中划线~~
+```
+
+### 段落引用
+
+```
+> 一级
+>> 二级
+>>> 三级
+```
+
+### 列表
+
+```
+有序列表
+1. xxx
+2. xxx
+3. xxx
+```
+
+```
+无序列表
+- xxx
+- xxx
+- xxx
+```
+
+### 任务列表
+
+```
+- [x] 已完成任务
+- [ ] 未完成任务
+```
+
+### 链接
+
+```
+[链接](www.baidu.com)
+```
+
+### 图片
+
+```
+![图片描述](https://wiki.incv.net/favicon.ico)
+![图片描述](https://wiki.incv.net/favicon.ico){{{width=30 height=30}}}
+```
+
+### 代码段落
+
+支持部分语言代码高亮
+`bash` `c` `cpp` `css` `csv` `django` `docker` `go` `html` `ini` `java` `javascript` `js` `json` `latex` `lua` `markdown` `matlab` `php` `python` `sql` `vim` `yaml`
+
+![image.png](https://wiki.incv.net/upload/202201/02/HQVBwpNGtr/image.png){{{width="256" height="auto"}}}
+
+```cpp
+int main()
+{
+    printf("hello world!");
+}
+```
+
+### 代码行高亮
+
+![image.png](https://wiki.incv.net/upload/202201/02/mXseo3EgWq/image.png){{{width="270" height="auto"}}}
+
+```cpp {1,3,5-9}
+int main()
+{
+    printf("hello world!");
+}
+
+int main()
+{
+    printf("hello world!");
+}
+```
+
+### 行内代码 `code`
+
+```
+`code`
+```
+
+### 表格(table)
+
+```
+| 标题1 | 标题2 | 标题3 |
+| :--  | :-: | --: |
+| 左对齐 | 居中 | 右对齐 |
+| ---------------------- | ------------- | ----------------- |
+```
+
+| 标题1 | 标题2 | 标题3 |
+| :--  | :-: | --: |
+| 左对齐 | 居中 | 右对齐 |
+| ---------------------- | ------------- | ----------------- |
+
+### 表情(emoji)
+
+```
+:laughing:
+:blush:
+:smiley:
+:)
+...
+```
+
+:laughing::blush::smiley::)
+
+具体参考顶部工具栏的 emoji
+
+### KaTeX 公式
+
+$\KaTeX$公式
+
+我们可以渲染公式例如：$x_i + y_i = z_i$和$\sum_{i=1}^n a_i=0$
+
+我们也可以单行渲染
+
+$$\sum_{i=1}^n a_i=0$$
+
+具体可参照[katex文档](http://www.intmath.com/cg5/katex-mathjax-comparison.php)和[katex支持的函数](https://github.com/Khan/KaTeX/wiki/Function-Support-in-KaTeX)以及[latex文档](https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference)
+
+### Mermaid 图表
+
+```mermaid
+graph LR
+classDef Style fill:none,stroke:#53a8ff,stroke-width:2px
+A --- B
+B ---> C
+B ---> D
+C ---> E
+D ---> E
+E --- F
+class A,B,C,D,E,F Style
+```
+
+具体参考[mermaid文档](https://mermaid-js.github.io/mermaid/#/)
+
+### 提示信息
+
+支持 `tip` `warning` `danger` `details`，“提示信息标题”是可选的
+
+```
+:::tip 提示信息标题
+提示信息
+:::
+```
+
+:::tip 提示信息标题
+提示信息
+:::
+
+### 布局
+
+::: align-left
+`::: align-left`
+`居左`
+`:::`
+:::
+
+::: align-center
+`::: align-center`
+`居中`
+`:::`
+:::
+
+::: align-right
+`::: align-right`
+`居右`
+`:::`
+:::

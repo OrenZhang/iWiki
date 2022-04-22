@@ -9,7 +9,7 @@
                 </el-button>
             </div>
             <v-md-editor
-                left-toolbar="undo redo | h bold italic strikethrough quote | ul ol table hr tip emoji todo-list | link image code"
+                left-toolbar="undo redo | h bold italic strikethrough quote align | ul ol table hr tip emoji todo-list | link image code"
                 :toolbar="toolbar"
                 v-model="docData.content" :mode="editType ? 'editable' : 'edit'" right-toolbar="fullscreen preview toc sync-scroll" :placeholder="$t('content')"
                 :disabled-menus="[]" @image-click="imgClick" @save="checkSave" @upload-image="handleUploadImage" />
@@ -178,7 +178,61 @@
                     },
                 },
             ],
-        }
+        },
+        align: {
+            title: t('align'),
+            icon: 'fa-solid fa-align-left',
+            menus: [
+                {
+                    name: 'left',
+                    text: t('alignLeft'),
+                    action(editor) {
+                        editor.insert(function (selected) {
+                            const prefix = ':::align-left\n'
+                            const suffix = '\n:::'
+                            const placeholder = 'you text here'
+                            const content = selected || placeholder
+                            return {
+                                text: `${prefix}${content}${suffix}`,
+                                selected: content,
+                            }
+                        })
+                    }
+                },
+                {
+                    name: 'center',
+                    text: t('alignCenter'),
+                    action(editor) {
+                        editor.insert(function (selected) {
+                            const prefix = ':::align-center\n'
+                            const suffix = '\n:::'
+                            const placeholder = 'you text here'
+                            const content = selected || placeholder
+                            return {
+                                text: `${prefix}${content}${suffix}`,
+                                selected: content,
+                            }
+                        })
+                    }
+                },
+                {
+                    name: 'right',
+                    text: t('alignRight'),
+                    action(editor) {
+                        editor.insert(function (selected) {
+                            const prefix = ':::align-right\n'
+                            const suffix = '\n:::'
+                            const placeholder = 'you text here'
+                            const content = selected || placeholder
+                            return {
+                                text: `${prefix}${content}${suffix}`,
+                                selected: content,
+                            }
+                        })
+                    }
+                },
+            ]
+        },
     })
 
     // 加载状态

@@ -36,14 +36,13 @@
                             <i :class="item.icon" />
                         </el-link>
                         <el-link :underline="false" class="notice" @click="toggleNotice">
-                            <i class="fa-solid fa-bell" :class="hasNoReadNotice ? 'icon-red' : ''" />
+                            <i class="fa-regular fa-bell" :class="hasNoReadNotice ? 'icon-red' : ''" />
                         </el-link>
                         <el-link :underline="false" class="version" @click="showVersionTab">
                             <i class="fa-regular fa-question-circle" />
                         </el-link>
-                        <el-link :underline="false" type="primary" class="locale" @click="toggleLang">
+                        <el-link :underline="false" class="locale" @click="toggleLang">
                             <i class="fa-solid fa-globe" />
-                            <span>{{ curLocaleName }}</span>
                         </el-link>
                         <div class="user-login">
                             <el-link :underline="false" type="primary" v-show="!user.auth" @click="store.commit('setLogin', true)">
@@ -104,7 +103,6 @@
     // 国际化
     const { t } = useI18n()
     const userLocale = ref(localStorage.getItem('locale'))
-    const curLocaleName = computed(() => userLocale.value === 'en' ? '简体中文' : 'English')
     const locale = computed(() => userLocale.value === 'en' ? en : zhCn)
     const toggleLang = () => {
         if (userLocale.value === 'en') {

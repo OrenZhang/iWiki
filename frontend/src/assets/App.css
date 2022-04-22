@@ -402,3 +402,12 @@ svg g .section0,
 svg g .section2 {
     fill: var(--el-color-primary-light-4)!important;
 }
+
+.v-md-editor__toolbar-left .fa-align-left {
+    font-size: 14px;
+}
+
+.v-md-editor__toolbar-left  .v-md-editor__tooltip,
+.v-md-editor__toolbar-left  .v-md-editor__menu {
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif !important;
+}
