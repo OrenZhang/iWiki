@@ -83,9 +83,10 @@ class CommentCommonView(
         sql = (
             "SELECT dc.*, dd.title "
             "FROM `doc_comment` dc "
-            "JOIN `doc_doc` dd ON dd.id=dc.doc_id {} "
+            "JOIN `doc_doc` dd ON dd.id=dc.doc_id AND NOT dd.is_deleted {} "
             "WHERE dc.creator = %s "
             "AND NOT dc.is_deleted "
+            "ORDER BY dc.update_at DESC "
         )
         search_key = request.GET.get("search_key")
         if search_key:
