@@ -82,13 +82,16 @@
         return row.content
     }
     const loadComments = () => {
+        setLoading(true)
         loadUserCommentAPI(paginator.value.page, 10, searchKey.value).then(
             res => {
                 comments.value = res.data.results
                 paginator.value.count = res.data.count
             },
             err => message(err.data.msg, 'error')
-        )
+        ).finally(() => {
+            setLoading(false)
+        })
     }
     const handlePageChange = (page) => {
         paginator.value.page = page
