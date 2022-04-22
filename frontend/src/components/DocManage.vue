@@ -17,7 +17,7 @@
             />
         </div>
         <el-skeleton :rows="6" v-show="loading" animated style="margin-top: 20px" />
-        <el-table size="medium" :data="docs" v-show="!loading">
+        <el-table size="medium" :data="docs" v-show="!loading" :show-header="false">
             <el-table-column :label="$t('title')">
                 <template #default="scope">
                     <el-tag size="small" effect="plain">

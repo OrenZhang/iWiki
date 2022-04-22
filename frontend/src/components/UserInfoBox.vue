@@ -15,7 +15,7 @@
             <el-row :gutter="30">
                 <el-col :span="12" class="statistic-box">
                     <div>{{ $t('myDocs') }}</div>
-                    <div>
+                    <div class="clickable" @click="goToUserInfo('doc')">
                         <el-tag size="mini" effect="plain">
                             {{ userProperty.doc_count }}
                         </el-tag>
@@ -23,7 +23,7 @@
                 </el-col>
                 <el-col :span="12" class="statistic-box">
                     <div>{{ $t('myComments') }}</div>
-                    <div>
+                    <div class="clickable" @click="goToUserInfo('comment')">
                         <el-tag size="mini" effect="plain">
                             {{ userProperty.comment_count }}
                         </el-tag>
@@ -31,7 +31,7 @@
                 </el-col>
                 <el-col :span="12" class="statistic-box">
                     <div>{{ $t('myRepos') }}</div>
-                    <div>
+                    <div class="clickable" @click="goToUserInfo('repo')">
                         <el-tag size="mini" effect="plain">
                             {{ userProperty.repo_count }}
                         </el-tag>
@@ -39,7 +39,7 @@
                 </el-col>
                 <el-col :span="12" class="statistic-box">
                     <div>{{ $t('activeIndex') }}</div>
-                    <div>
+                    <div class="clickable" @click="goToUserInfo('')">
                         <el-tag size="mini" effect="plain">
                             {{ userProperty.active_index }}
                         </el-tag>
@@ -96,6 +96,10 @@
         }
         return data
     })
+
+    const goToUserInfo = (tab) => {
+        router.push({ name: 'Self', params: { 'tab': tab } })
+    }
 </script>
 
 <style scoped>

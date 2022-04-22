@@ -35,3 +35,11 @@ export const deleteCommentAPI = (id) => {
         ).then(res => resolve(res), err => reject(err))
     })
 }
+
+export const loadUserCommentAPI = (page, size, searchKey) => {
+    return new Promise((resolve, reject) => {
+        http.get(
+            '/doc/comment/all/?page=' + page + '&size=' + size + '&search_key=' + searchKey
+        ).then(res => resolve(res), err => reject(err))
+    })
+}

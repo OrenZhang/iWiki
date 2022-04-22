@@ -189,6 +189,8 @@ const zh = {
     noMoreNotice: '暂无通知',
     allRepos: '全部库',
     myJoinedRepos: '我加入的',
+    commentManage: '评论管理',
+    deleteCommentMsg: '确认删除此条评论吗？',
 }
 
 export default zh

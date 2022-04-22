@@ -189,6 +189,8 @@ const en = {
     noMoreNotice: 'Empty Notice',
     allRepos: 'All Repos',
     myJoinedRepos: 'My Repos',
+    commentManage: 'Comment',
+    deleteCommentMsg: 'Are you confirm of deleting this comment ?',
 }
 
 export default en

@@ -69,3 +69,12 @@
     border: none;
     border-radius: 0;
 }
+
+.clickable:hover {
+    cursor: pointer;
+}
+
+.clickable .el-tag:hover {
+    background: var(--el-color-primary-light-4);
+    color: white;
+}
