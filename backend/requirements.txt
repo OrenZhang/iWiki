@@ -1,5 +1,5 @@
 # Django
-django==4.0.2
+django==4.0.4
 mysqlclient==2.0.3
 djangorestframework==3.12.4
 django-cors-headers==3.10.1
