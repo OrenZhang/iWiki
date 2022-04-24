@@ -2,10 +2,10 @@ from django.db import models, transaction
 from django.utils.translation import gettext_lazy as _
 
 from constents import (
-    MEDIUM_CHAR_LENGTH,
-    SMALL_SHORT_CHAR_LENGTH,
     DocAvailableChoices,
+    MEDIUM_CHAR_LENGTH,
     SHORT_CHAR_LENGTH,
+    SMALL_SHORT_CHAR_LENGTH,
 )
 
 DB_PREFIX = "doc_"

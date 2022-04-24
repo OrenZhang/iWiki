@@ -10,7 +10,7 @@ USER_MODEL = get_user_model()
 
 @admin.register(DocVisitLog)
 class DocVisitLogAdmin(admin.ModelAdmin):
-    list_display = ["id", "visitor_name", "doc_title", "visit_at"]
+    list_display = ["id", "visitor_name", "ip", "doc_title", "visit_at"]
     ordering = ["-visit_at"]
 
     @admin.display(description=_("访问人"))
