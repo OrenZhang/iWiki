@@ -25,9 +25,10 @@ class UploadETagListFilter(admin.SimpleListFilter):
 
 @admin.register(UploadLog)
 class UploadLogAdmin(admin.ModelAdmin):
-    list_display = ["name", "path", "etag", "operator_name", "upload_at"]
+    list_display = ["id", "name", "path", "etag", "operator_name", "upload_at"]
     search_fields = ["name"]
     list_filter = [UploadETagListFilter]
+    ordering = ["-id"]
 
     @admin.display(description=_("上传结果"), boolean=True)
     def etag(self, obj):

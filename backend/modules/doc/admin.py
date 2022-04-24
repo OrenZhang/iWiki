@@ -3,12 +3,12 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
 from modules.doc.models import (
-    Doc,
-    DocVersion,
     Comment,
     CommentVersion,
-    PinDoc,
+    Doc,
     DocCollaborator,
+    DocVersion,
+    PinDoc,
 )
 from modules.repo.models import Repo
 
@@ -42,13 +42,23 @@ class DocAdmin(admin.ModelAdmin):
 
 
 @admin.register(DocVersion)
-class DocAdmin(DocAdmin):
-    pass
+class DocVersionAdmin(DocAdmin):
+    list_display = [
+        "version_id",
+        "id",
+        "title",
+        "repo_name",
+        "creator_name",
+        "update_at",
+        "update_by_name",
+        "is_publish",
+        "is_deleted",
+    ]
 
 
 @admin.register(DocCollaborator)
 class DocCollaboratorAdmin(admin.ModelAdmin):
-    list_display = ["doc_title", "username", "add_at"]
+    list_display = ["id", "doc_title", "username", "add_at"]
     ordering = ["id"]
 
     @admin.display(description=_("标题"))
@@ -77,12 +87,20 @@ class CommentAdmin(admin.ModelAdmin):
 
 @admin.register(CommentVersion)
 class CommentVersionAdmin(CommentAdmin):
-    pass
+    list_display = [
+        "version_id",
+        "id",
+        "doc_title",
+        "creator_name",
+        "update_at",
+        "is_deleted",
+    ]
 
 
 @admin.register(PinDoc)
 class PinDocAdmin(admin.ModelAdmin):
     list_display = [
+        "id",
         "doc_id",
         "doc_title",
         "create_at",

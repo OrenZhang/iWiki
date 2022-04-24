@@ -19,7 +19,7 @@ class RepoAdmin(admin.ModelAdmin):
 
 @admin.register(RepoUser)
 class RepoUserAdmin(admin.ModelAdmin):
-    list_display = ["repo_name", "username", "u_type", "operator_name", "join_at"]
+    list_display = ["id", "repo_name", "username", "u_type", "operator_name", "join_at"]
     list_filter = ["u_type"]
     search_fields = ["repo_name", "username"]
 
