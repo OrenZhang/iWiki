@@ -59,7 +59,7 @@ class DocVersionAdmin(DocAdmin):
 @admin.register(DocCollaborator)
 class DocCollaboratorAdmin(admin.ModelAdmin):
     list_display = ["id", "doc_title", "username", "add_at"]
-    ordering = ["id"]
+    ordering = ["-id"]
 
     @admin.display(description=_("标题"))
     def doc_title(self, obj):
