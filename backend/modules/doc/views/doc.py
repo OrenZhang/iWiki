@@ -284,7 +284,7 @@ class DocCommonView(GenericViewSet):
     def retrieve(self, request, *args, **kwargs):
         """获取文章详情"""
         instance = self.get_object()
-        db_logger.doc_log(instance, request.user.uid)
+        db_logger.doc_log(instance, request)
         serializer = DocCommonSerializer(instance)
         return Response(serializer.data)
 
