@@ -207,9 +207,9 @@ def create_log(detail):
 
 
 @app.task
-def create_doc_log(doc_id, uid):
+def create_doc_log(doc_id, uid, ip, ua):
     logger.info("[create_doc_log] Start")
-    DocVisitLog.objects.create(doc_id=doc_id, visitor=uid)
+    DocVisitLog.objects.create(doc_id=doc_id, visitor=uid, ip=ip, ua=ua)
     logger.info("[create_doc_log] End")
 
 
