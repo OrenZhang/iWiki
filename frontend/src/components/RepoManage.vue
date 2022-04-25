@@ -37,7 +37,7 @@
                     </el-button>
                     <el-button
                         type="text" @click="showExitConfirm(scope.row)"
-                        :disabled="scope.row.id === 1 || scope.row.creator === user.uid">
+                        :disabled="scope.row.creator === user.uid">
                         {{ $t('exit') }}
                     </el-button>
                 </template>
