@@ -1,7 +1,7 @@
 <template>
     <div class="h-100">
         <ErrorPage :error="errorCode" v-if="!loading && errorCode !== 0" />
-        <div v-loading="loading" :element-loading-text="loadingText" class="editor-box" v-if="errorCode === 0">
+        <div v-loading.fullscreen.lock="loading" :element-loading-text="loadingText" class="editor-box" v-if="errorCode === 0">
             <div class="header">
                 <el-input :placeholder="$t('title')" :maxlength="64" show-word-limit v-model="docData.title" />
                 <el-button class="save-button" type="primary" @click="publishDrawer.visible = true" :disabled="checkDocData">
