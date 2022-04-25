@@ -1,6 +1,5 @@
 import datetime
 
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.db import IntegrityError, transaction
@@ -403,8 +402,6 @@ class RepoCommonView(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     def exit(self, request, *args, **kwargs):
         """退出库"""
         instance = self.get_object()
-        if instance.name == settings.DEFAULT_REPO_NAME:
-            raise OperationError()
         try:
             RepoUser.objects.filter(
                 Q(repo_id=instance.id)
