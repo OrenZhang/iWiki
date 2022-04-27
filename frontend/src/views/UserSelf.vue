@@ -33,6 +33,7 @@
     import HUserInfoBox from '../components/HUserInfoBox.vue'
     import DocManage from '../components/DocManage.vue'
     import CommentManage from '../components/CommentManage.vue'
+    import CollectManage from '../components/CollectManage.vue'
     import RepoManage from '../components/RepoManage.vue'
     import { useI18n } from 'vue-i18n'
     import { loginCheckAPI } from '../api/modules/user'
@@ -64,6 +65,8 @@
                 return RepoManage
             case 'comment':
                 return CommentManage
+            case 'collect':
+                return CollectManage
             default:
                 return DocManage
         }
@@ -74,6 +77,11 @@
             index: 'doc',
             name: t('docManage'),
             icon: 'fa-solid fa-copy',
+        },
+        {
+            index: 'collect',
+            name: t('collectManage'),
+            icon: 'fa-solid fa-star'
         },
         {
             index: 'comment',

@@ -98,3 +98,15 @@ class DocMigrateSerializer(serializers.Serializer):
             return Repo.objects.get(id=value, is_deleted=False).id
         except Repo.DoesNotExist:
             raise serializers.ValidationError(_("库不存在"))
+
+
+class DocCollectListSerializer(serializers.Serializer):
+    """文章收藏列表"""
+
+    doc_id = serializers.IntegerField()
+    creator = serializers.CharField()
+    creator_name = serializers.CharField()
+    repo_name = serializers.CharField()
+    repo_id = serializers.IntegerField()
+    title = serializers.CharField()
+    update_at = serializers.DateTimeField()

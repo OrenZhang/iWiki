@@ -25,7 +25,7 @@ from constents import (
     UserTypeChoices,
 )
 from modules.account.serializers import UserInfoSerializer
-from modules.doc.models import Comment, Doc, DocCollaborator, DocVersion
+from modules.doc.models import CollectDoc, Comment, Doc, DocCollaborator, DocVersion
 from modules.doc.permissions import (
     DocCommonPermission,
     DocManagePermission,
@@ -38,11 +38,11 @@ from modules.doc.serializers import (
     DocUpdateSerializer,
     DocVersionSerializer,
 )
-from modules.doc.serializers.doc import DocMigrateSerializer
+from modules.doc.serializers.doc import DocCollectListSerializer, DocMigrateSerializer
 from modules.log.utils import db_logger
 from modules.notice.notices import CollaboratorNotice, DocMigrateNotice
 from modules.repo.models import Repo, RepoUser
-from utils.authenticators import SessionAuthenticate
+from utils.authenticators import AuthTokenAuthenticate, SessionAuthenticate
 from utils.exceptions import Error404, OperationError, ParamsNotFound, UserNotExist
 from utils.paginations import NumPagination
 from utils.throttlers import DocSearchThrottle
@@ -322,6 +322,70 @@ class DocCommonView(GenericViewSet):
         queryset = Doc.objects.raw(sql, [repo_id, DocAvailableChoices.PUBLIC])
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+
+    @action(
+        detail=True,
+        methods=["POST"],
+        authentication_classes=[SessionAuthenticate, AuthTokenAuthenticate],
+    )
+    def collect(self, request, *args, **kwargs):
+        """收藏文章"""
+        instance = self.get_object()
+        try:
+            CollectDoc.objects.create(doc_id=instance.id, uid=request.user.uid)
+        except IntegrityError:
+            pass
+        return Response()
+
+    @action(
+        detail=True,
+        methods=["POST"],
+        authentication_classes=[SessionAuthenticate, AuthTokenAuthenticate],
+    )
+    def uncollect(self, request, *args, **kwargs):
+        """取消收藏文章"""
+        instance = self.get_object()
+        CollectDoc.objects.filter(doc_id=instance.id, uid=request.user.uid).delete()
+        return Response()
+
+    @action(detail=True, methods=["GET"])
+    def is_collect(self, request, *args, **kwargs):
+        """收藏文章状态"""
+        if not request.user.is_authenticated:
+            return Response(False)
+        instance = self.get_object()
+        return Response(
+            CollectDoc.objects.filter(doc_id=instance.id, uid=request.user.uid).exists()
+        )
+
+    @action(
+        detail=False,
+        methods=["Get"],
+        authentication_classes=[SessionAuthenticate, AuthTokenAuthenticate],
+    )
+    def collect_list(self, request, *args, **kwargs):
+        """收藏文章列表"""
+        sql = (
+            "SELECT dc.id, dc.doc_id, dd.title, dd.update_at, "
+            "rr.id as 'repo_id', rr.name as 'repo_name', au.username as 'creator_name', au.uid as 'creator' "
+            "FROM `doc_collect` dc "
+            "JOIN `doc_doc` dd ON dd.id = dc.doc_id "
+            "JOIN `repo_repo` rr ON rr.id = dd.repo_id "
+            "JOIN `auth_user` au ON au.uid = dd.creator "
+            "WHERE dc.uid = %s {}"
+        )
+        search_key = request.GET.get("search_key")
+        if search_key:
+            sql = sql.format("AND dd.title like %s")
+            search_key = f"%{search_key}%"
+            collect_docs = CollectDoc.objects.raw(sql, (request.user.uid, search_key))
+        else:
+            sql = sql.format("")
+            collect_docs = CollectDoc.objects.raw(sql, (request.user.uid,))
+        page = NumPagination()
+        queryset = page.paginate_queryset(collect_docs, request, self)
+        serializer = DocCollectListSerializer(queryset, many=True)
+        return page.get_paginated_response(serializer.data)
 
 
 class DocPublicView(GenericViewSet):

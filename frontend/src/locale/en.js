@@ -195,6 +195,11 @@ const en = {
     alignLeft: 'Left',
     alignCenter: 'Center',
     alignRight: 'Right',
+    collectManage: 'Collect',
+    cancelCollect: 'unCollect',
+    cancelCollectDocConfirmContent: 'Are you confirm of canceling collect this doc ?',
+    cancelConfirm: 'Cancel Confirm',
+    cancelConfirmed: 'Confirm',
 }
 
 export default en

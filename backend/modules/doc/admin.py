@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
 from modules.doc.models import (
+    CollectDoc,
     Comment,
     CommentVersion,
     Doc,
@@ -118,3 +119,17 @@ class PinDocAdmin(admin.ModelAdmin):
     @admin.display(description=_("操作人"))
     def operator_name(self, obj):
         return get_user_model().objects.get(uid=obj.operator).username
+
+
+@admin.register(CollectDoc)
+class CollectDocAdmin(admin.ModelAdmin):
+    list_display = ["id", "username", "title", "create_at"]
+    ordering = ["-id"]
+
+    @admin.display(description=_("文章"))
+    def title(self, obj):
+        return Doc.objects.get(id=obj.doc_id).title
+
+    @admin.display(description=_("用户"))
+    def username(self, obj):
+        return get_user_model().objects.get(uid=obj.uid).username

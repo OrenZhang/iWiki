@@ -22,6 +22,9 @@
                     </el-link>
                     <i class="fa-regular fa-clock ml-10 mr-2" />
                     {{ docData.update_at }}
+                    <el-link :underline="false" v-if="user.auth" @click="toggleCollectStatus">
+                        <i class="ml-10 mr-2 fa-star" :class="isCollect ? 'fa-solid color-yellow' : 'fa-regular'" />
+                    </el-link>
                 </div>
                 <div class="operate-box">
                     <el-link type="primary" :href="globalContext.backEndUrl + '/doc/manage/' + docData.id + '/export/'" target="_blank" v-if="docData.creator === user.uid || isCollaborator">
@@ -62,7 +65,14 @@
     import { ElMessageBox } from 'element-plus'
     import { useStore } from 'vuex'
     import { useI18n } from 'vue-i18n'
-    import { checkDocCollaboratorAPI, deleteDocAPI } from '../api/modules/doc'
+    import {
+        checkDocCollaboratorAPI,
+        collectDocAPI,
+        deleteDocAPI,
+        getDocCollectStatusAPI,
+        unCollectDocAPI
+    } from '../api/modules/doc'
+    import message from '../utils/message'
     
     const { t } = useI18n()
 
@@ -167,9 +177,33 @@
             isCollaborator.value = res.result
         })
     }
+
+    const isCollect = ref(false)
+    const getDocCollectStatus = () => {
+        getDocCollectStatusAPI(props.docData.id).then(
+            res => isCollect.value = res.data,
+            err => message(err.data.msg, 'error')
+        )
+    }
+
+    const toggleCollectStatus = () => {
+        if (isCollect.value) {
+            unCollectDocAPI(props.docData.id).then(
+                res => isCollect.value = false,
+                err => message(err.data.msg, 'error')
+            )
+        } else {
+            collectDocAPI(props.docData.id).then(
+                res => isCollect.value = true,
+                err => message(err.data.msg, 'error')
+            )
+        }
+    }
+
     watch(() => props.docData.id, () => {
         if (props.docData.id) {
             checkCollaborator()
+            getDocCollectStatus()
         }
     })
 </script>

@@ -195,6 +195,11 @@ const zh = {
     alignLeft: '左对齐',
     alignCenter: '居中对齐',
     alignRight: '右对齐',
+    collectManage: '收藏管理',
+    cancelCollect: '取消收藏',
+    cancelCollectDocConfirmContent: '确认取消收藏？',
+    cancelConfirm: '取消确认',
+    cancelConfirmed: '确认取消',
 }
 
 export default zh

@@ -4,12 +4,13 @@ from django.utils.translation import gettext_lazy as _
 
 
 def update_comment_status(sender, **kwargs):
-    from modules.doc.models import Doc, Comment, DocCollaborator, PinDoc
+    from modules.doc.models import Doc, Comment, DocCollaborator, PinDoc, CollectDoc
 
     deleted_doc_ids = Doc.objects.filter(is_deleted=True).values_list("id", flat=True)
     Comment.objects.filter(doc_id__in=deleted_doc_ids).update(is_deleted=True)
     DocCollaborator.objects.filter(doc_id__in=deleted_doc_ids).delete()
     PinDoc.objects.filter(doc_id__in=deleted_doc_ids).update(in_use=False)
+    CollectDoc.objects.filter(doc_id__in=deleted_doc_ids).delete()
 
 
 def init_default_doc(sender, **kwargs):
