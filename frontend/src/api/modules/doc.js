@@ -193,3 +193,35 @@ export const loadPinDocAPI = (repoId) => {
         ).then(res => resolve(res), err => reject(err))
     })
 }
+
+export const getDocCollectStatusAPI = (docId) => {
+    return new Promise((resolve, reject) => {
+        http.get(
+            '/doc/common/' + docId + '/is_collect/'
+        ).then(res => resolve(res), err => reject(err))
+    })
+}
+
+export const collectDocAPI = (docId) => {
+    return new Promise((resolve, reject) => {
+        http.post(
+            '/doc/common/' + docId + '/collect/'
+        ).then(res => resolve(res), err => reject(err))
+    })
+}
+
+export const unCollectDocAPI = (docId) => {
+    return new Promise((resolve, reject) => {
+        http.post(
+            '/doc/common/' + docId + '/uncollect/'
+        ).then(res => resolve(res), err => reject(err))
+    })
+}
+
+export const loadCollectDocAPI = (page, searchKey) => {
+    return new Promise((resolve, reject) => {
+        http.get(
+            '/doc/common/collect_list/?page=' + page + '&size=10&search_key=' + searchKey
+        ).then(res => resolve(res), err => reject(err))
+    })
+}

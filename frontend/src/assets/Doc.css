@@ -152,3 +152,7 @@
 .title-box {
     margin-top: 0;
 }
+
+.color-yellow {
+    color: var(--el-color-warning);
+}

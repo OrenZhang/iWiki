@@ -60,6 +60,7 @@ class Doc(DocBase):
         Comment.objects.filter(doc_id=self.id).update(is_deleted=True)
         DocCollaborator.objects.filter(doc_id=self.id).delete()
         PinDoc.objects.filter(doc_id=self.id).update(in_use=False)
+        CollectDoc.objects.filter(doc_id=self.id).delete()
         self.is_deleted = True
         self.save()
 
@@ -141,3 +142,18 @@ class PinDoc(models.Model):
         verbose_name_plural = verbose_name
         ordering = ["-id"]
         index_together = [["doc_id", "in_use"]]
+
+
+class CollectDoc(models.Model):
+    """收藏文章"""
+
+    uid = models.CharField(_("用户ID"), max_length=SHORT_CHAR_LENGTH)
+    doc_id = models.BigIntegerField(_("文章ID"))
+    create_at = models.DateTimeField(_("创建时间"), auto_now_add=True)
+
+    class Meta:
+        db_table = f"{DB_PREFIX}collect"
+        verbose_name = _("收藏文章")
+        verbose_name_plural = verbose_name
+        ordering = ["-id"]
+        unique_together = [["uid", "doc_id"]]
