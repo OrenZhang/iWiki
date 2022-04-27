@@ -123,7 +123,7 @@ class PinDocAdmin(admin.ModelAdmin):
 
 @admin.register(CollectDoc)
 class CollectDocAdmin(admin.ModelAdmin):
-    list_display = ["id", "username", "title"]
+    list_display = ["id", "username", "title", "create_at"]
     ordering = ["-id"]
 
     @admin.display(description=_("文章"))
