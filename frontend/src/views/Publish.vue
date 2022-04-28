@@ -373,7 +373,12 @@
     let autoSaveInterval
     onMounted(() => {
         autoSaveInterval = setInterval(() => {
-            localStorage.setItem(localStorageKey.value, docData.value.content)
+            try {
+                localStorage.setItem(localStorageKey.value, docData.value.content)
+            } catch (e) {
+                localStorage.clear()
+                console.log(e)
+            }
         }, 10000)
     })
     onUnmounted(() => {
