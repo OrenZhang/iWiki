@@ -442,6 +442,7 @@ class DocPublicView(GenericViewSet):
             "WHERE dd.repo_id in "
             "(SELECT rr.id FROM repo_repo rr "
             "WHERE rr.r_type = '{}' AND NOT rr.is_deleted) "
+            "AND NOT dd.is_deleted "
             "ORDER BY pv DESC LIMIT 10; "
         ).format(RepoTypeChoices.PUBLIC)
         queryset = self.queryset.raw(sql)
