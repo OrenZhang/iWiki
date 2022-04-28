@@ -40,7 +40,11 @@ from modules.doc.serializers import (
 )
 from modules.doc.serializers.doc import DocCollectListSerializer, DocMigrateSerializer
 from modules.log.utils import db_logger
-from modules.notice.notices import CollaboratorNotice, DocMigrateNotice
+from modules.notice.notices import (
+    CollaboratorNotice,
+    CollectDocNotice,
+    DocMigrateNotice,
+)
 from modules.repo.models import Repo, RepoUser
 from utils.authenticators import AuthTokenAuthenticate, SessionAuthenticate
 from utils.exceptions import Error404, OperationError, ParamsNotFound, UserNotExist
@@ -335,6 +339,7 @@ class DocCommonView(GenericViewSet):
             CollectDoc.objects.create(doc_id=instance.id, uid=request.user.uid)
         except IntegrityError:
             pass
+        CollectDocNotice(instance, request.user.username)()
         return Response()
 
     @action(

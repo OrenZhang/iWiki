@@ -123,7 +123,7 @@ class DocMigrateNotice(Notice):
 
 class CollaboratorNotice(Notice):
     title = "协作者变更"
-    content = "您已被{method}《{doc_name}》的协作者"
+    content = "您已被{method}<a href={doc_url} target='_blank'>《{doc_name}》</a>的协作者"
     button_text = "前往查看"
 
     @error_wrapper
@@ -132,13 +132,14 @@ class CollaboratorNotice(Notice):
         self.content = self.content.format(
             method=method,
             doc_name=doc.title,
+            doc_url=self.get_doc_url(doc.id),
         )
         self.url = self.get_doc_url(doc.id)
 
 
 class CommentNotice(Notice):
     title = "评论通知"
-    content = "用户<a href={url} target='_blank'>{username}</a>" "在《{doc_name}》" "写了一条评论"
+    content = "用户<a href={url} target='_blank'>{username}</a>在<a href={doc_url} target='_blank'>《{doc_name}》</a>写了一条评论"
     button_text = "前往查看"
 
     @error_wrapper
@@ -148,6 +149,7 @@ class CommentNotice(Notice):
         self.content = self.content.format(
             url=self.get_user_url(operator.username),
             username=operator.username,
+            doc_url=self.get_doc_url(doc.id),
             doc_name=doc.title,
         )
         self.url = self.get_doc_url(doc.id)
@@ -198,7 +200,7 @@ class DocHandlerNotice(Notice):
 
 class RepoApplyNotice(Notice):
     title = "申请通知"
-    content = "用户<a href={url} target='_blank'>{username}</a>" "正在申请加入{repo_name}"
+    content = "用户<a href={url} target='_blank'>{username}</a>正在申请加入<a href={repo_url} target='_blank'>{repo_name}</a>"
     button_text = "前往处理"
     url = "{}/admin".format(settings.SIMPLEUI_INDEX)
 
@@ -209,13 +211,14 @@ class RepoApplyNotice(Notice):
         self.content = self.content.format(
             url=self.get_user_url(user.username),
             username=user.username,
+            repo_url=self.get_repo_url(repo.id),
             repo_name=repo.name,
         )
 
 
 class ExitRepoNotice(Notice):
     title = "退出通知"
-    content = "用户<a href={url} target='_blank'>{username}</a>" "已退出{repo_name}"
+    content = "用户<a href={url} target='_blank'>{username}</a>已退出<a href={repo_url} target='_blank'>{repo_name}</a>"
 
     @error_wrapper
     def __init__(self, repo: Repo, username: str):
@@ -223,5 +226,24 @@ class ExitRepoNotice(Notice):
         self.content = self.content.format(
             url=self.get_user_url(username),
             username=username,
+            repo_url=self.get_repo_url(repo.id),
             repo_name=repo.name,
+        )
+
+
+class CollectDocNotice(Notice):
+    title = "收藏通知"
+    content = (
+        "用户<a href={url} target='_blank'>{username}</a>"
+        "收藏了你的文章<a href={doc_url} target='_blank'>《{doc_name}》</a>"
+    )
+
+    @error_wrapper
+    def __init__(self, doc: Doc, username: str):
+        self.receivers = [doc.creator]
+        self.content = self.content.format(
+            url=self.get_user_url(username),
+            username=username,
+            doc_url=self.get_doc_url(doc.id),
+            doc_name=doc.title,
         )
