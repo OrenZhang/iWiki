@@ -3,6 +3,7 @@ import traceback
 from functools import wraps
 
 from django.conf import settings
+from django.db import connection
 from django.http import JsonResponse
 from django.utils.deprecation import MiddlewareMixin
 
@@ -31,11 +32,21 @@ class CSRFExemptMiddleware(MiddlewareMixin):
 
 class SQLDebugMiddleware(MiddlewareMixin):
     def process_response(self, request, response):
-        if settings.DEBUG:
-            from django.db import connection
+        if not settings.DEBUG:
+            return response
 
-            for sql in connection.queries:
-                mysql_logger.info("[{}] {}".format(sql.get("time"), sql.get("sql")))
+        cursor = connection.cursor()
+        for sql in connection.queries:
+            sql_str = sql.get("sql")
+            sql_time = sql.get("time")
+            try:
+                cursor.execute(f"explain {sql_str}")
+                explain_data = "\n".join(
+                    [f"[{i[6]}] {str(i)}" for i in cursor.fetchall()]
+                )
+            except Exception:
+                explain_data = ""
+            mysql_logger.info("[%s] %s\n%s", sql_time, sql_str, explain_data)
         return response
 
 

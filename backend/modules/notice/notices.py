@@ -38,6 +38,9 @@ class Notice:
     def __call__(self, *args, **kwargs):
         if not self.validate():
             return
+        logger.info(
+            "[Notice Send Record] %s %s", self.__class__.__name__, self.receivers
+        )
         send_notice.delay(
             self.receivers, self.title, self.content, self.button_text, self.url
         )
@@ -54,6 +57,11 @@ class Notice:
                 "[Notice Validate Failed] button is %s while url is %s",
                 self.button_text,
                 self.url,
+            )
+            return False
+        if not isinstance(self.receivers, list):
+            logger.warning(
+                "[Notice Validate Failed] receiver invalid %s", self.receivers
             )
             return False
         return True
