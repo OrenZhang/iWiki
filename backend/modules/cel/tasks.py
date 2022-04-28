@@ -48,10 +48,10 @@ app.conf.beat_schedule = {
 }
 
 
-@app.task
-def auto_update_active_index():
+@app.task(bind=True)
+def auto_update_active_index(self):
     """自动更新用户活跃度"""
-    logger.info("[auto_update_active_index] Start")
+    logger.info("[auto_update_active_index] Start %s", self.request.id)
 
     sql_path = os.path.join(
         settings.BASE_DIR, "modules", "cel", "sql", "auto_update_active_index.sql"
@@ -68,24 +68,24 @@ def auto_update_active_index():
     for info in data:
         logger.info(info)
 
-    logger.info("[auto_update_active_index] End")
+    logger.info("[auto_update_active_index] End %s", self.request.id)
 
 
-@app.task
-def auto_check_pin_doc():
+@app.task(bind=True)
+def auto_check_pin_doc(self):
     """自动取消置顶到期的文章"""
-    logger.info("[auto_check_pin_doc] Start")
+    logger.info("[auto_check_pin_doc] Start %s", self.request.id)
     now = datetime.datetime.now()
     PinDoc.objects.filter(in_use=True, pin_to__lt=now).update(
         in_use=False, operator=settings.ADMIN_USERNAME
     )
-    logger.info("[auto_check_pin_doc] End")
+    logger.info("[auto_check_pin_doc] End %s", self.request.id)
 
 
-@app.task
-def export_all_docs(repo_id: int, uid: str):
+@app.task(bind=True)
+def export_all_docs(self, repo_id: int, uid: str):
     """导出仓库所有文章"""
-    logger.info("[export_all_docs] Start")
+    logger.info("[export_all_docs] Start %s", self.request.id)
     client = get_client_by_user(uid)
     incv_client = INCVUnionClient()
     # 获取用户和库对象
@@ -137,13 +137,13 @@ def export_all_docs(repo_id: int, uid: str):
             user.phone, settings.SMS_REPO_EXPORT_FAIL_TID, [user.username, repo.name]
         )
     logger.info(resp)
-    logger.info("[export_all_docs] End")
+    logger.info("[export_all_docs] End %s", self.request.id)
 
 
-@app.task
-def remind_apply_info():
+@app.task(bind=True)
+def remind_apply_info(self):
     """向管理员发送申请通知"""
-    logger.info("[remind_apply_info] Start")
+    logger.info("[remind_apply_info] Start %s", self.request.id)
     sql_path = os.path.join(
         settings.BASE_DIR, "modules", "cel", "sql", "remind_apply_info.sql"
     )
@@ -174,15 +174,15 @@ def remind_apply_info():
         )
         logger.info(resp)
         time.sleep(10)
-    logger.info("[remind_apply_info] End")
+    logger.info("[remind_apply_info] End %s", self.request.id)
 
 
-@app.task
+@app.task(bind=True)
 def send_apply_result(
-    operator: str, repo_id: int, apply_user: str, result: bool = True
+    self, operator: str, repo_id: int, apply_user: str, result: bool = True
 ):
     """管理员处理结果"""
-    logger.info("[send_apply_result] Start")
+    logger.info("[send_apply_result] Start %s", self.request.id)
     result_msg = "已通过" if result else "已拒绝"
     user_model = get_user_model()
     try:
@@ -196,25 +196,25 @@ def send_apply_result(
             user.phone, settings.SMS_REPO_APPLY_RESULT_TID, [repo.name, result_msg]
         )
         logger.info(resp)
-    logger.info("[send_apply_result] End")
+    logger.info("[send_apply_result] End %s", self.request.id)
 
 
-@app.task
-def create_log(detail):
-    logger.info("[create_log] Start")
+@app.task(bind=True)
+def create_log(self, detail):
+    logger.info("[create_log] Start %s", self.request.id)
     SaveLogHandler(detail)()
-    logger.info("[create_log] End")
+    logger.info("[create_log] End %s", self.request.id)
 
 
-@app.task
-def create_doc_log(doc_id, uid, ip, ua):
-    logger.info("[create_doc_log] Start")
+@app.task(bind=True)
+def create_doc_log(self, doc_id, uid, ip, ua):
+    logger.info("[create_doc_log] Start %s", self.request.id)
     DocVisitLog.objects.create(doc_id=doc_id, visitor=uid, ip=ip, ua=ua)
-    logger.info("[create_doc_log] End")
+    logger.info("[create_doc_log] End %s", self.request.id)
 
 
-@app.task
-def send_notice(receivers, title, content, button_text, url):
-    logger.info("[send_notice] Start")
+@app.task(bind=True)
+def send_notice(self, receivers, title, content, button_text, url):
+    logger.info("[send_notice] Start %s", self.request.id)
     notice_handler.send(receivers, title, content, button_text, url)
-    logger.info("[send_notice] End")
+    logger.info("[send_notice] End %s", self.request.id)
