@@ -1,97 +1,149 @@
+<!--
+ - MIT License
+ -
+ - Copyright (c) 2021 Oren Zhang
+ -
+ - Permission is hereby granted, free of charge, to any person obtaining a copy
+ - of this software and associated documentation files (the "Software"), to deal
+ - in the Software without restriction, including without limitation the rights
+ - to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ - copies of the Software, and to permit persons to whom the Software is
+ - furnished to do so, subject to the following conditions:
+ -
+ - The above copyright notice and this permission notice shall be included in all
+ - copies or substantial portions of the Software.
+ -
+ - THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ - IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ - FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ - AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ - LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ - OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ - SOFTWARE.
+-->
+
 <template>
-    <div class="version-container">
-        <div class="version-box">
-            <el-header>
-                <h3>{{ $t('versionLog') }}</h3>
-                <el-link :underline="false" class="close-button" @click="closeVersion">
-                    <i class="fa-solid fa-times" />
-                </el-link>
-            </el-header>
-            <el-main>
-                <el-scrollbar class="menu-scroll" style="margin-right: 10px;">
-                    <div class="menu">
-                        <div v-for="item in versions" :key="item.vid" class="single-version" @click="changeVersion(item)" :class="{ 'highlight-current': item.vid === curVersion }">
-                            <div style="padding: 10px; box-sizing: border-box; width: 180px;">
-                                <div style="display: flex; width: 100%">
-                                    <h4>{{ item.vid }}</h4>
-                                    <el-tag style="float: right" v-if="item.is_current" size="mini">
-                                        {{ $t('curVersion') }}
-                                    </el-tag>
-                                </div>
-                                <span style="font-size: 12px; color: var(--el-color-info)">{{ item.release_at }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </el-scrollbar>
-                <el-scrollbar style="margin-top: -18px">
-                    <div style="padding: 20px;" v-show="loading">
-                        <el-skeleton :rows="5" animated />
-                    </div>
-                    <div class="content" v-if="!loading" v-html="versionContent" />
-                </el-scrollbar>
-            </el-main>
-        </div>
+  <div class="version-container">
+    <div class="version-box">
+      <el-header>
+        <h3>{{ $t('versionLog') }}</h3>
+        <el-link
+          :underline="false"
+          class="close-button"
+          @click="closeVersion"
+        >
+          <i class="fa-solid fa-times" />
+        </el-link>
+      </el-header>
+      <el-main>
+        <el-scrollbar
+          class="menu-scroll"
+          style="margin-right: 10px;"
+        >
+          <div class="menu">
+            <div
+              v-for="item in versions"
+              :key="item.vid"
+              class="single-version"
+              @click="changeVersion(item)"
+              :class="{ 'highlight-current': item.vid === curVersion }"
+            >
+              <div style="padding: 10px; box-sizing: border-box; width: 180px;">
+                <div style="display: flex; width: 100%">
+                  <h4>{{ item.vid }}</h4>
+                  <el-tag
+                    style="float: right"
+                    v-if="item.is_current"
+                    size="mini"
+                  >
+                    {{ $t('curVersion') }}
+                  </el-tag>
+                </div>
+                <span style="font-size: 12px; color: var(--el-color-info)">{{ item.release_at }}</span>
+              </div>
+            </div>
+          </div>
+        </el-scrollbar>
+        <el-scrollbar style="margin-top: -18px">
+          <div
+            style="padding: 20px;"
+            v-show="loading"
+          >
+            <el-skeleton
+              :rows="5"
+              animated
+            />
+          </div>
+          <div
+            class="content"
+            v-if="!loading"
+            v-html="versionContent"
+          />
+        </el-scrollbar>
+      </el-main>
     </div>
+  </div>
 </template>
 
 <script setup>
-    import { useStore } from 'vuex'
-    import { computed, onMounted, ref } from 'vue'
-    import { marked } from 'marked'
-    import { listVersionAPI, loadVersionDataAPI } from '../api/modules/common'
+import { useStore } from 'vuex';
+import { computed, onMounted, ref } from 'vue';
+import { marked } from 'marked';
+import { listVersionAPI, loadVersionDataAPI } from '../api/modules/common';
 
-    const store = useStore()
+const store = useStore();
 
-    const loading = ref(true)
-    const setLoading = (status) => {
-        if (status) {
-            loading.value = true
-        } else {
-            setTimeout(() => {
-                loading.value = false
-            }, 600)
-        }
-    }
+const loading = ref(true);
+const setLoading = (status) => {
+  if (status) {
+    loading.value = true;
+  } else {
+    setTimeout(() => {
+      loading.value = false;
+    }, 600);
+  }
+};
 
-    const closeVersion = () => {
-        store.commit('setVersion', false)
-    }
+const closeVersion = () => {
+  store.commit('setVersion', false);
+};
 
-    const versionContent = computed(() => marked.parse(versionData.value.content))
-    const versions = ref([])
-    const curVersion = ref('')
-    const versionData = ref({
-        content: ''
-    })
-    const loadVersionData = () => {
-        versionData.value = {
-            content: ''
-        }
-        setLoading(true)
-        loadVersionDataAPI(curVersion.value).then(res => {
-            versionData.value = res.data
-        }).finally(() => {
-            setLoading(false)
-        })
+const versionContent = computed(() => marked.parse(versionData.value.content));
+const versions = ref([]);
+const curVersion = ref('');
+const versionData = ref({
+  content: '',
+});
+const loadVersionData = () => {
+  versionData.value = {
+    content: '',
+  };
+  setLoading(true);
+  loadVersionDataAPI(curVersion.value).then((res) => {
+    versionData.value = res.data;
+  })
+    .finally(() => {
+      setLoading(false);
+    });
+};
+const loadVersion = () => {
+  listVersionAPI().then((res) => {
+    versions.value = res.data;
+    if (versions.value.length > 0) {
+      curVersion.value = versions.value[0].vid;
+      loadVersionData();
     }
-    const loadVersion = () => {
-        listVersionAPI().then(res => {
-            versions.value = res.data
-            if (versions.value.length > 0) {
-                curVersion.value = versions.value[0].vid
-                loadVersionData()
-            }
-        })
-    }
-    onMounted(() => {
-        setLoading(true)
-        loadVersion()
-    })
+  });
+};
+onMounted(() => {
+  setLoading(true);
+  loadVersion();
+});
 
-    const changeVersion = (row) => {
-        curVersion.value = row.vid
-        loadVersionData()
-    }
+const changeVersion = (row) => {
+  curVersion.value = row.vid;
+  loadVersionData();
+};
 </script>
 
 <style scoped>
