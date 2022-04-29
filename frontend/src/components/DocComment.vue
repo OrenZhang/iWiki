@@ -197,7 +197,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref, watch, defineProps } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import message from '../utils/message';
 import { useStore } from 'vuex';
 import { ElMessageBox } from 'element-plus';

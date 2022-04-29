@@ -169,7 +169,7 @@
 
 <script setup>
 import moment from 'moment';
-import { onMounted, ref, watch, defineProps } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { ElMessageBox } from 'element-plus';
 import { useI18n } from 'vue-i18n';
 import globalContext from '../context';

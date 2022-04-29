@@ -51,8 +51,6 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue';
-
 defineProps({
   titles: {
     type: Array,

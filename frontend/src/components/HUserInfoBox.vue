@@ -82,7 +82,7 @@
 <script setup>
 import { useStore } from 'vuex';
 import message from '../utils/message';
-import { computed, defineProps } from 'vue';
+import { computed } from 'vue';
 import globalContext from '../context';
 import { useI18n } from 'vue-i18n';
 

@@ -144,7 +144,7 @@
 
 <script setup>
 import globalContext from '../context';
-import { computed, nextTick, onMounted, ref, watch, defineEmits, defineProps } from 'vue';
+import { computed, nextTick, onMounted, ref, watch } from 'vue';
 import { ElMessageBox } from 'element-plus';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';

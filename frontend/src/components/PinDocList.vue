@@ -96,7 +96,7 @@
 
 <script setup>
 import globalContext from '../context';
-import { onMounted, ref, watch, defineProps } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { loadPinDocAPI } from '../api/modules/doc';
 
 const props = defineProps({

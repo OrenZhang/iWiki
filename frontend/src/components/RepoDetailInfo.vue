@@ -136,7 +136,7 @@
 </template>
 
 <script setup>
-import { computed, defineEmits, defineProps } from 'vue';
+import { computed, defineEmits } from 'vue';
 import { ElMessageBox } from 'element-plus';
 import message from '../utils/message';
 import { useStore } from 'vuex';

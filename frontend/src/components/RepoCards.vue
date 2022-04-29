@@ -88,7 +88,6 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
 import message from '../utils/message';
 import { ElMessageBox } from 'element-plus';
 import { useI18n } from 'vue-i18n';
