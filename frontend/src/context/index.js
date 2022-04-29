@@ -22,15 +22,16 @@
  * SOFTWARE.
  */
 
+
 import { devConfig } from './dev';
 import { prodConfig } from './prod';
 
-let globalContext;
+const globalContext = { config: {} };
 
 if (process.env.NODE_ENV === 'production') {
-  globalContext = prodConfig;
+  globalContext.config = prodConfig;
 } else {
-  globalContext = devConfig;
+  globalContext.config = devConfig;
 }
 
-export default globalContext;
+export default globalContext.config;
