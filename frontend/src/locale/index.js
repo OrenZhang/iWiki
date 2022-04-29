@@ -28,6 +28,7 @@ import en from './en';
 
 const i18n = createI18n({
   locale: localStorage.getItem('locale') === 'en' ? 'en' : 'zh',
+  legacy: false,
   fallbackLocale: 'zh',
   messages: {
     zh,
