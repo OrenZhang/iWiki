@@ -26,7 +26,7 @@ UPDATE
             FROM `log_doc_visit` ldv
             WHERE ldv.visitor IS NOT NULL
             AND ldv.visit_at > ADDDATE(CURDATE(), -14)
-            GROUP BY ldv.visit_at
+            GROUP BY ldv.visitor
         ) dgl ON dgl.uid = au.uid
     ) s
 SET au.active_index = s.new_index
