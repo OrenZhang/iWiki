@@ -60,7 +60,7 @@ def simple_uniq_id(length: int):
 def num_code(length: int):
     random.seed(uniq_id())
     uniq = ""
-    for i in range(length):
+    while len(uniq) < length:
         uniq += str(random.randint(0, 9))
     return uniq
 
