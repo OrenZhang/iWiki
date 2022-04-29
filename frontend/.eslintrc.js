@@ -15,4 +15,7 @@ module.exports = {
     es6: true,
   },
   extends: ['plugin:vue/vue3-strongly-recommended', '@tencent/eslint-config-tencent'],
+  rules: {
+    'vue/no-side-effects-in-computed-properties': 'off',
+  },
 };
