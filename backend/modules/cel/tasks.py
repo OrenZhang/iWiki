@@ -59,7 +59,9 @@ def auto_update_active_index(self):
     with connection.cursor() as cursor:
         with open(sql_path) as sql_file:
             cursor.execute(sql_file.read())
-    get_user_model().objects.filter(username=settings.ADMIN_USERNAME).update(active_index=0)
+    get_user_model().objects.filter(username=settings.ADMIN_USERNAME).update(
+        active_index=0
+    )
     cache.delete(ACTIVE_USER_CACHE_KEY)
 
     statistics = User.objects.values("uid", "username", "active_index")
