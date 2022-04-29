@@ -22,11 +22,11 @@ UPDATE
             GROUP BY au.uid
         ) dc ON dc.uid = au.uid
         LEFT JOIN (
-            SELECT dgl.operator uid, COUNT(dgl.id) visit_count
-            FROM `django_global_log` dgl
-            WHERE dgl.operator IS NOT NULL
-            AND dgl.create_at > ADDDATE(CURDATE(), -14)
-            GROUP BY dgl.operator
+            SELECT ldv.visitor uid, COUNT(1) visit_count
+            FROM `log_doc_visit` ldv
+            WHERE ldv.visitor IS NOT NULL
+            AND ldv.visit_at > ADDDATE(CURDATE(), -14)
+            GROUP BY ldv.visit_at
         ) dgl ON dgl.uid = au.uid
     ) s
 SET au.active_index = s.new_index
