@@ -199,7 +199,9 @@ AUTH_TOKEN_NAME = os.getenv("AUTH_TOKEN_NAME", f"{APP_CODE}-auth-token")
 LOG_LEVEL = "INFO"
 LOG_DIR = os.path.join(BASE_DIR, "logs")
 LOGGING = get_logging_config_dict(LOG_LEVEL, LOG_DIR)
-IS_USING_DURATION_LOG = True if os.getenv("IS_USING_DURATION_LOG", "False") == "True" else False
+IS_USING_DURATION_LOG = (
+    True if os.getenv("IS_USING_DURATION_LOG", "False") == "True" else False
+)
 DURATION_LOG_ASYNC_SAVE_FUNC = "modules.cel.tasks.create_duration_log"
 INFLUXDB_ACCESS_TOKEN = os.getenv("INFLUXDB_ACCESS_TOKEN")
 INFLUXDB_ORG = os.getenv("INFLUXDB_ORG")
