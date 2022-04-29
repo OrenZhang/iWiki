@@ -1,142 +1,234 @@
+<!--
+ - MIT License
+ -
+ - Copyright (c) 2021 Oren Zhang
+ -
+ - Permission is hereby granted, free of charge, to any person obtaining a copy
+ - of this software and associated documentation files (the "Software"), to deal
+ - in the Software without restriction, including without limitation the rights
+ - to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ - copies of the Software, and to permit persons to whom the Software is
+ - furnished to do so, subject to the following conditions:
+ -
+ - The above copyright notice and this permission notice shall be included in all
+ - copies or substantial portions of the Software.
+ -
+ - THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ - IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ - FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ - AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ - LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ - OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ - SOFTWARE.
+-->
+
 <template>
-    <div class="doc-manage">
-        <div class="tool-bar">
-            <div style="display: flex">
-                <el-input size="medium" class="search-input" clearable :placeholder="$t('docTitle')" v-model="searchKey" />
-                <el-button size="medium" type="primary" @click="doSearch">
-                    {{ $t('search') }}
-                </el-button>
-                <el-button size="medium" type="primary" @click="resetSearch">
-                    {{ $t('reset') }}
-                </el-button>
-            </div>
-            <el-pagination
-                background layout="prev, pager, next"
-                :total="paginator.count" :pager-count="5"
-                :current-page="paginator.page" @current-change="handlePageChange"
-            />
-        </div>
-        <el-skeleton :rows="6" v-show="loading" animated style="margin-top: 20px" />
-        <el-table size="medium" :data="docs" v-show="!loading" :show-header="false">
-            <el-table-column :label="$t('title')">
-                <template #default="scope">
-                    <el-tag size="small" effect="plain">
-                        {{ scope.row.repo_name }}
-                    </el-tag>
-                    {{ scope.row.title }}
-                </template>
-            </el-table-column>
-            <el-table-column :label="$t('docType')" width="80px">
-                <template #default="scope">
-                    <el-tag v-if="scope.row.available === 'public'" size="small">
-                        {{ $t('public') }}
-                    </el-tag>
-                    <el-tag v-else size="small" type="warning">
-                        {{ $t('private') }}
-                    </el-tag>
-                </template>
-            </el-table-column>
-            <el-table-column :label="$t('docStatus')" width="80px">
-                <template #default="scope">
-                    <el-tag v-if="scope.row.is_publish" size="small">
-                        {{ $t('published') }}
-                    </el-tag>
-                    <el-tag v-else size="small" type="info">
-                        {{ $t('draft') }}
-                    </el-tag>
-                </template>
-            </el-table-column>
-            <el-table-column :label="$t('updateAt')" prop="update_at" width="200px" />
-            <el-table-column :label="$t('operation')" width="160px">
-                <template #default="scope">
-                    <el-button type="text" :disabled="!scope.row.is_publish" @click="goTo('doc/' + scope.row.id)">
-                        {{ $t('open') }}
-                    </el-button>
-                    <el-button type="text" @click="goTo('publish/' + scope.row.id)">
-                        {{ $t('edit') }}
-                    </el-button>
-                    <el-button type="text" @click="showDeleteConfirm(scope.row)">
-                        {{ $t('delete') }}
-                    </el-button>
-                </template>
-            </el-table-column>
-        </el-table>
+  <div class="doc-manage">
+    <div class="tool-bar">
+      <div style="display: flex">
+        <el-input
+          size="medium"
+          class="search-input"
+          clearable
+          :placeholder="$t('docTitle')"
+          v-model="searchKey"
+        />
+        <el-button
+          size="medium"
+          type="primary"
+          @click="doSearch"
+        >
+          {{ $t('search') }}
+        </el-button>
+        <el-button
+          size="medium"
+          type="primary"
+          @click="resetSearch"
+        >
+          {{ $t('reset') }}
+        </el-button>
+      </div>
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="paginator.count"
+        :pager-count="5"
+        :current-page="paginator.page"
+        @current-change="handlePageChange"
+      />
     </div>
+    <el-skeleton
+      :rows="6"
+      v-show="loading"
+      animated
+      style="margin-top: 20px"
+    />
+    <el-table
+      size="medium"
+      :data="docs"
+      v-show="!loading"
+      :show-header="false"
+    >
+      <el-table-column :label="$t('title')">
+        <template #default="scope">
+          <el-tag
+            size="small"
+            effect="plain"
+          >
+            {{ scope.row.repo_name }}
+          </el-tag>
+          {{ scope.row.title }}
+        </template>
+      </el-table-column>
+      <el-table-column
+        :label="$t('docType')"
+        width="80px"
+      >
+        <template #default="scope">
+          <el-tag
+            v-if="scope.row.available === 'public'"
+            size="small"
+          >
+            {{ $t('public') }}
+          </el-tag>
+          <el-tag
+            v-else
+            size="small"
+            type="warning"
+          >
+            {{ $t('private') }}
+          </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column
+        :label="$t('docStatus')"
+        width="80px"
+      >
+        <template #default="scope">
+          <el-tag
+            v-if="scope.row.is_publish"
+            size="small"
+          >
+            {{ $t('published') }}
+          </el-tag>
+          <el-tag
+            v-else
+            size="small"
+            type="info"
+          >
+            {{ $t('draft') }}
+          </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column
+        :label="$t('updateAt')"
+        prop="update_at"
+        width="200px"
+      />
+      <el-table-column
+        :label="$t('operation')"
+        width="160px"
+      >
+        <template #default="scope">
+          <el-button
+            type="text"
+            :disabled="!scope.row.is_publish"
+            @click="goTo('doc/' + scope.row.id)"
+          >
+            {{ $t('open') }}
+          </el-button>
+          <el-button
+            type="text"
+            @click="goTo('publish/' + scope.row.id)"
+          >
+            {{ $t('edit') }}
+          </el-button>
+          <el-button
+            type="text"
+            @click="showDeleteConfirm(scope.row)"
+          >
+            {{ $t('delete') }}
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
 </template>
 
 <script setup>
-    import { onMounted, ref } from 'vue'
-    import message from '../utils/message'
-    import { ElMessageBox } from 'element-plus'
-    import { useI18n } from 'vue-i18n'
-    import globalContext from '../context'
-    import { deleteDocAPI, listDocManageAPI } from '../api/modules/doc'
-    
-    const { t } = useI18n()
-    
-    const loading = ref(true)
-    const setLoading = (status) => {
-        if (status) {
-            loading.value = true
-        } else {
-            setTimeout(() => {
-                loading.value = false
-            }, 600)
-        }
-    }
+import { onMounted, ref } from 'vue';
+import message from '../utils/message';
+import { ElMessageBox } from 'element-plus';
+import { useI18n } from 'vue-i18n';
+import globalContext from '../context';
+import { deleteDocAPI, listDocManageAPI } from '../api/modules/doc';
 
-    const goTo = (url) => {
-        window.open(globalContext.siteUrl + url)
-    }
+const { t } = useI18n();
 
-    const docs = ref([])
-    const searchKey = ref('')
-    const paginator = ref({
-        page: 1,
-        count: 0
-    })
-    const handlePageChange = (page) => {
-        paginator.value.page = page
-        loadDocs()
-    }
-    const loadDocs = () => {
-        setLoading(true)
-        listDocManageAPI(paginator.value.page, searchKey.value).then(res => {
-            docs.value = res.data.results
-            paginator.value.count = res.data.count
-        }, err => {
-            message(err.data.msg, 'error')
-        }).finally(() => {
-            setLoading(false)
-        })
-    }
-    onMounted(loadDocs)
+const loading = ref(true);
+const setLoading = (status) => {
+  if (status) {
+    loading.value = true;
+  } else {
+    setTimeout(() => {
+      loading.value = false;
+    }, 600);
+  }
+};
 
-    const doSearch = () => {
-        paginator.value.page = 1
-        loadDocs()
-    }
-    const resetSearch = () => {
-        searchKey.value = ''
-        paginator.value.page = 1
-        loadDocs()
-    }
+const goTo = (url) => {
+  window.open(globalContext.siteUrl + url);
+};
 
-    const showDeleteConfirm = (row) => {
-        const content = t('deleteDocConfirmContent', { title: row.title })
-        ElMessageBox.alert(content, t('deleteConfirm'), {
-            confirmButtonText: t('deleteConfirmed'),
-            callback: (action) => {
-                if (action === 'confirm') {
-                    deleteDocAPI(row.id).then(() => {
-                        loadDocs()
-                    }, err => {
-                        message(err.data.msg, 'error')
-                    })
-                }
-            },
-        })
-    }
+const docs = ref([]);
+const searchKey = ref('');
+const paginator = ref({
+  page: 1,
+  count: 0,
+});
+const handlePageChange = (page) => {
+  paginator.value.page = page;
+  loadDocs();
+};
+const loadDocs = () => {
+  setLoading(true);
+  listDocManageAPI(paginator.value.page, searchKey.value).then((res) => {
+    docs.value = res.data.results;
+    paginator.value.count = res.data.count;
+  }, (err) => {
+    message(err.data.msg, 'error');
+  })
+    .finally(() => {
+      setLoading(false);
+    });
+};
+onMounted(loadDocs);
+
+const doSearch = () => {
+  paginator.value.page = 1;
+  loadDocs();
+};
+const resetSearch = () => {
+  searchKey.value = '';
+  paginator.value.page = 1;
+  loadDocs();
+};
+
+const showDeleteConfirm = (row) => {
+  const content = t('deleteDocConfirmContent', { title: row.title });
+  ElMessageBox.alert(content, t('deleteConfirm'), {
+    confirmButtonText: t('deleteConfirmed'),
+    callback: (action) => {
+      if (action === 'confirm') {
+        deleteDocAPI(row.id).then(() => {
+          loadDocs();
+        }, (err) => {
+          message(err.data.msg, 'error');
+        });
+      }
+    },
+  });
+};
 </script>
 
 <style scoped>
