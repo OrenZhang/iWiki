@@ -24,7 +24,6 @@ SOFTWARE.
 """
 
 from django.conf import settings
-from django.contrib import auth
 from django.core.cache import cache
 from rest_framework.authentication import BaseAuthentication, SessionAuthentication
 
@@ -44,8 +43,8 @@ class SessionAuthenticate(SessionAuthentication):
         # 校验 AUTH TOKEN
         uid = cache.get(auth_token)
         if uid != user.uid:
-            auth.logout(request)
             return None
+        setattr(user, "is_authtoken_authenticated", True)
         return user, None
 
 
@@ -53,6 +52,7 @@ class AuthTokenAuthenticate(BaseAuthentication):
     def authenticate(self, request):
         # 获取 request 用户
         user = getattr(request._request, "user", None)
-        if not user or not user.is_authenticated:
+        is_authtoken_authenticated = getattr(user, "is_authtoken_authenticated", False)
+        if not is_authtoken_authenticated:
             raise LoginRequired()
         return user, None
