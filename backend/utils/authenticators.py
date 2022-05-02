@@ -24,6 +24,7 @@ SOFTWARE.
 """
 
 from django.conf import settings
+from django.contrib import auth
 from django.core.cache import cache
 from rest_framework.authentication import BaseAuthentication, SessionAuthentication
 
@@ -43,6 +44,7 @@ class SessionAuthenticate(SessionAuthentication):
         # 校验 AUTH TOKEN
         uid = cache.get(auth_token)
         if uid != user.uid:
+            auth.logout(request)
             return None
         return user, None
 
