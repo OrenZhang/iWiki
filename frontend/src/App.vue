@@ -212,6 +212,17 @@ import { getNoticeCommonAPI, readAllNoticeAPI, readNoticeAPI } from './api/modul
 import NoticeItem from './components/NoticeItem.vue';
 import { ElMessageBox } from 'element-plus';
 import message from './utils/message';
+import globalContext from './context';
+import Aegis from 'aegis-web-sdk';
+
+if (globalContext.traceId && globalContext.traceId !== 'traceIDStr') {
+  new Aegis({
+    id: globalContext.traceId,
+    reportApiSpeed: true,
+    reportAssetSpeed: true,
+    spa: true,
+  });
+}
 
 // 国际化
 const { t } = useI18n();

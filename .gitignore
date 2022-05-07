@@ -109,7 +109,6 @@ venv.bak/
 
 # Logs
 logs
-*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -160,17 +159,12 @@ jspm_packages/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
-
 # dist
 webpack/monitor
 webpack/mobile
 webpack/weixin
 static/monitor
 static/weixin
-# DS_Store
-.DS_Store
 
 kernel_api/migrations/
 .venv/
@@ -188,6 +182,7 @@ celerybeat-schedule.*
 nohup.out
 tmp
 
+*.bak
 backend/entry/settings.json
 backend/.env
 frontend/yarn.lock
