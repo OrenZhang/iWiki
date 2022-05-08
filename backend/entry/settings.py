@@ -29,7 +29,6 @@ from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 from opentelemetry import trace
 from opentelemetry.exporter.jaeger.thrift import JaegerExporter
-from opentelemetry.instrumentation.django import DjangoInstrumentor
 from opentelemetry.sdk.resources import Resource, SERVICE_NAME
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
@@ -346,4 +345,3 @@ if IS_USING_JAEGER_EXPORT:
     SPAN_PROCESSOR = BatchSpanProcessor(JAEGER_EXPORTER)
     TRACE_PROVIDER.add_span_processor(SPAN_PROCESSOR)
     trace.set_tracer_provider(TRACE_PROVIDER)
-    DjangoInstrumentor().instrument()
