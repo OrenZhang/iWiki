@@ -24,10 +24,32 @@ SOFTWARE.
 """
 
 from django.apps import AppConfig
+from django.conf import settings
 from django.utils.translation import gettext_lazy as _
+from opentelemetry import trace
+from opentelemetry.exporter.jaeger.thrift import JaegerExporter
+from opentelemetry.instrumentation.django import DjangoInstrumentor
+from opentelemetry.sdk.resources import Resource, SERVICE_NAME
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from uwsgidecorators import postfork
+
+
+@postfork
+def init_instrument():
+    resource = Resource.create({SERVICE_NAME: settings.APP_CODE})
+    trace.set_tracer_provider(TracerProvider(resource=resource))
+    span_processor = BatchSpanProcessor(
+        JaegerExporter(agent_host_name=settings.JAEGER_HOST, agent_port=6831)
+    )
+    trace.get_tracer_provider().add_span_processor(span_processor)
 
 
 class LogConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "modules.log"
     verbose_name = _("日志模块")
+
+    def ready(self):
+        init_instrument()
+        DjangoInstrumentor().instrument()
