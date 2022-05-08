@@ -8,7 +8,7 @@ uwsgi \
 --processes $UWSGI_PROCESSES \
 --threads $UWSGI_THREADS \
 --module entry.wsgi \
---logto logs/uwsgi.log \
+--logto /usr/src/iwiki-backend/logs/uwsgi.log \
 --static-map /static=/usr/src/iwiki-backend/static \
 --log-maxsize 10000000
 > /dev/null 2>&1
