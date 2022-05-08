@@ -17,3 +17,9 @@ uwsgi==2.0.20
 
 # INCV_API
 incv-client==0.0.5
+
+# OpenTracing
+opentelemetry-api==1.11.1
+opentelemetry-sdk==1.11.1
+opentelemetry-exporter-jaeger==1.11.1
+opentelemetry-instrumentation-django==0.30b1
