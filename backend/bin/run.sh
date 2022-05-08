@@ -6,6 +6,7 @@ nohup celery -A modules.cel beat -l INFO -f /usr/src/iwiki-backend/celery-logs/b
 uwsgi \
 --http :8014 \
 --processes 1 \
+--workers 1 \
 --threads $UWSGI_THREADS \
 --module entry.wsgi \
 --logto /usr/src/iwiki-backend/logs/uwsgi.log \
