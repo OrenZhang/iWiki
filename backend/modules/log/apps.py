@@ -32,7 +32,11 @@ from opentelemetry.instrumentation.django import DjangoInstrumentor
 from opentelemetry.sdk.resources import Resource, SERVICE_NAME
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
-from uwsgidecorators import postfork
+
+try:
+    from uwsgidecorators import postfork
+except ImportError:
+    from utils.decorators import PostForkMock as postfork
 
 
 @postfork
