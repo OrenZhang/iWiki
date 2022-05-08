@@ -36,7 +36,7 @@ from uwsgidecorators import postfork
 
 
 @postfork
-def init_instrument():
+def init_tracer():
     resource = Resource.create({SERVICE_NAME: settings.APP_CODE})
     trace.set_tracer_provider(TracerProvider(resource=resource))
     span_processor = BatchSpanProcessor(
@@ -51,5 +51,5 @@ class LogConfig(AppConfig):
     verbose_name = _("日志模块")
 
     def ready(self):
-        init_instrument()
+        init_tracer()
         DjangoInstrumentor().instrument()
