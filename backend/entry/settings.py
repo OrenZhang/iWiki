@@ -27,6 +27,12 @@ import os
 from pathlib import Path
 
 from django.utils.translation import gettext_lazy as _
+from opentelemetry import trace
+from opentelemetry.exporter.jaeger.thrift import JaegerExporter
+from opentelemetry.instrumentation.django import DjangoInstrumentor
+from opentelemetry.sdk.resources import Resource, SERVICE_NAME
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
 
 from utils.logs import get_logging_config_dict
 from utils.tools import getenv_or_raise
@@ -328,3 +334,16 @@ SIMPLEUI_CONFIG = {"system_keep": False}
 
 # init
 DEFAULT_REPO_NAME = getenv_or_raise("DEFAULT_REPO_NAME")
+
+# opentracing
+IS_USING_JAEGER_EXPORT = (
+    True if os.getenv("IS_USING_JAEGER_EXPORT", "False") == "True" else False
+)
+if IS_USING_JAEGER_EXPORT:
+    JAEGER_HOST = os.getenv("JAEGER_HOST", "localhost")
+    TRACE_PROVIDER = TracerProvider(resource=Resource.create({SERVICE_NAME: APP_CODE}))
+    JAEGER_EXPORTER = JaegerExporter(agent_host_name=JAEGER_HOST, agent_port=6831)
+    SPAN_PROCESSOR = BatchSpanProcessor(JAEGER_EXPORTER)
+    TRACE_PROVIDER.add_span_processor(SPAN_PROCESSOR)
+    trace.set_tracer_provider(TRACE_PROVIDER)
+    DjangoInstrumentor().instrument()
