@@ -37,7 +37,6 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.db import connection
-from django_duration_log.utils import SaveLogHandler
 from incv_client import INCVUnionClient
 
 from constents import ACTIVE_USER_CACHE_KEY, DocAvailableChoices, UserTypeChoices
@@ -238,10 +237,3 @@ def send_notice(self, receivers, title, content, button_text, url):
     logger.info("[send_notice] Start %s", self.request.id)
     notice_handler.send(receivers, title, content, button_text, url)
     logger.info("[send_notice] End %s", self.request.id)
-
-
-@app.task(bind=True)
-def create_duration_log(self, detail):
-    logger.info("[create_duration_log] Start %s", self.request.id)
-    SaveLogHandler().save_log(detail)
-    logger.info("[create_duration_log] End %s", self.request.id)
