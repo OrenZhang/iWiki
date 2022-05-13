@@ -72,7 +72,6 @@ CSRF_TRUSTED_ORIGINS = [getenv_or_raise("FRONTEND_URL")]
 # APPs
 INSTALLED_APPS = [
     "corsheaders",
-    "django_duration_log",
     "simpleui",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -97,7 +96,6 @@ INSTALLED_APPS = [
 # 中间件
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
-    "django_duration_log.middlewares.DjangoDurationLogMiddleware",
     "utils.middlewares.CSRFExemptMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -220,14 +218,6 @@ AUTH_TOKEN_NAME = os.getenv("AUTH_TOKEN_NAME", f"{APP_CODE}-auth-token")
 LOG_LEVEL = "INFO"
 LOG_DIR = os.path.join(BASE_DIR, "logs")
 LOGGING = get_logging_config_dict(LOG_LEVEL, LOG_DIR)
-IS_USING_DURATION_LOG = (
-    True if os.getenv("IS_USING_DURATION_LOG", "False") == "True" else False
-)
-DURATION_LOG_ASYNC_SAVE_FUNC = "modules.cel.tasks.create_duration_log"
-INFLUXDB_ACCESS_TOKEN = os.getenv("INFLUXDB_ACCESS_TOKEN")
-INFLUXDB_ORG = os.getenv("INFLUXDB_ORG")
-INFLUXDB_BUCKET = os.getenv("INFLUXDB_BUCKET")
-INFLUXDB_URL = os.getenv("INFLUXDB_URL")
 
 # rest_framework
 REST_FRAMEWORK = {
