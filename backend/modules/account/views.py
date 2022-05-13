@@ -29,6 +29,7 @@ from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.db import IntegrityError
 from django.db.models import Q
+from django.http import HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -298,3 +299,13 @@ class LoginCheckView(GenericViewSet):
 
     def list(self, request, *args, **kwargs):
         return Response()
+
+
+class IPInfo(APIView):
+    """IP地址"""
+
+    authentication_classes = [SessionAuthenticate]
+
+    def get(self, quest, *args, **kwargs):
+        url = settings.INCV_API_DOMAIN + "/ius/ip_city/mine/"
+        return HttpResponseRedirect(url)

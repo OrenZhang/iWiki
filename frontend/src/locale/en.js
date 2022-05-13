@@ -224,6 +224,7 @@ const en = {
   cancelCollectDocConfirmContent: 'Are you confirm of canceling collect this doc ?',
   cancelConfirm: 'Cancel Confirm',
   cancelConfirmed: 'Confirm',
+  currentIpAddress: 'Current IP Address',
 };
 
 export default en;

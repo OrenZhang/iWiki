@@ -224,6 +224,7 @@ const zh = {
   cancelCollectDocConfirmContent: '确认取消收藏？',
   cancelConfirm: '取消确认',
   cancelConfirmed: '确认取消',
+  currentIpAddress: '当前IP地址',
 };
 
 export default zh;

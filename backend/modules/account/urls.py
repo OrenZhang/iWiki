@@ -27,6 +27,7 @@ from django.urls import path
 from rest_framework.routers import SimpleRouter
 
 from modules.account.views import (
+    IPInfo,
     LoginCheckView,
     LoginView,
     LogoutView,
@@ -44,6 +45,7 @@ urlpatterns = [
     path("sign_in/", LoginView.as_view()),
     path("sign_up/", RegisterView.as_view()),
     path("sign_out/", LogoutView.as_view()),
+    path("ip_info/", IPInfo.as_view()),
 ]
 
 urlpatterns += router.urls

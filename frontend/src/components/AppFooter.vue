@@ -30,6 +30,12 @@
     <div>
       {{ $t('continuousRunning') }} - {{ continuousRunningTime }}
     </div>
+    <div v-if="ip && ipInfoStr">
+      {{ $t('currentIpAddress') }} - {{ ipInfoStr }} ({{ ip }})
+    </div>
+    <div v-else-if="ip">
+      {{ $t('currentIpAddress') }} - {{ ip }}
+    </div>
     <div>
       Copyright <i class="fa-regular fa-copyright" />{{ startYear }} - {{ currentYear }} {{ footerInfo.copyright }}.
       All Rights Reserved.
@@ -38,9 +44,10 @@
 </template>
 
 <script setup>
-import { onUnmounted, computed, ref } from 'vue';
+import { onUnmounted, computed, ref, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
+import { loadIPInfoAPI } from '../api/modules/common';
 
 const { t } = useI18n();
 
@@ -88,6 +95,36 @@ const startUpTimer = setInterval(calculateTime, 1000);
 onUnmounted(() => {
   clearInterval(startUpTimer);
 });
+
+const ip = ref('');
+const ipInfo = ref({
+  nation: '',
+  province: '',
+  city: '',
+});
+const ipInfoStr = computed(() => {
+  let info = '';
+  if (ipInfo.value.nation) {
+    info += ipInfo.value.nation;
+    if (ipInfo.value.province) {
+      info = `${info}/${ipInfo.value.province}`;
+      if (ipInfo.value.city) {
+        info = `${info}/${ipInfo.value.city}`;
+      }
+    }
+  }
+  return info;
+});
+
+const loadIPInfo = () => {
+  loadIPInfoAPI().then((res) => {
+    if (res.result) {
+      ip.value = res.data.ip;
+      ipInfo.value = res.data;
+    }
+  });
+};
+onMounted(() => loadIPInfo());
 </script>
 
 <style scoped>

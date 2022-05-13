@@ -69,3 +69,7 @@ export const loadVersionDataAPI = vid => new Promise((resolve, reject) => {
 export const listVersionAPI = () => new Promise((resolve, reject) => {
   http.get('/version/log/').then(res => resolve(res), err => reject(err));
 });
+
+export const loadIPInfoAPI = () => new Promise((resolve, reject) => {
+  http.get('/account/ip_info/').then(res => resolve(res), err => reject(err));
+});

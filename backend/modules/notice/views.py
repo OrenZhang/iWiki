@@ -47,7 +47,7 @@ class NoticeCommonView(GenericViewSet):
     def list(self, request, *args, **kwargs):
         """获取所有通知"""
         if not request.user.is_authenticated:
-            return Response()
+            return Response({"count": 0, "page": 1, "results": []})
         sql = (
             "SELECT nn.*, nr.is_read, nr.id 'log_id' "
             "FROM `notice_notice` nn "
