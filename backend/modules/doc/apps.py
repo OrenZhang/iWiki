@@ -28,7 +28,7 @@ from django.db.models.signals import post_migrate
 from django.utils.translation import gettext_lazy as _
 
 
-def update_comment_status(sender, **kwargs):
+def update_doc_partner_status(sender, **kwargs):
     from modules.doc.models import Doc, Comment, DocCollaborator, PinDoc, CollectDoc
 
     deleted_doc_ids = Doc.objects.filter(is_deleted=True).values_list("id", flat=True)
@@ -43,12 +43,12 @@ def init_default_doc(sender, **kwargs):
 
     from django.conf import settings
 
-    from constents import DOC_INIT
+    from constents import DocInit
     from modules.conf.models import Conf
     from modules.doc.models import Doc
     from modules.repo.models import Repo
 
-    is_init = Conf.objects.get(DOC_INIT["c_key"], DOC_INIT["sensitive"])
+    is_init = Conf.objects.get(DocInit.c_key, DocInit.sensitive)
     if not is_init:
         repo = Repo.objects.get(name=settings.DEFAULT_REPO_NAME)
         path = os.path.join(settings.BASE_DIR, "modules", "doc", "markdowns")
@@ -62,7 +62,7 @@ def init_default_doc(sender, **kwargs):
                     content=file_content.read(),
                     creator=settings.ADMIN_USERNAME,
                 )
-        Conf.objects.filter(c_key=DOC_INIT["c_key"]).update(c_bool=True)
+        Conf.objects.filter(c_key=DocInit.c_key).update(c_bool=True)
 
 
 class DocConfig(AppConfig):
@@ -71,5 +71,5 @@ class DocConfig(AppConfig):
     verbose_name = _("文档模块")
 
     def ready(self):
-        post_migrate.connect(update_comment_status, sender=self)
+        post_migrate.connect(update_doc_partner_status, sender=self)
         post_migrate.connect(init_default_doc, sender=self)

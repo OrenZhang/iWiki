@@ -9,6 +9,6 @@ else
   echo -e "\033[36mDomain is wiki.incv.net\033[0m"
 fi
 
-yarn build
+yarn && yarn build
 
 mv src/context/prod.js.bak src/context/prod.js

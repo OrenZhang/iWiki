@@ -61,7 +61,7 @@ app.conf.beat_schedule = {
     },
     "auto_check_pin_doc": {
         "task": "modules.cel.tasks.auto_check_pin_doc",
-        "schedule": crontab(minute="*"),
+        "schedule": crontab(minute="*/10"),
         "args": (),
     },
     "remind_apply_info": {
