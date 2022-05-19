@@ -33,7 +33,7 @@ def conf_init(sender, **kwargs):
     from modules.conf.models import Conf
 
     for item in AUTO_REGISTRY_KEYS:
-        Conf.objects.get_or_create(c_key=item["c_key"], defaults=item)
+        Conf.objects.get_or_create(c_key=item.c_key, defaults=item.json())
 
 
 class ConfConfig(AppConfig):

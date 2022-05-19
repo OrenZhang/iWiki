@@ -28,7 +28,7 @@ from django.utils.translation import gettext as _
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from constents import SIGN_UP_KEY
+from constents import SignUpKey
 from modules.conf.models import Conf
 from utils.authenticators import SessionAuthenticate
 from utils.exceptions import OperationError, ParamsNotFound, SMSSendFailed, UserNotExist
@@ -42,7 +42,7 @@ class RegisterCodeView(APIView):
     authentication_classes = [SessionAuthenticate]
 
     def post(self, request, *args, **kwargs):
-        if not Conf.objects.get(SIGN_UP_KEY["c_key"]):
+        if not Conf.objects.get(SignUpKey.c_key):
             raise OperationError(_("暂未开放注册，请联系管理员"))
         phone = request.data.get("phone", None)
         if not phone or (isinstance(phone, str) and len(phone) != 11):

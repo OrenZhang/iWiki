@@ -23,10 +23,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from django.urls import path
+from rest_framework.routers import SimpleRouter
 
 from modules.conf.views import ConfView
 
-urlpatterns = [
-    path("common/<pk>/", ConfView.as_view()),
-]
+router = SimpleRouter()
+router.register("common", ConfView)
+
+urlpatterns = router.urls

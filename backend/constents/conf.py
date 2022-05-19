@@ -35,67 +35,84 @@ class ConfTypeChoices(models.IntegerChoices):
     JSON = 2, _("字典")
 
 
-SIGN_UP_KEY = {
-    "c_key": "sign_up",
-    "c_type": ConfTypeChoices.BOOL,
-    "c_val": {},
-    "c_bool": True,
-}
-GLOBAL_NOTICE = {
-    "c_key": "global_notice",
-    "c_type": ConfTypeChoices.JSON,
-    "c_val": {},
-    "c_bool": True,
-}
-HOME_NOTICE = {
-    "c_key": "home_notice",
-    "c_type": ConfTypeChoices.JSON,
-    "c_val": {
+class ConfConst:
+    c_key = None
+    c_type = ConfTypeChoices.BOOL
+    c_val = {}
+    c_bool = True
+    sensitive = False
+
+    @classmethod
+    def json(cls):
+        return {
+            "c_key": cls.c_key,
+            "c_type": cls.c_type,
+            "c_val": cls.c_val,
+            "c_bool": cls.c_bool,
+            "sensitive": cls.sensitive,
+        }
+
+
+class BoolConfConst(ConfConst):
+    c_type = ConfTypeChoices.BOOL
+
+
+class JsonConfConst(ConfConst):
+    c_type = ConfTypeChoices.JSON
+
+
+class SignUpKey(BoolConfConst):
+    c_key = "sign_up"
+
+
+class GlobalNotice(JsonConfConst):
+    c_key = "global_notice"
+
+
+class HomeNotice(JsonConfConst):
+    c_key = "home_notice"
+    c_val = {
         "desc": "",
         "type": "info",
         "title": "",
         "showIcon": True,
         "showNotice": False,
-    },
-    "c_bool": True,
-}
-SHOW_DOC_PUBLISH_CHART = {
-    "c_key": "show_doc_publish_chart",
-    "c_type": ConfTypeChoices.BOOL,
-    "c_val": {},
-    "c_bool": True,
-}
-FOOTER_INFO = {
-    "c_key": "footer_info",
-    "c_type": ConfTypeChoices.JSON,
-    "c_val": {
+    }
+
+
+class ShowDocPublishChart(BoolConfConst):
+    c_key = "show_doc_publish_chart"
+
+
+class FooterInfo(JsonConfConst):
+    copyright = settings.SIMPLEUI_INDEX.replace("http://", "").replace("https://", "")
+    c_key = "footer_info"
+    c_val = {
         "showFooter": True,
         "siteStartup": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "copyright": settings.APP_CODE,
-    },
-    "c_bool": True,
-}
-NAV_LINK = {
-    "c_key": "nav_link",
-    "c_type": ConfTypeChoices.JSON,
-    "c_val": [
+        "copyright": copyright,
+    }
+
+
+class NavLink(JsonConfConst):
+    c_key = "nav_link"
+    c_val = [
         {"url": "https://github.com/OrenZhang/iWiki", "icon": "fa-brands fa-github"}
-    ],
-    "c_bool": True,
-}
-DOC_INIT = {
-    "c_key": "doc_init",
-    "c_type": ConfTypeChoices.BOOL,
-    "c_val": {},
-    "c_bool": False,
-    "sensitive": True,
-}
+    ]
+
+
+class DocInit(BoolConfConst):
+    c_key = "doc_init"
+    c_bool = False
+    sensitive = True
+
+
 AUTO_REGISTRY_KEYS = (
-    SIGN_UP_KEY,
-    GLOBAL_NOTICE,
-    HOME_NOTICE,
-    SHOW_DOC_PUBLISH_CHART,
-    FOOTER_INFO,
-    NAV_LINK,
-    DOC_INIT,
+    SignUpKey,
+    GlobalNotice,
+    HomeNotice,
+    ShowDocPublishChart,
+    FooterInfo,
+    NavLink,
+    DocInit,
 )

@@ -22,24 +22,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-
+from rest_framework.mixins import RetrieveModelMixin
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.viewsets import GenericViewSet
 
 from modules.conf.models import Conf
 from utils.authenticators import SessionAuthenticate
-from utils.exceptions import Error404
 
 
-class ConfView(APIView):
+class ConfView(GenericViewSet, RetrieveModelMixin):
     """配置入口"""
 
+    queryset = Conf.objects.filter(sensitive=False)
     authentication_classes = [SessionAuthenticate]
+    lookup_url_kwarg = "c_key"
 
-    def get(self, request, *args, **kwargs):
-        c_key = kwargs.get("pk")
-        conf = Conf.objects.get(c_key=c_key, sensitive=False)
-        if conf is not None:
-            return Response(conf)
-        else:
-            raise Error404()
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        return Response(instance.val)
