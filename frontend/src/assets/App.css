@@ -411,3 +411,11 @@ svg g .section2 {
 .v-md-editor__toolbar-left  .v-md-editor__menu {
     font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif !important;
 }
+
+.v-md-editor__editor-wrapper, .v-md-editor__preview-wrapper {
+    width: 100%;
+}
+
+.vuepress-markdown-body {
+    word-break: break-all;
+}
