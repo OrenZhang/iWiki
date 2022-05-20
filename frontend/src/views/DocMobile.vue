@@ -57,6 +57,15 @@ onMounted(() => {
   if (window.innerWidth >= 1000 && window.innerHeight >= 600) {
     window.location.replace(`${globalContext.siteUrl}doc/${docID.value}`);
   }
+  try {
+    const meta = document.getElementById('apple-mobile-web');
+    const oMeta = document.createElement('meta');
+    oMeta.name = 'viewport';
+    oMeta.content = 'width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no';
+    meta.parentNode.appendChild(oMeta);
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 const loading = ref(true);
