@@ -50,7 +50,7 @@
       <el-header
         class="app-header"
         height="61px"
-        v-if="!isMobile"
+        v-if="route.name !== 'DocMobile'"
       >
         <div class="el-menu-demo">
           <div class="menu">
@@ -242,16 +242,17 @@ const showVersionTab = () => {
 };
 
 // 宽度控制
-const width = ref(window.innerWidth);
-const height = ref(window.innerHeight);
-const isMobile = computed(() => width.value < 1000 || height.value < 600);
-const screenCheck = computed(() => route.meta.allowMobile || (width.value >= 1000 && height.value >= 600));
-onMounted(() => {
-  window.addEventListener('resize', () => {
-    width.value = window.innerWidth;
-    height.value = window.innerHeight;
-  });
-});
+const screenCheck = true;
+// const width = ref(window.innerWidth);
+// const height = ref(window.innerHeight);
+// const isMobile = computed(() => width.value < 1000 || height.value < 600);
+// const screenCheck = computed(() => route.meta.allowMobile || (width.value >= 1000 && height.value >= 600));
+// onMounted(() => {
+//   window.addEventListener('resize', () => {
+//     width.value = window.innerWidth;
+//     height.value = window.innerHeight;
+//   });
+// });
 
 // vuex
 const store = useStore();
