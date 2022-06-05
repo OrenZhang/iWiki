@@ -225,6 +225,9 @@ const en = {
   cancelConfirm: 'Cancel Confirm',
   cancelConfirmed: 'Confirm',
   currentIpAddress: 'Current IP Address',
+  disableApply: 'Deny Apply',
+  allowApply: 'Allow Apply',
+  repoApplyStatus: 'Apply Status',
 };
 
 export default en;

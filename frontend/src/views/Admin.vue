@@ -51,6 +51,19 @@
               :value="item.id"
             />
           </el-select>
+          <el-select
+            @change="changeRepoApplyStatus"
+            class="admin-header-select2"
+            v-model="repoApplyStatus"
+            :placeholder="$t('repoApplyStatus')"
+          >
+            <el-option
+              v-for="item in repoApplyStatusOptions"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            />
+          </el-select>
           <el-button
             type="danger"
             size="medium"
@@ -136,7 +149,13 @@ import AdminMember from '../components/AdminMember.vue';
 import AdminDoc from '../components/AdminDoc.vue';
 import { useI18n } from 'vue-i18n';
 import globalContext from '../context';
-import { changeRepoTypeAPI, checkOwnerAPI, deleteRepoAPI, loadManageRepoAPI } from '../api/modules/repo';
+import {
+  changeRepoApplyStatusAPI,
+  changeRepoTypeAPI,
+  checkOwnerAPI,
+  deleteRepoAPI,
+  loadManageRepoAPI,
+} from '../api/modules/repo';
 import { checkSuperAdminAPI } from '../api/modules/user';
 import { setTitle } from '../utils/controller';
 import message from '../utils/message';
@@ -162,14 +181,34 @@ const changeRepoType = (value) => {
     loadRepo();
   });
 };
+
+const repoApplyStatus = ref(true);
+const repoApplyStatusOptions = ref([
+  {
+    id: true,
+    name: t('allowApply'),
+  },
+  {
+    id: false,
+    name: t('disableApply'),
+  },
+]);
+const changeRepoApplyStatus = (value) => {
+  changeRepoApplyStatusAPI(curRepoID.value, value).then(() => {
+    loadRepo();
+  });
+};
+
 const repoName = computed(() => {
   for (const i in repos.value) {
     if (repos.value[i].id === curRepoID.value) {
       repoType.value = repos.value[i].r_type;
+      repoApplyStatus.value = repos.value[i].is_allow_apply;
       return repos.value[i].name;
     }
   }
   repoType.value = '';
+  repoApplyStatus.value = true;
   return '';
 });
 const curComponent = computed(() => {

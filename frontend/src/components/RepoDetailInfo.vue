@@ -46,7 +46,7 @@
       </div>
       <div>
         <el-link
-          v-show="!isMember"
+          v-show="!isMember && repo.is_allow_apply"
           :underline="false"
           @click="showApplyConfirm"
         >
@@ -158,6 +158,7 @@ const props = defineProps({
       name: '',
       admins: [],
       members: [],
+      is_allow_apply: true,
     }),
   },
 });

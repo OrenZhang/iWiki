@@ -106,3 +106,10 @@ export const changeRepoUserTypeAdminAPI = (repoId, uid, uType) => new Promise((r
     { uid, uType },
   ).then(res => resolve(res), err => reject(err));
 });
+
+export const changeRepoApplyStatusAPI = (repoId, status) => new Promise((resolve, reject) => {
+  http.put(
+    `/repo/manage/${repoId}/allow_apply/`,
+    { allow_apply: status },
+  ).then(res => resolve(res), err => reject(err));
+});

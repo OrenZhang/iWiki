@@ -225,6 +225,9 @@ const zh = {
   cancelConfirm: '取消确认',
   cancelConfirmed: '确认取消',
   currentIpAddress: '当前IP地址',
+  disableApply: '禁止申请',
+  allowApply: '允许申请',
+  repoApplyStatus: '申请状态',
 };
 
 export default zh;
