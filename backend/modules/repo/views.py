@@ -319,6 +319,17 @@ class RepoView(ModelViewSet):
         DocHandlerNotice(doc_id, _("取消置顶"))()
         return Response()
 
+    @action(detail=True, methods=["PUT"])
+    def allow_apply(self, request, *args, **kwargs):
+        """变更允许申请"""
+        is_allow_apply = request.data.get("allow_apply")
+        if is_allow_apply is None:
+            raise ParamsNotFound()
+        instance = self.get_object()
+        instance.is_allow_apply = is_allow_apply
+        instance.save()
+        return Response()
+
 
 class RepoCommonView(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     """仓库常规入口"""
@@ -395,6 +406,8 @@ class RepoCommonView(ListModelMixin, RetrieveModelMixin, GenericViewSet):
 
     def apply_for_repo(self, repo: Repo, uid: str):
         """申请库"""
+        if not repo.is_allow_apply:
+            raise OperationError(_("库管理员未开启入库申请通道"))
         try:
             RepoUser.objects.create(
                 repo_id=repo.id, uid=uid, u_type=UserTypeChoices.VISITOR

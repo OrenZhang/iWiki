@@ -38,7 +38,7 @@ class RepoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Repo
-        fields = ["id", "name", "r_type"]
+        fields = ["id", "name", "r_type", "is_allow_apply"]
 
     def validate_name(self, value: str):
         try:
@@ -53,7 +53,7 @@ class RepoCommonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Repo
-        fields = ["id", "name", "r_type", "creator"]
+        fields = ["id", "name", "r_type", "creator", "is_allow_apply"]
 
 
 class RepoApplyDealSerializer(serializers.ModelSerializer):

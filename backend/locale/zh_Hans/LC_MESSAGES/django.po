@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-27 19:42+0800\n"
+"POT-Creation-Date: 2022-06-06 01:32+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,615 +18,623 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: constents/conf.py:9
+#: constents/conf.py:34
 msgid "布尔"
 msgstr "布尔"
 
-#: constents/conf.py:10
+#: constents/conf.py:35
 msgid "字典"
 msgstr "字典"
 
-#: constents/doc.py:6 constents/repo.py:6
+#: constents/doc.py:31 constents/repo.py:31
 msgid "公开"
 msgstr "公开"
 
-#: constents/doc.py:7 constents/repo.py:7
+#: constents/doc.py:32 constents/repo.py:32
 msgid "私有"
 msgstr "私有"
 
-#: constents/repo.py:11
+#: constents/repo.py:36
 msgid "所有者"
 msgstr "所有者"
 
-#: constents/repo.py:12
+#: constents/repo.py:37
 msgid "管理员"
 msgstr "管理员"
 
-#: constents/repo.py:13 modules/account/models.py:58
+#: constents/repo.py:38 modules/account/models.py:83
 msgid "成员"
 msgstr "成员"
 
-#: constents/repo.py:14
+#: constents/repo.py:39
 msgid "访客"
 msgstr "访客"
 
-#: entry/settings.py:178
+#: entry/settings.py:197
 msgid "English"
 msgstr "英语"
 
-#: entry/settings.py:179
+#: entry/settings.py:198
 msgid "中文简体"
 msgstr "中文简体"
 
-#: modules/account/apps.py:19
+#: modules/account/apps.py:44
 msgid "用户模块"
 msgstr "用户模块"
 
-#: modules/account/models.py:41 modules/doc/models.py:150
-#: modules/notice/models.py:31
+#: modules/account/models.py:66 modules/doc/models.py:175
+#: modules/notice/models.py:56
 msgid "用户ID"
 msgstr "用户ID"
 
-#: modules/account/models.py:42 modules/doc/admin.py:69 modules/doc/admin.py:84
-#: modules/repo/admin.py:30
+#: modules/account/models.py:67 modules/doc/admin.py:94
+#: modules/doc/admin.py:109 modules/repo/admin.py:55
 msgid "用户名"
 msgstr "用户名"
 
-#: modules/account/models.py:43
+#: modules/account/models.py:68
 msgid "访问后台"
 msgstr "访问后台"
 
-#: modules/account/models.py:44
+#: modules/account/models.py:69
 msgid "激活状态"
 msgstr "激活状态"
 
-#: modules/account/models.py:45
+#: modules/account/models.py:70
 msgid "注册时间"
 msgstr "注册时间"
 
-#: modules/account/models.py:46
+#: modules/account/models.py:71
 msgid "头像"
 msgstr "头像"
 
-#: modules/account/models.py:48
+#: modules/account/models.py:73
 msgid "联系电话"
 msgstr "联系电话"
 
-#: modules/account/models.py:50 modules/doc/models.py:37
-#: modules/doc/models.py:102 modules/repo/models.py:32
+#: modules/account/models.py:75 modules/doc/models.py:62
+#: modules/doc/models.py:127 modules/repo/models.py:57
 msgid "软删除"
 msgstr "软删除"
 
-#: modules/account/models.py:51
+#: modules/account/models.py:76
 msgid "活跃指数"
 msgstr "活跃指数"
 
-#: modules/account/models.py:108
+#: modules/account/models.py:133
 msgid "手机号不匹配"
 msgstr "手机号不匹配"
 
-#: modules/account/serializers.py:24
+#: modules/account/serializers.py:49
 msgid "用户名格式有误"
 msgstr "用户名格式有误"
 
-#: modules/account/serializers.py:25 modules/account/serializers.py:28
-#: modules/account/views.py:132 modules/doc/views/doc.py:457
+#: modules/account/serializers.py:50 modules/account/serializers.py:53
+#: modules/account/views.py:158 modules/doc/views/doc.py:488
 msgid "用户名不能为空"
 msgstr "用户名不能为空"
 
-#: modules/account/serializers.py:26
+#: modules/account/serializers.py:51
 msgid "用户名过长"
 msgstr "用户名过长"
 
-#: modules/account/serializers.py:27
+#: modules/account/serializers.py:52
 msgid "用户名过短"
 msgstr "用户名过短"
 
-#: modules/account/serializers.py:34
+#: modules/account/serializers.py:59
 msgid "密码格式有误"
 msgstr "密码格式有误"
 
-#: modules/account/serializers.py:35 modules/account/serializers.py:37
+#: modules/account/serializers.py:60 modules/account/serializers.py:62
 msgid "密码不能为空"
 msgstr "密码不能为空"
 
-#: modules/account/serializers.py:36
+#: modules/account/serializers.py:61
 msgid "密码过长"
 msgstr "密码过长"
 
-#: modules/account/serializers.py:64
+#: modules/account/serializers.py:89
 msgid "用户名不能为纯数字"
 msgstr "用户名不能为纯数字"
 
-#: modules/account/serializers.py:67
+#: modules/account/serializers.py:92
 msgid "用户名只能包含a-z,A-Z,0-9,-,_"
 msgstr "用户名只能包含a-z,A-Z,0-9,-,_"
 
-#: modules/account/serializers.py:73
+#: modules/account/serializers.py:98
 msgid "验证码格式有误"
 msgstr "验证码格式有误"
 
-#: modules/account/views.py:90
+#: modules/account/views.py:116
 msgid "登陆失败，用户名或密码错误"
 msgstr "登陆失败，用户名或密码错误"
 
-#: modules/conf/apps.py:17
+#: modules/conf/apps.py:42
 msgid "配置模块"
 msgstr "配置模块"
 
-#: modules/conf/models.py:27
+#: modules/conf/models.py:52
 msgid "配置项"
 msgstr "配置项"
 
-#: modules/conf/models.py:29
+#: modules/conf/models.py:54
 msgid "配置类型"
 msgstr "配置类型"
 
-#: modules/conf/models.py:32
+#: modules/conf/models.py:57
 msgid "配置内容字典"
 msgstr "配置内容字典"
 
-#: modules/conf/models.py:34
+#: modules/conf/models.py:59
 msgid "配置内容布尔"
 msgstr "配置内容布尔"
 
-#: modules/conf/models.py:35
+#: modules/conf/models.py:60
 msgid "敏感信息"
 msgstr "敏感信息"
 
-#: modules/conf/models.py:41
+#: modules/conf/models.py:66
 msgid "配置"
 msgstr "配置"
 
-#: modules/cos/admin.py:9 modules/cos/admin.py:33
+#: modules/cos/admin.py:34 modules/cos/admin.py:58
 msgid "上传结果"
 msgstr "上传结果"
 
-#: modules/cos/admin.py:14
+#: modules/cos/admin.py:39
 msgid "上传成功"
 msgstr "上传成功"
 
-#: modules/cos/admin.py:15
+#: modules/cos/admin.py:40
 msgid "上传失败"
 msgstr "上传失败"
 
-#: modules/cos/admin.py:37 modules/cos/models.py:15 modules/doc/admin.py:119
-#: modules/doc/models.py:136
+#: modules/cos/admin.py:62 modules/cos/models.py:40 modules/doc/admin.py:144
+#: modules/doc/models.py:161
 msgid "操作人"
 msgstr "操作人"
 
-#: modules/cos/apps.py:8
+#: modules/cos/apps.py:33
 msgid "对象存储"
 msgstr "对象存储"
 
-#: modules/cos/models.py:12
+#: modules/cos/models.py:37
 msgid "文件名"
 msgstr "文件名"
 
-#: modules/cos/models.py:13
+#: modules/cos/models.py:38
 msgid "文件Path"
 msgstr "文件Path"
 
-#: modules/cos/models.py:14
+#: modules/cos/models.py:39
 msgid "相应参数"
 msgstr "相应参数"
 
-#: modules/cos/models.py:16
+#: modules/cos/models.py:41
 msgid "上传时间"
 msgstr "上传时间"
 
-#: modules/cos/models.py:20
+#: modules/cos/models.py:45
 msgid "上传日志"
 msgstr "上传日志"
 
-#: modules/cos/views.py:28 modules/cos/views.py:73
+#: modules/cos/views.py:53 modules/cos/views.py:98
 #, python-format
 msgid "请上传 %(limit)dM 以内文件"
 msgid_plural "请上传 %(limit)dM 以内文件"
 msgstr[0] "请上传 %(limit)dM 以内文件"
 msgstr[1] "请上传 %(limit)dM 以内文件"
 
-#: modules/cos/views.py:43 modules/cos/views.py:63
+#: modules/cos/views.py:68 modules/cos/views.py:88
 msgid "上传失败，请稍后再试"
 msgstr "上传失败，请稍后再试"
 
-#: modules/doc/admin.py:32 modules/repo/admin.py:26 modules/repo/models.py:23
+#: modules/doc/admin.py:57 modules/repo/admin.py:51 modules/repo/models.py:48
 msgid "库名"
 msgstr "库名"
 
-#: modules/doc/admin.py:36 modules/doc/models.py:31 modules/doc/models.py:100
-#: modules/repo/admin.py:15 modules/repo/models.py:30
+#: modules/doc/admin.py:61 modules/doc/models.py:56 modules/doc/models.py:125
+#: modules/repo/admin.py:40 modules/repo/models.py:55
 msgid "创建人"
 msgstr "创建人"
 
-#: modules/doc/admin.py:40 modules/doc/models.py:34
+#: modules/doc/admin.py:65 modules/doc/models.py:59
 msgid "更新人"
 msgstr "更新人"
 
-#: modules/doc/admin.py:65 modules/doc/models.py:28 modules/notice/admin.py:22
-#: modules/notice/models.py:12
+#: modules/doc/admin.py:90 modules/doc/models.py:53 modules/notice/admin.py:47
+#: modules/notice/models.py:37
 msgid "标题"
 msgstr "标题"
 
-#: modules/doc/admin.py:80 modules/doc/admin.py:115 modules/doc/admin.py:129
-#: modules/log/admin.py:23
+#: modules/doc/admin.py:105 modules/doc/admin.py:140 modules/doc/admin.py:154
+#: modules/log/admin.py:48
 msgid "文章"
 msgstr "文章"
 
-#: modules/doc/admin.py:133
+#: modules/doc/admin.py:158
 msgid "用户"
 msgstr "用户"
 
-#: modules/doc/apps.py:46
+#: modules/doc/apps.py:71
 msgid "文档模块"
 msgstr "文档模块"
 
-#: modules/doc/models.py:21 modules/doc/models.py:46
+#: modules/doc/models.py:46 modules/doc/models.py:71
 msgid "仓库id"
 msgstr "仓库id"
 
-#: modules/doc/models.py:23
+#: modules/doc/models.py:48
 msgid "可见范围"
 msgstr "可见范围"
 
-#: modules/doc/models.py:29 modules/doc/models.py:99
-#: modules/notice/models.py:13
+#: modules/doc/models.py:54 modules/doc/models.py:124
+#: modules/notice/models.py:38
 msgid "内容"
 msgstr "内容"
 
-#: modules/doc/models.py:30
+#: modules/doc/models.py:55
 msgid "附件"
 msgstr "附件"
 
-#: modules/doc/models.py:32 modules/doc/models.py:101
+#: modules/doc/models.py:57 modules/doc/models.py:126
 msgid "更新时间"
 msgstr "更新时间"
 
-#: modules/doc/models.py:36
+#: modules/doc/models.py:61
 msgid "发布状态"
 msgstr "发布状态"
 
-#: modules/doc/models.py:50
+#: modules/doc/models.py:75
 msgid "文档"
 msgstr "文档"
 
-#: modules/doc/models.py:71 modules/doc/models.py:121
+#: modules/doc/models.py:96 modules/doc/models.py:146
 msgid "版本id"
 msgstr "版本id"
 
-#: modules/doc/models.py:76
+#: modules/doc/models.py:101
 msgid "文档版本"
 msgstr "文档版本"
 
-#: modules/doc/models.py:83 modules/doc/models.py:133 modules/doc/models.py:151
-#: modules/log/models.py:16
+#: modules/doc/models.py:108 modules/doc/models.py:158
+#: modules/doc/models.py:176 modules/log/models.py:41
 msgid "文章ID"
 msgstr "文章ID"
 
-#: modules/doc/models.py:84
+#: modules/doc/models.py:109
 msgid "协作人ID"
 msgstr "协作人ID"
 
-#: modules/doc/models.py:85
+#: modules/doc/models.py:110
 msgid "添加时间"
 msgstr "添加时间"
 
-#: modules/doc/models.py:89
+#: modules/doc/models.py:114
 msgid "协作成员"
 msgstr "协作成员"
 
-#: modules/doc/models.py:97
+#: modules/doc/models.py:122
 msgid "文档id"
 msgstr "文档id"
 
-#: modules/doc/models.py:98
+#: modules/doc/models.py:123
 msgid "父级评论"
 msgstr "父级评论"
 
-#: modules/doc/models.py:113
+#: modules/doc/models.py:138
 msgid "评论"
 msgstr "评论"
 
-#: modules/doc/models.py:126
+#: modules/doc/models.py:151
 msgid "评论版本"
 msgstr "评论版本"
 
-#: modules/doc/models.py:134 modules/doc/models.py:152
-#: modules/notice/models.py:18 modules/repo/models.py:31
+#: modules/doc/models.py:159 modules/doc/models.py:177
+#: modules/notice/models.py:43 modules/repo/models.py:56
 msgid "创建时间"
 msgstr "创建时间"
 
-#: modules/doc/models.py:135
+#: modules/doc/models.py:160
 msgid "置顶到期时间"
 msgstr "置顶到期时间"
 
-#: modules/doc/models.py:137
+#: modules/doc/models.py:162
 msgid "使用中"
 msgstr "使用中"
 
-#: modules/doc/models.py:141
+#: modules/doc/models.py:166
 msgid "置顶文章"
 msgstr "置顶文章"
 
-#: modules/doc/models.py:156
+#: modules/doc/models.py:181
 msgid "收藏文章"
 msgstr "收藏文章"
 
-#: modules/doc/serializers/doc.py:87
+#: modules/doc/serializers/doc.py:112
 msgid "用户名相同"
 msgstr "用户名相同"
 
-#: modules/doc/serializers/doc.py:100
+#: modules/doc/serializers/doc.py:125
 msgid "库不存在"
 msgstr "库不存在"
 
-#: modules/doc/views/doc.py:89
+#: modules/doc/views/doc.py:118
 #, python-format
 msgid "成功更新%(count)d篇文章的作者"
 msgid_plural "成功更新%(count)d篇文章的作者"
 msgstr[0] ""
 
-#: modules/doc/views/doc.py:182
+#: modules/doc/views/doc.py:211
 msgid "已添加该用户为协作者，请勿重复添加"
 msgstr "已添加该用户为协作者，请勿重复添加"
 
-#: modules/doc/views/doc.py:183
+#: modules/doc/views/doc.py:212
 msgid "添加"
 msgstr "添加"
 
-#: modules/doc/views/doc.py:194
+#: modules/doc/views/doc.py:223
 msgid "移除"
 msgstr "移除"
 
-#: modules/doc/views/doc.py:508
+#: modules/doc/views/doc.py:539
 msgid "搜索关键字不能为空"
 msgstr "搜索关键字不能为空"
 
-#: modules/i18n/apps.py:8
+#: modules/i18n/apps.py:33
 msgid "国际化模块"
 msgstr "国际化模块"
 
-#: modules/i18n/views.py:21
+#: modules/i18n/views.py:46
 msgid "不支持的语言"
 msgstr "不支持的语言"
 
-#: modules/log/admin.py:16
+#: modules/log/admin.py:41
 #, fuzzy
 #| msgid "访问量"
 msgid "访问人"
 msgstr "访问量"
 
-#: modules/log/apps.py:8
+#: modules/log/apps.py:33
 msgid "日志模块"
 msgstr "日志模块"
 
-#: modules/log/models.py:18
+#: modules/log/models.py:43
 msgid "访问者ID"
 msgstr "访问者ID"
 
-#: modules/log/models.py:20
+#: modules/log/models.py:45
 msgid "IP"
 msgstr "IP"
 
-#: modules/log/models.py:21
+#: modules/log/models.py:46
 msgid "用户代理"
 msgstr "用户代理"
 
-#: modules/log/models.py:22
+#: modules/log/models.py:47
 msgid "访问时间"
 msgstr "访问时间"
 
-#: modules/log/models.py:26
+#: modules/log/models.py:51
 msgid "访问日志"
 msgstr "访问日志"
 
-#: modules/notice/admin.py:29
+#: modules/notice/admin.py:54
 msgid "接受人"
 msgstr "接受人"
 
-#: modules/notice/apps.py:8
+#: modules/notice/apps.py:33
 msgid "通知模块"
 msgstr "通知模块"
 
-#: modules/notice/models.py:15
+#: modules/notice/models.py:40
 msgid "按钮文本"
 msgstr "按钮文本"
 
-#: modules/notice/models.py:17
+#: modules/notice/models.py:42
 msgid "跳转链接"
 msgstr "跳转链接"
 
-#: modules/notice/models.py:22
+#: modules/notice/models.py:47
 msgid "通知"
 msgstr "通知"
 
-#: modules/notice/models.py:30
+#: modules/notice/models.py:55
 msgid "消息ID"
 msgstr "消息ID"
 
-#: modules/notice/models.py:32
+#: modules/notice/models.py:57
 msgid "阅读状态"
 msgstr "阅读状态"
 
-#: modules/notice/models.py:33
+#: modules/notice/models.py:58
 msgid "阅读时间"
 msgstr "阅读时间"
 
-#: modules/notice/models.py:37
+#: modules/notice/models.py:62
 msgid "通知读取"
 msgstr "通知读取"
 
-#: modules/repo/admin.py:34 modules/repo/models.py:79
+#: modules/repo/admin.py:59 modules/repo/models.py:105
 msgid "处理人"
 msgstr "处理人"
 
-#: modules/repo/apps.py:28
+#: modules/repo/apps.py:53
 msgid "文库模块"
 msgstr "文库模块"
 
-#: modules/repo/models.py:25
+#: modules/repo/models.py:50
 msgid "类型"
 msgstr "类型"
 
-#: modules/repo/models.py:36
+#: modules/repo/models.py:58
+msgid "允许申请"
+msgstr "允许申请"
+
+#: modules/repo/models.py:62
 msgid "库"
 msgstr "库"
 
-#: modules/repo/models.py:69
+#: modules/repo/models.py:95
 msgid "库id"
 msgstr "库id"
 
-#: modules/repo/models.py:70
+#: modules/repo/models.py:96
 msgid "用户id"
 msgstr "用户id"
 
-#: modules/repo/models.py:72
+#: modules/repo/models.py:98
 msgid "用户类型"
 msgstr "用户类型"
 
-#: modules/repo/models.py:81
+#: modules/repo/models.py:107
 msgid "加入时间"
 msgstr "加入时间"
 
-#: modules/repo/models.py:85
+#: modules/repo/models.py:111
 msgid "库成员"
 msgstr "库成员"
 
-#: modules/repo/serializers.py:21
+#: modules/repo/serializers.py:46
 msgid "库名重复"
 msgstr "库名重复"
 
-#: modules/repo/views.py:106
+#: modules/repo/views.py:131
 msgid "该申请不存在"
 msgstr "该申请不存在"
 
-#: modules/repo/views.py:112
+#: modules/repo/views.py:137
 msgid "已拒绝"
 msgstr "已拒绝"
 
-#: modules/repo/views.py:124
+#: modules/repo/views.py:149
 msgid "已通过"
 msgstr "已通过"
 
-#: modules/repo/views.py:234
+#: modules/repo/views.py:259
 msgid "删除"
 msgstr "删除"
 
-#: modules/repo/views.py:271
+#: modules/repo/views.py:296
 #, fuzzy
 #| msgid "配置项"
 msgid "置顶"
 msgstr "配置项"
 
-#: modules/repo/views.py:294
+#: modules/repo/views.py:319
 msgid "取消置顶"
 msgstr "取消置顶"
 
-#: modules/repo/views.py:380
+#: modules/repo/views.py:410
+msgid "库管理员未开启入库申请通道"
+msgstr "库管理员未开启入库申请通道"
+
+#: modules/repo/views.py:418
 #, python-format
 msgid "已申请或加入%(name)s"
 msgid_plural "已申请或加入%(name)s"
 msgstr[0] "已申请或加入%(name)s"
 msgstr[1] "已申请或加入%(name)s"
 
-#: modules/sms/apps.py:8
+#: modules/sms/apps.py:33
 msgid "短信模块"
 msgstr "短信模块"
 
-#: modules/sms/views.py:21
+#: modules/sms/views.py:46
 msgid "暂未开放注册，请联系管理员"
 msgstr "暂未开放注册，请联系管理员"
 
-#: modules/sms/views.py:24 modules/sms/views.py:40
+#: modules/sms/views.py:49 modules/sms/views.py:65
 msgid "手机号为空或格式有误"
 msgstr "手机号为空或格式有误"
 
-#: modules/sms/views.py:42
+#: modules/sms/views.py:67
 msgid "用户名为空或格式有误"
 msgstr "用户名为空或格式有误"
 
-#: modules/version/apps.py:36
+#: modules/version/apps.py:61
 msgid "版本模块"
 msgstr "版本模块"
 
-#: modules/version/models.py:12
+#: modules/version/models.py:37
 msgid "版本号"
 msgstr "版本号"
 
-#: modules/version/models.py:13
+#: modules/version/models.py:38
 msgid "日志内容"
 msgstr "日志内容"
 
-#: modules/version/models.py:14
+#: modules/version/models.py:39
 msgid "发布时间"
 msgstr "发布时间"
 
-#: modules/version/models.py:15
+#: modules/version/models.py:40
 msgid "当前版本"
 msgstr "当前版本"
 
-#: modules/version/models.py:19
+#: modules/version/models.py:44
 msgid "版本"
 msgstr "版本"
 
-#: utils/exceptions.py:93
+#: utils/exceptions.py:118
 msgid "服务器异常，请联系管理员"
 msgstr "服务器异常，请联系管理员"
 
-#: utils/exceptions.py:99
+#: utils/exceptions.py:124
 msgid "未登录用户"
 msgstr "未登录用户"
 
-#: utils/exceptions.py:105
+#: utils/exceptions.py:130
 msgid "登录失败"
 msgstr "登录失败"
 
-#: utils/exceptions.py:111
+#: utils/exceptions.py:136
 msgid "验证码有误"
 msgstr "验证码有误"
 
-#: utils/exceptions.py:117
+#: utils/exceptions.py:142
 msgid "用户不存在"
 msgstr "用户不存在"
 
-#: utils/exceptions.py:123
+#: utils/exceptions.py:148
 msgid "用户名已存在"
 msgstr "用户名已存在"
 
-#: utils/exceptions.py:127
+#: utils/exceptions.py:152
 msgid "手机号已被注册"
 msgstr "手机号已被注册"
 
-#: utils/exceptions.py:133
+#: utils/exceptions.py:158
 msgid "未经授权访问"
 msgstr "未经授权访问"
 
-#: utils/exceptions.py:139
+#: utils/exceptions.py:164
 msgid "参数缺失"
 msgstr "参数缺失"
 
-#: utils/exceptions.py:145
+#: utils/exceptions.py:170
 msgid "请求次数受限"
 msgstr "请求次数受限"
 
-#: utils/exceptions.py:146
+#: utils/exceptions.py:171
 #, python-brace-format
 msgid "请在{wait}秒后再试"
 msgstr "请在{wait}秒后再试"
 
-#: utils/exceptions.py:153
+#: utils/exceptions.py:178
 msgid "短信发送失败，请稍后再试"
 msgstr "短信发送失败，请稍后再试"
 
-#: utils/exceptions.py:159
+#: utils/exceptions.py:184
 msgid "异常操作"
 msgstr "异常操作"
 
-#: utils/exceptions.py:165
+#: utils/exceptions.py:190
 msgid "资源不存在"
 msgstr "资源不存在"
 
-#: utils/exceptions.py:171
+#: utils/exceptions.py:196
 msgid "服务维护中，请稍后再试"
 msgstr "服务维护中，请稍后再试"
 
