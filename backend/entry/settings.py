@@ -187,18 +187,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# 国际化
-LANGUAGE_CODE = os.getenv("DEFAULT_LANGUAGE", "zh-Hans")
-TIME_ZONE = os.getenv("DEFAULT_TIME_ZONE", "Asia/Shanghai")
-USE_I18N = True
-USE_L10N = True
-USE_TZ = False
-LANGUAGES = (
-    ("en", _("English")),
-    ("zh-hans", _("中文简体")),
-)
-LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
-
 # 静态文件
 STATIC_URL = "/static/"
 # STATIC_ROOT = os.path.join(BASE_DIR, "static")
@@ -213,6 +201,19 @@ SESSION_CACHE_ALIAS = "default"
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 7
 SESSION_COOKIE_DOMAIN = os.getenv("SESSION_COOKIE_DOMAIN")
 AUTH_TOKEN_NAME = os.getenv("AUTH_TOKEN_NAME", f"{APP_CODE}-auth-token")
+
+# 国际化
+LANGUAGE_CODE = os.getenv("DEFAULT_LANGUAGE", "zh-Hans")
+TIME_ZONE = os.getenv("DEFAULT_TIME_ZONE", "Asia/Shanghai")
+USE_I18N = True
+USE_L10N = True
+USE_TZ = False
+LANGUAGES = (
+    ("en", _("English")),
+    ("zh-hans", _("中文简体")),
+)
+LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
+LANGUAGE_COOKIE_DOMAIN = SESSION_COOKIE_DOMAIN
 
 # 日志
 LOG_LEVEL = "INFO"
