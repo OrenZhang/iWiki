@@ -21,7 +21,7 @@
         "markdown-it-sub": "^1.0.0",
         "markdown-it-sup": "^1.0.0",
         "marked": "^4.0.10",
-        "mermaid": "8.13.8",
+        "mermaid": "9.1.2",
         "moment": "^2.29.1",
         "prismjs": "^1.25.0",
         "vue": "3.2.16",
