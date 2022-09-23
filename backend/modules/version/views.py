@@ -40,7 +40,7 @@ class VersionView(APIView):
     def get(self, request, *args, **kwargs):
         if kwargs.get("pk") is not None:
             return self.retrieve(request, *args, **kwargs)
-        queryset = Version.objects.all().order_by("-is_current", "-vid")
+        queryset = Version.objects.all().order_by("-is_current", "-release_at")
         serializer = VersionListSerializer(queryset, many=True)
         return Response(serializer.data)
 
