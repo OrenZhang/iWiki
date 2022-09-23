@@ -188,6 +188,8 @@ celerybeat-schedule.*
 nohup.out
 tmp
 
+*/.codecc/*
+
 backend/entry/settings.json
 backend/.env
 frontend/yarn.lock

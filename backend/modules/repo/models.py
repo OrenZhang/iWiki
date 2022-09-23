@@ -56,6 +56,7 @@ class Repo(models.Model):
     create_at = models.DateTimeField(_("创建时间"), auto_now_add=True)
     is_deleted = models.BooleanField(_("软删除"), default=False)
     is_allow_apply = models.BooleanField(_("允许申请"), default=True)
+    is_display = models.BooleanField(_("展示"), default=True)
 
     class Meta:
         db_table = f"{DB_PREFIX}repo"
