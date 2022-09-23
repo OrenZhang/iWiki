@@ -25,64 +25,68 @@
 <template>
   <div>
     <el-row :gutter="20">
-      <el-col
-        :span="6"
+      <template
         v-for="repo in repos"
         :key="repo.id"
       >
-        <el-card>
-          <div class="card-container">
-            <div class="text-info">
-              <div style="height: 100%; display: flex; align-items: center;">
-                <h4 style="margin-top: 0; color: var(--el-text-color-primary)">
-                  {{ repo.name }}
-                </h4>
+        <el-col
+          :span="6"
+          v-if="repo.is_display"
+        >
+          <el-card>
+            <div class="card-container">
+              <div class="text-info">
+                <div style="height: 100%; display: flex; align-items: center;">
+                  <h4 style="margin-top: 0; color: var(--el-text-color-primary)">
+                    {{ repo.name }}
+                  </h4>
+                </div>
+                <div style="color: var(--el-text-color-regular)">
+                  <div style="display: flex; align-items: center; font-size: 14px; margin-bottom: 6px;">
+                    <el-tag
+                      size="mini"
+                      type="success"
+                      v-if="repo.r_type === 'public'"
+                      style="margin-right: 10px;"
+                    >
+                      {{ $t('publicRepo') }}
+                    </el-tag>
+                    <el-tag
+                      size="mini"
+                      type="warning"
+                      v-else
+                      style="margin-right: 10px;"
+                    >
+                      {{ $t('privateRepo') }}
+                    </el-tag>
+                    <i class="fa-solid fa-user" />&nbsp;{{ repo.creator_name }}
+                  </div>
+                  <div style="font-size: 14px;">
+                    <el-tag
+                      size="mini"
+                      type="info"
+                      style="margin-right: 10px"
+                    >
+                      {{ $t('createAt') }}
+                    </el-tag>
+                    <i class="fa-solid fa-calendar-alt" />&nbsp;{{ repo.create_at }}
+                  </div>
+                </div>
               </div>
-              <div style="color: var(--el-text-color-regular)">
-                <div style="display: flex; align-items: center; font-size: 14px; margin-bottom: 6px;">
-                  <el-tag
-                    size="mini"
-                    type="success"
-                    v-if="repo.r_type === 'public'"
-                    style="margin-right: 10px;"
-                  >
-                    {{ $t('publicRepo') }}
-                  </el-tag>
-                  <el-tag
-                    size="mini"
-                    type="warning"
-                    v-else
-                    style="margin-right: 10px;"
-                  >
-                    {{ $t('privateRepo') }}
-                  </el-tag>
-                  <i class="fa-solid fa-user" />&nbsp;{{ repo.creator_name }}
-                </div>
-                <div style="font-size: 14px;">
-                  <el-tag
-                    size="mini"
-                    type="info"
-                    style="margin-right: 10px"
-                  >
-                    {{ $t('createAt') }}
-                  </el-tag>
-                  <i class="fa-solid fa-calendar-alt" />&nbsp;{{ repo.create_at }}
-                </div>
+              <div
+                class="check-info"
+                :class="checkUserStatus(repo) ? 'public-repo' : 'private-repo'"
+                @click="goRepo(repo)"
+              >
+                <i
+                  class="fa-solid"
+                  :class="checkUserStatus(repo) ? 'fa-arrow-right-to-bracket' : 'fa-lock'"
+                />
               </div>
             </div>
-            <div
-              class="check-info"
-              :class="checkUserStatus(repo) ? 'public-repo' : 'private-repo'"
-              @click="goRepo(repo)"
-            >
-              <i
-                class="fa-solid"
-                :class="checkUserStatus(repo) ? 'fa-arrow-right-to-bracket' : 'fa-lock'"
-              />
-            </div>
-          </div>
-        </el-card>
-      </el-col>
+          </el-card>
+        </el-col>
+      </template>
     </el-row>
   </div>
 </template>
