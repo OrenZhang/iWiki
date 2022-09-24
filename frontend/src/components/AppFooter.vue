@@ -44,10 +44,9 @@
 </template>
 
 <script setup>
-import { onUnmounted, computed, ref, onMounted } from 'vue';
+import { onUnmounted, computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
-import { loadIPInfoAPI } from '../api/modules/common';
 
 const { t } = useI18n();
 
@@ -115,16 +114,6 @@ const ipInfoStr = computed(() => {
   }
   return info;
 });
-
-const loadIPInfo = () => {
-  loadIPInfoAPI().then((res) => {
-    if (res.result) {
-      ip.value = res.data.ip;
-      ipInfo.value = res.data;
-    }
-  });
-};
-onMounted(() => loadIPInfo());
 </script>
 
 <style scoped>
