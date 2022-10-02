@@ -44,7 +44,7 @@ try:
             if env_setting:
                 env_split = env_setting.strip("\n").split("=")
                 key = env_split[0]
-                val = "=".join(env_split[1:])
+                val = "=".join(env_split[1:])  # pylint: disable=invalid-name
                 os.environ[key] = val
             else:
                 break
@@ -141,6 +141,7 @@ DATABASES = {
         "HOST": getenv_or_raise("DB_HOST"),
         "PORT": int(getenv_or_raise("DB_PORT")),
         "CHARSET": "utf8mb4",
+        "CONN_MAX_AGE": 3600,
     }
 }
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
